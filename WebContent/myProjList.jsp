@@ -86,7 +86,7 @@
 									<%=pj_Inform.getProj_title() %> 
 									</a>
 									</span> 
-									<span class="col-sm-6"> <%=pj_Inform.getProj_regenddate() %></span>
+									<span class="col-sm-6"> D-<%=pj_Inform.getD_day() %></span>
 									<span class="col-md-3 text-right">
 										<button type="button" class="btn common"onclick="fnParameter('modify','','<%=pj_Inform.getPf_id()%>', '')">수정</button>
 										<button type="button" class="btn common"onclick="fnParameter('list','delete','<%=pj_Inform.getPf_id()%>', '')">삭제</button>
@@ -213,7 +213,7 @@
 									<%=app_PJ.getProj_title() %>
 									</a> 
 									</span> 
-									<span class="col-sm-6"> <%=app_PJ.getProj_regenddate() %></span>									
+									<span class="col-sm-6"> D-<%=app_PJ.getD_day() %></span>									
 									<span class="col-md-3 text-right">
 										<button type="button" class="btn common" onclick="fnParameter('list','cancle','<%=app_PJ.getProj_id()%>','')">지원 취소</button>
 									</span>

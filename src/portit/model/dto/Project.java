@@ -22,6 +22,22 @@ public class Project {
 	private ArrayList apply_mem;	
 	
 	
+	
+	
+	private int d_day;
+	
+	
+	public int getD_day() {
+		return d_day;
+	}
+	
+	public void setD_day(int d_day) {
+		this.d_day = d_day;
+	}
+	
+	
+	
+	
 	private int proj_id;
 	private String proj_title;
 	private String proj_intro;
@@ -29,6 +45,7 @@ public class Project {
 	private String proj_regdate;
 	private String proj_startdate;
 	private String proj_regenddate;
+	
 	private int proj_period;
 	private String tag_name;
 	private String prof_name;
@@ -112,12 +129,12 @@ public class Project {
 	public void setProj_period(int proj_period) {
 		this.proj_period = proj_period;
 	}
-	public String getProj_regenddate() {
-		return proj_regenddate;
-	}
 	public void setProj_regenddate(String proj_regenddate) {
 		this.proj_regenddate = proj_regenddate;
 	}
 	
 	
+	public String getProj_regenddate() {
+		return proj_regenddate;
+	}
 }

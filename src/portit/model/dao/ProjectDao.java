@@ -118,7 +118,7 @@ public class ProjectDao {
 		//프로젝트 id, 프로젝트 이름, 마감일
 		
 		//인스턴스 생성.
-		 sql="select proj_title, PROJ_REGENDDATE,proj_id    "
+		 sql="select proj_title, PROJ_REGENDDATE-sysdate,proj_id    "
 			 +"from project "
              +"where proj_id='"+pj_Id+"' ";
 		 
@@ -132,8 +132,10 @@ public class ProjectDao {
 				Prodto =new Project();
 				Prodto.setProj_title(rs.getString("proj_title"));				//제목
 				Prodto.setPf_id(rs.getInt("proj_id"));							//id
-				Prodto.setProj_regenddate(rs.getString("PROJ_REGENDDATE"));		//마감일
+				Prodto.setD_day((rs.getInt("PROJ_REGENDDATE-sysdate")));		//마감일
 				
+				
+				System.out.println("DAO.ck   "+Prodto.getD_day());
 			}
 		} catch (Exception e) {
 			System.out.println("DAO.regProjectList()에서 에러!!");
@@ -251,7 +253,7 @@ public class ProjectDao {
 		
 		//인스턴스 생성.
 		rsList=new ArrayList();
-		sql="select  DISTINCT project.proj_title, project.proj_id, project.proj_regdate,  project.proj_regenddate, project.proj_startDate, proj_app.proj_app_confirm "
+		sql="select  DISTINCT project.proj_title, project.proj_id, project.proj_regdate,  project.proj_regenddate-sysdate, project.proj_startDate, proj_app.proj_app_confirm "
 				+"from project inner join proj_app on project.proj_id=proj_app.proj_id  " 
 				+"where project.proj_id in (select proj_id from proj_app where mem_id='"+login_id+"')";
 		 
@@ -259,25 +261,25 @@ public class ProjectDao {
 		 
 		System.out.println("dao  "+sql);
 		
+		
+
 		try {
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			
 			while(rs.next()){
 				Prodto =new Project();
 				Prodto.setProj_id(rs.getInt("proj_id"));
 				Prodto.setProj_title(rs.getString("proj_title"));
-				Prodto.setProj_regenddate(rs.getString("proj_regenddate"));
+				
+//				Prodto.setProj_regenddate(((rs.getString("proj_regenddate"))));
+				Prodto.setD_day((((rs.getInt("project.proj_regenddate-sysdate")))));
 				Prodto.setProj_regdate(rs.getString("proj_regdate"));
 				Prodto.setProj_startdate(rs.getString("proj_startDate"));
 				Prodto.setProj_app_confirm(rs.getString("proj_app_confirm"));
 				
-				System.out.println("DAO  "+Prodto.getPf_id());
-				System.out.println("doa22  "+rs.getInt("proj_id"));
 				rsList.add(Prodto);
 			}
-			
 			
 		} catch (Exception e) {
 			System.out.println("DAO.applyProjectList()에서 에러!!");
