@@ -234,39 +234,71 @@
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-				<h3>
-					<i class="fa fa-angle-right"></i> Blank Page
-				</h3>
 
 
-
-
-
-
-				<!--  ---=============아코디언 ================================-->
+				<!--  --=============아코디언 ================================-->
 				<div class="row">
 					<div class="col-md-12">
 						<div class="panel panel-default">
-							<div class="panel-heading">Chat List</div>
+							<div class="panel-heading">
+								<div class="input-group">
+								<div class="row">
+								
+									<div class="col-md-3">
+										<i class="fa fa-comments fa-fw"></i>검색
+									</div>
+									
+									<div class="col-md-5">
+										<span class="input-group-btn">
+										<input id="btn-input" type="text"
+											class="form-control input-sm" placeholder="Type user name" />
+										
+											<button class="btn btn-warning btn-sm" id="#">
+												Search</button>
+										</span>
+									</div>
+									
+									<div class="col-md-4">
+										<span class="pull-right">
+											<a href="msgSend.html">
+												<button class="btn btn-warning btn-sm" id="#">New</button>
+											</a>
+										</span>
+									</div>
+									
+									</div>
+									
+									
+								</div>
+
+
+							
+							</div>
 							<div class="panel-body">
 								<div class="panel-group" id="accordion">
 									<div class="panel panel-default">
+
 										<div class="panel-heading">
 											<h4 class="panel-title">
-											
-						 						<a href="#">발신자1</a>
-						 						
-						 						
-												<a data-toggle="collapse" data-parent="#accordion"
-													href="#collapseOne" class="collapsed">
-												<button type="button" class="btn btn-primary btn-sm">보내기</button>
-												</a>
-												
-												
-														
-													 
+												<a href="#">발신자1</a> 
+												<span class="chat-img pull-right">
+													<span class="input-group"> 
+													<a href="msgDetail.html">
+															<button type="button" class="btn btn-primary btn-sm">보내기</button>
+													</a> 
+													<a data-toggle="collapse" data-parent="#accordion"		href="#collapseOne" class="collapsed">
+														<button type="button" class="btn btn-default btn-xs dropdown-toggle">
+																<i class="fa fa-chevron-down"></i>
+														</button>
+													</a>
+												</span>
+												</span>
+
+
 											</h4>
 										</div>
+
+
 										<div id="collapseOne" class="panel-collapse collapse"
 											style="height: 0px;">
 											<div class="panel-body">
@@ -280,8 +312,8 @@
 														<div class="panel-body">
 															<ul class="chat-box">
 																<li class="left clearfix"><span
-																	class="chat-img pull-left"> <img
-																		src="assets/img/1.png" alt="User" class="img-circle" />
+																	class="chat-img pull-left"> <img src="#"
+																		alt="User" class="img-circle" />
 																</span>
 																	<div class="chat-body">
 																		<strong>코난</strong> <small
@@ -291,42 +323,58 @@
 																		<p>내 이름은 코난 탐정이죠 ㅎ</p>
 																	</div></li>
 																<li class="right clearfix"><span
-																	class="chat-img pull-right"> <img
-																		src="assets/img/2.png" alt="User" class="img-circle" />
+																	class="chat-img pull-right"> <img src="#"
+																		alt="User" class="img-circle" />
 																</span>
 																	<div class="chat-body clearfix">
-
 																		<small class=" text-muted"> <i
 																			class="fa fa-clock-o fa-fw"></i>13 mins ago
 																		</small> <strong class="pull-right">김전일</strong>
 
 																		<p>할아버지의 이름을 걸고 !</p>
-																	</div></li>
+																	</div> <span class="chat-img pull-right"> <a
+																		href="msgDetail.html">더보기</a>
+																</span></li>
+
+
 															</ul>
 														</div>
 
 													</div>
 												</div>
 												<!-- 아코디언1 내용끝 -->
-												
-												
+
+
 											</div>
 										</div>
 									</div>
 									<div class="panel panel-default">
+
+
 										<div class="panel-heading">
 											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordion"
-													href="#collapseTwo">chat #2</a>
+												<a href="#">발신자2</a> <span class="chat-img pull-right">
+													<a href="msgDetail.html">
+														<button type="button" class="btn btn-primary btn-sm">보내기</button>
+												</a> <a data-toggle="collapse" data-parent="#accordion"
+													href="#collapseTwo" class="collapsed">
+														<button type="button"
+															class="btn btn-default btn-xs dropdown-toggle">
+															<i class="fa fa-chevron-down"></i>
+														</button>
+												</a>
+												</span>
+
 											</h4>
 										</div>
-										<div id="collapseTwo" class="panel-collapse in"
-											style="height: auto;">
-											<div class="panel-body">
-											
-											
-											<!-- 아코디언 1내용. -->
 
+	
+
+							<div id="collapseTwo" class="panel-collapse collapse"	style="height: 0px;">
+											<div class="panel-body">
+
+
+												<!-- 아코디언 2내용. -->
 												<div class="row">
 
 													<div
@@ -335,8 +383,8 @@
 														<div class="panel-body">
 															<ul class="chat-box">
 																<li class="left clearfix"><span
-																	class="chat-img pull-left"> <img
-																		src="assets/img/1.png" alt="User" class="img-circle" />
+																	class="chat-img pull-left"> <img src="#"
+																		alt="User" class="img-circle" />
 																</span>
 																	<div class="chat-body">
 																		<strong>코난</strong> <small
@@ -346,8 +394,8 @@
 																		<p>내 이름은 코난 탐정이죠 ㅎ</p>
 																	</div></li>
 																<li class="right clearfix"><span
-																	class="chat-img pull-right"> <img
-																		src="assets/img/2.png" alt="User" class="img-circle" />
+																	class="chat-img pull-right"> <img src="#"
+																		alt="User" class="img-circle" />
 																</span>
 																	<div class="chat-body clearfix">
 
@@ -356,67 +404,48 @@
 																		</small> <strong class="pull-right">김전일</strong>
 
 																		<p>할아버지의 이름을 걸고 !</p>
-																	</div></li>
+																	</div> <span class="chat-img pull-right"> <a
+																		href="msgDetail.html">더보기</a>
+																</span></li>
+
+
 															</ul>
 														</div>
 
 													</div>
 												</div>
-												<!-- 아코디언1 내용끝 -->
-											
-											
+												<!-- 아코디언2 내용끝 -->
+
+
 											</div>
 										</div>
 									</div>
 									<div class="panel panel-default">
+
+
 										<div class="panel-heading">
 											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordion"
-													href="#collapseThree" class="collapsed">Chat #3</a>
+												<a href="#">발신자3</a> <span class="chat-img pull-right">
+
+													<a href="msgDetail.html">
+														<button type="button" class="btn btn-primary btn-sm">보내기</button>
+												</a> <a data-toggle="collapse" data-parent="#accordion"
+													href="#collapseThree" class="collapsed">
+														<button type="button"
+															class="btn btn-default btn-xs dropdown-toggle">
+															<i class="fa fa-chevron-down"></i>
+														</button>
+												</a>
+												</span>
 											</h4>
 										</div>
+
+
 										<div id="collapseThree" class="panel-collapse collapse">
 											<div class="panel-body">
-											<!-- 아코디언 1내용. -->
+												<!-- 아코디언 3내용. -->
 
-												<div class="row">
-
-													<div
-														class="chat-panel panel panel-default chat-boder chat-panel-head">
-
-														<div class="panel-body">
-															<ul class="chat-box">
-																<li class="left clearfix"><span
-																	class="chat-img pull-left"> <img
-																		src="assets/img/1.png" alt="User" class="img-circle" />
-																</span>
-																	<div class="chat-body">
-																		<strong>코난</strong> <small
-																			class="pull-right text-muted"> <i
-																			class="fa fa-clock-o fa-fw"></i>12 mins ago
-																		</small>
-																		<p>내 이름은 코난 탐정이죠 ㅎ</p>
-																	</div></li>
-																<li class="right clearfix"><span
-																	class="chat-img pull-right"> <img
-																		src="assets/img/2.png" alt="User" class="img-circle" />
-																</span>
-																	<div class="chat-body clearfix">
-
-																		<small class=" text-muted"> <i
-																			class="fa fa-clock-o fa-fw"></i>13 mins ago
-																		</small> <strong class="pull-right">김전일</strong>
-
-																		<p >할아버지의 이름을 걸고 !</p>
-																	</div></li>
-															</ul>
-														</div>
-
-													</div>
-												</div>
-												<!-- 아코디언1 내용끝 -->
-
-
+												<!-- 아코디언 3내용끝 -->
 
 											</div>
 										</div>
@@ -431,83 +460,6 @@
 
 
 
-
-				<!--  chat box start -->
-				<div class="row">
-					<div class="col-md-6 col-sm-12 col-xs-12">
-
-						<div
-							class="chat-panel panel panel-default chat-boder chat-panel-head">
-							<div class="panel-heading">
-								<i class="fa fa-comments fa-fw"></i> Chat Box
-								<div class="btn-group pull-right">
-									<button type="button"
-										class="btn btn-default btn-xs dropdown-toggle"
-										data-toggle="dropdown">
-										<i class="fa fa-chevron-down"></i>
-									</button>
-									<ul class="dropdown-menu slidedown">
-										<li><a href="#"> <i class="fa fa-refresh fa-fw"></i>Refresh
-										</a></li>
-										<li><a href="#"> <i class="fa fa-check-circle fa-fw"></i>Available
-										</a></li>
-										<li><a href="#"> <i class="fa fa-times fa-fw"></i>Busy
-										</a></li>
-										<li><a href="#"> <i class="fa fa-clock-o fa-fw"></i>Away
-										</a></li>
-										<li class="divider"></li>
-										<li><a href="#"> <i class="fa fa-sign-out fa-fw"></i>Sign
-												Out
-										</a></li>
-									</ul>
-								</div>
-							</div>
-
-							<div class="panel-body">
-								<ul class="chat-box">
-									<li class="left clearfix"><span class="chat-img pull-left">
-											<img src="assets/img/1.png" alt="User" class="img-circle" />
-									</span>
-										<div class="chat-body">
-											<strong>코난</strong> <small class="pull-right text-muted">
-												<i class="fa fa-clock-o fa-fw"></i>12 mins ago
-											</small>
-											<p>수수께끼는 모두 풀렸어! 범인은 바로 당신이야!</p>
-										</div></li>
-									<li class="right clearfix"><span
-										class="chat-img pull-right"> <img
-											src="assets/img/2.png" alt="User" class="img-circle" />
-									</span>
-										<div class="chat-body clearfix">
-
-											<small class=" text-muted"> <i
-												class="fa fa-clock-o fa-fw"></i>13 mins ago
-											</small> <strong class="pull-right">김전일</strong>
-
-											<p>할아버지의 이름을 걸고!</p>
-										</div></li>
-								</ul>
-							</div>
-
-							<div class="panel-footer">
-								<div class="input-group">
-									<input id="btn-input" type="text" class="form-control input-sm"
-										placeholder="Type your message to send..." /> <span
-										class="input-group-btn">
-										<button class="btn btn-warning btn-sm" id="btn-chat">
-											Send</button>
-									</span>
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-
-
-
-				<!--  chat box end -->
 
 
 
