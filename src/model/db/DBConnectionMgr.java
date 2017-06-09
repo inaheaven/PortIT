@@ -38,11 +38,6 @@ import java.util.Vector;
  */
 public class DBConnectionMgr {
     private Vector<ConnectionObject> connections = new Vector<ConnectionObject>(10);
-    /*private String _driver = "org.gjt.mm.mysql.Driver",
-    _url = "jdbc:mysql://54.238.254.206:3306/pcbang?useUnicode=true&amp;characterEncoding=utf8&connectTimeout=3000",
-    _user = "pcbang",
-    _password = "1234";*/
-    
     private String _driver = "oracle.jdbc.driver.OracleDriver",
     		_url = "jdbc:oracle:thin:@hostname70.12.110.120:1521:orcl",
     		_user = "portit",
