@@ -43,13 +43,10 @@ public class DBConnectionMgr {
     _user = "pcbang",
     _password = "1234";*/
     
-    private String _driver = "org.h2.Driver",
-    /*
-    		_url = "jdbc:h2:~/test",
-     */
-    		_url = "jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;MVCC=TRUE",
-    _user = "sa",
-    _password = "";
+    private String _driver = "oracle.jdbc.driver.OracleDriver",
+    		_url = "jdbc:oracle:thin:@hostname70.12.110.120:1521:orcl",
+    		_user = "portit",
+    		_password = "1111";
 
     
     private boolean _traceOn = false;
