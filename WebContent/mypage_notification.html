@@ -34,7 +34,7 @@
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
 		<!--header start-->
-		<header class="header black-bg"> PORTIT 헤더는 수연이가 </header>
+		<header class="header black-bg"> </header>
 		<!--header end-->
 		<!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -44,11 +44,14 @@
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-				<h3 style="text-align: center;">MY NOTIFICATIONS</h3>
+				<div class="col-md-12 col-sm-12 col-xs-12 mt">
 				<!-- BASIC FORM ELELEMNTS -->
-				<div class="row mt">
 					<div class="col-lg-12">
+					
+					
 						<div class="form-panel">
+							<form class="form-horizontal style-form" method="get">
+							
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle"
 									data-toggle="dropdown">
@@ -66,69 +69,66 @@
 									<br>
 								</p>
 							</div>
-							<form class="form-horizontal style-form" method="get">
-								<!-- First Action -->
-								<div class="desc">
-									<div class="thumb" style="font-size:large;">
-										<hr>
-										<span class="badge bg-theme col-lg-1" style="font-size:large;height:35px">좋아요!</span>
+							<!-- line space -->
+							<div class="row">&nbsp;</div>
+						
+							<!-- First Action -->
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="headingOne">
+										<span class="glyphicon glyphicon-heart col-lg-1"></span>
 										<a href="#" class="col-lg-2">사용자1 님이</a>
-										<p class="col-lg-5">내 포트폴리오를 좋아합니다.</p>
-										<p class="col-lg-3">2017-06-17 12:00 <br></p>
-										<button type="button" class="btn btn-danger col-lg-1">삭제</button>
-									</div>
+										<label class="col-lg-4">내 포트폴리오를 좋아합니다.</label>
+										<label class="col-lg-4">2017-06-17 12:00 <br></label>
+										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
+										</div>
 								</div>
-								<!-- Second Action -->
-								<div class="desc">
-									<div class="thumb" style="font-size:large;">
-										&nbsp;<hr>
-										<span class="badge bg-theme col-lg-1" style="font-size:large;height:35px">팔로우!</span>
-										<a href="#" class="col-lg-2">사용자2 님이</a> 
-										<p class="col-lg-5">포트폴리오를 업로드했습니다.</p>
-										<p class="col-lg-3">2017-06-04 12:00</p>
-										<button type="button" class="btn btn-danger col-lg-1">삭제</button>
-									</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="headingOne">
+										<span class="glyphicon  glyphicon-upload col-lg-1"></span>
+										<a href="#" class="col-lg-2">사용자2 님이</a>
+										<label class="col-lg-4">새로운 포트폴리오를 업로드했습니다.</label>
+										<label class="col-lg-4">2017-06-17 12:00 <br></label>
+										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
+										</div>
 								</div>
-								<!-- Third Action -->
-								<div class="desc">
-									<div class="thumb" style="font-size:large;">
-										&nbsp;<hr>
-										<span class="badge bg-theme col-lg-1" style="font-size:large;height:35px">신청!</span>
-											<a href="#" class="col-lg-2">사용자3 님이</a>
-											<p class="col-lg-5"> 내가 등록한 프로젝트에 참여를 신청하였습니다.</p>
-											<p class="col-lg-3">2017-06-07 15:00</p>
-											<button type="button" class="btn btn-danger col-lg-1">삭제</button>
-									</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="headingOne">
+										<span class="glyphicon glyphicon-envelope col-lg-1"></span>
+										<a href="#" class="col-lg-2">사용자3 님이</a>
+										<label class="col-lg-4">메시지를 보냈습니다.</label>
+										<label class="col-lg-4">2017-06-17 12:00 <br></label>
+										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
+										</div>
 								</div>
-								<!-- Fourth Action -->
-								<div class="desc">
-									<div class="thumb"  style="font-size:large;">
-										&nbsp;<hr>
-										<span class="badge bg-theme col-lg-1" style="font-size:large;height:35px">메시지!</span>
-											<a href="#" class="col-lg-2">사용자4 님이</a>
-											<p class="col-lg-5"> 메시지를 보냈습니다. </p>
-											<p class="col-lg-3">2017-06-09 12:00</p>
-											<button type="button" class="btn btn-danger col-lg-1">삭제</button>
-										<p>&nbsp;<hr></p>
-									</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="headingOne">
+										<span class="glyphicon glyphicon-ok-sign col-lg-1"></span>
+										<a href="#" class="col-lg-2">사용자4 님이</a>
+										<label class="col-lg-4">내가 등록한 프로젝트에 참여를 신청하였습니다.</label>
+										<label class="col-lg-4">2017-06-17 12:00 <br></label>
+										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
+										</div>
 								</div>
-								<!-- Fifth Action -->
-								<div class="desc">
-									<div class="thumb"  style="font-size:large;">
-										<span class="badge bg-theme col-lg-1" style="font-size:large;height:35px">팔로잉!</span>
-											<a href="#" class="col-lg-2">사용자5 님이</a> 
-											<p class="col-lg-5">나를 팔로잉했습니다.</p>
-											<p class="col-lg-3">2017-06-10 14:00</p>
-											<button type="button" class="btn btn-danger col-lg-1">삭제</button>
-										<p>&nbsp;<hr></p>
-									</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="headingOne">
+										<span class="glyphicon glyphicon-plus col-lg-1"></span>
+										<a href="#" class="col-lg-2">사용자5 님이</a>
+										<label class="col-lg-4">나를 팔로잉했습니다.</label>
+										<label class="col-lg-4">2017-06-17 12:00 <br></label>
+										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
+										</div>
 								</div>
+							</div>
 							</form>
+							</div>	
 						</div>
 					</div>
-				</div>
 			</section>
-			<!-- /wrapper -->
+			<!-- /wrapper --> 
 		</section>
 
 		<!--main content end-->

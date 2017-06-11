@@ -50,7 +50,7 @@
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
 		<!--header start-->
-		<header class="header black-bg"> PORTIT 헤더는 수연이가 </header>
+		<header class="header black-bg"></header>
 		<!--header end-->
 		<!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -60,7 +60,6 @@
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-				<h3 style="text-align:center;">프로젝트 등록하기</h3>
 
 				<!-- BASIC FORM ELELEMNTS -->
 				<div class="row mt">
@@ -109,9 +108,12 @@
 										<input type="text" class="form-control"
 											placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
 									</div>
-									<label class="col-sm-2 control-label">필요 인원 수</label>
+									<label class="col-sm-1 control-label">필요 인원</label>
 									<div class="col-sm-1">
 										<input type="text" class="form-control">
+									</div>
+									<div class="col-sm-1">
+									<label class="control-label">명</label>
 									</div>
 									<div>
 									<button type="button" class="btn btn-default">추가</button>
@@ -131,10 +133,12 @@
 									<div class="col-sm-3">
 									 <input	class="form-control" id="start_date" name="start_date" placeholder="MM/DD/YYY" type="text" />
 									 </div>
-									<label class="col-sm-2 col-sm-2 control-label"  for="date">프로젝트 예정 종료일</label>
-									<div class="col-sm-3">
-									 <input	class="form-control" id="end_date" name="end_date" placeholder="MM/DD/YYY" type="text" />
+									<label class="col-sm-2 col-sm-2 control-label"  for="date">예상 운영 기간</label>
+									<div class="col-sm-2">
+									 <input	class="form-control" id="end_date" name="end_date" type="text"/>
 									 </div>
+									 <div class="col-sm-1 col-sm-1 control-label">
+									 <label>일</label></div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">함께할 사람</label>
@@ -203,7 +207,6 @@
 				function() {
 					var reg_date_input = $('input[name="reg_date"]'); //our date input has the name "date"
 					var start_date_input = $('input[name="start_date"]'); //our date input has the name "date"
-					var end_date_input = $('input[name="end_date"]'); //our date input has the name "date"
 					var container = $('.bootstrap-iso form').length > 0 ? $(
 							'.bootstrap-iso form').parent() : "body";
 					var options = {
@@ -214,7 +217,6 @@
 					};
 					reg_date_input.datepicker(options);
 					start_date_input.datepicker(options);
-					end_date_input.datepicker(options);
 				})
 	</script>
 </body>
