@@ -35,18 +35,23 @@ function insRow() {
   oTbl = document.getElementById("addTable");
   var oRow = oTbl.insertRow();
   oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
-  var oCell = oRow.insertCell();
+  var oCell1 = oRow.insertCell(0);
+  var oCell2 = oRow.insertCell(1);
   index++;
 
   var select = document.getElementById("SNS");
 	  //"www."+select.options[select.selectedIndex].text+".com";
-  var option_value = select.options[select.selectedIndex].value;
+//   var option_value = select.options[select.selectedIndex].value;
+  var option_value = document.getElementById("addText").value;
 
 
   //삽입될 Form Tag
-  var frmTag = "<input type=text name=addText id=addText"+index+" style=width:350px; height:20px;> ";
-  frmTag += "<input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
-  oCell.innerHTML = frmTag;
+  var frmTag1="";
+  frmTag1 += "<input type=text name=addText id=addText"+index+" style=width:350px; height:20px;>";
+  oCell1.innerHTML = frmTag1;
+  var frmTag2="";
+  frmTag2 += "<input type=button value='x' onClick='removeRow()' style='cursor:hand'>";
+  oCell2.innerHTML = frmTag2;
   var temp = "addText"+index;
   document.getElementById(temp).value=option_value;
 }
@@ -85,15 +90,22 @@ function addSkill(skill,score) {
 	
 	//상태바 추가
 	var idx ="";
-	idx=idx+"<div class='progress progress-striped active'>";
-	idx=idx+"<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='50' style='width:"+ barSize+"%''>";
-	idx=idx+"<span class='sr-only'>45% Complete</span>";
-	idx=idx+"<span class='sr-only'>45% Complete</span>";
-	idx=idx+"</div>";
-	idx=idx+"<input type='button' value='x' onclick='fnDeleteItem("+ addSkillIndex +")'/>";
-	idx=idx+"</div>";
 	
-	newSpan.innerHTML = skill +idx;
+	
+	idx+="<div class='col-sm-1'>"+skill+"</div>";
+	
+	idx+="<div class='col-sm-11'>";
+	idx+="<div class='progress progress-striped active'>";
+	idx+="<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='50' style='width:"+ barSize+"%''>";
+	idx+="<span class='sr-only'>45% Complete</span>";
+	idx+="<span class='sr-only'>45% Complete</span>";
+	idx+="</div>";
+	idx+="<input type='button' value='x' onclick='fnDeleteItem("+ addSkillIndex +")'/>";
+	idx+="</div>";
+	idx+="</div>";
+	idx+="</br>";
+	
+	newSpan.innerHTML = idx;
 	
 	var itemList = document.getElementById("itemList");
 	itemList.appendChild(newSpan);			
@@ -122,6 +134,12 @@ function frmCheck()
       }
    }
  }
+ 
+//상태바 삭제 
+function fnSelectSnsInfo(snsName){
+	document.getElementById("addText").value=snsName;
+	document.getElementById("addText").focus();	
+}
 
 
 //-->
@@ -211,28 +229,32 @@ function frmCheck()
 											<table width="400" border="0" cellspacing="0" cellpadding="0">
 												<tr>
 													<td colspan="2" align="left">
-														<table width="100%" border="0" cellpadding="0"
-															cellspacing="0">
+														<table width="100%" border="0" cellpadding="0"	cellspacing="0">
 															<tr>
 																<td height="25">
 																	<table id="addTable" width="400" cellspacing="0"
 																		cellpadding="0" border="0">
 																		<tr>
-																			<select name="SNS" id="SNS">
+																			<select name="SNS" id="SNS" onchange="fnSelectSnsInfo(this.value)">
 																				<option value="">SNS선택</option>
 																				<option value="www.facebook.com/">FaceBook</option>
 																				<option value="WWW.github.com/">Github</option>
 																				<option value="http://www.">Blog</option>
 																			</select>
-																			<td><input type="text" name="addText"
-																				style="width: 350px; height: 20px;"></td>
-																			<button type="button" class="btn btn-theme"
-																				style="cursor: hand" onClick="insRow()" value="추가">
-																				추가
-																				</td>
-																				<td align="left"></td>
+																			<td>
+																				<input type="text"  id ="addText" name="addText" style="width: 350px; height: 20px;"/>
+																			</td>
+																			<td>
+																				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																			 </td>
+																			 
+																			  
+																			<td>
+																				<button type="button" class="btn btn-theme"	style="cursor: hand" onClick="insRow()" value="추가">추가</button>
+																			</td>
 																		</tr>
 																	</table>
+																	
 																</td>
 															</tr>
 														</table>
@@ -256,9 +278,9 @@ function frmCheck()
 											 <input id="score" type="text" value="1-5까지 입력하세요." onclick="if(this.value=='1-5까지 입력하세요.'){this.value=''}">&nbsp;&nbsp;
 										<button type="submit" class="btn btn-theme"
 											onclick="addSkill(document.getElementById('skill').value,document.getElementById('score').value)">추가</button>
-											<br>
-											<div id="itemList">
-										</div>
+											<br/>
+											<div id="itemList" class="row">
+											</div>
 									</div>
 								</div>
 								
