@@ -1,5 +1,0 @@
-/**
- * @author student
- *
- */
-package view;
