@@ -3,12 +3,12 @@ package portit.model.dto;
 public class Message {
 	
 	
-	private int msg_id;				
-	private int mem_id_sender;		
-	private int mem_id_receiver;	
-	private String msg_date;		
-	private String msg_content;		
-	private String msg_isread;		
+	private int msg_id;				//MSG iD	
+	private int mem_id_sender;		//발신 FROM
+	private int mem_id_receiver;	//수신 TO
+	private String msg_date;		//발신시간
+	private String msg_content;		//내용
+	private String msg_isread;		//수신여부
 	
 	
 	

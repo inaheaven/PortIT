@@ -9,11 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import portit.model.action.MessageModel;
+import portit.model.dao.MassageDao;
 import portit.model.dao.MemberDao;
 import portit.model.dto.Member;
+import portit.model.dto.Message;
 
 @WebServlet("/msg")
 public class MessageController extends HttpServlet {
+	//컨트롤러
+	//model에서 request로부터 뽑아서 데이터에 저장하는작업.
+	
+	//view->frontCtrl ->컨트롤러 ->모델.
+	
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doPost(req, resp);
@@ -24,23 +32,28 @@ public class MessageController extends HttpServlet {
 		
 		try {
 			// request에서 dto로 옮겨담기.
+			//model에서 정보를 dto에 담는 작업을 한다.
+			
+			//모델 : dao저장, dto리턴.
+			MessageModel model = new MessageModel(req);
+			
+			//모델-DTO
+			Message dto= new Message();
+			
+			//모델_DAO
+			MassageDao dao= new MassageDao();
+			
+			//dto를 DB와 view에 전달해야한다.
+			dto=model.getMessage();
+			
+			//DB에 전달.
+			dao.insertMessage(dto);
 			
 			
 			
-			ServletContext sc = this.getServletContext();
-			MemberDao memberDao = (MemberDao) sc.getAttribute("member");
-			Member member = (Member) req.getAttribute("member");
-			// DAO의 메서드 호출
-			// 같은 회원 번호를 가진 회원이 있는지 검사
-			Member existingMember = memberDao.findExistingMember(member.getMem_id(), member.getMem_email());
-			if (member.getMem_id() != existingMember.getMem_id()) {
-				// 같은 회원 번호를 가진 회원이 있다면 회원 번호를 재설정
-				member.resetMem_id();
-			}
-			// 가입 메서드 호출
-			memberDao.insert(member);
 			
-			// 가입처리 후 이동할 페이지 지정
+			
+			
 			req.setAttribute("viewURL", "");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -34,21 +34,7 @@ public class MassageDao{
 	}
 	
 	
-	private void updatePos(Connection con){
-		try{
-			String sql = "update tblBoard set b_pos=b_pos+1";
-			pstmt = con.prepareStatement(sql);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("updatePos()에서 오류");
-			err.printStackTrace();
-		}
-	}
-	
-	
-	
-	// PostProc.jsp(글쓰기 기능)
+	// msgSend.jsp (메세지 보내기)
 	public void insertMessage(Message msg){
 		String sql = "insert into Message("
 			+"MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD,"
@@ -58,11 +44,10 @@ public class MassageDao{
 			con = pool.getConnection();
 			updatePos(con);
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, msg.getMsg_id());
-			pstmt.setInt(2, msg.getMem_id_sender());
-			pstmt.setInt(3, msg.getMem_id_receiver());
-			pstmt.setString(4, msg.getMsg_content());
-			pstmt.setString(5, msg.getMsg_isread());
+			pstmt.setInt(1, msg.getMem_id_sender());
+			pstmt.setInt(2, msg.getMem_id_receiver());
+			pstmt.setString(3, msg.getMsg_content());
+			pstmt.setString(4, msg.getMsg_isread());
 			pstmt.executeUpdate();
 		}
 		
@@ -73,6 +58,29 @@ public class MassageDao{
 		
 		finally{
 			pool.freeConnection(con, pstmt);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private void updatePos(Connection con){
+		try{
+			String sql = "update tblBoard set b_pos=b_pos+1";
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("updatePos()에서 오류");
+			err.printStackTrace();
 		}
 	}
 	
