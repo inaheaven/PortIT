@@ -24,15 +24,11 @@
 
 $(document).ready(function(){
 	$("#btn-send").click(function(){
-		location.href="../src/controller/FrontController.java"
+		location.href="/Project2/msg";
 	});
-
 });
-/* 
-	 $("#btn-send").bind("click",null,function(){
-		 alert("ddd");
-		 location.href="/src/controller/FrontController.java"
-	 }); */
+	 
+	 
 </script>
 
 <!-- Bootstrap core CSS -->
