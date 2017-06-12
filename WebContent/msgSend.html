@@ -18,6 +18,8 @@
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+<link href="assets/css/message.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -52,12 +54,32 @@
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-
-
+				<div class="col-md-12 mt msg msgSend">
+					<div class="msgSendContent">
+						<form method="post" action="#" class="msgForm clearfix">
+							<div class="form-group col-md-8 center" >
+								<label class="control-label" for="msgReceiver">받는 사람 </label><br>
+								<div class="">
+									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" value=""/>
+								</div>
+							</div><br>
+							<div class="form-group col-md-8 center">
+								<label class="control-label" for="msgText">내용 </label><br>
+								<div>
+									<input class="form-control" type="text" id="msgText" name="msgText" value=""/>
+								</div>
+							</div>
+							<div class="msgBtn col-md-3 center">
+								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn" onclick="location.href='#'">돌아가기</button>
+							</div>
+						</form>
+					</div>
 				
 
 
 				<!--  chat box start -->
+				<!--  
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="chat-panel panel panel-default chat-boder chat-panel-head">
@@ -94,7 +116,7 @@
 
 
 
-	<!-- <form class="form-horizontal">
+						 <form class="form-horizontal">
 										<div class="row">
 											
 											<label class="col-sm-2 contral-label"> 
@@ -114,14 +136,14 @@
 												</a>
 											</div>
 										</div>
-							</form> -->
+							</form> 
 
 
 
 					
 							
 							<div class="panel-body">
-							<!-- 대화내용 -->
+							
 							<br>
 							<br>
 							<br>
@@ -147,6 +169,7 @@
 						</div>
 						</div>
 						</div>
+						-->
 
 				<!--  chat box end -->
 

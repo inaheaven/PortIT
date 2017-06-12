@@ -18,6 +18,8 @@
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+<link href="assets/css/message.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -27,16 +29,70 @@
 </head>
 
 <body>
-
 	<section id="container">
-		<!-- **********************************************************************************************************************************************************
-      TOP BAR CONTENT & NOTIFICATIONS
-      *********************************************************************************************************************************************************** -->
 		<!--header start-->
 		<header class="header black-bg">
-			<div class="sidebar-toggle-box">
+			<!--logo start-->
+			<a href="index.html" class="logo"><b>Port IT</b></a>
+			<!--logo end-->
+			<div class="nav notify-row" id="top_menu">
+				<!--  menu start -->
+				<ul class="nav top-menu">
+					<!-- settings start -->
+					<li><a href="">Member</a></li>
+					<li><a href="">Portfolio</a></li>
+					<li><a href="">Project</a>
+					<li>
+					<li><a href="">Community</a></li>
+				</ul>
+				<!--  menu end -->
 			</div>
-			
+			<div class="top-menu-right">
+				<ul class="nav pull-right top-menu">
+					<li>
+						<form class="form-inline top-menu-search" method="post" action="">
+							<div class="input-group">
+								<input type="text" class="form-control round-form" name="search"
+									size="20" placeholder="통합 검색" /> <span class="input-group-btn">
+									<button type="submit" class="btn btn-default round-form">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</span>
+							</div>
+						</form>
+					</li>
+					<li id="header_inbox_bar" class="dropdown"><a
+						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+							<i class="fa fa-bell"></i> <span class="badge bg-theme"></span>
+					</a>
+						<ul class="dropdown-menu extended inbox">
+							<div class="notify-arrow notify-arrow-yellow"></div>
+							<li>
+								<p class="yellow">Notification</p>
+							</li>
+							<li><a href=""> <span>구분</span>&nbsp;/&nbsp; <span
+									class="time">Just now</span> <span class="message">[누구누구]님이
+										내 포트포리오를 좋아합니다.</span>
+							</a></li>
+							<li><a href="">더보기</a></li>
+						</ul></li>
+					<li id="header_inbox_bar" class="dropdown mypage"><a
+						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+							<img alt="avatar" src="assets/img/ui-danro.jpg"
+							class="img-circle">
+					</a>
+						<ul class="dropdown-menu extended inbox">
+							<div class="notify-arrow notify-arrow-yellow"></div>
+							<li>
+								<p class="yellow">김수연 님</p>
+							</li>
+							<li><a href="">내 프로필</a></li>
+							<li><a href="">팔로잉한 멤버</a> <a href="">북마크한 포트폴리오</a></li>
+							<li><a href="">개인정보 설정</a></li>
+							<li><a class="logout" href="login.html">로그아웃</a></li>
+						</ul></li>
+				</ul>
+			</div>
 		</header>
 		<!--header end-->
 
@@ -44,254 +100,137 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
 		<!--sidebar start-->
-		
+		<aside>
+			<div id="sidebar">
+				<!-- sidebar menu start-->
+				<ul class="sidebar-menu">
+					<div class="myImg">
+						<p class="centered">
+							<a href="profile.html"><img src="assets/img/ui-sam.jpg"
+								class="img-circle" width="60"></a>
+						</p>
+						<h5 class="centered">김수연 님</h5>
+					</div>
+					<hr class="line" />
+					<li class="sub-menu"><a href="index.html"> <span>My
+								Profile</span>
+					</a></li>
+					<li class="sub-menu"><a href=""> <span>My Portfolio</span>
+					</a></li>
+					<li class="sub-menu"><a href=""> <span>My Project</span>
+					</a></li>
+					<li class="sub-menu"><a href=""> <span>Bookmarks</span>
+					</a></li>
+					<li class="sub-menu"><a href=""> <span>Following</span>
+					</a></li>
+					<li class="sub-menu"><a href=""> <span>Notification</span>
+					</a></li>
+					<li class="sub-menu"><a href="msgList.html"> <span>Message</span>
+					</a></li>
+					<hr class="line" />
+					<li class="sub-menu"><a href=""> <span>My Account</span>
+					</a></li>
+					<li class="sub-menu"><a href=""> <span>Delete
+								Account</span>
+					</a></li>
+				</ul>
+				<!-- sidebar menu end-->
+			</div>
+		</aside>
 		<!--sidebar end-->
-
 		<!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-
-
-				<!--  --=============Chat List================================-->
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="panel panel-default">
-						
-							<!-- CL_heading -->
+				<!--  Message List -->
+				<div class="col-md-12 mt msg msgList">
+					<div class="msgList_top">
+						<span class="pull-left">
+							<form class="form-inline" method="post" action="#">
+								<div class="form-group">
+									<input type="text" class="form-control" id="msgSearch"
+										placeholder="Search Member">
+									<button class="btn" type="submit">Search</button>
+								</div>
+							</form>
+						</span> 
+						<span class="pull-right"> 
+							<a href="msgSend.html">
+								<button class="btn">Send New Message</button>
+							</a>
+						</span>
+					</div>
+					
+					<!-- Message List Body -->
+					<div class="panel-group msgListContent" id="msgBoxList">
+						<!--  반복  -->
+						<div class="panel panel-default msgBox">
 							<div class="panel-heading">
-						
-								<div class="row">
-								
-								<div class="col-sm-5">
-									<form class="form-inline">
-										<div class="form-group">
-											<label for="exampleInputEmail2">
-											<i class="fa fa-comments fa-fw"></i>검색
-											</label> 
-											<input type="text" class="form-control" id="#"
-												placeholder="Type userName">
-										</div>
-										<button class="btn btn-warning btn-sm" id="#">
-										Search
-										</button>
-									</form>
-								</div>
-
-								<div class="col-sm-5">
-								</div>
-
-								<div class="col-sm-2">
-									<a href="msgSend.html">
-										<button class="btn btn-warning btn-sm" id="#">New</button>
-									</a> &nbsp;
-								</div>
+								<span class="pull-left">
+									<a href="#">
+										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
+										<span class="msgSender">발신자 이름</span>
+									</a>
+								</span>
+								<span class="pull-right"> 
+									<a href="msgDetail.html">
+										<button type="button" class="btn">메세지 보내기</button>
+									</a>
+									<a data-toggle="collapse" data-parent="#msgBoxList" href="#msgBoxOpen" class="updown collapsed"> 
+										<i class="fa fa-chevron-down"></i>
+									</a>
+								</span>								
 							</div>
 
-						</div>
-							<!-- END_ CL_heading -->
-							
-							
-							<!-- CL_Body -->
-							<div class="panel-body">
-								<div class="panel-group" id="accordion">
-								
-								
-								<!--  아코디언1 -->
-									<div class="panel panel-default">
-										<div class="panel-heading">
-										
-											<h4 class="panel-title">
-												<a href="#">긍정왕</a> 
-												
-												<span class="chat-img pull-right">
-													<span class="input-group"> 
-													<a href="msgDetail.html">
-															<button type="button" class="btn btn-primary btn-xs">보내기</button>
-													</a> 
-													
-
-													
-													
-													<a data-toggle="collapse" data-parent="#accordion"		href="#collapseOne" class="collapsed">
-																<i class="fa fa-chevron-down"></i>
-													</a>
-													</span>
-												</span>
-											</h4>
-										</div>
-
-										<div id="collapseOne" class="panel-collapse collapse"
-											style="height: 0px;">
-											<div class="panel-body">
-												<div class="row">
-													<div class="chat-panel panel panel-default chat-boder chat-panel-head">
-															<ul class="chat-box">
-																<li class="left clearfix"> 
-																	<span class="chat-img pull-left"> 
-																		<img src="/Project2/assets/img/yesman.jpg" width="60px" height="60px" alt="User" class="img-circle" />
-																	</span>
-																	<div class="chat-body">
-																		<strong>긍정왕</strong> 
-																		<small class="pull-right text-muted"> 
-																			<i class="fa fa-clock-o fa-fw"></i>12 mins ago
-																		</small>
-																		<p>ㅋㅋㅋㅋ</p>
-																	</div>
-																</li>
-																<li class="right clearfix">
-																	<span class="chat-img pull-right"> 
-																		<img src="/Project2/assets/img/bo.png" width="60px" height="60px" alt="User" class="img-circle" />
-																	</span>
-																		<div class="chat-body clearfix">
-																			<small class=" text-muted"> 
-																				<i class="fa fa-clock-o fa-fw"></i>13 mins ago
-																			</small> 
-																			<strong class="pull-right">보노보노</strong>
-																			<p>포로리야~</p>
-																		</div> 
-																		<span class="chat-img pull-right"> 
-																		<a href="msgDetail.html">더보기</a>
-																	</span>
-																</li>
-															</ul>
-													</div>
-												</div>
-											</div>
-										</div>
+							<div id="msgBoxOpen" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="msgContentBox mb clearfix"> <!-- 반복 -->
+										<span class="pull-left col-md-10 msgContent">
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+										</span>
+										<span class="pull-right col-md-2">
+											<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>17.05.12 16:34</span>
+											<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></span>											
+										</span>										
+									</div>	
+									<div class="msgContentBox mb clearfix"> <!-- 반복 -->
+										<span class="pull-left col-md-10 msgContent">
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+										</span>
+										<span class="pull-right col-md-2">
+											<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>17.05.12 16:34</span>
+											<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></span>											
+										</span>										
 									</div>
-									
-									
-									
-									<!-- 아코디언2 -->
-									<div class="panel panel-default">
-										<div class="panel-heading">
-										
-											<h4 class="panel-title">
-												<a href="#">범인</a> 
-												
-												<span class="chat-img pull-right">
-													<span class="input-group"> 
-													<a href="msgDetail.html">
-															<button type="button" class="btn btn-primary btn-xs">보내기</button>
-													</a> 
-													<a data-toggle="collapse" data-parent="#accordion"	href="#collapseTwo" class="collapsed">
-																<i class="fa fa-chevron-down"></i>
-													</a>
-													</span>
-												</span>
-											</h4>
-										</div>
-
-										<div id="collapseTwo" class="panel-collapse collapse"
-											style="height: 0px;">
-											<div class="panel-body">
-												<div class="row">
-													<div class="chat-panel panel panel-default chat-boder chat-panel-head">
-															<ul class="chat-box">
-																<li class="left clearfix"> 
-																	<span class="chat-img pull-left"> 
-																		<img src="/Project2/assets/img/you2.png" width="60px" height="60px" alt="Responsive image" class="img-circle" />
-																		
-																	</span>
-																	<div class="chat-body">
-																		<strong>코난범인</strong> 
-																		<small class="pull-right text-muted"> 
-																			<i class="fa fa-clock-o fa-fw"></i>12 mins ago
-																		</small>
-																		<p>ㅋㅋㅋㅋㅋㅋㅋ</p>
-																	</div>
-																</li>
-																<li class="right clearfix">
-																	<span class="chat-img pull-right"> 
-																	<img src="/Project2/assets/img/co2.png" width="60px" height="60px" alt="user" class="img-circle" />
-																	</span>
-																		<div class="chat-body clearfix">
-																			<small class=" text-muted"> 
-																				<i class="fa fa-clock-o fa-fw"></i>13 mins ago
-																			</small> 
-																			<strong class="pull-right">코난</strong>
-																			<p>수수께끼는 풀렸어 범인은 당신이야!</p>
-																		</div> 
-																		<span class="chat-img pull-right"> 
-																		<a href="msgDetail.html">더보기</a>
-																	</span>
-																</li>
-															</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									
-									
-									
-									
-									<div class="panel panel-default">
-
-
-											<div class="panel-heading">
-										
-											<h4 class="panel-title">
-												<a href="#">발신자3</a> 
-												
-												<span class="chat-img pull-right">
-													<span class="input-group"> 
-													<a href="msgDetail.html">
-															<button type="button" class="btn btn-primary btn-xs">보내기</button>
-													</a> 
-													<a data-toggle="collapse" data-parent="#accordion"	href="#collapseThree" class="collapsed">
-																<i class="fa fa-chevron-down"></i>
-													</a>
-													</span>
-												</span>
-											</h4>
-										</div>
-
-
-										<div id="collapseThree" class="panel-collapse collapse">
-											<div class="panel-body">
-												<!-- 아코디언 3내용. -->
-												<!-- 아코디언 3내용끝 -->
-											</div>
-										</div>
-									</div>
+									<div class="pull-right">
+										<button type="button" class="btn" onclick="location.href='msgDetail.html'">더보기</button>
+									</div>					
 								</div>
-							</div>
-							<!-- CL_Body -->
-							
-							
-							
-						</div>
-					</div>
-					</div>
-
-				<!--  ========/아코디언================= -->
-
-
-
-
-
-
+							</div> <!-- END - msgBoxOpen -->
+						</div> <!-- END - msgBox -->
+					</div> <!-- END - Message List Body  -->
+				</div> 
 			</section>
 			<!--/wrapper -->
 		</section>
-
-
-
-
-
 		<!-- /MAIN CONTENT -->
 
 		<!--main content end-->
 		<!--footer start-->
-		<footer class="site-footer">
-			<div class="text-center">
-				2014 - Alvarez.is <a href="blank.html#" class="go-top"> <i
-					class="fa fa-angle-up"></i>
+		<footer class="footer site-footer">
+			<div class="col-md-3 footer-logo">(c) Port IT 2017 / All right
+				reserved.</div>
+			<div class="col-md-3 footer-menu">
+				<a href="">사이트 소개</a> <a href="">도움말</a> <a href="">문의하기</a> <a
+					href="main.html#" class="go-top"> <i class="fa fa-angle-up"></i>
 				</a>
 			</div>
 		</footer>
@@ -313,15 +252,22 @@
 	<script src="assets/js/common-scripts.js"></script>
 
 	<!--script for this page-->
-
 	<script>
-      //custom select box
+		$(document).ready(function(){
+			$('.updown').on('click',function(){
+				var icon = $(this).find('i');
+				
+		        if (icon.hasClass("fa-chevron-down")){
+		        	icon.addClass("fa-chevron-up").removeClass("fa-chevron-down");
+		    	} 
+		        else {
+		        	 icon.addClass("fa-chevron-down").removeClass("fa-chevron-up");
+		        }
+		    });
+		});
+		
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
-
+	    
+	</script>
 </body>
 </html>

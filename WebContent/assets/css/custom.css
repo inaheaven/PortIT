@@ -446,9 +446,21 @@ ul.sidebar-menu .line {
 }
 
 
+/**************************************/
+.pull-right {
+	float: right;
+}
+.pull-left {
+	float: left;
+}
+.center {
+	float: none;
+	margin: 0 auto;
+}
 
-
-
+.clearfix {
+	overflow: auto;
+}
 
 
 
