@@ -1,7 +1,7 @@
 package portit.model.dto;
 
-import java.util.Date;
 import java.lang.Math;
+import java.util.Date;
 
 /**
  * 회원 값 객체
