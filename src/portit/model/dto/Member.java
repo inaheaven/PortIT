@@ -49,8 +49,8 @@ public class Member {
 	 * 같은 회원 번호가 존재할 경우 회원 번호를 재설정
 	 * @return
 	 */
-	public Member resetMem_id() {
-		mem_id = (int) (Math.random() * 10000000);
+	public Member resetMem_id(int mem_id) {
+		this.mem_id = (int) (Math.random() * 10000000);
 		return this;
 	}
 
