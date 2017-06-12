@@ -39,15 +39,16 @@ function insRow() {
   index++;
 
   var select = document.getElementById("SNS");
-  var option_text   = "www."+select.options[select.selectedIndex].text+".com";
-  
+	  //"www."+select.options[select.selectedIndex].text+".com";
+  var option_value = select.options[select.selectedIndex].value;
+
 
   //삽입될 Form Tag
   var frmTag = "<input type=text name=addText id=addText"+index+" style=width:350px; height:20px;> ";
   frmTag += "<input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
   oCell.innerHTML = frmTag;
   var temp = "addText"+index;
-  document.getElementById(temp).value=option_text;
+  document.getElementById(temp).value=option_value;
 }
 //Row 삭제
 function removeRow() {
@@ -83,28 +84,29 @@ function addSkill(skill,score) {
 	}
 	
 	//상태바 추가
-	var barHtml ="";
-	barHtml=barHtml+"<div class='progress progress-striped active'>";
-	barHtml=barHtml+"<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100' style='width:"+ barSize+"%''>";
-	barHtml=barHtml+"<span class='sr-only'>45% Complete</span>";
-	barHtml=barHtml+"<span class='sr-only'>45% Complete</span>";
-	barHtml=barHtml+"</div>";
-	barHtml=barHtml+"<input type='button' value='x' onclick='fnDeleteItem("+ addSkillIndex +")'/>";
-	//barHtml=barHtml+ "<input type=button value='x' onClick='fnDeleteItem()' style='cursor:hand'>";
-	barHtml=barHtml+"</div>";
+	var idx ="";
+	idx=idx+"<div class='progress progress-striped active'>";
+	idx=idx+"<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='50' style='width:"+ barSize+"%''>";
+	idx=idx+"<span class='sr-only'>45% Complete</span>";
+	idx=idx+"<span class='sr-only'>45% Complete</span>";
+	idx=idx+"</div>";
+	idx=idx+"<input type='button' value='x' onclick='fnDeleteItem("+ addSkillIndex +")'/>";
+	idx=idx+"</div>";
 	
-	newSpan.innerHTML = skill +barHtml;
+	newSpan.innerHTML = skill +idx;
 	
 	var itemList = document.getElementById("itemList");
 	itemList.appendChild(newSpan);			
 }
-debugger;
-//상태바 삭제
-function fnDeleteItem(barHtml){
-	var itemList = document.getElementById("itemList");
-	itemList.deleteRow(itemList.clickedRowIndex);
+//상태바 삭제 
+function fnDeleteItem(idx){
+	var item = document.getElementById("item_" + idx);
+	
+	if(item != null){
+		item.parentNode.removeChild(item);
+	}
+	
 }
-
 function frmCheck()
 {
   var frm = document.form;
@@ -120,6 +122,8 @@ function frmCheck()
       }
    }
  }
+
+
 //-->
 </script>
 <body>
@@ -218,9 +222,9 @@ function frmCheck()
 																				style="width: 350px; height: 20px;"></td>
 																			<select name="SNS" id="SNS">
 																				<option value="">SNS선택</option>
-																				<option value="FaceBook">FaceBook</option>
-																				<option value="Github">Github</option>
-																				<option value="Blog">Blog</option>
+																				<option value="www.facebook.com/">FaceBook</option>
+																				<option value="WWW.github.com/">Github</option>
+																				<option value="http://www.">Blog</option>
 																			</select>
 																			<button type="button" class="btn btn-theme"
 																				style="cursor: hand" onClick="insRow()" value="추가">
@@ -253,9 +257,9 @@ function frmCheck()
 										<button type="submit" class="btn btn-theme"
 											onclick="addSkill(document.getElementById('skill').value,document.getElementById('score').value)">추가</button>
 											<br>
-											<div id="itemList"></div>
+											<div id="itemList">
+										</div>
 									</div>
-									
 								</div>
 								
 								<div class="form-group" align="center">
