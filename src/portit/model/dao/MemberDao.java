@@ -55,18 +55,49 @@ public class MemberDao {
 		}
 	}
 	
-	public void insert(Member member) {
-		// DB 접속
-		getConnection();
+	/**
+	 * 같은 회원 번호를 쓰는 회원이 있는지 검사
+	 * @param mem_id
+	 * @param mem_email
+	 */
+	public Member findExistingMember(int mem_id, String mem_email) {
+		Member member = null;
 		try {
-			conn = pool.getConnection();
+			sql = "";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, member.getMem_id());
+			stmt.setString(2, member.getMem_email());
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				member = new Member();
+				// 결과를 DTO에 저장
+				member.setMem_id(rs.getInt("mem_id"));
+				member.setMem_email(rs.getString("mem_email"));
+				member.setMem_regdate(rs.getDate("mem_regdate"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// DB 접속 해제
+			freeConnection();
+		}
+
+		return member;
+	}
+	
+	/**
+	 * 회원 추가
+	 * @param member
+	 * @return
+	 */
+	public void insert(Member member) {
+		try {
 			sql = "";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, member.getMem_id());
 			stmt.setString(2, member.getMem_email());
 			stmt.setString(3, member.getMem_password());
-			stmt.setString(4, member.getMem_date());
-			stmt.execute();
+			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

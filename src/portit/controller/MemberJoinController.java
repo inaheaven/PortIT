@@ -30,6 +30,13 @@ public class MemberJoinController extends HttpServlet {
 			MemberDao memberDao = (MemberDao) sc.getAttribute("member");
 			Member member = (Member) req.getAttribute("member");
 			// DAO의 메서드 호출
+			// 같은 회원 번호를 가진 회원이 있는지 검사
+			Member existingMember = memberDao.findExistingMember(member.getMem_id(), member.getMem_email());
+			if (member.getMem_id() != existingMember.getMem_id()) {
+				// 같은 회원 번호를 가진 회원이 있다면 회원 번호를 재설정
+				member.resetMem_id();
+			}
+			// 가입 메서드 호출
 			memberDao.insert(member);
 			
 			// 가입처리 후 이동할 페이지 지정

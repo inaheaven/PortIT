@@ -1,6 +1,7 @@
 package portit.model.dto;
 
 import java.util.Date;
+import java.lang.Math;
 
 /**
  * 회원 값 객체
@@ -9,7 +10,7 @@ import java.util.Date;
  */
 public class Member {
 	
-	private int mem_id;
+	private int mem_id = (int) (Math.random() * 10000000); // 회원 번호를 8자리 정수로 무작위로 생성
 	private String mem_email;
 	private String mem_password;
 	private Date mem_regdate;
@@ -41,6 +42,15 @@ public class Member {
 	}
 	public Member setMem_regdate(Date mem_regdate) {
 		this.mem_regdate = mem_regdate;
+		return this;
+	}
+	
+	/**
+	 * 같은 회원 번호가 존재할 경우 회원 번호를 재설정
+	 * @return
+	 */
+	public Member resetMem_id() {
+		mem_id = (int) (Math.random() * 10000000);
 		return this;
 	}
 
