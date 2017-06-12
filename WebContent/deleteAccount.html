@@ -18,7 +18,9 @@
         
     <!-- Custom styles for this template -->
     <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">    
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <link href="assets/css/account.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -53,41 +55,32 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <section id="main-content">
-          <section class="wrapper">
-          	
-          	<!-- sssssssssssssssssss -->
-          	<div class="form-panel">
-          	<div class="box box-primary">
-                <div align="center" class="box-header">
-                  <h3 class="box-title">Delete Account</h3>
-                  <br><br>
-                </div><!-- /.box-header -->
-                <!-- form start -->
-
-
-                
-                   <form class="form-horizontal style-form" method="get">
-                        <div align="center" class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">비밀번호</label>
-                              <div class="col-sm-5">
-                                  <input type="password"  class="form-control" placeholder="">
-                              </div>
-                        </div>
-                   <div class="box-footer">
-                   <div align="center">
-                    <button type="submit" class="btn btn-primary">계정 삭제</button>
-                  </div>
-                  </div>
-                   </form>
-                
-              </div><!-- /.box -->
+      	<section class="wrapper">
+        	<div class="col-md-12 mt myAccount">
+          		<div class="col-md-8 center">
+          			<h3 class="accountTitle text-center">Delete Account</h3>
+          			<br><br>
+          			<form class="form-horizontal" method="post" action="#">
+          				<div class="deleteInfo center text-center">
+          					계정을 삭제하시면, 모든 정보들이 삭제됩니다.<br>
+          					정말 삭제하시겠습니까?
+          				</div>
+	                    <div class="form-group">
+	                        <label class="col-md-4 control-label">Password</label>
+	                        <div class="col-md-6">
+	                            <input type="password" class="form-control" id="userpw" onchange="fnPasswordConfirm()">
+	                        </div>
+	                    </div>
+	                    <div id="pwconfirm"></div> 
+                        <div class="deleteBtn">
+		               		<div align="center">
+		                    	<button type="submit" class="btn">계정 삭제</button>
+		                	</div>
+			            </div>
+	                </form>
+          		</div>
           	</div>
-          	
-          	
-          	
-          	
-          	
-		</section><! --/wrapper -->
+		</section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
 
       <!--main content end-->
@@ -127,10 +120,22 @@
     
   <script>
       //custom select box
-
-      $(function(){
-          $('select.styled').customSelect();
-      });
+		function fnPasswordConfirm() {
+		   	var pw = document.getElementById("newpw").value;
+		   	var pwcf = document.getElementById("newpwcf").value;
+		   	var div = document.getElementById("pwconfirm");
+		   	
+		   	if(pw != pwcf){
+		   		div.classList.remove('greenLine');
+		   		div.classList.add('redLine');
+		   		div.innerHTML = "&nbsp;<span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;새로운 비밀번호가 일치하지 않습니다.";
+		   	}
+		   	else {
+		   		div.classList.remove('redLine');
+		   		div.classList.add('greenLine');
+		   		div.innerHTML = "&nbsp;<span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;새로운 비밀번호가 일치합니다.";
+		   	}
+		   }
 
   </script>
 

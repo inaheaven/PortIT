@@ -116,11 +116,11 @@ form.login{
 #signUpModal .modal-body input {
 	height: 40px;
 }
-#signUpModal .redLine {
+.redLine {
 	padding-left: 5px;
 	color: red;
 }
-#signUpModal .greenLine {
+.greenLine {
 	padding-left: 5px;
 	color: green;
 }
