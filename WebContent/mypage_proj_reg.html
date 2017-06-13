@@ -52,31 +52,27 @@
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-2").append($cloneRow);
 				i++;
-				alert(i);
 			}else if(i==2){
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-3").append($cloneRow);
 				i++;
-				alert(i);
 			}else if(i==3){
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-4").append($cloneRow);
 				i++;
-				alert(i);
 			}else if(i==4){
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-5").append($cloneRow);
 				i++;
-				alert(i);
 			}else{
 				alert("모집 분야수를 5개 이내로 제한합니다.");
 			}
 		});
 
 		$("#delete").click(function(){
-			if(i>0){
-			$(this).parent().parent().remove();
-			i--;
+			if(i>1){
+				$(this).parent().parent().remove();
+				i--;
 			}else{
 				alert("모집 분야수를 1개 이상으로 제한합니다.")
 			}
