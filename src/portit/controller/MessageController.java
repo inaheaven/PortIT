@@ -32,33 +32,26 @@ public class MessageController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
 		
+		
+		
 		try {
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
-			String url= null;
+			String url= "WebContent/msgList.html";
+			
+			//Login된 Id session에서 추출.
+			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
 			
 			
-			
-		
 			
 			if(cmd.equals("send")){
-				// request에서 dto로 옮겨담기.
-				//model에서 정보를 dto에 담는 작업을 한다.
 				
-			//모델-FN 데이터뽑어서  dto저장.
-			MessageModel model = new MessageModel(req);
+			//모델 : Request와 login_id전달.
+			MessageModel model = new MessageModel(req,login_id);
 			
-			//모델-DTO
-			Message dto= new Message();
+			//모델 : DB전달
+			model.getMessage();
 			
-			//모델_DAO
-			MassageDao dao= new MassageDao();
-			
-			//dto를 DB와 view에 전달해야한다.
-			dto=model.getMessage();
-			
-			//DB에 전달.
-			dao.insertMessage(dto);
 
 			}
 			

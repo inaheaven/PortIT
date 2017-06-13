@@ -34,25 +34,25 @@ public class MassageDao{
 	}
 	
 	
-	// msgSend.jsp (메세지 보내기)
-	public void insertMessage(Message msg){
-		String sql = "insert into Message("
-			+"MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD,"
+	// msgSend.jsp (메세지 보내기) 성공!
+	public void insertMessage(Message dto){
+		String sql = "insert into Message"
+			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
 			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
 	
 		try{
 			con = pool.getConnection();
-			updatePos(con);
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, msg.getMem_id_sender());
-			pstmt.setInt(2, msg.getMem_id_receiver());
-			pstmt.setString(3, msg.getMsg_content());
-			pstmt.setString(4, msg.getMsg_isread());
+			//updatePos(con);
+	 		pstmt = con.prepareStatement(sql);
+	 		pstmt.setInt(1, dto.getMem_id_sender());
+			pstmt.setInt(2, dto.getMem_id_receiver());
+			pstmt.setString(3, dto.getMsg_content());
+			pstmt.setString(4, dto.getMsg_isread());
 			pstmt.executeUpdate();
 		}
 		
 		catch(Exception err){
-			System.out.println("insertMessage()에서 오류");
+			System.out.println("[DAO]: insertMessage()에서 오류");
 			err.printStackTrace();
 		}
 		

@@ -36,6 +36,7 @@
 <script src="assets/js/jquery-3.2.1.min.js"></script>
 <script>
 
+
 //View->Controller  -MessageController
 // 컨트롤러 : /Project2/msg
 
@@ -62,9 +63,6 @@
 /*	일단 form방식으로 사용해보자.
  	dto의 변수명과 id값이 동일해야한다.
  */
-	
-
-
 
 
 
@@ -78,10 +76,11 @@
 
 <body>
 
-
-
-
-
+<%
+//로그인 : 메일
+//Session에 저장되는것 : mem_ID (DB에서 조회해야함.)
+session.setAttribute("longin_id","7729");
+%>
 
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
@@ -110,20 +109,20 @@
 				<div class="col-md-12 mt msg msgSend">
 					<div class="msgSendContent">
 						<form method="post" action="/Project2/msg?cmd=send" class="msgForm clearfix">
-							<div class="form-group col-md-8 center" >
-								<label class="control-label" for="mem_id_sender">받는 사람 </label><br>
+									<div class="form-group col-md-8 center" >
+								<label class="control-label" for="msgReceiver">받는 사람 </label><br>
 								<div class="">
-									<input class="form-control" type="text" id="mem_id_sender" name="msgReceiver" value=""/>
+									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" value=""/>
 								</div>
 							</div><br>
 							<div class="form-group col-md-8 center">
 								<label class="control-label" for="msgText">내용 </label><br>
 								<div>
-									<input class="form-control" type="text" id="msg_content" name="msg_content" value=""/>
+									<input class="form-control" type="text" id="msgText" name="msgText" value=""/>
 								</div>
 							</div>
 							<div class="msgBtn col-md-3 center">
-								<button type="submit" class="btn" id="btn-send">보내기</button>&nbsp;&nbsp;&nbsp;
+								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
 								<button type="button" class="btn" onclick="location.href='#'">돌아가기</button>
 							</div>
 						</form>
