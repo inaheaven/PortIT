@@ -10,6 +10,8 @@ import javax.sql.DataSource;
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Bookmark;
 import portit.model.dto.Follow;
+import portit.model.dto.Profile;
+import portit.model.dto.Tag;
 
 /**
  * Follow관련 Dao
@@ -62,21 +64,25 @@ public class FollowDao {
 	 * @param fw_id
 	 * @return
 	 */
-	public Follow FollowDao(int fw_id) {
+	public Profile getFollow(int prof_id) {
 		String sql = "";
-		Follow dto = new Follow();
+		//String sql = "";
+
+		Profile dto = new Profile();
+		//Tag dto1 = new Tag(); 
+		
 		try {
 			conn = pool.getConnection();
 
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, fw_id);
+			stmt.setInt(1, prof_id);
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setFw_id(rs.getInt("fw_id"));
-				dto.setMem_id_sender(rs.getInt("mem_id_sender"));
-				dto.setMem_id_receiver(rs.getInt("mem_id_receiver"));
-				dto.setFw_date(rs.getDate("fw_date"));
+				dto.setProf_img(rs.getString("prof_img"));//프로필사진
+				dto.setProf_name(rs.getString("prof_name"));//개발자이름
+				dto.setProf_follower(rs.getInt("prof_follower"));//팔로워수
+			//	
 			}
 		} catch (Exception err) {
 			System.out.println("getList() : " + err);
@@ -84,9 +90,30 @@ public class FollowDao {
 			freeConnection();
 		}
 		
-	
-		return dto;
+		
+		//개발자가 입력한 태그 불러오기 
+		String sql1 = "";
+		
+		Tag dto1 = new Tag(); 
+		
+		try {
+			conn = pool.getConnection();
 
+			stmt = conn.prepareStatement(sql1);
+			stmt.setInt(1, prof_id);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				dto1.setTag_name(rs.getString("tag_name"));//태그3개까지만 개발자 기술태그
+			}
+		} catch (Exception err) {
+			System.out.println("getList() : " + err);
+		} finally {
+			freeConnection();
+		}
+		
+		
+		return dto;
 	}
 
 	/**
@@ -107,4 +134,5 @@ public class FollowDao {
 		}
 
 	}
+	
 }

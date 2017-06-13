@@ -1,10 +1,11 @@
-/**
- * @author hyang
- */
+
 package portit.model.dto;
 
 import java.util.Date;
 
+/**
+ * @author hyang
+ */
 public class Profile {
 	private int prof_id;
 	private int mem_id;
@@ -17,8 +18,12 @@ public class Profile {
 	private String prof_github;
 	private String prof_facebook;
 	private Date prof_regdate;
-	private String prof_follower;
+	private int prof_follower;
 	
+	private String tag_id;
+	private Tag tag_type;
+	private String tag_name;
+	private int prof_skill_level;
 	public int getProf_id() {
 		return prof_id;
 	}
@@ -85,10 +90,35 @@ public class Profile {
 	public void setProf_regdate(Date prof_regdate) {
 		this.prof_regdate = prof_regdate;
 	}
-	public String getProf_follower() {
+	public int getProf_follower() {
 		return prof_follower;
 	}
-	public void setProf_follower(String prof_follower) {
+	public void setProf_follower(int prof_follower) {
 		this.prof_follower = prof_follower;
 	}
+	public String getTag_id() {
+		return tag_id;
+	}
+	public void setTag_id(String tag_id) {
+		this.tag_id = tag_id;
+	}
+	public Tag getTag_type() {
+		return tag_type;
+	}
+	public void setTag_type(Tag tag_type) {
+		this.tag_type = tag_type;
+	}
+	public String getTag_name() {
+		return tag_name;
+	}
+	public void setTag_name(String tag_name) {
+		this.tag_name = tag_name;
+	}
+	public int getProf_skill_level() {
+		return prof_skill_level;
+	}
+	public void setProf_skill_level(int prof_skill_level) {
+		this.prof_skill_level = prof_skill_level;
+	}
+		
 }

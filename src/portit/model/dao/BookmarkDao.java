@@ -8,6 +8,8 @@ import javax.sql.DataSource;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Bookmark;
+import portit.model.dto.Portfolio;
+import portit.model.dto.Profile;
 import portit.model.dto.Tag;
 
 /**
@@ -68,28 +70,67 @@ public class BookmarkDao {
 	}
 
 	// BOOKMARK 추가
-	public Bookmark BookmarkDao(int bm_id, int mem_id) {
+	public Portfolio getBookmark(int pf_id,int mem_id) {
 		String sql = "";
-		Bookmark dto = new Bookmark();
+		Portfolio dto = new Portfolio();//포트폴리오 제목 좋아요수, 
 		
 		try {
 			con = ds.getConnection();
 
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, mem_id);
+			pstmt.setInt(1, pf_id);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setBm_id(rs.getInt("bm_id"));
-				dto.setMem_id(rs.getInt("mem_id"));
-				dto.setPf_id(rs.getInt("pf_id"));
-				dto.setBm_date(rs.getDate("bm_date"));
+				dto.setPf_title(rs.getString("pf_title"));//포트폴리오제목
+				dto.setPf_like(rs.getInt("pf_like"));//포트폴리오 좋아요수
+				//dto.setBm_date(rs.getDate("bm_date"));//포트폴리오에 사용된 기술 태그
 			}
 		} catch (Exception err) {
 			System.out.println("getList() : " + err);
 		} finally {
 			freeCon();
 		}
+		
+		String sql1 ="";
+		Profile dto1 = new Profile(); //PROFILE DTO에서 불러옴
+		
+		try {
+			con = ds.getConnection();
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pf_id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto1.setProf_name(rs.getString("prof_name")); //포트폴리오 작성자 이름
+			}
+		} catch (Exception err) {
+			System.out.println("getList() : " + err);
+		} finally {
+			freeCon();
+		}
+		
+		String sql2 ="";
+		Tag dto2 = new Tag();
+		
+		try {
+			con = ds.getConnection();
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pf_id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto2.setTag_name(rs.getString("tag_name")); //포트폴리오에 사용된 기술 태그
+			}
+		} catch (Exception err) {
+			System.out.println("getList() : " + err);
+		} finally {
+			freeCon();
+		}
+		
+		
 		return dto;
 
 	}
