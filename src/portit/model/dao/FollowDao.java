@@ -82,6 +82,7 @@ public class FollowDao {
 				dto.setProf_img(rs.getString("prof_img"));//프로필사진
 				dto.setProf_name(rs.getString("prof_name"));//개발자이름
 				dto.setProf_follower(rs.getInt("prof_follower"));//팔로워수
+				dto.setTag_name(rs.getString("tag_name"));//태그3개까지만 개발자 기술태그
 			//	
 			}
 		} catch (Exception err) {
@@ -89,29 +90,6 @@ public class FollowDao {
 		} finally {
 			freeConnection();
 		}
-		
-		
-		//개발자가 입력한 태그 불러오기 
-		String sql1 = "";
-		
-		Tag dto1 = new Tag(); 
-		
-		try {
-			conn = pool.getConnection();
-
-			stmt = conn.prepareStatement(sql1);
-			stmt.setInt(1, prof_id);
-			rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				dto1.setTag_name(rs.getString("tag_name"));//태그3개까지만 개발자 기술태그
-			}
-		} catch (Exception err) {
-			System.out.println("getList() : " + err);
-		} finally {
-			freeConnection();
-		}
-		
 		
 		return dto;
 	}

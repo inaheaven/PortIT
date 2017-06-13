@@ -58,12 +58,9 @@ import portit.model.dto.Profile;
  * 
  * @param dto
  */
-	public void Profile(){
+	public void Profile(Profile dto){
 		String sql = "insert into () "
-				+	"values(,?,?,?,?,?,?)";//프로필 작성시sql쿼리
-		
-		Profile dto = new Profile();
-	
+				+	"values(?,?,?,?,?,?,?)";//프로필 작성시sql쿼리
 		
 		try{
 			conn = pool.getConnection();

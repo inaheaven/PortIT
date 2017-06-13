@@ -8,6 +8,21 @@ public class Portfolio {
 	private String pf_intro;
 	private Date pf_regdate;
 	private int pf_like;
+	private String prof_name;
+	private String tag_name;
+	
+	public String getProf_name() {
+		return prof_name;
+	}
+	public void setProf_name(String prof_name) {
+		this.prof_name = prof_name;
+	}
+	public String getTag_name() {
+		return tag_name;
+	}
+	public void setTag_name(String tag_name) {
+		this.tag_name = tag_name;
+	}
 	
 	public int getPf_id() {
 		return pf_id;

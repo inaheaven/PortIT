@@ -84,6 +84,8 @@ public class BookmarkDao {
 			if (rs.next()) {
 				dto.setPf_title(rs.getString("pf_title"));//포트폴리오제목
 				dto.setPf_like(rs.getInt("pf_like"));//포트폴리오 좋아요수
+				dto.setProf_name(rs.getString("prof_name")); //포트폴리오 작성자 이름
+				dto.setTag_name(rs.getString("tag_name")); //포트폴리오에 사용된 기술 태그
 				//dto.setBm_date(rs.getDate("bm_date"));//포트폴리오에 사용된 기술 태그
 			}
 		} catch (Exception err) {
@@ -91,46 +93,6 @@ public class BookmarkDao {
 		} finally {
 			freeCon();
 		}
-		
-		String sql1 ="";
-		Profile dto1 = new Profile(); //PROFILE DTO에서 불러옴
-		
-		try {
-			con = ds.getConnection();
-
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, pf_id);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				dto1.setProf_name(rs.getString("prof_name")); //포트폴리오 작성자 이름
-			}
-		} catch (Exception err) {
-			System.out.println("getList() : " + err);
-		} finally {
-			freeCon();
-		}
-		
-		String sql2 ="";
-		Tag dto2 = new Tag();
-		
-		try {
-			con = ds.getConnection();
-
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, pf_id);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				dto2.setTag_name(rs.getString("tag_name")); //포트폴리오에 사용된 기술 태그
-			}
-		} catch (Exception err) {
-			System.out.println("getList() : " + err);
-		} finally {
-			freeCon();
-		}
-		
-		
 		return dto;
 
 	}
