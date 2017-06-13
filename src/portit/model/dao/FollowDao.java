@@ -12,72 +12,65 @@ import portit.model.dto.Bookmark;
 import portit.model.dto.Follow;
 
 /**
- * 
+ * Follow관련 Dao
  * @author hyang
  *
  */
 public class FollowDao {
-	private Connection con;
-	private PreparedStatement pstmt;
+	private Connection conn;
+	private PreparedStatement stmt;
 	private ResultSet rs;
-	private DataSource ds;
 	private DBConnectionMgr pool;
 	private String sql = null;
-
+	
 	public FollowDao() {
 		try {
-			ds = (DataSource) new InitialContext().lookup("");
-			con = ds.getConnection();
-		} catch (Exception err) {
-			System.out.println("DBCP 연결 실패 : " + err);
-		}
-	}
-
-	public void freeCon() {
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (Exception err) {
-			}
-		}
-		if (pstmt != null) {
-			try {
-				pstmt.close();
-			} catch (Exception err) {
-			}
-		}
-		if (con != null) {
-			try {
-				con.close();
-			} catch (Exception err) {
-			}
-		}
-	}
-
-	/**
-	 * DB
-	 */
-	private void freeConnection() {
-		try {
-			pool.freeConnection(con, pstmt, rs);
-			if (con != null)
-				System.out.println("DB ");
+			pool = DBConnectionMgr.getInstance();
 		} catch (Exception e) {
-			System.out.println("연결실패 freeConnection()");
+			System.out.println("커넥션 풀 오류 - MemberDao()");
 			e.printStackTrace();
 		}
 	}
-
-	// follow 추가
+	
+	/**
+	 * DB 연결
+	 */
+	private void getConnection() {
+		try {
+			conn = pool.getConnection();
+			if (conn != null) System.out.println("DB 접속");
+		} catch (Exception e) {
+			System.out.println("DB 접속 오류 - getConnection()");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * DB 연결 해제
+	 */
+	private void freeConnection() {
+		try {
+			pool.freeConnection(conn, stmt, rs);
+			if (conn != null) System.out.println("DB 접속 해제");
+		} catch (Exception e) {
+			System.out.println("DB 접속해제 오류 - freeConnection()");
+			e.printStackTrace();
+		}
+	}
+	/**
+	 *  follow 추가
+	 * @param fw_id
+	 * @return
+	 */
 	public Follow FollowDao(int fw_id) {
 		String sql = "";
 		Follow dto = new Follow();
 		try {
-			con = ds.getConnection();
+			conn = pool.getConnection();
 
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, fw_id);
-			rs = pstmt.executeQuery();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, fw_id);
+			rs = stmt.executeQuery();
 
 			if (rs.next()) {
 				dto.setFw_id(rs.getInt("fw_id"));
@@ -88,24 +81,27 @@ public class FollowDao {
 		} catch (Exception err) {
 			System.out.println("getList() : " + err);
 		} finally {
-			freeCon();
+			freeConnection();
 		}
 		return dto;
 
 	}
 
-	// following 삭제
-	public void FolloDelete(int fw_id) {
+	/**
+	 *  following 삭제
+	 * @param fw_id
+	 */
+	public void FollowDelete(int fw_id) {
 		String sql = "";
 
 		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.executeUpdate();
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
 		} catch (Exception err) {
 			System.out.println("DBCP 연결 실패 : " + err);
 		} finally {
-			freeCon();
+			freeConnection();
 		}
 
 	}

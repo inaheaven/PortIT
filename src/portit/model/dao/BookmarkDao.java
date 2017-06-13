@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Bookmark;
+import portit.model.dto.Tag;
 
 /**
  * 
@@ -70,6 +71,7 @@ public class BookmarkDao {
 	public Bookmark BookmarkDao(int bm_id, int mem_id) {
 		String sql = "";
 		Bookmark dto = new Bookmark();
+		
 		try {
 			con = ds.getConnection();
 
