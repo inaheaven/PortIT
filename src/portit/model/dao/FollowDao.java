@@ -27,7 +27,7 @@ public class FollowDao {
 		try {
 			pool = DBConnectionMgr.getInstance();
 		} catch (Exception e) {
-			System.out.println("커넥션 풀 오류 - MemberDao()");
+			System.out.println("커넥션 풀 오류 - FollowDao()");
 			e.printStackTrace();
 		}
 	}
@@ -83,6 +83,8 @@ public class FollowDao {
 		} finally {
 			freeConnection();
 		}
+		
+	
 		return dto;
 
 	}
