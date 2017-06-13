@@ -18,7 +18,7 @@ import portit.model.dto.Member;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/")
+@WebServlet("/*.do") /* HTML/JSP에서 .do로 끝나는 요청은 모두 서블릿 요청으로 간주하여 프론트 컨트롤러가 처리 */
 public class FrontController extends HttpServlet {
 
 	@Override
