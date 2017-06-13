@@ -3,7 +3,7 @@ package portit.model.action;
 import javax.servlet.http.HttpServletRequest;
 
 import portit.model.dao.MassageDao;
-import portit.model.dto.Message;
+import portit.model.dto.MessageDto;
 
 public class MessageModel {
 
@@ -34,7 +34,7 @@ public class MessageModel {
 		 * 6.또 view에 출력된다.
 		 */
 
-		Message dto = new Message();
+		MessageDto dto = new MessageDto();
 		
 		//1.login할때 ID를 session에 저장한다.
 		//2.session에 저장된 ID를  mem_id_sender로 dto에 저장한다.

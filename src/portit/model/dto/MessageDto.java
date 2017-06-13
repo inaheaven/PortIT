@@ -1,6 +1,6 @@
 package portit.model.dto;
 
-public class Message {
+public class MessageDto {
 	
 	
 	private int msg_id;				//MSG iD	

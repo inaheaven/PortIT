@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
-import portit.model.dto.Message;
+import portit.model.dto.MessageDto;
 
 public class MassageDao{
 	
@@ -21,7 +21,19 @@ public class MassageDao{
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
-
+	private int longin_id;				//로그인한 사용자 MEM_ID
+	
+	
+	
+	public MassageDao(int _longin_id){
+		try{
+			this.longin_id=_longin_id;
+			pool = DBConnectionMgr.getInstance();
+		}
+		catch(Exception err){
+			System.out.println("DBCP 인스턴스 참조 실패 : " + err);
+		}
+	}
 	
 	
 	public MassageDao(){
@@ -35,7 +47,7 @@ public class MassageDao{
 	
 	
 	// msgSend.jsp (메세지 보내기) 성공!
-	public void insertMessage(Message dto){
+	public void insertMessage(MessageDto dto){
 		String sql = "insert into Message"
 			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
 			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
@@ -66,7 +78,7 @@ public class MassageDao{
 	
 	
 	// 목록 불러오기.
-	public List getMessageList(String keyField, String keyWord){
+	public List getMessageList(String MEM_ID_SENDER, String MEM_EMAIL){
 		
 		/* 
 		 1.ArrayList 선언
@@ -75,24 +87,30 @@ public class MassageDao{
 		 * */
 		
 		
+		//ID로 도메인을 찾아오는 쿼리가 필요해진다.
+		
 		
 		ArrayList list = new ArrayList();
 		String sql = null;
 		
-		if(keyWord == null){
-			sql = "select * from Message where MEM_ID_SENDER=11111 or MEM_ID_RECEIVER=11111;";
+		if(MEM_ID_SENDER == null){
+			sql = "select * from Message where MEM_ID_SENDER=? or MEM_ID_RECEIVER=?;";
 		}
 		else{
 			sql = "select * from Message where " 
-				+ keyField + " like '%" + keyWord 
+				+ MEM_ID_SENDER + " like '%" + MEM_EMAIL 
 				+ "%' order by b_pos";
 		}
+		
 		try{
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, longin_id);
+			pstmt.setInt(2, longin_id);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()){
-				Message message = new Message();
+				MessageDto message = new MessageDto();
 				message.setMsg_id(rs.getInt("MSG_ID"));
 				message.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
 				message.setMem_id_receiver(rs.getInt("MEM_ID_RECEIVER"));
@@ -167,7 +185,7 @@ public class MassageDao{
 	
 	
 	// 답변글을 입력할 때 부모보다 큰 pos는 1씩 증가시킨다.
-	public void replyUpdatePos(Message message){
+	public void replyUpdatePos(MessageDto message){
 		try{
 			String sql = "update tblBoard set b_pos = b_pos+1 where b_pos > ?";
 			con = pool.getConnection();

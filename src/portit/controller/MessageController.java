@@ -1,9 +1,9 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import portit.model.action.MessageModel;
-import portit.model.dao.MassageDao;
-import portit.model.dao.MemberDao;
-import portit.model.dto.Member;
-import portit.model.dto.Message;
 
 @WebServlet("/msg")
 public class MessageController extends HttpServlet {
@@ -51,10 +47,19 @@ public class MessageController extends HttpServlet {
 			
 			//모델 : DB전달	(MessageModel)
 			model.getMessage();
-			
-			System.out.println("check2");
 			}
 			
+			else if(cmd.equals("CART")){
+				
+				//url="/WEB-INF/exam2/cart.jsp";
+				url="WEB-INF/exam2/bookShop.jsp";
+
+				//if(bookList==null){
+				//		bookList= new ArrayList();
+				//}
+				//booklist는 접속끊키기 전까지 보관되어야하기때문에 session에 담겨있어야한다.
+			//	bookList.add(getBook(req));
+			}
 			
 			
 			
