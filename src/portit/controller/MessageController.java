@@ -31,9 +31,9 @@ public class MessageController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
-		
-		
-		
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		System.out.println("check1");
 		try {
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
@@ -49,10 +49,10 @@ public class MessageController extends HttpServlet {
 			//모델 : Request와 login_id전달.
 			MessageModel model = new MessageModel(req,login_id);
 			
-			//모델 : DB전달
+			//모델 : DB전달	(MessageModel)
 			model.getMessage();
 			
-
+			System.out.println("check2");
 			}
 			
 			

@@ -1,4 +1,4 @@
-<%@ page  contentType="text/html; charset=EUC-KR"%>
+<%@ page  contentType="text/html; charset=UTF-8"%>
 
 
 
@@ -38,11 +38,11 @@
 
 
 //View->Controller  -MessageController
-// ÄÁÆ®·Ñ·¯ : /Project2/msg
+// ì»¨íŠ¸ë¡¤ëŸ¬ : /Project2/msg
 
-/*¼öÁ¤¹æ¾È.
- 1.J_Query·Î µ¥ÀÌÅÍ Àü¼Û.
-	µ¥ÀÌÅÍ¿¡ ¾î¶»°Ô reqeust¿¡ Àü´ŞÇØ¾ßÇÏ³ª?
+/*ìˆ˜ì •ë°©ì•ˆ.
+ 1.J_Queryë¡œ ë°ì´í„° ì „ì†¡.
+	ë°ì´í„°ì— ì–´ë–»ê²Œ reqeustì— ì „ë‹¬í•´ì•¼í•˜ë‚˜?
 */
 
 /*  	
@@ -52,7 +52,7 @@
 		
 		var msg_content =$("#msg_content");
 		var mem_id_sender =$("#mem_id_sender");
-		//ÀÌ º¯¼ö¸¦ ¾î¶»°Ô request¿¡ ´ã¾Æ¾ßÇÏ³ª¿ä ¤Ğ¤Ğ?
+		//ì´ ë³€ìˆ˜ë¥¼ ì–´ë–»ê²Œ requestì— ë‹´ì•„ì•¼í•˜ë‚˜ìš” ã… ã… ?
 		
 		location.href="/Project2/msg";
 	});
@@ -60,14 +60,11 @@
 */
 
 
-/*	ÀÏ´Ü form¹æ½ÄÀ¸·Î »ç¿ëÇØº¸ÀÚ.
- 	dtoÀÇ º¯¼ö¸í°ú id°ªÀÌ µ¿ÀÏÇØ¾ßÇÑ´Ù.
+/*	ì¼ë‹¨ formë°©ì‹ìœ¼ë¡œ ì‚¬ìš©í•´ë³´ì.
+ 	dtoì˜ ë³€ìˆ˜ëª…ê³¼ idê°’ì´ ë™ì¼í•´ì•¼í•œë‹¤.
  */
 
-
-
 </script>
-
 </head>
 
 
@@ -77,8 +74,8 @@
 <body>
 
 <%
-//·Î±×ÀÎ : ¸ŞÀÏ
-//Session¿¡ ÀúÀåµÇ´Â°Í : mem_ID (DB¿¡¼­ Á¶È¸ÇØ¾ßÇÔ.)
+//ë¡œê·¸ì¸ : ë©”ì¼
+//Sessionì— ì €ì¥ë˜ëŠ”ê²ƒ : mem_ID (DBì—ì„œ ì¡°íšŒí•´ì•¼í•¨.)
 session.setAttribute("longin_id","7729");
 %>
 
@@ -110,20 +107,20 @@ session.setAttribute("longin_id","7729");
 					<div class="msgSendContent">
 						<form method="post" action="/Project2/msg?cmd=send" class="msgForm clearfix">
 									<div class="form-group col-md-8 center" >
-								<label class="control-label" for="msgReceiver">¹Ş´Â »ç¶÷ </label><br>
+								<label class="control-label" for="msgReceiver">ë°›ëŠ” ì‚¬ëŒ </label><br>
 								<div class="">
 									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" value=""/>
 								</div>
 							</div><br>
 							<div class="form-group col-md-8 center">
-								<label class="control-label" for="msgText">³»¿ë </label><br>
+								<label class="control-label" for="msgText">ë‚´ìš© </label><br>
 								<div>
 									<input class="form-control" type="text" id="msgText" name="msgText" value=""/>
 								</div>
 							</div>
 							<div class="msgBtn col-md-3 center">
-								<button type="submit" class="btn">º¸³»±â</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn" onclick="location.href='#'">µ¹¾Æ°¡±â</button>
+								<button type="submit" class="btn">ë³´ë‚´ê¸°</button>&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn" onclick="location.href='#'">ëŒì•„ê°€ê¸°</button>
 							</div>
 						</form>
 					</div>
