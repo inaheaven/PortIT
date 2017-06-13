@@ -461,6 +461,15 @@ ul.sidebar-menu .line {
 }
 
 
-
+button.common {
+	background-color: #A1BBD0;
+	color: #fff;
+}
+button.common:active,
+button.common:hover,
+button.common:focus {
+	background-color: #E69138;
+	color: #F4E7D7;
+}
 
 
