@@ -18,12 +18,11 @@ import portit.model.dto.Member;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/")
 public class FrontController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Servlet Loaded");
+		System.out.println("프론트 Ctrl");
 		resp.setContentType("text/html; charset=UTF-8");
 
 		// 클라이언트가 요청한 주소 알아내기

@@ -2,12 +2,14 @@ package portit.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import portit.model.action.MessageModel;
 import portit.model.dao.MassageDao;
@@ -31,10 +33,19 @@ public class MessageController extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		try {
-			// request에서 dto로 옮겨담기.
-			//model에서 정보를 dto에 담는 작업을 한다.
+			HttpSession session = req.getSession();
+			String cmd= req.getParameter("cmd");
+			String url= null;
 			
-			//모델 : dao저장, dto리턴.
+			
+			
+		
+			
+			if(cmd.equals("send")){
+				// request에서 dto로 옮겨담기.
+				//model에서 정보를 dto에 담는 작업을 한다.
+				
+			//모델-FN 데이터뽑어서  dto저장.
 			MessageModel model = new MessageModel(req);
 			
 			//모델-DTO
@@ -48,17 +59,24 @@ public class MessageController extends HttpServlet {
 			
 			//DB에 전달.
 			dao.insertMessage(dto);
+
+			}
 			
 			
 			
 			
 			
-			
-			req.setAttribute("viewURL", "");
+			//session.setAttribute("bookList",bookList);
+			RequestDispatcher view=	req.getRequestDispatcher(url);
+			view.forward(req,resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
 	
 	
 }

@@ -65,30 +65,17 @@ public class MassageDao{
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	private void updatePos(Connection con){
-		try{
-			String sql = "update tblBoard set b_pos=b_pos+1";
-			pstmt = con.prepareStatement(sql);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("updatePos()에서 오류");
-			err.printStackTrace();
-		}
-	}
-	
-	
-	
-	
-	// List.jsp
+	// 목록 불러오기.
 	public List getMessageList(String keyField, String keyWord){
+		
+		/* 
+		 1.ArrayList 선언
+		 2.list에 Select에 조회된 데이터 반복을 저장
+		 3.
+		 * */
+		
+		
+		
 		ArrayList list = new ArrayList();
 		String sql = null;
 		
@@ -124,6 +111,31 @@ public class MassageDao{
 		}
 		return list;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private void updatePos(Connection con){
+		try{
+			String sql = "update tblBoard set b_pos=b_pos+1";
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("updatePos()에서 오류");
+			err.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+
 	
 	
 	

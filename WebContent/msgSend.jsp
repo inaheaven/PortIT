@@ -109,7 +109,7 @@
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 mt msg msgSend">
 					<div class="msgSendContent">
-						<form method="post" action="/Project2/msg" class="msgForm clearfix">
+						<form method="post" action="/Project2/msg?cmd=send" class="msgForm clearfix">
 							<div class="form-group col-md-8 center" >
 								<label class="control-label" for="mem_id_sender">받는 사람 </label><br>
 								<div class="">
