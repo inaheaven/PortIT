@@ -18,6 +18,8 @@
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+<link href="assets/css/profpfproj.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -60,7 +62,9 @@ function removeRow() {
   oTbl.deleteRow(oTbl.clickedRowIndex);
 }
 //skill 추가
-function addSkill(skill,score) {
+function addSkill() {
+	var skill = document.getElementById('skill').value;
+	var score = document.getElementById('score').value;
 	
 	if(Number(score)>Number("5")){
 		alert("숫자의 범위를 확인해주세요.");
@@ -77,37 +81,37 @@ function addSkill(skill,score) {
 	//상태바 길이 조정.
 	var barSize =0;
 	if(Number(score)==Number("1")){
-		barSize=5;
-	}else if(Number(score)==Number("2")){
-		barSize=10;
-	}else if(Number(score)==Number("3")){
-		barSize=15;
-	}else if(Number(score)==Number("4")){
 		barSize=20;
+	}else if(Number(score)==Number("2")){
+		barSize=40;
+	}else if(Number(score)==Number("3")){
+		barSize=60;
+	}else if(Number(score)==Number("4")){
+		barSize=80;
 	}else if(Number(score)==Number("5")){
-		barSize=25;
+		barSize=100;
 	}
 	
 	//상태바 추가
 	var idx ="";
-	
-	
-	idx+="<div class='col-sm-1'>"+skill+"</div>";
-	
-	idx+="<div class='col-sm-11'>";
-	idx+="<div class='progress progress-striped active'>";
-	idx+="<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='50' style='width:"+ barSize+"%''>";
-	idx+="<span class='sr-only'>45% Complete</span>";
-	idx+="<span class='sr-only'>45% Complete</span>";
+		
+	idx+="<div class='col-md-3 skill'>"+skill+"</div>";
+	idx+="<div class='col-md-7'>";
+		idx+="<div class='progress'>";
+			idx+="<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100' style='width:"+ barSize+"%''>";
+				idx+="<span class='sr-only'>45% Complete</span>";
+				idx+="<span class='sr-only'>45% Complete</span>";
+			idx+="</div>";			
+		idx+="</div>";
 	idx+="</div>";
-	idx+="<input type='button' value='x' onclick='fnDeleteItem("+ addSkillIndex +")'/>";
-	idx+="</div>";
+	idx+="<div class='col-md-2'>";
+		idx+="<button class='btn common' type='button' onclick='fnDeleteItem("+ addSkillIndex +")'>삭제</button";
 	idx+="</div>";
 	idx+="</br>";
 	
 	newSpan.innerHTML = idx;
 	
-	var itemList = document.getElementById("itemList");
+	var itemList = document.getElementById("skillList");
 	itemList.appendChild(newSpan);			
 }
 //상태바 삭제 
@@ -119,8 +123,7 @@ function fnDeleteItem(idx){
 	}
 	
 }
-function frmCheck()
-{
+function frmCheck(){
   var frm = document.form;
   
   for( var i = 0; i <= frm.elements.length - 1; i++ ){
@@ -173,128 +176,93 @@ function fnSelectSnsInfo(snsName){
       *********************************************************************************************************************************************************** -->
 		<!--main content start-->
 		<section id="main-content">
-			<section class="wrapper site-min-height">
-				<div class="row mt">
-					<div class="col-md-12 col-sm-12 col-xs-12 mt">
-						<div style="border: 1px solid black">
-							<form action="#" method="get" class="form-horizontal style-form">
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">프로필 사진</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control">
+			<section class="wrapper site-min-height">				
+				<div class="col-md-12 mt profreg">					
+					<div class="profregForm">
+						<h3 class="formTitle text-center">프로필 등록</h3>	
+						<form action="#" method="post" class="form-horizontal style-form">
+							<div class="form-group">
+								<label class="col-md-3 control-label">프로필 사진</label>
+								<div class="col-md-9">
+									<input type="file" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">배경 사진</label>
+								<div class="col-md-9">
+									<input type="file" class="form-control">
+								</div>
+					
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">이름</label>
+								<div class="col-md-9">
+									<input class="form-control" id="name" type="text"
+										placeholder="한글로 입력하세요.">						
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">닉네임</label>
+								<div class="col-md-9">
+									<input class="form-control" id="nickname" type="text"
+										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)">									
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">소개</label>
+								<div class="col-md-9">
+									<textarea class="form-control" rows="5" name="contents"
+										placeholder="2000byte 이내로 입력하세요."></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">관심분야</label>
+								<div class="col-md-9">
+									<input class="form-control" id="disabledInput" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Link</label>
+								<div class="col-md-9">									
+									<div class="col-md-3">
+										<select class="form-control" name="SNS" id="SNS" onchange="fnSelectSnsInfo(this.value)">
+											<option value="">SNS선택</option>
+											<option value="www.facebook.com/">FaceBook</option>
+											<option value="WWW.github.com/">Github</option>
+											<option value="http://www.">Blog</option>
+										</select>
+									</div>
+									<div class="col-md-7">										
+										<input type="text" class="form-control" id ="addText" name="addText"/>
+									</div>
+									<div class="col-md-2">
+										<button type="button" class="btn common" style="cursor: hand" onClick="insRow()" value="추가">추가</button>
+									</div>
+									<br><br>
+									<div id="snsList">
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">배경 사진</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control"> <span
-											class="help-block"></span>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Skill</label>
+								<div class="col-md-9">
+									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명"></div>
+									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요"></div>
+									<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">추가</button></div>
+									<br><br>
+									<div id="skillList">
 									</div>
-						
 								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">이름</label>
-									<div class="col-sm-10">
-										<input class="form-control" id="name" type="text"
-											value="한글로 입력"
-											onclick="if(this.value=='한글로 입력'){this.value=''}">
+							</div>
 							
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">닉네임</label>
-									<div class="col-sm-10">
-										<input class="form-control" id="nickname" type="text"
-											value="영문으로 입력"
-											onclick="if(this.value=='영문으로 입력'){this.value=''}">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">소개</label>
-									<div class="col-sm-10">
-										<textarea rows="4" cols="100" name="contents"
-											onclick="if(this.value=='xxxxbyte이내로 입력 바랍니다.'){this.value=''}">xxxxbyte이내로 입력 바랍니다.</textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">관심분야</label>
-									<div class="col-sm-10">
-										<input class="form-control" id="disabledInput" type="text">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">Link</label>
-									<div class="col-sm-10">
-										<form name="form" method="post">
-											<table width="400" border="0" cellspacing="0" cellpadding="0">
-												<tr>
-													<td colspan="2" align="left">
-														<table width="100%" border="0" cellpadding="0"	cellspacing="0">
-															<tr>
-																<td height="25">
-																	<table id="addTable" width="400" cellspacing="0"
-																		cellpadding="0" border="0">
-																		<tr>
-																			<select name="SNS" id="SNS" onchange="fnSelectSnsInfo(this.value)">
-																				<option value="">SNS선택</option>
-																				<option value="www.facebook.com/">FaceBook</option>
-																				<option value="WWW.github.com/">Github</option>
-																				<option value="http://www.">Blog</option>
-																			</select>
-																			<td>
-																				<input type="text"  id ="addText" name="addText" style="width: 350px; height: 20px;"/>
-																			</td>
-																			<td>
-																				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																			 </td>
-																			 
-																			  
-																			<td>
-																				<button type="button" class="btn btn-theme"	style="cursor: hand" onClick="insRow()" value="추가">추가</button>
-																			</td>
-																		</tr>
-																	</table>
-																	
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-											<table width="400" border="0" cellspacing="0" cellpadding="0">
-												<br>
-												<tr>
-													<td height="10"></td>
-												</tr>
-
-											</table>
-										</form>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-lg-2 col-sm-2 control-label">Skill</label>
-									<div class="col-lg-10">
-											 <input id="skill" type="text" value="Skill을 입력하세요." onclick="if(this.value=='Skill을 입력하세요.'){this.value=''}">&nbsp;&nbsp;
-											 <input id="score" type="text" value="1-5까지 입력하세요." onclick="if(this.value=='1-5까지 입력하세요.'){this.value=''}">&nbsp;&nbsp;
-										<button type="submit" class="btn btn-theme"
-											onclick="addSkill(document.getElementById('skill').value,document.getElementById('score').value)">추가</button>
-											<br/>
-											<div id="itemList" class="row">
-											</div>
-									</div>
-								</div>
-								
-								<div class="form-group" align="center">
-									<button type="submit" class="btn btn-theme">등록</button>
-									<button type="submit" class="btn btn-theme">수정</button>
-								</div>
-								
-							</form>
-						</div>
+							<div class="form-group text-center buttonDiv">
+								<button type="submit" class="btn common">등록하기</button>&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn cancel" onclick="">수정하기</button>
+							</div>							
+						</form>
 					</div>
 				</div>
-				
-			</section><! --/wrapper -->
+			</section><!--/wrapper -->
 		</section>
 		<!-- /MAIN CONTENT -->
 
@@ -329,11 +297,8 @@ function fnSelectSnsInfo(snsName){
 	<script>
       //custom select box
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
 
-  </script>
+ 	</script>
 
 </body>
 </html>
