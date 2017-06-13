@@ -18,8 +18,8 @@
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
-
 <link href="assets/css/custom.css" rel="stylesheet">
+<link href="assets/css/profpfproj.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -62,117 +62,96 @@
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-				<div class="col-md-12 col-sm-12 col-xs-12 mt">
+				<div class="col-md-12 col-sm-12 col-xs-12 mt pfreg">
 				<!-- BASIC FORM ELELEMNTS -->
-				<div class="row mt">
-					<div class="col-lg-12">
-						<div class="form-panel">
-							<form class="form-horizontal style-form" method="get">
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오 제목</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오 주제</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">포트폴리오 제작 기간</label> <label
-										class="col-sm-1 col-sm-1 control-label" for="date">시작
-										일</label>
-									<div class="col-sm-4">
-										<input class="form-control" id="start_date" name="start_date" placeholder="MM/DD/YYY" type="text" /> 
-									</div>
-									<label class="col-sm-1 col-sm-1 control-label" for="date">마감
-										일</label>
-									<div class="col-sm-4">
-										<input class="form-control" id="end_date" name="end_date"
-											placeholder="MM/DD/YYY" type="text" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오 내용</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" placeholder="프로젝트 주제 , 목적등 자세한 설명을 작성하세요" rows="10"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오 개발
-										환경</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오 개발
-										언어</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) C, JAVA, Python 등">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오 개발
-										도구</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) Eclipse, Visual Studio2013 등">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오 수행
-										인원</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">작성자 담당
-										업무</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">포트폴리오
-										소스코드</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) github URL">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">함께한 사람</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-sm-2">
-										<button type="button" class="btn btn-default">검색</button>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">이미지 및
-										동영상</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-sm-2">
-										<button type="button" class="btn btn-default">업로드</button>
-									</div>
-								</div>
-								<div class="form-group" style="text-align: center;">
-									<button type="button" class="btn btn-success">등록하기</button>
-									<button type="button" class="btn btn-danger">취소하기</button>
-								</div>
-							</form>
+				<div class="pfregForm">					
+					<form class="form-horizontal style-form" method="post" action="#">
+						<div class="form-group">
+							<label class="col-md-3 control-label">포트폴리오 제목</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
 						</div>
-					</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">포트폴리오 주제</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">포트폴리오 제작 기간</label> 
+							<label class="col-md-1 control-label" for="date">시작 	일</label>
+							<div class="col-md-3">
+								<input class="form-control" id="start_date" name="start_date" type="date" /> 
+							</div>
+							<div class="col-md-1"></div>
+							<label class="col-md-1 control-label" for="date">마감 일</label>
+							<div class="col-md-3">
+								<input class="form-control" id="end_date" name="end_date" type="date" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">포트폴리오 내용</label>
+							<div class="col-md-9">
+								<textarea class="form-control" placeholder="프로젝트 주제 , 목적 등 자세한 내용을 작성하세요.(2000byte 이내)" rows="10"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">개발 환경</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">개발 언어</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="ex) C, JAVA, Python 등">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">개발 도구</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="ex) Eclipse, Visual Studio2013 등">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">수행 인원</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">담당 업무</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Github URL</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="ex) github URL">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">함께한 사람</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-sm-2">
+								<button type="button" class="btn btn-default">검색</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">이미지 및 동영상</label>
+							<div class="col-md-9">
+								<input type="file" class="form-control">
+							</div>
+						</div>
+						<div class="form-group text-center buttonDiv" >
+							<button type="submit" class="btn register">등록하기</button>&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn cancel" onclick="location.href='mypage_pf_list.html'">취소하기</button>
+						</div>
+					</form>
 				</div>
 				<!-- /row -->
 
@@ -211,6 +190,7 @@
 	<!-- datepicker script -->
 	<script>
 		$(document).ready(
+				/*
 				function() {
 					var start_date_input = $('input[name="start_date"]'); //our date input has the name "date"
 					var end_date_input = $('input[name="end_date"]'); //our date input has the name "date"
@@ -224,7 +204,8 @@
 					};
 					start_date_input.datepicker(options);
 					end_date_input.datepicker(options);
-				})
+				});
+				*/
 	</script>
 </body>
 </html>

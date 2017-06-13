@@ -18,6 +18,8 @@
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+<link href="assets/css/notification.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -44,95 +46,68 @@
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-				<div class="col-md-12 col-sm-12 col-xs-12 mt">
-				<!-- BASIC FORM ELELEMNTS -->
-					<div class="col-lg-12">
-					
-					
-						<div class="form-panel">
-							<form class="form-horizontal style-form" method="get">
-							
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle"
-									data-toggle="dropdown">
-									알림 종류 <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">전체</a></li>
-									<li><a href="#">좋아요</a></li>
-									<li><a href="#">업로드</a></li>
-									<li><a href="#">신청</a></li>
-									<li><a href="#">메시지</a></li>
-									<li><a href="#">팔로잉</a></li>
-								</ul>
-								<p>
-									<br>
-								</p>
-							</div>
-							<!-- line space -->
-							<div class="row">&nbsp;</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 mt noti">				
+					<div class="notiTable">			
+						<div class="form-group col-md-2">
+						  <select class="form-control pull-left" id="sort">
+						    <option selected>전체</option>
+						    <option>좋아요</option>
+						    <option>업로드</option>
+						    <option>신청</option>
+						    <option>메세지</option>
+						    <option>팔로잉</option>
+						  </select>
+						</div>	
 						
-							<!-- First Action -->
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingOne">
-										<span class="glyphicon glyphicon-heart col-lg-1"></span>
-										<a href="#" class="col-lg-2">사용자1 님이</a>
-										<label class="col-lg-4">내 포트폴리오를 좋아합니다.</label>
-										<label class="col-lg-4">2017-06-17 12:00 <br></label>
-										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
-										</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingOne">
-										<span class="glyphicon  glyphicon-upload col-lg-1"></span>
-										<a href="#" class="col-lg-2">사용자2 님이</a>
-										<label class="col-lg-4">새로운 포트폴리오를 업로드했습니다.</label>
-										<label class="col-lg-4">2017-06-17 12:00 <br></label>
-										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
-										</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingOne">
-										<span class="glyphicon glyphicon-envelope col-lg-1"></span>
-										<a href="#" class="col-lg-2">사용자3 님이</a>
-										<label class="col-lg-4">메시지를 보냈습니다.</label>
-										<label class="col-lg-4">2017-06-17 12:00 <br></label>
-										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
-										</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingOne">
-										<span class="glyphicon glyphicon-ok-sign col-lg-1"></span>
-										<a href="#" class="col-lg-2">사용자4 님이</a>
-										<label class="col-lg-4">내가 등록한 프로젝트에 참여를 신청하였습니다.</label>
-										<label class="col-lg-4">2017-06-17 12:00 <br></label>
-										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
-										</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="headingOne">
-										<span class="glyphicon glyphicon-plus col-lg-1"></span>
-										<a href="#" class="col-lg-2">사용자5 님이</a>
-										<label class="col-lg-4">나를 팔로잉했습니다.</label>
-										<label class="col-lg-4">2017-06-17 12:00 <br></label>
-										<div class="text-right"><button type="button" class="btn btn-danger" style="height:30px">삭제</button>
-										</div>
-								</div>
-							</div>
-							<div class="row" style="text-align:center;">
-								<button type="button" class="btn btn-default"><i class="fa fa-angle-left"></i> 이전글</button>
-								1 2 3 4 5
-								<button type="button" class="btn btn-default">다음글 <i class="fa fa-angle-right"></i> </button>
-							</div>
-							
-							</form>
-							</div>	
+						<table class="table">							
+	                        <thead>
+	                         <tr>
+	                             <th>#</th>
+	                             <th>내용</th>
+	                             <th>날짜</th>
+	                             <th></th>
+	                         </tr>
+	                        </thead>
+	                        <tbody> 
+	                         <tr> <!-- 반복 -->
+	                             <td class="sort"><span class="glyphicon glyphicon-heart"></span></td>
+	                             <td class="content">[사용자]님이 내 포트폴리오를 좋아합니다.</td>
+	                             <td class="date">2017-06-17 12:00</td>
+	                             <td class="delete"><button type="button" class="btn">삭제</button></td>
+	                         </tr>
+	                         <tr> 
+	                             <td><span class="glyphicon glyphicon-upload"></span></td>
+	                             <td>[사용자]님이 새로운 포트폴리오를 업로드했습니다.</td>
+	                             <td>2017-06-17 12:00</td>
+	                             <td><button type="button" class="btn">삭제</button></td>
+	                         </tr>
+	                         <tr> 
+	                             <td><span class="glyphicon glyphicon-envelope"></span></td>
+	                             <td>[사용자]님이 메세지를 보냈습니다.</td>
+	                             <td>2017-06-17 12:00</td>
+	                             <td><button type="button" class="btn">삭제</button></td>
+	                         </tr>
+	                         <tr> 
+	                             <td><span class="glyphicon glyphicon-ok-sign"></span></td>
+	                             <td>[사용자]님이 내 [프로젝트]에 신청했습니다.</td>
+	                             <td>2017-06-17 12:00</td>
+	                             <td><button type="button" class="btn">삭제</button></td>
+	                         </tr>
+	                         <tr> 
+	                             <td><span class="glyphicon glyphicon-plus"></span></td>
+	                             <td>[사용자]님이 나를 팔로잉했습니다.</td>
+	                             <td>2017-06-17 12:00</td>
+	                             <td><button type="button" class="btn">삭제</button></td>
+	                         </tr>
+	                        </tbody>	                        
+                       	</table>
+						<div class="row" style="text-align:center;">
+							<a href="#"><i class="fa fa-angle-left"></i> 이전글</a>&nbsp;&nbsp;&nbsp;
+								1 2 3 4 5&nbsp;&nbsp;&nbsp;
+							<a href="#">다음글 <i class="fa fa-angle-right"></i></a>
 						</div>
-					</div>
+					</div>	
+				</div>
 			</section>
 			<!-- /wrapper --> 
 		</section>

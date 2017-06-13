@@ -1,0 +1,38 @@
+/********* portfolio register ***********/
+.pfreg {
+	padding: 20px;
+	background-color: #e1e1e1;
+}
+
+.pfregForm {
+	width: 90%;
+	margin: 25px auto;
+}
+
+.pfregForm label {
+	text-align: right !important;
+	font-size: 14px;
+}
+
+.buttonDiv {
+	margin-top: 30px;
+	margin-bottm: 30px;
+	border-bottom: none !important;
+}
+
+.pfregForm button.register {
+	background-color: #A1BBD0;
+	color: #fff;
+}
+.pfregForm button.register:active,
+.pfregForm button.register:hover,
+.pfregForm button.register:focus {
+	background-color: #E69138;
+	color: #F4E7D7;
+}
+
+.pfregForm button.cancel {
+	background-color: #bebebe;
+	color: #fff;
+}
+
