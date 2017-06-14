@@ -1,3 +1,7 @@
+:lang(ko) {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 /**************************** Header *****************************/
 .top-menu-right {
 	float: right;
@@ -46,7 +50,7 @@
 
 /**************************** Sign In Page *****************************/
 
-.intro {
+#login-page .intro {
 	position: absolute;
 	margin: 0;
 	top: 50%;
@@ -54,7 +58,7 @@
 	-ms-transform: translate(50%, 50%);
 	transform: translate(0, 50%);
 }
-form.login{
+#login-page .login{
 	position: absolute;
 	margin: 0;
 	top: 50%;
@@ -469,6 +473,6 @@ button.common:active,
 button.common:hover,
 button.common:focus {
 	background-color: #E69138;
-	color: #F4E7D7;
+	color: #fff;
 }
 
