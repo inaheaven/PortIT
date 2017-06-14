@@ -72,7 +72,7 @@ public class BookmarkDao {
 	// BOOKMARK 추가
 	public Portfolio getBookmark(int pf_id,int mem_id) {
 		String sql = "";
-		Portfolio dto = new Portfolio();//포트폴리오 제목 좋아요수, 
+		Portfolio portfolio = new Portfolio(); 
 		
 		try {
 			con = ds.getConnection();
@@ -82,10 +82,10 @@ public class BookmarkDao {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setPf_title(rs.getString("pf_title"));//포트폴리오제목
-				dto.setPf_like(rs.getInt("pf_like"));//포트폴리오 좋아요수
-				dto.setProf_name(rs.getString("prof_name")); //포트폴리오 작성자 이름
-				dto.setTag_name(rs.getString("tag_name")); //포트폴리오에 사용된 기술 태그
+				portfolio.setPf_title(rs.getString("pf_title"));//포트폴리오제목
+				portfolio.setPf_like(rs.getInt("pf_like"));//포트폴리오 좋아요수
+				portfolio.setProf_name(rs.getString("prof_name")); //포트폴리오 작성자 이름
+				portfolio.setTag_name(rs.getString("tag_name")); //포트폴리오에 사용된 기술 태그
 				//dto.setBm_date(rs.getDate("bm_date"));//포트폴리오에 사용된 기술 태그
 			}
 		} catch (Exception err) {
@@ -93,7 +93,7 @@ public class BookmarkDao {
 		} finally {
 			freeCon();
 		}
-		return dto;
+		return portfolio;
 
 	}
 

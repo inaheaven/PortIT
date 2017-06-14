@@ -68,7 +68,7 @@ public class FollowDao {
 		String sql = "";
 		//String sql = "";
 
-		Profile dto = new Profile();
+		Profile profile = new Profile();
 		//Tag dto1 = new Tag(); 
 		
 		try {
@@ -79,11 +79,11 @@ public class FollowDao {
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setProf_img(rs.getString("prof_img"));//프로필사진
-				dto.setProf_name(rs.getString("prof_name"));//개발자이름
-				dto.setProf_follower(rs.getInt("prof_follower"));//팔로워수
-				dto.setTag_name(rs.getString("tag_name"));//태그3개까지만 개발자 기술태그
-			//	
+				profile.setProf_img(rs.getString("prof_img"));//프로필사진
+				profile.setProf_name(rs.getString("prof_name"));//개발자이름
+				profile.setProf_follower(rs.getInt("prof_follower"));//팔로워수
+				profile.setProf_language(new Tag()
+						.setTag_name(rs.getString("t.tag_name")));//태그3개까지만 개발자 기술태그
 			}
 		} catch (Exception err) {
 			System.out.println("getList() : " + err);
@@ -91,7 +91,7 @@ public class FollowDao {
 			freeConnection();
 		}
 		
-		return dto;
+		return profile;
 	}
 
 	/**
