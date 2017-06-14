@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Media;
 import portit.model.dto.Message;
+import portit.model.dto.Portfolio;
+import portit.model.dto.Profile;
+import portit.model.dto.Tag;
 /**
  * 
  * 통합 검색시, DB에서 자료 가지고 오기.
@@ -21,32 +25,43 @@ public class SearchDao{
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 
-
 	public SearchDao(){
 		try{
 			pool = DBConnectionMgr.getInstance();
 		}
 		catch(Exception err){
-			System.out.println("DBCP 인스턴스 참조 실패 : " + err);
+			System.out.println("SearchDao 오류 : " + err);
 		}
 	}
 	
 	
 	// msgSend.jsp (메세지 보내기) 성공!
-	public void insertMessage(Message dto){
-		String sql = "insert into Message"
-			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
+	public void insertMessage(Portfolio protfolio){
+		String sql = "";
 	
 		try{
-			con = pool.getConnection();
-			//updatePos(con);
-	 		pstmt = con.prepareStatement(sql);
-	 		pstmt.setInt(1, dto.getMem_id_sender());
-			pstmt.setInt(2, dto.getMem_id_receiver());
-			pstmt.setString(3, dto.getMsg_content());
-			pstmt.setString(4, dto.getMsg_isread());
-			pstmt.executeUpdate();
+			con = pool.getConnection();		
+	 		pstmt = con.prepareStatement(sql);	 
+	 		
+	 		while(rs.next()){
+				Media media = new Media();	//이미지위(path)
+				Tag tag = new Tag();	//태그명
+				Portfolio portfolio = new Portfolio();	//포폴 제목, 좋아요 수
+				Profile profile = new Profile();	//멤버 이름
+				
+				//번호 제목 이름 날짜 조회수	
+				media.setMl_path(rs.getInt("ml_path"));
+				tag.setTag_name(rs.getString("tag_name"));
+				portfolio.setPortfolio_title(rs.getString("pf_title"));
+				profile.setProf_name(rs.getString("prof_name"));
+				portfolio.setPf_like(rs.getInt("pf_like"));
+				
+				list.add(board);
+			}
+	 		
+			pstmt.executeQuery();
+			
+			
 		}
 		
 		catch(Exception err){
