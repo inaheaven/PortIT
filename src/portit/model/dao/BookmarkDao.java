@@ -62,7 +62,7 @@ public class BookmarkDao {
 	}
 
 	// BOOKMARK 추가
-	public Portfolio getBookmark(int pf_id,int mem_id) {
+	public Portfolio addBookmark(int pf_id,int mem_id) {
 		String sql = "";
 		Portfolio portfolio = new Portfolio(); 
 		
@@ -105,7 +105,7 @@ public class BookmarkDao {
 	}
 
 	// BOOKMARK 삭제
-	public void BookmarkDelete(int bm_id) {
+	public void deleteBookmark(int bm_id) {
 		String sql = "delete from bookmark where bm_id ="+bm_id+"";
 
 		try {

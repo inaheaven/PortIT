@@ -109,14 +109,15 @@ public class ProfileDao {
 	/**
 	 * 프로필 입력 
 	 * @param _profile
+	 * @return 
 	 * @return
 	 */
-	public Profile addprofile() {
-		Profile dto = new Profile();
+	public Profile addprofile(Profile dto) {
 		String sql = "insert into profile() "
 				+	"values(seq_prof_id.nextVal,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
-			try{
+
+		try{
 				conn = pool.getConnection();
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, dto.getProf_img());
@@ -187,13 +188,14 @@ public class ProfileDao {
 	 * 프로필 수정 란(내용값 수정)
 	 * @param dto
 	 */
-	// updateEmp_proc.jsp
-	public void updateprofile(){
+	
+	public void updateProfile(Profile dto){
 		
 		String sql = "update profile set prof_img=?, prof_background=?, prof_name=?, prof_nick=?, prof_intro=?"
 				+ ", prof_img=?, prof_background=?, prof_website=?, prof_github=?, prof_facebook=?, prof_facebook=?, prof_regdate"
 				+ ", prof_follower=?, Tag_name=?, Tag_name=?, Prof_skill_level=? where prof_id=?";
-		Profile dto = new Profile();
+		
+		
 		try{
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -226,7 +228,7 @@ public class ProfileDao {
  */
 	
 	// deleteEmp_proc.jsp
-	public void deleteEmp(int prof_id){
+	public void deleteProfile(int prof_id){
 		String sql = "delete from profile where prof_id ="+prof_id+"";
 		
 		try{

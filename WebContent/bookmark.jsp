@@ -25,7 +25,9 @@
     <![endif]-->
   </head>
   <script language="javascript">
-	
+   function deletebookmark(){
+	   this.parentNode.removeChild(this); 
+   }
   
   </script>
   <body>
@@ -108,7 +110,7 @@
 						</div>
 					</div>
 					<div class=" col-md-3 col-sm-3 mb">
-						<img src="assets/img/member.png" onmouseover="this.src='assets/img/member_off.png'" onmouseout="this.src='assets/img/member.png'" />
+						<img src="assets/img/member.png" onmouseover="this.src='assets/img/member_off.png'" onmouseout="this.src='assets/img/member.png'" onclick="deletebookmark()"/>
 					</div>
 				</div>
 				<br><br>

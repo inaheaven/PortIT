@@ -131,7 +131,7 @@ public class FollowDao {
 	 *  following 삭제
 	 * @param fw_id
 	 */
-	public void FollowDelete(int fw_id) {
+	public void deleteFollow(int fw_id) {
 		String sql = "delete from following where fw_id ="+fw_id+"";
 
 		try {
