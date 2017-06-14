@@ -7,7 +7,6 @@ import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -21,34 +20,31 @@ import javax.servlet.http.Part;
 @SuppressWarnings("serial")
 @WebServlet("/media")
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*20)
-public class MediaController extends HttpServlet {
+public class MediaController {
 	
 	/**
 	 * 업로드할 파일이 저장될 디렉토리 이름
 	 */
 	private static final String UPLOAD_DIR = "uploads";
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public String fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 파일 저장 위치의 경로
-		String uploadFilePath = req.getServletContext().getRealPath("")
-				+ File.separator
-				+ UPLOAD_DIR;
+		String uploadFilePath = req.getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
 		String fileName = null;
-		
+
 		// 저장할 디렉토리가 없으면 생성
 		File fileSaveDir = new File(uploadFilePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdirs();
-        }
-        
-        for (Part part : req.getParts()) {
-            fileName = getFileName(part);
-            part.write(uploadFilePath + File.separator + fileName);
-        }
-        
-        // 업로드가 성공했을 때의 처리
-        req.setAttribute("message", fileName + " File uploaded successfully!");
+		if (!fileSaveDir.exists()) {
+			fileSaveDir.mkdirs();
+		}
+
+		for (Part part : req.getParts()) {
+			fileName = getFileName(part);
+			part.write(uploadFilePath + File.separator + fileName);
+		}
+
+		// 업로드가 성공했을 때의 처리
+		return (uploadFilePath + File.separator + fileName).toString();
 	}
 	
 	/**
