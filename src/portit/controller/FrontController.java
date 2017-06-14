@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import portit.model.dto.Member;
-
 /**
  * 프론트 컨트롤러
  * 
@@ -18,34 +16,31 @@ import portit.model.dto.Member;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/")
+@WebServlet("/*.do") /* HTML/JSP에서 .do로 끝나는 요청은 모두 서블릿 요청으로 간주하여 프론트 컨트롤러가 처리 */
 public class FrontController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Servlet Loaded");
 		resp.setContentType("text/html; charset=UTF-8");
-
 		// 클라이언트가 요청한 주소 알아내기
 		String requestPath = req.getServletPath();
+		String controllerPath = null;
 		try {
-
-			String controllerPath = null;
-			if ("/join".equals(requestPath)) {
+			// 요청에 따른 분기
+			if ("/join.do".equals(requestPath)) {
 				controllerPath = "/join";
-				// 회원가입 정보를 저장
-				req.setAttribute("member", new Member()
-						.setMem_email(req.getParameter("email"))
-						.setMem_password(req.getParameter("password"))
-						);
+				// 클라이언트 입력값을 페이지 컨트롤러에 전달
 			}
 
-			// 인클루드하여 처리 위임
+			// 컨트롤러에 처리 위임
 			RequestDispatcher rd = req.getRequestDispatcher(controllerPath);
 			rd.include(req, resp);
-
-			String viewURL = (String) req.getAttribute("viewURL");
-			rd = req.getRequestDispatcher(viewURL);
+			
+			// 컨트롤러 처리 결과 뷰 URL 반환
+			String viewUrl = null;
+			
+			// 뷰 실행
+			rd = req.getRequestDispatcher(viewUrl);
 			rd.include(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
