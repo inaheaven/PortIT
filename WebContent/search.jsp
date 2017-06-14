@@ -175,7 +175,7 @@
 					 	<div style="border: 1px solid black">
 							<h4>
 								<span class="label label-default">구 분</span>&nbsp;&nbsp;&nbsp;&nbsp;
-									<a href="#">전체</a>&nbsp;&nbsp;
+									<a href="search.jsp">전체</a>&nbsp;&nbsp;
 									<a href="#">포트폴리오</a>&nbsp;&nbsp;
 									<a href="#">인물</a> &nbsp;&nbsp;
 									<a href="#">프로젝트</a> 

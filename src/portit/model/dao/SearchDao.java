@@ -35,9 +35,12 @@ public class SearchDao{
 	}
 	
 	
-	// msgSend.jsp (메세지 보내기) 성공!
-	public void insertMessage(Portfolio protfolio){
-		String sql = "";
+	// index2.html -> search.jsp
+	public void TotalSearch(String keytext){
+		ArrayList list = new ArrayList();
+		String sql = "select MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, PORTFOLIO.PF_TITLE, PROFILE.PROF_NAME ,PORTFOLIO.PF_LIKE  "
+				+ "+from MEDIA_LIBRARY ,TAG, PROFILE, PORTFOLIO +"
+				+ "where PORTFOLIO.PF_TITLE like '?' or TAG.TAG_NAME like '?' ";
 	
 		try{
 			con = pool.getConnection();		
@@ -50,22 +53,24 @@ public class SearchDao{
 				Profile profile = new Profile();	//멤버 이름
 				
 				//번호 제목 이름 날짜 조회수	
-				media.setMl_path(rs.getInt("ml_path"));
+				media.setMl_path(rs.getString("ml_path"));
 				tag.setTag_name(rs.getString("tag_name"));
-				portfolio.setPortfolio_title(rs.getString("pf_title"));
+				portfolio.setPf_title(rs.getString("pf_title"));
 				profile.setProf_name(rs.getString("prof_name"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				
-				list.add(board);
+				list.add(media);
+				list.add(tag);
+				list.add(profile);
+				list.add(portfolio);
 			}
 	 		
-			pstmt.executeQuery();
-			
+			pstmt.executeQuery();		
 			
 		}
 		
 		catch(Exception err){
-			System.out.println("[DAO]: insertMessage()에서 오류");
+			System.out.println("[DAO]: SearchDao()에서 오류");
 			err.printStackTrace();
 		}
 		
@@ -73,8 +78,6 @@ public class SearchDao{
 			pool.freeConnection(con, pstmt);
 		}
 	}
-	
-	
 	
 	
 	
@@ -125,89 +128,7 @@ public class SearchDao{
 		return list;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	private void updatePos(Connection con){
-		try{
-			String sql = "update tblBoard set b_pos=b_pos+1";
-			pstmt = con.prepareStatement(sql);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("updatePos()에서 오류");
-			err.printStackTrace();
-		}
-	}
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	// Delete.jsp
-	public void deleteMessage(int b_num){
-		String sql = "delete from MESSAGE where b_num=?";
 		
-		try{
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, b_num);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("deleteMessage()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
-		}
-	}
-	
-	
-	
-	
-	
-	
-	// 답변글을 입력할 때 부모보다 큰 pos는 1씩 증가시킨다.
-	public void replyUpdatePos(Message message){
-		try{
-			String sql = "update tblBoard set b_pos = b_pos+1 where b_pos > ?";
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			//pstmt.setInt(1, board.getB_pos());
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("replyUpdatePos()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
-		}
-	}
-	
-	
-	
-	
-	public String useDepth(int depth){
-		String result ="";
-		for(int i=0; i<depth*3; i++){
-			result += "&nbsp;";
-		}
-		return result;
-	}
-	
 	
 }
 
