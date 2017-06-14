@@ -40,7 +40,7 @@ public class SearchDao{
 		ArrayList list = new ArrayList();
 		String sql = "select MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, PORTFOLIO.PF_TITLE, PROFILE.PROF_NAME ,PORTFOLIO.PF_LIKE  "
 				+ "+from MEDIA_LIBRARY ,TAG, PROFILE, PORTFOLIO +"
-				+ "where PORTFOLIO.PF_TITLE like '?' or TAG.TAG_NAME like '?' ";
+				+ "where PORTFOLIO.PF_TITLE like '?' or TAG.TAG_NAME like '%%' ";
 	
 		try{
 			con = pool.getConnection();		
