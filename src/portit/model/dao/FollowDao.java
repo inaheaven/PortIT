@@ -107,7 +107,7 @@ public class FollowDao {
 			
 			while(rs.next()) {
 				// 조회 결과를 DTO에 저장
-				if (rs.getString("tag_type").equals("field")) {
+				if (rs.getString("tag_type").equals("tool")) {
 					profile.setProf_language(new Tag()
 							.setTag_id(rs.getInt("t.tag_id"))
 							.setTag_type(rs.getString("t.tag_type"))
@@ -132,7 +132,7 @@ public class FollowDao {
 	 * @param fw_id
 	 */
 	public void FollowDelete(int fw_id) {
-		String sql = "";
+		String sql = "delete from following where fw_id ="+fw_id+"";
 
 		try {
 			conn = pool.getConnection();

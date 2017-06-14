@@ -26,6 +26,58 @@ public class Profile {
 	private Tag prof_tool;
 	private Tag prof_field;
 	
+	private int tag_use_id;
+	private String tag_use_type;
+	private int tag_use_type_id;
+	private int prof_skill_level;
+	private int tag_id;
+	
+	public int getTag_use_id() {
+		return tag_use_id;
+	}
+	public void setTag_use_id(int tag_use_id) {
+		this.tag_use_id = tag_use_id;
+	}
+	public String getTag_use_type() {
+		return tag_use_type;
+	}
+	public void setTag_use_type(String tag_use_type) {
+		this.tag_use_type = tag_use_type;
+	}
+	public int getTag_use_type_id() {
+		return tag_use_type_id;
+	}
+	public void setTag_use_type_id(int tag_use_type_id) {
+		this.tag_use_type_id = tag_use_type_id;
+	}
+	public int getProf_skill_level() {
+		return prof_skill_level;
+	}
+	public void setProf_skill_level(int prof_skill_level) {
+		this.prof_skill_level = prof_skill_level;
+	}
+	public int getTag_id() {
+		return tag_id;
+	}
+	public void setTag_id(int tag_id) {
+		this.tag_id = tag_id;
+	}
+	public String getTag_type() {
+		return tag_type;
+	}
+	public void setTag_type(String tag_type) {
+		this.tag_type = tag_type;
+	}
+	public String getTag_name() {
+		return tag_name;
+	}
+	public void setTag_name(String tag_name) {
+		this.tag_name = tag_name;
+	}
+
+	private String tag_type;
+	private String tag_name;
+	
 	public int getProf_id() {
 		return prof_id;
 	}

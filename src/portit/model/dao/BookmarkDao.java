@@ -106,7 +106,7 @@ public class BookmarkDao {
 
 	// BOOKMARK 삭제
 	public void BookmarkDelete(int bm_id) {
-		String sql = "";
+		String sql = "delete from bookmark where bm_id ="+bm_id+"";
 
 		try {
 			conn = pool.getConnection();

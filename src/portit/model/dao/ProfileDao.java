@@ -3,17 +3,15 @@ package portit.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
+import portit.model.dto.TagUse;
+
 
 /**
  * 프로필 관련 DAO
- * @author gnsngck
+ * @author hyang
  *
  */
 public class ProfileDao {
@@ -109,197 +107,140 @@ public class ProfileDao {
 	}
 	
 	/**
-	 * 개별 프로필 조회
+	 * 프로필 입력 
 	 * @param _profile
 	 * @return
 	 */
-	public Profile select(int prof_id) {
-		Profile profile = new Profile();
-		getConnection();
-		try {
-			// DB에서 프로필 테이블 조회
-			sql = "SELECT * FROM PROFILE WHERE prof_id=?";
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, prof_id);
-			rs = stmt.executeQuery();
-			while(rs.next()) {
-				// 조회 결과를 DTO에 저장
-				profile.setProf_id(rs.getInt("prof_id"))
-				.setMem_id(rs.getInt("mem_id"))
-				.setProf_nick(rs.getString("prof_nick"))
-				.setProf_name(rs.getString("prof_name"))
-				.setProf_intro(rs.getString("prof_intro"))
-				.setProf_img(rs.getString("prof_img"))
-				.setProf_background(rs.getString("prof_background"))
-				.setProf_website(rs.getString("prof_website"))
-				.setProf_github(rs.getString("prof_github"))
-				.setProf_facebook(rs.getString("prof_facebook"))
-				.setProf_regdate(new SimpleDateFormat("yyyy-MM-dd")
-						.parse(rs.getString("prof_regdate")));
-				
-				// DB에서 Follower 수 조회
-				sql = "SELECT COUNT(*) FROM FOLLOWING WHERE mem_id_receiver=?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, profile.getProf_id());
-				rs = stmt.executeQuery();
-				while(rs.next()) {
-					// 조회 결과를 DTO에 저장
-					profile.setProf_follower(rs.getInt(1));
-				}
-				
-				// DB에서 태그 사용 테이블 조회
-				sql = "SELECT * FROM TAGUSE tu "
-						+ "INNER JOIN TAG t "
-						+ "ON tu.tag_id=t.tag_id "
-						+ "WHERE tu.tag_use_type=? AND tu.tag_use_type_id=?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, "profile");
-				stmt.setInt(2, profile.getProf_id());
-				rs = stmt.executeQuery();
-				while(rs.next()) {
-					// 조회 결과를 DTO에 저장
-					if (rs.getString("tag_type").equals("language")) {
-						profile.setProf_language(new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name(rs.getString("t.tag_name")));
-					}
-					if (rs.getString("tag_type").equals("tool")) {
-						profile.setProf_language(new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name(rs.getString("t.tag_name")));
-					}
-					if (rs.getString("tag_type").equals("field")) {
-						profile.setProf_language(new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name(rs.getString("t.tag_name")));
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			// DB 접속 해제
-			freeConnection();
-		}
-		return profile;
-	}
+	public Profile addprofile() {
+		Profile dto = new Profile();
+		String sql = "insert into profile() "
+				+	"values(seq_prof_id.nextVal,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
+			try{
+				conn = pool.getConnection();
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, dto.getProf_img());
+				stmt.setString(2, dto.getProf_background());
+				stmt.setString(3, dto.getProf_name());
+				stmt.setString(4, dto.getProf_nick());
+				stmt.setString(5, dto.getProf_intro());
+				stmt.setString(7, dto.getProf_website());
+				stmt.setString(8, dto.getProf_github());
+				stmt.setString(9, dto.getProf_facebook());
+				stmt.setInt(10, dto.getProf_follower());
+				stmt.setString(11, dto.getTag_name());
+				stmt.setString(12, dto.getTag_name());
+				stmt.setInt(13, dto.getProf_skill_level());
+				stmt.executeUpdate();
+			}
+			catch(Exception err){
+				System.out.println("profile() : " + err);
+			}
+			finally{
+				freeConnection();
+		}
+			return dto;
+	}
 	/**
-	 * 프로필 목록 조회
-	 * @return
+	 * 프로필 수정  
+	 * 입력했던 것을 불러온다.
+	 * @param profile
 	 */
-	public List<Profile> selectAll() {
-		ArrayList<Profile> profiles = new ArrayList<Profile>();
-		getConnection();
+	public Profile getProfile(int prof_id){
+		String sql="select * from profile where prof_id =?";
 		
-		try {
-			// DB에서 프로필 테이블 조회
-			Profile profile = new Profile();
-			sql = "SELECT * FROM PROFILE ORDER BY ? DESC";
-			// 쿼리문에 정렬기준 입력
-			String sortBy = "";
-			if (sortBy.equals("")) {
-				stmt.setString(1, "");
-			} else if (sortBy.equals("")) {
-				stmt.setString(1, "");
-			}
+		Profile dto = new Profile();
+		
+		try{
+			conn = pool.getConnection();
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1,  prof_id);
 			rs = stmt.executeQuery();
-			while(rs.next()) {
-				// 조회 결과를 DTO에 저장
-				profile.setProf_id(rs.getInt("prof_id"))
-				.setMem_id(rs.getInt("mem_id"))
-				.setProf_nick(rs.getString("prof_nick"))
-				.setProf_name(rs.getString("prof_name"))
-				.setProf_intro(rs.getString("prof_intro"))
-				.setProf_img(rs.getString("prof_img"))
-				.setProf_background(rs.getString("prof_background"))
-				.setProf_website(rs.getString("prof_website"))
-				.setProf_github(rs.getString("prof_github"))
-				.setProf_facebook(rs.getString("prof_facebook"))
-				.setProf_regdate(new SimpleDateFormat("yyyy-MM-dd")
-						.parse(rs.getString("prof_regdate")));
-				
-				// DB에서 Follower 수 조회
-				sql = "SELECT COUNT(*) FROM FOLLOWING WHERE mem_id_receiver=?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, profile.getProf_id());
-				rs = stmt.executeQuery();
-				while(rs.next()) {
-					// 조회 결과를 DTO에 저장
-					profile.setProf_follower(rs.getInt(1));
-				}
-				
-				// DB에서 태그 사용 테이블 조회
-				sql = "SELECT * FROM TAGUSE tu "
-						+ "INNER JOIN TAG t "
-						+ "ON tu.tag_id=t.tag_id "
-						+ "WHERE tu.tag_use_type=? AND tu.tag_use_type_id=?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, "profile");
-				stmt.setInt(2, profile.getProf_id());
-				rs = stmt.executeQuery();
-				while(rs.next()) {
-					// 조회 결과를 DTO에 저장
-					if (rs.getString("tag_type").equals("language")) {
-						profile.setProf_language(new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name(rs.getString("t.tag_name")));
-					}
-					if (rs.getString("tag_type").equals("tool")) {
-						profile.setProf_language(new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name(rs.getString("t.tag_name")));
-					}
-					if (rs.getString("tag_type").equals("field")) {
-						profile.setProf_language(new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name(rs.getString("t.tag_name")));
-					}
-				}
-				profiles.add(profile);
+			
+			if(rs.next()){
+				dto.setProf_id(prof_id);
+				dto.setProf_img(rs.getString("Prof_img"));
+				dto.setProf_background(rs.getString("Prof_background"));
+				dto.setProf_name(rs.getString("Prof_name"));
+				dto.setProf_nick(rs.getString("Prof_nick"));
+				dto.setProf_intro(rs.getString("Prof_intro"));
+				dto.setProf_website(rs.getString("Prof_website"));				
+				dto.setProf_github(rs.getString("Prof_github"));				
+				dto.setProf_facebook(rs.getString("Prof_facebook"));				
+				dto.setProf_follower(rs.getInt("Prof_follower"));				
+				dto.setTag_name(rs.getString("Tag_name"));				
+				dto.setTag_name(rs.getString("Tag_name"));				
+				dto.setProf_skill_level(rs.getInt("Prof_skill_level"));				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
+		}
+		catch(Exception err){
+			System.out.println("profile() : " + err);
+		}
+		finally{
 			freeConnection();
 		}
-		return profiles;
+		return dto;
+		
+	}
+	/**
+	 * 프로필 수정 란(내용값 수정)
+	 * @param dto
+	 */
+	// updateEmp_proc.jsp
+	public void updateprofile(){
+		
+		String sql = "update profile set prof_img=?, prof_background=?, prof_name=?, prof_nick=?, prof_intro=?"
+				+ ", prof_img=?, prof_background=?, prof_website=?, prof_github=?, prof_facebook=?, prof_facebook=?, prof_regdate"
+				+ ", prof_follower=?, Tag_name=?, Tag_name=?, Prof_skill_level=? where prof_id=?";
+		Profile dto = new Profile();
+		try{
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, dto.getProf_img());
+			stmt.setString(2, dto.getProf_background());
+			stmt.setString(3, dto.getProf_name());
+			stmt.setString(4, dto.getProf_nick());
+			stmt.setString(5, dto.getProf_intro());
+			stmt.setString(7, dto.getProf_website());
+			stmt.setString(8, dto.getProf_github());
+			stmt.setString(9, dto.getProf_facebook());
+			stmt.setInt(10, dto.getProf_follower());
+			stmt.setString(11, dto.getTag_name());
+			stmt.setString(12, dto.getTag_name());
+			stmt.setInt(13, dto.getProf_skill_level());
+			stmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("DBCP 연결 실패 : " + err);
+		}
+		finally{
+			freeConnection();
+		}
+		
 	}
 	
-	/**
-	 * 프로필 작성
-	 * @param profile
-	 */
-	public void insert(Profile profile) {
-		getConnection();
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
+/**
+ * 프로필 삭제 
+ * @param eno
+ */
+	
+	// deleteEmp_proc.jsp
+	public void deleteEmp(int prof_id){
+		String sql = "delete from profile where prof_id ="+prof_id+"";
+		
+		try{
+			conn = pool.getConnection();			
+			stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("DBCP 연결 실패 : " + err);
+		}
+		finally{
 			freeConnection();
 		}
+		
 	}
 	
-	/**
-	 * 프로필 수정
-	 * @param profile
-	 */
-	public void update(Profile profile) {
-		getConnection();
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			freeConnection();
-		}
-	}
-
 }
