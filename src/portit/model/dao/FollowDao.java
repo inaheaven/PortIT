@@ -65,7 +65,7 @@ public class FollowDao {
 	 * @return
 	 */
 	public Profile getFollow(int prof_id) {
-		String sql = "";
+		String sql = "SELECT * FROM PROFILE WHERE prof_id=?";
 		//String sql = "";
 
 		Profile profile = new Profile();
@@ -78,18 +78,51 @@ public class FollowDao {
 			stmt.setInt(1, prof_id);
 			rs = stmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				profile.setProf_img(rs.getString("prof_img"));//프로필사진
 				profile.setProf_name(rs.getString("prof_name"));//개발자이름
-				profile.setProf_follower(rs.getInt("prof_follower"));//팔로워수
-				profile.setProf_language(new Tag()
-						.setTag_name(rs.getString("t.tag_name")));//태그3개까지만 개발자 기술태그
 			}
-		} catch (Exception err) {
+			
+			// DB에서 Follower 수 조회
+			sql = "SELECT COUNT(*) FROM FOLLOWING WHERE mem_id_receiver=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, profile.getProf_id());
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				// 조회 결과를 DTO에 저장
+				profile.setProf_follower(rs.getInt(1));
+			}
+			
+			// DB에서 태그 사용 테이블 조회
+			
+			sql = "SELECT * FROM TAGUSE tu "
+					+ "INNER JOIN TAG t "
+					+ "ON tu.tag_id=t.tag_id "
+					+ "WHERE tu.tag_use_type=? AND tu.tag_use_type_id=?";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "profile");
+			stmt.setInt(2, profile.getProf_id());
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				// 조회 결과를 DTO에 저장
+				if (rs.getString("tag_type").equals("field")) {
+					profile.setProf_language(new Tag()
+							.setTag_id(rs.getInt("t.tag_id"))
+							.setTag_type(rs.getString("t.tag_type"))
+							.setTag_name(rs.getString("t.tag_name")));
+			
+		}
+			}
+			
+		}catch (Exception err) {
 			System.out.println("getList() : " + err);
 		} finally {
 			freeConnection();
 		}
+		
+	
 		
 		return profile;
 	}
