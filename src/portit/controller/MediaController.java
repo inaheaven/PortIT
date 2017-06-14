@@ -2,17 +2,15 @@ package portit.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Random;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import javax.servlet.http.Part;
 
 
 /**
@@ -22,54 +20,52 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
  */
 @SuppressWarnings("serial")
 @WebServlet("/media")
+@MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*20)
 public class MediaController extends HttpServlet {
 	
-	private MultipartRequest multi;
-	private String path;
-	private int maxSize;
-	private String encType;
-	
-	public void setMulti(HttpServletRequest request) {
-		try {
-			multi = new MultipartRequest(request, path, maxSize, encType, new DefaultFileRenamePolicy());
-		} catch (Exception e) {
-			System.out.println("업로드 실패");
-			e.printStackTrace();
-		}
-	}
-	public void setPath(String path, HttpServletRequest request) {
-		this.path = request.getServletContext().getRealPath(path);
-	}
-	public void setMaxSize(int maxSize) {
-		this.maxSize = maxSize;
-	}
-	public void setEncType(String encType) {
-		this.encType = encType;
-	}
-	
-	public String getUser() {
-		return multi.getParameter("user");
-	}
-	public String getTitle() {
-		return multi.getParameter("title");
-	}
-	public String getUpfile() {
-		String result = "";
-		Enumeration enume = multi.getFileNames();
-		while(enume.hasMoreElements()) {
-			String name = (String) enume.nextElement();
-			File file = multi.getFile(name);
-			result += file.getPath()+multi.getFilesystemName(name)+" ("+multi.getContentType(name)+", "+file.length()+"Bytes)";
-		}
-		return result;
-	}
+	/**
+	 * 업로드할 파일이 저장될 디렉토리 이름
+	 */
+	private static final String UPLOAD_DIR = "uploads";
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		setPath("files", req);
-		setMaxSize(20 * 1024 * 1024); // 20MBytes
-		setEncType("utf-8");
-		setMulti(req);
+		// 파일 저장 위치의 경로
+		String uploadFilePath = req.getServletContext().getRealPath("")
+				+ File.separator
+				+ UPLOAD_DIR;
+		String fileName = null;
+		
+		// 저장할 디렉토리가 없으면 생성
+		File fileSaveDir = new File(uploadFilePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdirs();
+        }
+        
+        for (Part part : req.getParts()) {
+            fileName = getFileName(part);
+            part.write(uploadFilePath + File.separator + fileName);
+        }
+        
+        // 업로드가 성공했을 때의 처리
+        req.setAttribute("message", fileName + " File uploaded successfully!");
+	}
+	
+	/**
+	 * content-disposition 헤더를 통한 파일이름 추출
+	 * @param part
+	 * @return 파일명 문자열
+	 */
+	private String getFileName(Part part) {
+		// content-disposition 헤더 읽어오기
+		String[] cd = part.getHeader("content-disposition").split(";");
+		// 파일 이름 추출
+		for (String s : cd) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length()-1);
+            }
+        }
+		return "";
 	}
 	
 	/**
