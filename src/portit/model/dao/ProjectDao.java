@@ -86,7 +86,7 @@ public class ProjectDao {
 					+ "set PROJ_TITLE=?, PROJ_INTRO=?,"
 					+ " PROJ_TO=?, PROJ_REGDATE=sysdate,"
 					+ "PROJ_STARTDATE=?, PROJ_PERIOD=?,PROJ_REGENDDATE=?"
-					+ " where PROJ_ID=306";
+					+ " where PROJ_ID=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, project.getProj_title());
 			stmt.setString(2, project.getProj_intro());
