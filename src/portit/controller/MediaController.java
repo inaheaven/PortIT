@@ -17,8 +17,6 @@ import javax.servlet.http.Part;
  * @author gnsngck
  *
  */
-@SuppressWarnings("serial")
-@WebServlet("/media")
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*20)
 public class MediaController {
 	
