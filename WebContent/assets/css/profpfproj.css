@@ -115,8 +115,20 @@ button.cancel {
 	margin-left: 20px;	
 }
 
-
 /********* project register ***********/
+.projreg {
+	padding: 20px;
+	background-color: #e1e1e1;
+}
+
+.projregForm {
+	width: 90%;
+	margin: 25px auto;
+}
+.projregForm label {
+	text-align: right !important;
+	font-size: 14px;
+}
 
 
 /********* profile register ***********/
@@ -133,10 +145,15 @@ button.cancel {
 	font-size: 14px;
 }
 
+#snsList tr {
+	height: 40px;
+}
+
+
+
 .profregForm #skillList {
 	margin-top: 20px;
 }
-
 #skillList .skill {
 	text-align: center;
 }
