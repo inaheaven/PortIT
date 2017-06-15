@@ -3,17 +3,27 @@ package portit.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.taglibs.standard.tag.common.fmt.ParseDateSupport;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Project;
 
 public class ProjectDao {
+	
+	
 	private Connection conn;
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
-	private String sql = null;
 	
 	public ProjectDao() {
 		try{
@@ -55,28 +65,48 @@ public class ProjectDao {
 	//프로젝트 전체 목록
 
 	//프로젝트 등록
-	public void insertPro(int PROJ_ID, String PROJ_TITLE, String PROJ_INTRO, int PROJ_TO, Date PROJ_REGDATE, Date PROJ_STARTDATE, Date PROJ_PERIOD, Date PROJ_REGENDDATE){
-		Project project = new Project();
+	public void insertPro(HttpServletRequest req, HttpServletResponse resp){
+	
+		String proj_title = req.getParameter("proj_title");
+		String proj_intro = req.getParameter("proj_intro");
+		int proj_to = Integer.parseInt(req.getParameter("proj_to"));
+		String proj_startdate =  req.getParameter("proj_startdate");
+		int proj_period = Integer.parseInt(req.getParameter("proj_period"));
+		String proj_regenddate =  req.getParameter("proj_regenddate");
+		
+	
+		try {
+			//프로젝트 시작일에 값을 받아와서 sql문에 입력가능한 형태의 문자열로 재변환
+			Date proj_startdate_format = new SimpleDateFormat("MM/dd/yyyy").parse(proj_startdate);
+			Date proj_regendtdate_format = new SimpleDateFormat("MM/dd/yyyy").parse(proj_regenddate);
+			proj_startdate = new SimpleDateFormat("yyyy-MM-dd").format(proj_startdate_format);
+			proj_regenddate = new SimpleDateFormat("yyyy-MM-dd").format(proj_regendtdate_format);
+		} catch (ParseException e) {
+			System.out.println("날짜 변경 오류"+e);
+		}
+		
+		
 		String sql = "INSERT INTO PROJECT "
 				+ "(PROJ_ID, PROJ_TITLE, PROJ_INTRO, PROJ_TO, PROJ_REGDATE, PROJ_STARTDATE, PROJ_PERIOD, PROJ_REGENDDATE) "
-				+ "VALUES(?, ?, ?, ?, 'sysdate', ?, ?, ?)";
+				+ "VALUES(mypage_proj_id.nextVal, ?, ?, ?, sysdate, ?, ?, ?)";
+	
 		try{
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
-			
-			stmt.setInt(1, project.getProj_id());
-			stmt.setString(2, project.getProj_title());
-			stmt.setString(3, project.getProj_intro());
-			stmt.setInt(4, project.getProj_to());
-			stmt.setDate(5, (java.sql.Date)project.getProj_startdate());
-			stmt.setInt(6, project.getProj_period());
-			stmt.setDate(7, (java.sql.Date) project.getProj_regenddate());
+			stmt.setString(1, proj_title);		//프로젝트 제목
+			stmt.setString(2, proj_intro);		//프로젝트 설명
+			stmt.setInt(3, proj_to);					//프로젝트 모집 인원 수
+			stmt.setString(4, proj_startdate);	//프로젝트 시작일
+			stmt.setInt(5, proj_period);					//프로젝트 기간
+			stmt.setString(6, proj_regenddate);	//프로젝트 마감일
 			rs = stmt.executeQuery();
 			
 		}catch (Exception e) {
 			System.out.println("insertProj()오류 " + e);
 		}
 	}
+	
+	
 	//프로젝트 수정
 	public void updateProj(Connection conn) {
 		getConnection();

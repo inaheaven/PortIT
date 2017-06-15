@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import portit.model.dao.MemberDao;
 import portit.model.dto.Member;
 
-@WebServlet("/join")
 public class MemberJoinController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -34,7 +33,7 @@ public class MemberJoinController extends HttpServlet {
 			Member existingMember = memberDao.findExistingMember(member.getMem_id(), member.getMem_email());
 			if (member.getMem_id() != existingMember.getMem_id()) {
 				// 같은 회원 번호를 가진 회원이 있다면 회원 번호를 재설정
-				member.resetMem_id();
+				//member.resetMem_id();
 			}
 			// 가입 메서드 호출
 			memberDao.insert(member);

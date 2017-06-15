@@ -1,8 +1,7 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="Dashboard">
@@ -66,7 +65,7 @@
 				$("#add-team-5").append($cloneRow);
 				i++;
 			}else{
-				alert("¸ğÁı ºĞ¾ß¼ö¸¦ 5°³ ÀÌ³»·Î Á¦ÇÑÇÕ´Ï´Ù.");
+				alert("ëª¨ì§‘ ë¶„ì•¼ìˆ˜ë¥¼ 5ê°œ ì´ë‚´ë¡œ ì œí•œí•©ë‹ˆë‹¤.");
 			}
 		});
 
@@ -75,7 +74,7 @@
 				$(this).parent().parent().remove();
 				i--;
 			}else{
-				alert("¸ğÁı ºĞ¾ß¼ö¸¦ 1°³ ÀÌ»óÀ¸·Î Á¦ÇÑÇÕ´Ï´Ù.")
+				alert("ëª¨ì§‘ ë¶„ì•¼ìˆ˜ë¥¼ 1ê°œ ì´ìƒìœ¼ë¡œ ì œí•œí•©ë‹ˆë‹¤.")
 			}
 		});
 	});
@@ -90,7 +89,7 @@
 </head>
 
 <body>
-
+<% request.setCharacterEncoding("UTF-8"); %>
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
@@ -111,65 +110,62 @@
 				<div class="row mt">
 					<div class="col-lg-12">
 						<div class="form-panel">
-							<form class="form-horizontal style-form" method="get">
+						<form action="input" class="form-horizontal style-form" method="post">
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÇÁ·ÎÁ§Æ® Á¦¸ñ</label>
+									<label class="col-sm-2 col-sm-2 control-label">í”„ë¡œì íŠ¸ ì œëª©</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control">
+										<input type="text" class="form-control"  name="proj_title">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÇÁ·ÎÁ§Æ® ¼³¸í</label>
+									<label class="col-sm-2 col-sm-2 control-label">í”„ë¡œì íŠ¸ ì„¤ëª…</label>
 									<div class="col-sm-10">
-										<textarea class="form-control"
-											placeholder="ÇÁ·ÎÁ§Æ® ÁÖÁ¦ , ¸ñÀûµî ÀÚ¼¼ÇÑ ¼³¸íÀ» ÀÛ¼ºÇÏ¼¼¿ä" rows="10"></textarea>
+										<textarea class="form-control"  name="proj_intro"
+											placeholder="í”„ë¡œì íŠ¸ ì£¼ì œ , ëª©ì ë“± ìì„¸í•œ ì„¤ëª…ì„ ì‘ì„±í•˜ì„¸ìš”" rows="10"></textarea>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÇÁ·ÎÁ§Æ® °³¹ß
-										È¯°æ</label>
+									<label class="col-sm-2 col-sm-2 control-label">í”„ë¡œì íŠ¸ ê°œë°œ
+										í™˜ê²½</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) windows7, oracle DB °°Àº ½ÇÇà È¯°æ°ú ¼­¹ö È¯°æ ">
+										<input type="text" class="form-control"  name="proj_title"
+											placeholder="ex) windows7, oracle DB ê°™ì€ ì‹¤í–‰ í™˜ê²½ê³¼ ì„œë²„ í™˜ê²½ ">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÇÁ·ÎÁ§Æ® °³¹ß
-										¾ğ¾î</label>
+									<label class="col-sm-2 col-sm-2 control-label">í”„ë¡œì íŠ¸ ê°œë°œ
+										ì–¸ì–´</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) C, JAVA, Python µî">
+										<input type="text" class="form-control" name="proj_language"
+											placeholder="ex) C, JAVA, Python ë“±">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÇÁ·ÎÁ§Æ® °³¹ß
-										µµ±¸</label>
+									<label class="col-sm-2 col-sm-2 control-label">í”„ë¡œì íŠ¸ ê°œë°œ
+										ë„êµ¬</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control"
-											placeholder="ex) Eclipse, Visual Studio2013 µî">
+										<input type="text" class="form-control" name="proj_tool"
+											placeholder="ex) Eclipse, Visual Studio2013 ë“±">
 									</div>
 								</div>
-
-
-
 								<div class="form-group" id="add-team">
-									<label class="col-sm-2 col-sm-2 control-label">¸ğÁı ºĞ¾ß</label>
+									<label class="col-sm-2 col-sm-2 control-label">ëª¨ì§‘ ë¶„ì•¼</label>
 									<div class="col-sm-5">
-										<input type="text" class="form-control"
-											placeholder="ex) ±âÈ¹, ¼³°è, ÇÁ·ĞÆ®, ¹é¿£µå µî">
+										<input type="text" class="form-control" name="proj_field"
+											placeholder="ex) ê¸°íš, ì„¤ê³„, í”„ë¡ íŠ¸, ë°±ì—”ë“œ ë“±">
 									</div>
 									<div class="col-sm-1">
-										<label class="control-label">ÇÊ¿ä ÀÎ¿ø</label>
+										<label class="control-label">í•„ìš” ì¸ì›</label>
 									</div>
 									<div class="col-sm-1">
-										<input type="text" class="form-control">
+										<input type="text" class="form-control" name="proj_to">
 									</div>
 									<div class="col-sm-1">
-										<label class="control-label">¸í</label>
+										<label class="control-label">ëª…</label>
 									</div>
 									<div class="col-sm-2">
-										<button type="button" class="btn btn-default" id="insert">Ãß°¡</button>
-										<button type='button' class='btn btn-default' id='delete'>»èÁ¦</button>
+										<button type="button" class="btn btn-default" id="insert">ì¶”ê°€</button>
+										<button type='button' class='btn btn-default' id='delete'>ì‚­ì œ</button>
 									</div>
 								</div>
 								
@@ -181,53 +177,53 @@
 
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label" for="date">ÇÁ·ÎÁ§Æ®
-										¸ğÁı ¸¶°¨ÀÏ</label>
+									<label class="col-sm-2 col-sm-2 control-label" for="date">í”„ë¡œì íŠ¸
+										ëª¨ì§‘ ë§ˆê°ì¼</label>
 									<div class="col-sm-3">
-										<input class="form-control" id="reg_date" name="reg_date"
-											placeholder="MM/DD/YYY" type="text" />
+										<input class="form-control" id="proj_regenddate" name="proj_regenddate"
+											placeholder="MM/DD/YYYY" type="text" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÇÁ·ÎÁ§Æ® ¿î¿µ
-										±â°£</label> <label class="col-sm-2 control-label" for="date">ÇÁ·ÎÁ§Æ®
-										¿¹Á¤ ½ÃÀÛÀÏ</label>
+									<label class="col-sm-2 col-sm-2 control-label">í”„ë¡œì íŠ¸ ìš´ì˜
+										ê¸°ê°„</label> <label class="col-sm-2 control-label" for="date">í”„ë¡œì íŠ¸
+										ì˜ˆì • ì‹œì‘ì¼</label>
 									<div class="col-sm-3">
-										<input class="form-control" id="start_date" name="start_date"
-											placeholder="MM/DD/YYY" type="text" />
+										<input class="form-control" id="proj_startdate" name="proj_startdate"
+											placeholder="MM/DD/YYYY" type="text" />
 									</div>
-									<label class="col-sm-1 col-sm-1 control-label" for="date">¿¹»ó
-										±â°£</label>
+									<label class="col-sm-1 col-sm-1 control-label" for="date">ì˜ˆìƒ
+										ê¸°ê°„</label>
 									<div class="col-sm-2">
-										<input class="form-control" id="end_date" name="end_date"
+										<input class="form-control" name="proj_period"
 											type="text" />
 									</div>
 									<div class="col-sm-1 col-sm-1 control-label">
-										<label>ÀÏ</label>
+										<label>ì¼</label>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÇÔ²²ÇÒ »ç¶÷</label>
+									<label class="col-sm-2 col-sm-2 control-label">í•¨ê»˜í•  ì‚¬ëŒ</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control">
 									</div>
 									<div class="col-sm-2">
-										<button type="button" class="btn btn-default">°Ë»ö</button>
+										<button type="button" class="btn btn-default">ê²€ìƒ‰</button>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ÀÌ¹ÌÁö ¹×
-										µ¿¿µ»ó</label>
+									<label class="col-sm-2 col-sm-2 control-label">ì´ë¯¸ì§€ ë°
+										ë™ì˜ìƒ</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control">
 									</div>
 									<div class="col-sm-2">
-										<button type="button" class="btn btn-default">¾÷·Îµå</button>
+										<button type="button" class="btn btn-default">ì—…ë¡œë“œ</button>
 									</div>
 								</div>
 								<div class="form-group" style="text-align: center;">
-									<button type="button" class="btn btn-success">µî·ÏÇÏ±â</button>
-									<button type="button" class="btn btn-danger">Ãë¼ÒÇÏ±â</button>
+									<button type="submit" class="btn btn-success">ë“±ë¡í•˜ê¸°</button>
+									<button type="button" class="btn btn-danger">ì·¨ì†Œí•˜ê¸°</button>
 								</div>
 							</form>
 						</div>
@@ -271,8 +267,8 @@
 	<script>
 		$(document).ready(
 				function() {
-					var reg_date_input = $('input[name="reg_date"]'); //our date input has the name "date"
-					var start_date_input = $('input[name="start_date"]'); //our date input has the name "date"
+					var proj_regenddate_input = $('input[name="proj_regenddate"]'); //our date input has the name "date"
+					var proj_startdate_input = $('input[name="proj_startdate"]'); //our date input has the name "date"
 					var container = $('.bootstrap-iso form').length > 0 ? $(
 							'.bootstrap-iso form').parent() : "body";
 					var options = {
@@ -281,8 +277,8 @@
 						todayHighlight : true,
 						autoclose : true,
 					};
-					reg_date_input.datepicker(options);
-					start_date_input.datepicker(options);
+					proj_regenddate_input.datepicker(options);
+					proj_startdate_input.datepicker(options);
 				})
 	</script>
 </body>
