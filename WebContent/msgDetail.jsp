@@ -1,8 +1,6 @@
-<%@ page  contentType="text/html; charset=UTF-8"%>
-
-
-
-
+<%@ page  contentType="text/html; charset=EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +12,6 @@
 	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
 <title>DASHGUM - Bootstrap Admin Template</title>
-
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
@@ -31,75 +28,30 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    
-<script src="assets/js/jquery-3.2.1.min.js"></script>
-<script>
-
-
-//View->Controller  -MessageController
-// 컨트롤러 : /Project2/msg
-
-/*수정방안.
- 1.J_Query로 데이터 전송.
-	데이터에 어떻게 reqeust에 전달해야하나?
-*/
-
-/*  	
- $(document).ready(function() {
-	$("#btn-send").click(function() {
-		//alert("aa");
-		
-		var msg_content =$("#msg_content");
-		var mem_id_sender =$("#mem_id_sender");
-		//이 변수를 어떻게 request에 담아야하나요 ㅠㅠ?
-		
-		location.href="/Project2/msg";
-	});
-});  
-*/
-
-
-/*	일단 form방식으로 사용해보자.
- 	dto의 변수명과 id값이 동일해야한다.
- */
-
-</script>
-
-
-
-
-
-
 </head>
 
-
-
-
-
 <body>
-
-<%
-//로그인 : 메일
-//Session에 저장되는것 : mem_ID (DB에서 조회해야함.)
-session.setAttribute("longin_id","2");
-%>
 
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
 		<!--header start-->
+		
 		<header class="header black-bg">
 			<div class="sidebar-toggle-box">
 			</div>
+			
 		</header>
+		
+		
 		<!--header end-->
 
 		<!-- **********************************************************************************************************************************************************
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
 		<!--sidebar start-->
+		
 		
 		<!--sidebar end-->
 
@@ -109,38 +61,77 @@ session.setAttribute("longin_id","2");
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-				<div class="col-md-12 mt msg msgSend">
-					<div class="msgSendContent">
-						<form method="post" action="/Project2/msg?cmd=list_send" class="msgForm clearfix">
-									<div class="form-group col-md-8 center" >
-								<label class="control-label" for="msgReceiver">받는 사람 </label><br>
-								<div class="">
-									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" value=""/>
-								</div>
-							</div><br>
-							<div class="form-group col-md-8 center">
-								<label class="control-label" for="msgText">내용 </label><br>
-								<div>
-									<input class="form-control" type="text" id="msgText" name="msgText" value=""/>
-								</div>
+				<div class="col-md-12 mt msg msgDetail">
+					<div class="panel-group msgDetailContent">
+						<div class="panel panel-default msgBox">
+							<div class="panel-heading">
+								<span class="pull-left">
+									<a href="#">
+										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
+										<span class="msgSender">�߽��� �̸�</span>
+									</a>
+								</span>
+								<span class="pull-right"> 
+									<a href="msgSend.html">
+										<button type="button" class="btn">�޼��� ������</button>
+									</a>&nbsp;&nbsp;&nbsp;
+									<a href="msgList.html">
+										<button type="button" class="btn">���</button>
+									</a>
+								</span>								
 							</div>
-							<div class="msgBtn col-md-3 center">
-								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn" onclick="location.href='#'">돌아가기</button>
-							</div>
-						</form>
+							<div class="panel-body">
+							
+								<c:forEach var="msg" items="${msgList}" varStatus="staus">
+							
+								<div class="msgContentBox mb clearfix"> <!-- �ݺ� -->
+									<span class="pull-left col-md-10 msgContent">
+									
+											${msg.msg_content}
+									
+									</span>
+									<span class="pull-right col-md-2">
+										<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>17.05.12 16:34</span>
+										<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">����</button></span>											
+									</span>										
+								</div>	
+								
+								</c:forEach>
+								
+								
+								
+								
+								
+								
+								
+								<!-- ���������̼� -->
+								<div class="center"> 
+									1 2 3 4 5
+								</div>					
+							</div>			
+								
+						</div> <!-- END - msgBoxOpen -->
+					</div> <!-- END - msgBox -->			
+						
+							
 					</div>
 				</div>
 
 
 
+				<!--  chat box end -->
+
+
+
 			</section>
-			<!--/wrapper -->
+			<! --/wrapper -->
 		</section>
+
+
+
+
+
 		<!-- /MAIN CONTENT -->
-
-
-
 
 		<!--main content end-->
 		<!--footer start-->
@@ -173,9 +164,10 @@ session.setAttribute("longin_id","2");
 	<script>
       //custom select box
 
-     /*  $(function(){
+      $(function(){
           $('select.styled').customSelect();
-      }); */
+      });
+
   </script>
 
 </body>

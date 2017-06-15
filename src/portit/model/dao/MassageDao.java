@@ -13,21 +13,21 @@ import portit.model.dto.MessageDto;
 public class MassageDao{
 	
 /*
- insertMessage()	메세지 작성
- getMessageList()	메세지 리스트 조회 
+ insertMessage()	: 메세지 보내기.
+ getMessageList()	: Mem_ID 에 해당하는 대화목록을 LIST에 저장해서 리턴한다.
  */
 	
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
-	private int longin_id;				//로그인한 사용자 MEM_ID
+	private int login_id;				//로그인한 사용자 MEM_ID
 	
 	
 	
-	public MassageDao(int _longin_id){
+	public MassageDao(int _login_id){
 		try{
-			this.longin_id=_longin_id;
+			this.login_id=_login_id;
 			pool = DBConnectionMgr.getInstance();
 		}
 		catch(Exception err){
@@ -77,47 +77,106 @@ public class MassageDao{
 	
 	
 	
-	// 목록 불러오기.
-	public List getMessageList(String MEM_ID_SENDER, String MEM_EMAIL){
+	// '특정발신자'로 수신 And 발신 메세지.
+	public ArrayList getMessageListAll(String Type, String Name, int Msg_Sender){
 		
-		/* 
-		 1.ArrayList 선언
-		 2.list에 Select에 조회된 데이터 반복을 저장
-		 3.
-		 * */
-		
-		
-		//ID로 도메인을 찾아오는 쿼리가 필요해진다.
-		
+		/*
+		 MemID 에 해당하는 대화목록을 LIST에 저장해서 리턴한다.
+			
+		 1.ArrayList 준비 (msglist를 담는다)
+		 2.list에 조회된 msg를 반복해서 답는다.
+		*/
 		
 		ArrayList list = new ArrayList();
 		String sql = null;
 		
-		if(MEM_ID_SENDER == null){
-			sql = "select * from Message where MEM_ID_SENDER=? or MEM_ID_RECEIVER=?;";
-		}
-		else{
-			sql = "select * from Message where " 
-				+ MEM_ID_SENDER + " like '%" + MEM_EMAIL 
-				+ "%' order by b_pos";
-		}
-		
+	
 		try{
+			//sql->connection->pstmt-rs
+			if(Type == null){
+				//쿼리문이 닉네임을 검색할때와 이름을 검색할때로 나뉘어야한다.
+				//우선 1차적으로 내가 발신or수신인 모든 데이터를 뽑는다.(MsgDetail에 보여진다)
+				//다음으로 내가 수신자인것만 뽑는다.(msgList에 보여진다.)
+				//사용자 정보를 출력하기 위해서 키값이 필요한데, mem_id로 사용하면된다.
+				
+				sql="select * from Message"+
+					"where (mem_id_sender ="+String.valueOf(login_id);
+				sql=sql.concat("and MEM_ID_RECEIVER="+String.valueOf(Msg_Sender));
+				sql=sql.concat(")or (mem_id_sender = "+String.valueOf(login_id));
+				sql=sql.concat("and MEM_ID_RECEIVER="+String.valueOf(Msg_Sender)+")");
+
+				System.out.println("수신메세지 확인"+sql);
+			}
+			
+			else{
+				//검색조건  유
+				//sql =null; 
+			}
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, longin_id);
-			pstmt.setInt(2, longin_id);
 			rs = pstmt.executeQuery();
 			
+			//DB 인출확인
 			while(rs.next()){
-				MessageDto message = new MessageDto();
-				message.setMsg_id(rs.getInt("MSG_ID"));
-				message.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
-				message.setMem_id_receiver(rs.getInt("MEM_ID_RECEIVER"));
-				message.setMsg_isread(rs.getString("MSG_ISREAD"));
-				message.setMsg_content(rs.getString("MSG_CONTENT"));
-				message.setMsg_date(rs.getString("MSG_DATE"));
-				list.add(message);
+				MessageDto Dto = new MessageDto();
+				Dto.setMsg_id(rs.getInt("MSG_ID"));
+				Dto.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
+				Dto.setMem_id_receiver(rs.getInt("MEM_ID_RECEIVER"));
+				Dto.setMsg_isread(rs.getString("MSG_ISREAD"));
+				Dto.setMsg_content(rs.getString("MSG_CONTENT"));
+				Dto.setMsg_date(rs.getString("MSG_DATE"));
+				list.add(Dto);
+			}
+		}
+		catch(Exception err){
+			System.out.println("getMessageListAll()에서 오류");
+			err.printStackTrace();
+		}
+		finally{
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return list;
+	}
+	
+	
+	
+	
+	// '특정발신자'로 부터받은 수신메세지.
+	public ArrayList getMessageList(String Type, String Name, int Msg_Sender){
+		
+		ArrayList list = new ArrayList();
+		String sql = null;
+		
+		
+		try{
+			//sql->connection->pstmt-rs
+			if(Type == null){
+				
+				sql="select * from Message"+
+						"where (mem_id_sender ="+String.valueOf(Msg_Sender);
+				sql=sql.concat("and MEM_ID_RECEIVER="+String.valueOf(login_id)+")");
+				
+			}
+			
+			else{
+				sql = "select * from Message where " 
+						+ Type + " like '%" + Name + "%' ";
+			}
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			
+			//DB 인출확인
+			while(rs.next()){
+				MessageDto Dto = new MessageDto();
+				Dto.setMsg_id(rs.getInt("MSG_ID"));
+				Dto.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
+				Dto.setMem_id_receiver(rs.getInt("MEM_ID_RECEIVER"));
+				Dto.setMsg_isread(rs.getString("MSG_ISREAD"));
+				Dto.setMsg_content(rs.getString("MSG_CONTENT"));
+				Dto.setMsg_date(rs.getString("MSG_DATE"));
+				list.add(Dto);
 			}
 		}
 		catch(Exception err){
@@ -132,6 +191,75 @@ public class MassageDao{
 	
 	
 	
+		//MEM_id를 한글이름으로 변환. (확인못함)
+		//list에서 꺼내온값을 list에 다시 저장하기 때문에 mem_id를 문자열로 저장.
+		//불필요한 casting과정을 줄인다.
+		public String convertToName(String mem_id){
+			String sql = null;
+			String name = null;
+			
+			try{
+					sql="select distinct PROF_NAME "+
+						"FROM MEMBER INNER JOIN	PROFILE "+
+						"on MEMBER.MEM_ID=profile.MEM_ID "+
+						"where MEMBER.MEM_ID=";
+				
+				/*	sql = "select distinct PROF_NAME "+
+							"FROM MESSAGE INNER JOIN PROFILE "+
+							"on message.MEM_ID_SENDER=profile.mem_ID "+
+							"where message.MEM_ID_SENDER=";*/
+					sql = sql.concat(mem_id);	
+	
+					con = pool.getConnection();
+					pstmt = con.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					name= rs.getString("PROF_NAME");
+				}
+			}
+			catch(Exception err){
+				System.out.println("convertToName()에서 오류");
+				err.printStackTrace();
+			}
+			finally{
+				pool.freeConnection(con, pstmt, rs);
+			}
+			
+			return name;
+	}
+	
+		
+	
+		//메세지 발신자 List	(확인 못함)
+		//msgList.jsp에서 호출되어야한다.
+		public ArrayList getMsgSender(int mem_id){
+			String sql = null;
+			String name = null;
+			ArrayList list = new ArrayList();
+			
+			try{
+					sql = "select distinct MEM_ID_SENDER "+
+							"FROM MESSAGE "+
+							"where MEM_ID_RECEIVER=";
+					sql = sql.concat(String.valueOf(mem_id));	
+					con = pool.getConnection();
+					pstmt = con.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					list.add(rs.getString("MEM_ID_SENDER"));
+				}
+			}
+			catch(Exception err){
+				System.out.println("getMSG_Sender()에서 오류");
+				err.printStackTrace();
+			}
+			finally{
+				pool.freeConnection(con, pstmt, rs);
+			}
+			return list;
+	}
 	
 	
 	

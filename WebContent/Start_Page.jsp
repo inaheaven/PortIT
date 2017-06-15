@@ -38,19 +38,24 @@
 
 
 
-
-
 <!-- JSP:useBean -->
 <jsp:useBean id="dao" class="portit.model.dao.MassageDao"/>
 
 
+<%
+//로그인 : 메일
+//Session에 저장되는것 : mem_ID (DB에서 조회해야함.)
+session.setAttribute("longin_id","2");
+%>
+
 <script>
-/* 	window.onload=function(){
-		//Ctrl에 접근해서 list 뽑아오기.
-		if(){
-		location.href="/Project2/msg?cmd=list";
-		}
-	}; */
+$(document).ready(function(){
+	
+			 $("#push").click(function(){
+					alert("버튼눌림");
+				});
+		});
+
 </script>
 
 
@@ -61,7 +66,7 @@
 		<!--header start-->
 		<header class="header black-bg">
 			<!--logo start-->
-			<a href="index.html" class="logo"><b>Port IT</b></a>
+			<a href="index.html" class="logo"><b>Start!</b></a>
 			<!--logo end-->
 			<div class="nav notify-row" id="top_menu">
 				<!--  menu start -->
@@ -112,7 +117,7 @@
 						<ul class="dropdown-menu extended inbox">
 							<div class="notify-arrow notify-arrow-yellow"></div>
 							<li>
-								<p class="yellow">김수연 님</p>
+								<p class="yellow">조병규 님</p>
 							</li>
 							<li><a href="">내 프로필</a></li>
 							<li><a href="">팔로잉한 멤버</a> <a href="">북마크한 포트폴리오</a></li>
@@ -137,7 +142,7 @@
 							<a href="profile.html"><img src="assets/img/ui-sam.jpg"
 								class="img-circle" width="60"></a>
 						</p>
-						<h5 class="centered">${longin_id} 님</h5>
+						<h5 class="centered">조병규 님</h5>
 					</div>
 					<hr class="line" />
 					<li class="sub-menu"><a href="index.html"> <span>My
@@ -153,7 +158,7 @@
 					</a></li>
 					<li class="sub-menu"><a href=""> <span>Notification</span>
 					</a></li>
-					<li class="sub-menu"><a href="msgList.jsp"> <span>Message</span>
+					<li class="sub-menu"><a href="/Project2/msg?cmd=list"> <span>Message</span>
 					</a></li>
 					<hr class="line" />
 					<li class="sub-menu"><a href=""> <span>My Account</span>
@@ -169,98 +174,11 @@
 		<!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
+		
+		
 		<!--main content start-->
-		<section id="main-content">
-			<section class="wrapper site-min-height">
-				<!--  Message List -->
-				<div class="col-md-12 mt msg msgList">
-					<div class="msgList_top">
-						<span class="pull-left">
-							<form class="form-inline" method="post" action="#">
-								<div class="form-group">
-									<input type="text" class="form-control" id="msgSearch"
-										placeholder="Search Member">
-									<button class="btn" type="submit">Search</button>
-								</div>
-							</form>
-						</span> 
-						<span class="pull-right"> 
-							<a href="/Project2/msg?cmd=send">
-								<button class="btn">Send New Message</button>
-							</a>
-						</span>
-					</div>
-					
-					<!-- Message List Body -->
-					<div class="panel-group msgListContent" id="msgBoxList">
-						
-						
-						
-						
-						<c:forEach var="msgSender" items="${msgSenderList}" begin="0" varStatus="status">
-						<!--  #################반복시작#################### -->
-
-						<div class="panel panel-default msgBox">
-							<!-- Head -->
-							<div class="panel-heading">
-								<span class="pull-left">
-									<a href="#">
-										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
-										<span class="msgSender">${msgSender}</span>
-									</a>
-								</span>
-								<span class="pull-right"> 
-									<a href="#">
-										<button type="button" class="btn">메세지 보내기</button>
-									</a>
-									<a data-toggle="collapse" data-parent="#msgBoxList" href="#m1_${status.count}" class="updown collapsed"> 
-										<i class="fa fa-chevron-down"></i>
-									</a>
-								</span>								
-							</div>
-							<!-- End_Head -->
-
-
-							<div id="m1_${status.count}" class="panel-collapse collapse">
-								<div class="panel-body">
-					
-									<!--  Msg_Content -->
-									<div class="msgContentBox mb clearfix"> 
-										<span class="pull-left col-md-10 msgContent">
-												내용내용내용내용내용내용내용^^
-										</span>
-										<span class="pull-right col-md-2">
-											<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>날짜^^</span>
-											<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></span>											
-										</span>										
-									</div>	
-									<!--  END_Msg_Content -->
-									
-									<div class="pull-right">
-										<button type="button" class="btn" onclick="location.href='/Project2/msg?cmd=detail'">더보기</button>
-									</div>					
-								</div>
-							</div> <!-- END - msgBoxOpen -->
-						</div> <!-- END - msgBox -->
-
-									
-									
-						<!-- -------------반복끝---------------------------------- -->
-						</c:forEach>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-					</div> <!-- END - Message List Body  -->
-				</div> 
-			</section>
-			<!--/wrapper -->
-		</section>
+		
+		
 		<!-- /MAIN CONTENT -->
 
 		<!--main content end-->

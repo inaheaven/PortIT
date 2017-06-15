@@ -29,7 +29,6 @@ public class MessageController extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		System.out.println("check1");
 		try {
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
@@ -39,32 +38,59 @@ public class MessageController extends HttpServlet {
 			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
 			
 			
+			/*ArrayList msgList = (ArrayList)session.getAttribute("msgList");
+			ArrayList msgListAll = (ArrayList)session.getAttribute("msgListAll");*/
+			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
 			
-			if(cmd.equals("send")){
-				
-			//모델 : Request와 login_id전달.
+			
+			//모델 : Request와 login_id전달, 
 			MessageModel model = new MessageModel(req,login_id);
 			
-			//모델 : DB전달	(MessageModel)
-			model.getMessage();
-			}
 			
-			else if(cmd.equals("CART")){
+			
+			
+			//msgSend.jsp
+			if(cmd.equals("list_send")){
+				//DB_InPut
+				model.getMessage();
 				
-				//url="/WEB-INF/exam2/cart.jsp";
-				url="WEB-INF/exam2/bookShop.jsp";
-
-				//if(bookList==null){
-				//		bookList= new ArrayList();
-				//}
-				//booklist는 접속끊키기 전까지 보관되어야하기때문에 session에 담겨있어야한다.
-			//	bookList.add(getBook(req));
+				url="msgList.jsp";
+				
+		/*		msgListAll=model.getListAll();
+				session.setAttribute("msgListAll", msgListAll);
+				
+				msgList=model.getList();
+				session.setAttribute("msgList", msgList);*/
+			}
+			
+			
+			//msgList.jsp
+			//발신자목록  request!
+			else if(cmd.equals("list")){
+				
+				url="msgList.jsp";
+				
+				msgSenderList=model.getSederList();
+				session.setAttribute("msgSenderList", msgSenderList);
 			}
 			
 			
 			
 			
-			//session.setAttribute("bookList",bookList);
+			else if(cmd.equals("detail")){
+				url="msgDetail.jsp";
+			}
+			
+			
+			//이름중복.
+			else if(cmd.equals("send")){
+				url="msgSend.jsp";
+			}
+			
+			
+			
+			
+			
 			RequestDispatcher view=	req.getRequestDispatcher(url);
 			view.forward(req,resp);
 		} catch (Exception e) {
