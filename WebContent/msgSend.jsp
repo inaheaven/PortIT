@@ -126,7 +126,7 @@ session.setAttribute("longin_id","2");
 							</div>
 							<div class="msgBtn col-md-3 center">
 								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn" onclick="location.href='#'">돌아가기</button>
+								<button type="button" class="btn" onclick="location.href='/Project2/msg?cmd=list'">돌아가기</button>
 							</div>
 						</form>
 					</div>

@@ -27,7 +27,7 @@ public class MessageModel {
 	
 	
 	//메세지를 보낸다.
-	public void getMessage() {
+	public void insertMessage() {
 		/*
 		 * 1.보내기 페이지에서 'MessageSend'page에서 request가 들어온다. 
 		 * 2.request에서 데이터를 뽑아낸다getParameter 
@@ -42,7 +42,6 @@ public class MessageModel {
 		//1.login할때 ID를 session에 저장한다.
 		//2.session에 저장된 ID를  mem_id_sender로 dto에 저장한다.
 		//3.우선 임의의 ID를 직접 입력한다.
-		//4.MSG_Send.jsp 에서 'session.setAttribute("longin_id","CaterJo");'
 		//5.session은 JSP, Servelet에서만 접근이 가능하다
 		//6.controller에서 ID를 전달하자.
 		
@@ -60,11 +59,11 @@ public class MessageModel {
 	
 	// msgList.jsp
 	//~에게 받은 메세지.
-	public ArrayList getReciveMsg(int Msg_Sender){
+	public ArrayList getReciveMsg(String Msg_Sender){
 		this.list = new ArrayList();
 		
 		//dao 변수1: Type(이름,nick), 변수2: 검색어.
-		this.list=dao.getMessageList(null,null, Msg_Sender);
+		this.list=dao.getReciveMsg(null,null, Msg_Sender);
 		
 		return list;
 	}
@@ -90,7 +89,7 @@ public class MessageModel {
 	
 	//msgList.jsp
 	//발신자 목록!
-	public ArrayList getSederList(){
+	public ArrayList getSenderList(){
 		
 		
 		this.list = new ArrayList();
@@ -99,28 +98,45 @@ public class MessageModel {
 		/*
 		 이름은 키값이 아니기때문에 식별자로써 할수없다.
 		 그럼 이름과 mem_id를 묶어서 키값으로 사용할 수 있다.
-		->DB에 접근할때. 이게 통일된것이 닉네임.
+		->DB에 접근할때. 이것을 통일된것이 닉네임.
 		 */
 		
-		//Covert to name
+		
+		/*//한글이름으로 변환.
 		for(int i=0; i<list.size();i++){
-			
-			//list.set(i, dao.convertToName((String)list.get(i)));
-			
+		
 			list.set(i, dao.convertToName((String)list.get(i)));
 			
-			/*
 			1.list에서 mem_id를 꺼내온다.
 			2.DB에서 해당하는 한글이름을 출력받는다.
-			3.String으로 캐스팅
-			4.다시 integer로 캐스팅
-			5.list에 다시 setting해준다. 
-			*/
-		}
+			3.list에 다시 setting해준다. 
+		}*/
+		
+		
+		convertToName(list);
 		
 		return this.list;
 	}
 	
+	
+	
+	
+	
+	
+	public ArrayList convertToName(ArrayList _list){
+		/*
+		1.list에서 mem_id를 꺼내온다.
+		2.DB에서 해당하는 한글이름을 출력받는다.
+		3.list에 다시 setting해준다. 
+		4.변환된 한글화 List를 반환한다.
+		*/
+		
+		//한글이름으로 변환.
+		for(int i=0; i<_list.size();i++){
+			_list.set(i, dao.convertToName((String)_list.get(i)));
+		}
+		return _list;
+	}
 }
 
 

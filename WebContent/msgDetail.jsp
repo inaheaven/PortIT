@@ -72,16 +72,20 @@
 									</a>
 								</span>
 								<span class="pull-right"> 
-									<a href="msgSend.html">
+									<a href="/Project2/msg?cmd=send">
 										<button type="button" class="btn">메세지 보내기</button>
 									</a>&nbsp;&nbsp;&nbsp;
-									<a href="msgList.html">
+									<a href="/Project2/msg?cmd=list">
 										<button type="button" class="btn">목록</button>
 									</a>
 								</span>								
 							</div>
 							<div class="panel-body">
 							
+							
+							
+							
+							<!--  #######반복 시작 ############# -->
 								<c:forEach var="msg" items="${msgList}" varStatus="staus">
 							
 								<div class="msgContentBox mb clearfix"> <!-- 반복 -->
@@ -97,7 +101,7 @@
 								</div>	
 								
 								</c:forEach>
-								
+								<!--  ###########반복 끝############# -->
 								
 								
 								

@@ -37,7 +37,6 @@
 
 
 
-
 <!-- JSP:useBean -->
 <jsp:useBean id="dao" class="portit.model.dao.MassageDao"/>
 

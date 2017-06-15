@@ -46,7 +46,7 @@ public class MassageDao{
 	}
 	
 	
-	// msgSend.jsp (메세지 보내기) 성공!
+	// msgSend.jsp (메세지 보내기) 확인!!
 	public void insertMessage(MessageDto dto){
 		String sql = "insert into Message"
 			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
@@ -105,7 +105,6 @@ public class MassageDao{
 				sql=sql.concat(")or (mem_id_sender = "+String.valueOf(login_id));
 				sql=sql.concat("and MEM_ID_RECEIVER="+String.valueOf(Msg_Sender)+")");
 
-				System.out.println("수신메세지 확인"+sql);
 			}
 			
 			else{
@@ -142,7 +141,7 @@ public class MassageDao{
 	
 	
 	// '특정발신자'로 부터받은 수신메세지.
-	public ArrayList getMessageList(String Type, String Name, int Msg_Sender){
+	public ArrayList getReciveMsg(String Type, String Name, String Msg_Sender){
 		
 		ArrayList list = new ArrayList();
 		String sql = null;
@@ -151,11 +150,9 @@ public class MassageDao{
 		try{
 			//sql->connection->pstmt-rs
 			if(Type == null){
-				
-				sql="select * from Message"+
-						"where (mem_id_sender ="+String.valueOf(Msg_Sender);
-				sql=sql.concat("and MEM_ID_RECEIVER="+String.valueOf(login_id)+")");
-				
+				sql="select * from Message "+
+						"where (mem_id_sender ="+Msg_Sender;
+				sql=sql.concat(" and MEM_ID_RECEIVER="+String.valueOf(login_id)+")");
 			}
 			
 			else{
@@ -169,6 +166,9 @@ public class MassageDao{
 			
 			//DB 인출확인
 			while(rs.next()){
+				//Dto는 한개의 메세지
+				//list는 메세지묶음,즉 대화.
+				
 				MessageDto Dto = new MessageDto();
 				Dto.setMsg_id(rs.getInt("MSG_ID"));
 				Dto.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
@@ -180,7 +180,7 @@ public class MassageDao{
 			}
 		}
 		catch(Exception err){
-			System.out.println("getMessageList()에서 오류");
+			System.out.println("getReciveMsg()에서 오류");
 			err.printStackTrace();
 		}
 		finally{
@@ -191,7 +191,7 @@ public class MassageDao{
 	
 	
 	
-		//MEM_id를 한글이름으로 변환. (확인못함)
+		//MEM_id를 한글이름으로 변환. (확인!)
 		//list에서 꺼내온값을 list에 다시 저장하기 때문에 mem_id를 문자열로 저장.
 		//불필요한 casting과정을 줄인다.
 		public String convertToName(String mem_id){
@@ -231,7 +231,7 @@ public class MassageDao{
 	
 		
 	
-		//메세지 발신자 List	(확인 못함)
+		//메세지 발신자 List	(확인!)
 		//msgList.jsp에서 호출되어야한다.
 		public ArrayList getMsgSender(int mem_id){
 			String sql = null;
@@ -239,20 +239,33 @@ public class MassageDao{
 			ArrayList list = new ArrayList();
 			
 			try{
-					sql = "select distinct MEM_ID_SENDER "+
+				
+					sql = "Select mem_ID_sender, max(MSG_DATE)" +
+							"From (select * from message where MEM_ID_RECEIVER= ";
+					sql = sql.concat(String.valueOf(mem_id));
+					sql = sql.concat(") group by (mem_ID_sender) ");
+					sql = sql.concat("order by max(msg_date) desc");	
+				
+					System.out.println(sql);
+					
+					/*
+					 * sql = "select distinct MEM_ID_SENDER "+
 							"FROM MESSAGE "+
 							"where MEM_ID_RECEIVER=";
-					sql = sql.concat(String.valueOf(mem_id));	
+					sql = sql.concat(String.valueOf(mem_id));
+					*/
+					
 					con = pool.getConnection();
 					pstmt = con.prepareStatement(sql);
 					rs = pstmt.executeQuery();
 				
 				while(rs.next()){
+					//정수형을 저장.
 					list.add(rs.getString("MEM_ID_SENDER"));
 				}
 			}
 			catch(Exception err){
-				System.out.println("getMSG_Sender()에서 오류");
+				System.out.println("getMsgSender()에서 오류");
 				err.printStackTrace();
 			}
 			finally{

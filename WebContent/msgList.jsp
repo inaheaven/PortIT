@@ -210,7 +210,7 @@
 									</a>
 								</span>
 								<span class="pull-right"> 
-									<a href="#">
+									<a href="/Project2/msg?cmd=send">
 										<button type="button" class="btn">메세지 보내기</button>
 									</a>
 									<a data-toggle="collapse" data-parent="#msgBoxList" href="#m1_${status.count}" class="updown collapsed"> 
@@ -245,7 +245,7 @@
 
 									
 									
-						<!-- -------------반복끝---------------------------------- -->
+						<!-- ##################### 반복 끝 ################## -->
 						</c:forEach>
 						
 						

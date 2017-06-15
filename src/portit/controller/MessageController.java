@@ -41,6 +41,7 @@ public class MessageController extends HttpServlet {
 			/*ArrayList msgList = (ArrayList)session.getAttribute("msgList");
 			ArrayList msgListAll = (ArrayList)session.getAttribute("msgListAll");*/
 			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
+			ArrayList list= (ArrayList)session.getAttribute("msgList");
 			
 			
 			//모델 : Request와 login_id전달, 
@@ -48,46 +49,82 @@ public class MessageController extends HttpServlet {
 			
 			
 			
-			
-			//msgSend.jsp
-			if(cmd.equals("list_send")){
-				//DB_InPut
-				model.getMessage();
-				
-				url="msgList.jsp";
-				
-		/*		msgListAll=model.getListAll();
-				session.setAttribute("msgListAll", msgListAll);
-				
-				msgList=model.getList();
-				session.setAttribute("msgList", msgList);*/
-			}
-			
-			
 			//msgList.jsp
 			//발신자목록  request!
-			else if(cmd.equals("list")){
+			 if(cmd.equals("list")){
+				//From msgDetail,msgSender
+				url="msgList.jsp";
+				
+				
+				//1.발신자 목록.
+				msgSenderList=model.getSenderList();
+				
+				session.setAttribute("msgSenderList", msgSenderList);
+				
+				
+				//2.수신메세지 목록 따오기 :From sender목록
+					//화면을 처음에 띄워줄때 서버요청없이 한번에 처리해주기위해 msg리스트를 처음에 넘겨야한다.
+					//여기서 msgSenderList만큼 반복을 돌아서 msg리스트를 넘겨야한다.
+				
+				/*	
+				 	Sender_id가 한글로 되어있기때문에 문제가 생긴다 식별자 오류.
+				//String[] reciveMsg= new String[msgSenderList.size()];
+			
+				for(int i=0; i<msgSenderList.size(); i++){
+					
+					//SenderList에 담긴 발신자의 대화내용 list
+					list=model.getReciveMsg((String)msgSenderList.get(i));
+					
+					String reciveMsg="rm_";
+					reciveMsg.concat(String.valueOf(i));
+					
+					
+					 reciveMsg[i]="reciveMsg";
+					reciveMsg[i]=reciveMsg[i].concat(String.valueOf(i));
+					
+					session.setAttribute(reciveMsg, list);
+				}
+				*/
+			}
+			
+			
+			else if(cmd.equals("list_send")){
+				//From msgSend
 				
 				url="msgList.jsp";
 				
-				msgSenderList=model.getSederList();
+				//DB_InPut Msg
+				model.insertMessage();
+
+				
+				//발신자 목록.
+				msgSenderList=model.getSenderList();
 				session.setAttribute("msgSenderList", msgSenderList);
+				
+				//~발신자로 부터의 수신메세지 목록
 			}
+			
 			
 			
 			
 			
 			else if(cmd.equals("detail")){
 				url="msgDetail.jsp";
+				//해당발신자의 mem_id를 어디서 넘겨받아야하나...?
+				
+				
+				//~발신자의 수신,발신 msg목록
 			}
 			
 			
-			//이름중복.
+			
+			
 			else if(cmd.equals("send")){
+				//from msgList, msgDetail
+				
+				
 				url="msgSend.jsp";
 			}
-			
-			
 			
 			
 			
