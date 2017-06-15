@@ -12,5 +12,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  */
 public interface Controller {
-	public Object execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
+	/**
+	 * 컨트롤러의 실행 메서드
+	 * @param req
+	 * @param resp
+	 * @return {"inc:|fwd:", "뷰 URL"}이 저장된 배열
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String[] execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
 }

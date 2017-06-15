@@ -18,7 +18,7 @@ public class ControllerFactory {
 	private static ControllerFactory instance = new ControllerFactory();
 	
 	/**
-	 * 인스턴스를 가져다 쓸 수 있는 getter 메소드
+	 * 인스턴스를 가져다 쓸 수 있는 getter 메서드
 	 * @return ControllerFactory 인스턴스
 	 */
     public static ControllerFactory getInstance() {
