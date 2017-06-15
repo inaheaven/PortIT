@@ -21,7 +21,6 @@ public class FrontController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Servlet Loaded");
 		resp.setContentType("text/html; charset=UTF-8");
 
 		// 팩토리에 의한 인스턴스 생성

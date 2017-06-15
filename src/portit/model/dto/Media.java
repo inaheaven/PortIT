@@ -1,12 +1,12 @@
 package portit.model.dto;
 
 /**
- * 미디어 DTO
- * @author student
+ * 미디어 라이브러리 DTO
+ * @author gnsngck
  *
  */
 public class Media {
-
+	
 	private int ml_id;
 	private String ml_type;
 	private int ml_type_id;
@@ -37,9 +37,9 @@ public class Media {
 		this.ml_type_id = ml_type_id;
 		return this;
 	}
-	public void setMl_path(String ml_path) {
+	public Media setMl_path(String ml_path) {
 		this.ml_path = ml_path;
+		return this;
 	}
-	
 	
 }
