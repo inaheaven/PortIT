@@ -246,7 +246,6 @@ public class MassageDao{
 					sql = sql.concat(") group by (mem_ID_sender) ");
 					sql = sql.concat("order by max(msg_date) desc");	
 				
-					System.out.println(sql);
 					
 					/*
 					 * sql = "select distinct MEM_ID_SENDER "+
