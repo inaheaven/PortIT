@@ -179,7 +179,7 @@ function fnSelectSnsInfo(snsName){
 				<div class="col-md-12 mt profreg">					
 					<div class="profregForm">
 						<h3 class="formTitle text-center">프로필 등록</h3>	
-						<form action="/PortIT/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
+						<form action="PortIT/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
 							
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로필 사진</label>
@@ -198,7 +198,7 @@ function fnSelectSnsInfo(snsName){
 								<label class="col-md-3 control-label">이름</label>
 								<div class="col-md-9">
 									<input class="form-control" id="name" type="text"
-										placeholder="한글로 입력하세요." >				
+										placeholder="한글로 입력하세요." value="<%=dto.getProf_name() %>" >				
 								</div>
 							</div>
 							<div class="form-group">

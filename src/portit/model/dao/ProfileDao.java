@@ -114,7 +114,7 @@ public class ProfileDao {
 	 */
 	public Profile addprofile(Profile dto,int mem_id) {
 		String sql = "insert into profile() "
-				+	"values(seq_prof_id.nextVal,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+	"values(seq_prof_id.nextVal,mem_id,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 
 		try{

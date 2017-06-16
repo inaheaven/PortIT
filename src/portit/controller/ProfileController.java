@@ -18,12 +18,11 @@ public class ProfileController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("SEVLET ");
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		String cmd = req.getParameter("cmd");
 		String url ="";
-		String id = req.getSession().getAttribute("id").toString();
+		//String mem_id = req.getSession().getAttribute("mem_id").toString();
 		/*
 		 * dto 에 변수 넣기
 		 * dao로 insert 처리 Dto dto = dao.addprofile(dto);
@@ -40,7 +39,7 @@ public class ProfileController extends HttpServlet {
 		 * */
 		if(cmd.equals("REGISTER")){
 			//return  new RegisterCommand();
-			url="myProf.html";
+			url="/myProf.html";
 		}
 	
 		RequestDispatcher view = req.getRequestDispatcher(url);
