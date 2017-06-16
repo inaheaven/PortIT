@@ -11,8 +11,8 @@
 <jsp:useBean id="dto" class="portit.model.dto.Profile"></jsp:useBean>
 <% 
 	dao.addprofile(dto);
-	
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import portit.model.dto.Profile;
+
 @WebServlet(urlPatterns="/register")
 public class ProfileController extends HttpServlet {
 
@@ -47,4 +49,7 @@ public class ProfileController extends HttpServlet {
 		
 	}
 
-}
+	/*public Profile profile(HttpServletRequest req){
+		String prof_nick = req.getParameter("prof_nick");*/
+	}
+
