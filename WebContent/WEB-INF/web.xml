@@ -22,7 +22,7 @@
 -->
 <servlet>
   	<servlet-name>join</servlet-name>
-  	<servlet-class>portit.controller.SearchController</servlet-class>
+  	<servlet-class>portit.controller.MemberJoinController</servlet-class>
   </servlet>
   
   <servlet-mapping>
