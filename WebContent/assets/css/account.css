@@ -1,0 +1,36 @@
+/**************** Modify Account **********************/
+.myAccount {
+	padding: 20px;
+	background-color: #F4E7D7;
+}
+
+.myAccount label{
+	font-size: 16px;
+	text-align: right !important;
+}
+
+.myAccount button {
+	background-color: #A1BBD0;
+	color: #fff;
+}
+.myAccount button:active,
+.myAccount button:hover,
+.myAccount button:focus {
+	background-color: #E69138;
+	color: #F4E7D7;
+}
+
+.modifyBtn,
+.deleteBtn {
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+
+.deleteInfo {
+	background-color: #E69138;
+	color: #fff;
+	width: 80%;
+	font-size: 18px;
+	margin-bottom: 50px;
+	padding: 40px;
+}
