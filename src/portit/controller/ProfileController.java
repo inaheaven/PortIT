@@ -39,9 +39,9 @@ public class ProfileController extends HttpServlet {
 		 * */
 		if(cmd.equals("REGISTER")){
 			//return  new RegisterCommand();
-			url="/myProf.html";
+			url="/myProf.jsp";
 		}
-	
+		
 		RequestDispatcher view = req.getRequestDispatcher(url);
 		view.forward(req, resp);
 		

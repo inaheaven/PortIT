@@ -1,8 +1,11 @@
 package portit.model.dao;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
@@ -112,11 +115,10 @@ public class ProfileDao {
 	 * @return 
 	 * @return
 	 */
-	public Profile addprofile(Profile dto,int mem_id) {
-		String sql = "insert into profile() "
+	public Profile addprofile(Profile dto) {
+		String sql = "INSERT into profile"
 				+	"values(seq_prof_id.nextVal,mem_id,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	
-
+		 
 		try{
 				conn = pool.getConnection();
 				stmt = conn.prepareStatement(sql);
@@ -133,7 +135,10 @@ public class ProfileDao {
 				stmt.setString(12, dto.getTag_name());
 				stmt.setInt(13, dto.getProf_skill_level());
 				stmt.executeUpdate();
+				
+				//list.add(dto);
 			}
+			
 			catch(Exception err){
 				System.out.println("profile() : " + err);
 			}

@@ -9,7 +9,7 @@ import java.util.Date;
  *
  */
 public class Profile {
-
+	
 	private int prof_id = (int) (Math.random() * 100000000);
 	private int mem_id;
 	private String prof_nick;

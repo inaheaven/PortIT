@@ -1,3 +1,18 @@
+<%@page import="portit.model.dto.Profile"%>
+<%@page import="portit.model.dao.ProfileDao"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="javax.naming.*" %>
+<%@page import="javax.sql.DataSource"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<jsp:useBean id="dao" class="portit.model.dao.ProfileDao"></jsp:useBean>
+<jsp:useBean id="dto" class="portit.model.dto.Profile"></jsp:useBean>
+<% 
+	dao.addprofile(dto);
+	
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -205,21 +220,21 @@ function fnSelectSnsInfo(snsName){
 								<label class="col-md-3 control-label">닉네임</label>
 								<div class="col-md-9">
 									<input class="form-control" id="nickname" type="text"
-										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)">									
+										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="<%=dto.getProf_nick() %>">									
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">소개</label>
 								<div class="col-md-9">
 									<textarea class="form-control" rows="5" name="contents"
-										placeholder="2000byte 이내로 입력하세요."></textarea>
+										placeholder="2000byte 이내로 입력하세요." value="<%=dto.getProf_intro() %>"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 언어</label>
 								<div class="col-md-9">
 									<input class="form-control" id="disabledInput" type="text"
-										placeholder="ex) C, JAVA, Python 등">
+										placeholder="ex) C, JAVA, Python 등" value="=">
 								</div>
 							</div>
 							<div class="form-group">
