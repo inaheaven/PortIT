@@ -110,7 +110,7 @@
 				<div class="row mt">
 					<div class="col-lg-12">
 						<div class="form-panel">
-						<form action="input" class="form-horizontal style-form" method="post">
+						<form action="mypage_proj_reg" class="form-horizontal style-form" method="post">
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">프로젝트 제목</label>
 									<div class="col-sm-10">
@@ -128,7 +128,7 @@
 									<label class="col-sm-2 col-sm-2 control-label">프로젝트 개발
 										환경</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control"  name="proj_title"
+										<input type="text" class="form-control"  name="proj_env"
 											placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
 									</div>
 								</div>
@@ -150,7 +150,7 @@
 								</div>
 								<div class="form-group" id="add-team">
 									<label class="col-sm-2 col-sm-2 control-label">모집 분야</label>
-									<div class="col-sm-5">
+									<div class="col-sm-5" id="add-team-input">
 										<input type="text" class="form-control" name="proj_field"
 											placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
 									</div>
@@ -158,7 +158,7 @@
 										<label class="control-label">필요 인원</label>
 									</div>
 									<div class="col-sm-1">
-										<input type="text" class="form-control" name="proj_to">
+										<input type="text" class="form-control" name="proj_numofperson">
 									</div>
 									<div class="col-sm-1">
 										<label class="control-label">명</label>

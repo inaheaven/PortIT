@@ -12,7 +12,6 @@ public class Project {
 	private int proj_id;
 	private String proj_title;
 	private String proj_intro;
-	private int proj_to;
 	private Date proj_regdate;
 	private Date proj_startdate;
 	private int proj_period;
@@ -35,12 +34,6 @@ public class Project {
 	}
 	public void setProj_intro(String proj_intro) {
 		this.proj_intro = proj_intro;
-	}
-	public int getProj_to() {
-		return proj_to;
-	}
-	public void setProj_to(int proj_to) {
-		this.proj_to = proj_to;
 	}
 	public Date getProj_regdate() {
 		return proj_regdate;

@@ -23,7 +23,7 @@ public class ProjectController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		ProjectDao dao = new ProjectDao();
 		
-		dao.insertPro(req, resp);
+		dao.reg_pro(req, resp);
 		
 	}
 

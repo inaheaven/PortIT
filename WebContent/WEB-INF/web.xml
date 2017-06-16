@@ -28,12 +28,12 @@
   </description>
   
   <servlet>
-		<servlet-name>input</servlet-name>
+		<servlet-name>mypage_proj_reg</servlet-name>
 		<servlet-class>portit.controller.ProjectController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>input</servlet-name>
-		<url-pattern>/input</url-pattern>
+		<servlet-name>mypage_proj_reg</servlet-name>
+		<url-pattern>/mypage_proj_reg</url-pattern>
 	</servlet-mapping>
   
 
