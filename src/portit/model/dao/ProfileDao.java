@@ -112,7 +112,7 @@ public class ProfileDao {
 	 * @return 
 	 * @return
 	 */
-	public Profile addprofile(Profile dto) {
+	public Profile addprofile(Profile dto,int mem_id) {
 		String sql = "insert into profile() "
 				+	"values(seq_prof_id.nextVal,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	

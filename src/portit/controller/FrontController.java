@@ -17,7 +17,7 @@ import portit.model.dto.Member;
  * @author gnsngck
  *
  */
-@SuppressWarnings("serial")
+/*@SuppressWarnings("serial")
 @WebServlet("/")
 public class FrontController extends HttpServlet {
 
@@ -58,3 +58,4 @@ public class FrontController extends HttpServlet {
 	}
 
 }
+*/

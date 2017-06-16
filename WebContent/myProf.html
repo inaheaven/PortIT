@@ -29,6 +29,14 @@
 </head>
 <script src="assets/js/search.js"></script>
 <script language="javascript">
+
+function profRegister(){
+	alert("프로필이 정상적으로 등록 되었습니다.");
+}
+
+function profalter(){
+	alert("프로필이 정상적으로 수정되었습니다.");
+}
 //skill 추가
 function addSkill() {
 	var skill = document.getElementById('skill').value;
@@ -170,7 +178,8 @@ function fnSelectSnsInfo(snsName){
 				<div class="col-md-12 mt profreg">					
 					<div class="profregForm">
 						<h3 class="formTitle text-center">프로필 등록</h3>	
-						<form action="#" method="post" class="form-horizontal style-form">
+						<form action="PortIT/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
+							<input type="hidden" name="cmd" value="REGISTER" />
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로필 사진</label>
 								<div class="col-md-9">
@@ -188,7 +197,7 @@ function fnSelectSnsInfo(snsName){
 								<label class="col-md-3 control-label">이름</label>
 								<div class="col-md-9">
 									<input class="form-control" id="name" type="text"
-										placeholder="한글로 입력하세요.">						
+										placeholder="한글로 입력하세요." >				
 								</div>
 							</div>
 							<div class="form-group">
@@ -264,8 +273,8 @@ function fnSelectSnsInfo(snsName){
 							</div>
 							
 							<div class="form-group text-center buttonDiv">
-								<button type="submit" class="btn common">등록하기</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn cancel" onclick="">수정하기</button>
+								<button type="submit" class="btn common" onclick="profRegister()">등록하기</button>&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn cancel" onclick="profalter()">수정하기</button>
 							</div>							
 						</form>
 					</div>
