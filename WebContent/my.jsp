@@ -8,8 +8,8 @@
 <!--sidebar start-->
 <aside>
 <%		
-			String pageName = (String)session.getAttribute("pageName");
-			//String pageName = (String)request.getAttribute("pageName");			
+			//String pageName = (String)session.getAttribute("pageName");
+			String pageName = (String)request.getAttribute("pageName");			
 %>
 	<div id="sidebar" >
 		<!-- sidebar menu start-->

@@ -23,10 +23,11 @@ public class MyPageController extends HttpServlet {
 		
 		String page = req.getParameter("page");
 		
-		HttpSession session = req.getSession();
+		//HttpSession session = req.getSession();
 		
 		String pageName = page + ".jsp";
-		session.setAttribute("pageName", pageName);
+		//session.setAttribute("pageName", pageName);
+		req.setAttribute("pageName", pageName);
 		
 		RequestDispatcher view = req.getRequestDispatcher("/myTemplate.jsp");
 		view.forward(req, resp);		
