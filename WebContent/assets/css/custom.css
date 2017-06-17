@@ -406,9 +406,10 @@ ul.sidebar-menu li a{
     outline: none;
 }
 
-ul.sidebar-menu li a.active, 
-ul.sidebar-menu li a:hover, 
-ul.sidebar-menu li a:focus {
+ul.sidebar-menu li:active > a,
+ul.sidebar-menu li:hover > a, 
+ul.sidebar-menu li:focus > a, 
+ul.sidebar-menu li.active > a {
     background: #F4E7D7;
     color: #E69138;
     display: block;

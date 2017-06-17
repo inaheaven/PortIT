@@ -26,7 +26,7 @@
     <![endif]-->
 </head>
 
-<body><a href="http://localhost:8080/test">test</a>
+<body>
 	<jsp:include page="signIn.jsp"></jsp:include>
 
 	<!-- js placed at the end of the document so the pages load faster -->

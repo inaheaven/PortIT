@@ -20,13 +20,14 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
 <link href="assets/css/custom.css" rel="stylesheet">
+<!-- 
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <link href="assets/css/notification.css" rel="stylesheet">
 <link href="assets/css/message.css" rel="stylesheet">
 <link href="assets/css/bookmark.css" rel="stylesheet">
 <link href="assets/css/following.css" rel="stylesheet">
 <link href="assets/css/account.css" rel="stylesheet">
-
+ -->
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -42,15 +43,12 @@
 		<%--sidenavbar start--%>
 		<jsp:include page="my.jsp"></jsp:include>
 		<%--sidenavbar end--%>
-		
-		
-		<%-- 내용 --%>
-		
-		<c:choose>
-		<c:when test="${page == 'myPfList'}">
-			<jsp:include page="${page}+'.jsp'"></jsp:include>
-		</c:when>
-		</c:choose>
+	
+		<%-- 내용 --%>		
+		<c:if test="${pageName eq null}">
+			<jsp:include page="myProf.jsp"></jsp:include>
+		</c:if>		
+		<jsp:include page="${pageName}"></jsp:include>
 
 		<%--footer start--%>
 		<jsp:include page="footer.jsp"></jsp:include>
@@ -70,9 +68,6 @@
 
 	<!--common script for all pages-->
 	<script src="assets/js/common-scripts.js"></script>
-	<script>
-		// sidenavbar 클릭했을 때 .active 클래스 추가
-		
-	</script>
+
 </body>
 </html>
