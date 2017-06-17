@@ -3,17 +3,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <header class="header black-bg">
 	<!--logo start-->
-	<a href="index.html" class="logo"><b>Port IT</b></a>
+	<a href="template.jsp" class="logo"><b>Port IT</b></a>
 	<!--logo end-->
 	<div class="nav notify-row" id="top_menu">
 		<!--  menu start -->
 		<ul class="nav top-menu">
 			<!-- settings start -->
-			<li><a href="">Member</a></li>
-			<li><a href="">Portfolio</a></li>
-			<li><a href="">Project</a>
-			<li>
-			<li><a href="">Community</a></li>
+			<li><a href="memSearch.jsp">Member</a></li>
+			<li><a href="pfSearch.jsp">Portfolio</a></li>
+			<li><a href="projSearch.jsp">Project</a></li>
+			<!-- <li><a href="">Community</a></li> -->
 		</ul>
 		<!--  menu end -->
 	</div>
@@ -44,7 +43,7 @@
 							class="time">Just now</span> <span class="message">[누구누구]님이
 								내 포트포리오를 좋아합니다.</span>
 					</a></li>
-					<li><a href="">더보기</a></li>
+					<li><a href="/mypage?page=myNotification">더보기</a></li>
 				</ul></li>
 			<li id="header_inbox_bar" class="dropdown mypage"><a
 				data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
@@ -53,12 +52,15 @@
 				<ul class="dropdown-menu extended inbox">
 					<div class="notify-arrow notify-arrow-yellow"></div>
 					<li>
-						<p class="yellow">김수연 님</p>
+						<p class="yellow">김수연 님</p> <!-- 로그인한 -->
 					</li>
-					<li><a href="">내 프로필</a></li>
-					<li><a href="">팔로잉한 멤버</a> <a href="">북마크한 포트폴리오</a></li>
-					<li><a href="">개인정보 설정</a></li>
-					<li><a class="logout" href="login.html">로그아웃</a></li>
+					<li><a href="/mypage?page=myProf">내 프로필</a></li>
+					<li><a href="/mypage?page=myPfList">내 포트폴리오</a></li>
+					<li><a href="/mypage?page=myProjList">내 프로젝트</a></li>
+					<li><a href="/mypage?page=myBookmark">북마크</a></li>
+					<li><a href="/mypage?page=myMsgList">메세지</a></li>
+					<li><a href="/mypage?page=myAccount">계정 설정</a></li>
+					<li><a class="logout" href="index.jsp">로그아웃</a></li> <!-- 로그아웃 처리해야함 - session 지우기 -->
 				</ul></li>
 		</ul>
 	</div>
