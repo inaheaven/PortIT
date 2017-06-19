@@ -1,0 +1,487 @@
+body {
+	background-color: #f8f8f8;
+}
+h1, h2, h3, h4 {
+	margin: 1em 0;
+	line-height: 1.5; 
+}
+
+hr {
+	border-top: 1px solid #bebebe;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+header {
+	position: absolute !important;
+	top:0;
+	left: 0;
+}
+
+/**************************** Member Detail *****************************/
+/*
+ * 헤더 영역
+ */
+#memHeader {
+	display: table;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	height: 100vh;
+	background: url("http://loremflickr.com/2560/1600/cat") no-repeat center center fixed;
+	background-size: cover;
+}
+
+#memHeader img {
+	margin-top: 2em;
+	width: 120px;
+	height: 120px;
+}
+
+#memHeader .headerContainer {
+	display: table-cell;
+	margin: 0;
+	padding: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	text-align: center;
+	vertical-align: middle;
+}
+
+#memHeader h1,
+#memHeader h2,
+#memHeader h3,
+#memHeader h4 {
+	color: #FFF;
+}
+
+#memHeader .username {
+	margin-top: -1em;
+	margin-bottom: 2em;
+}
+
+#memHeader .tags a {
+	color: #fff;
+}
+#memHeader .tags a:active,
+#memHeader .tags a:hover,
+#memHeader .tags a:focus {
+	color: #E69138;
+}
+
+#memHeader .common {
+	font-size: 18px;
+	margin: 1rem;
+	padding: 0.5em 1em;
+}
+
+/*
+ * 프로필 내비게이션
+ */
+#profileNavbar .navbar-nav {
+	width: 100%;
+	text-align: center;
+}
+
+#profileNavbar .navbar-nav > li {
+	float: none;
+	display: inline-block;
+	font-size:16px;
+}
+#profileNavbar .navbar-nav > li:active a,
+#profileNavbar .navbar-nav > li:hover a,
+#profileNavbar .navbar-nav > li:focus a{
+	font-weight: 700;
+	color: #E69138;
+}
+
+/*
+ * 소개
+ */
+#memAbout {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+#memAbout .intro {
+	line-height: 1.5;
+	margin-top: 2em;
+	margin-bottom: 4em;
+}
+#memAbout .skillset {
+	border: 1px solid #A1BBD0;
+	border-radius: 10px;
+	padding: 20px 60px;	
+}
+#memAbout .skillset .skill {
+	margin: 25px auto;
+}
+#memAbout .skillset .progress {
+	margin-bottom: 0px;
+}
+#memAbout .skillset .progress-bar {
+	background-color: #E69138;	
+}
+
+/*
+ * 포트폴리오
+ */
+#Portfolios {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+#Portfolios .sorting {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+#Portfolios .sorting li {
+	display: inline;
+	margin-right: 15px;
+}
+#Portfolios .sorting li a {
+	font-size: 14px;
+	color: #A1BBD0;
+}
+#Portfolios .sorting li a.active,
+#Portfolios .sorting li a:active,
+#Portfolios .sorting li a:hover,
+#Portfolios .sorting li a:focus {
+	font-weight: bold;
+	color: #E69138;
+}
+
+/*
+ * 프로젝트
+ */
+#Projects {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+#Projects .sorting {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+#Projects .sorting li {
+	display: inline;
+	margin-right: 15px;
+}
+#Projects .sorting li a {
+	font-size: 14px;
+	color: #A1BBD0;
+}
+#Projects .sorting li a.active,
+#Projects .sorting li a:active,
+#Projects .sorting li a:hover,
+#Projects .sorting li a:focus {
+	font-weight: bold;
+	color: #E69138;
+}
+
+/*
+ * 연락
+ */
+#Contact {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+
+#Contact .actions {
+	margin-top: 2em;
+}
+#Contact .actions span {
+	padding: 20px;
+	background-color: #A1BBD0;
+	color: #fff;
+	width: 80px;
+	height: 80px;
+	font-size: 40px;
+	margin: 10px;
+}
+#Contact .actions a:active span,
+#Contact .actions a:hover span,
+#Contact .actions a:focus span {
+	background-color: #E69138;
+}
+
+
+
+
+/**************************** Portfolio Detail *****************************/
+/*
+ * 헤더
+ */
+#pfHeader {
+	background: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ),
+    #A1BBD0;
+	color: #fff;
+}
+/*
+#pfHeader .container{
+	background-color:  rgba(0, 0, 0, 0.4);
+	
+}*/
+#pfHeader .container {
+	margin-top: 60px;
+	text-align: center;
+}
+
+#pfHeader .tags {
+	margin-top: -1em;
+	margin-bottom: 4em;
+}
+#pfHeader .tags a {
+	color: #fff;
+}
+#pfHeader .tags a:active,
+#pfHeader .tags a:hover,
+#pfHeader .tags a:focus {
+	color: #E69138;
+}
+
+#pfHeader .actions {
+	margin-bottom: 3em; 
+}
+#pfHeader .common,
+#pfAbout .common {
+	font-size: 20px;
+	margin: 1rem;
+	padding: 10px;
+	width: 50px;
+	height: 50px;
+}
+
+
+
+/*
+ * 포트폴리오 네비게이션
+ */
+#portfolioNavbar .navbar-nav {
+	width: 100%;
+	text-align: center;
+}
+
+#portfolioNavbar .navbar-nav > li {
+	float: none;
+	display: inline-block;
+	font-size:16px;
+}
+#portfolioNavbar .navbar-nav > li:active a,
+#portfolioNavbar .navbar-nav > li:hover a,
+#portfolioNavbar .navbar-nav > li:focus a{
+	font-weight: 700;
+	color: #E69138;
+}
+
+/*
+ * 소개
+ */
+#pfAbout {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+#pfAbout .pfMem {
+	margin-top: 2em;
+	margin-bottom: 2em;
+	border: 1px solid #A1BBD0;
+	border-radius: 10px;
+	padding: 30px 60px;	
+}
+#pfAbout .tags{
+	margin-top: 20px;
+}
+#pfAbout .tags a {
+	font-size: 16px;
+	color: #797979;
+}
+#pfAbout .tags a:active,
+#pfAbout .tags a:hover,
+#pfAbout .tags a:focus {
+	color: #E69138;
+}
+
+#pfAbout .uploaderImage {
+	width: 80px;
+	height: 80px;
+}
+
+#pfAbout .uploaderName{
+	margin: 0;
+}
+#pfAbout .uploaderName a{
+	color: #797979;
+}
+#pfAbout .uploaderName a:active,
+#pfAbout .uploaderName a:hover,
+#pfAbout .uploaderName a:focus{
+	color: #E69138;
+}
+
+#pfAbout .intro {
+	line-height: 1.5;	
+	margin-top: 3em;
+}
+#pfAbout table th {
+	text-align: right;
+}
+#pfAbout table a {
+	color: #797979;
+}
+
+#pfAbout table a:active,
+#pfAbout table a:hover,
+#pfAbout table a:focus {
+	color: #E69138;
+}
+
+#pfAbout .pfMedia {
+	margin-top: 3em;
+}
+
+
+/*
+ * 콜라보레이터
+ */
+#pfCollaborators {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+#pfCollaborators .collaboList {
+	margin-top: 2em;
+}
+
+
+/*
+ * 추천 포폴
+ */
+#Recommendations {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+#Recommendations .recoList {
+	margin-top: 2em;
+}
+
+
+/**************************** Project Detail *****************************/
+/*
+ * 헤더
+ */
+#projHeader {
+	background-color: #F4E7D7;
+}
+#projHeader .container {
+	margin-top: 60px;
+	text-align: center;
+}
+#projHeader h1 {
+	margin-top: 0;
+}
+#projHeader .username {
+	margin-top: -1em;
+	margin-bottom: 2em;
+}
+
+#projHeader .tags {
+	margin-top: 2em;
+}
+#projHeader  a {
+	color: #797979;
+}
+#projHeader  a:active,
+#projHeader  a:hover,
+#projHeader  a:focus {
+	color: #E69138;
+}
+
+#projHeader .field {
+	margin-bottom: 2em;
+	font-weight: bolder;
+}
+#projHeader .dday {
+	position: absolute;
+	top: 15%;
+	left: 20%;
+	font-weight: 700;
+	color: #E69138;
+	margin-top: 0;
+}
+
+/*
+ * 프로젝트 내비게이션
+ */
+#projectNavbar .navbar-nav {
+	width: 100%;
+	text-align: center;
+}
+
+#projectNavbar .navbar-nav > li {
+	float: none;
+	display: inline-block;
+	font-size:16px;
+}
+#projectNavbar .navbar-nav > li:active a,
+#projectNavbar .navbar-nav > li:hover a,
+#projectNavbar .navbar-nav > li:focus a{
+	font-weight: 700;
+	color: #E69138;
+}
+/*
+ * 소개
+ */
+ #projAbout {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+
+#projAbout .intro {
+	line-height: 1.5;
+	margin-top: 2em;
+	margin-bottom: 4em;
+}
+
+#projAbout .projMedia {
+	margin-top: 2em;
+}
+
+/*
+ * 정보
+ */
+ #projInfo {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+
+#projInfo table {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+#projInfo table th {
+	text-align: right;
+}
+#projInfo .actions {
+	margin: 2em 0;
+	text-align: center;
+}
+
+#projInfo  a {
+	color: #797979;
+}
+#projInfo  a:active,
+#projInfo  a:hover,
+#projInfo  a:focus {
+	color: #E69138;
+}
+
+/*
+ * 콜라보레이터
+ */
+ #projCollaborators {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+
+#projCollaborators .collaboList {
+	margin-top: 2em;
+}

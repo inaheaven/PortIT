@@ -11,7 +11,7 @@ public class TagUse {
 	private String tag_use_type;
 	private int tag_use_type_id;
 	private int tag_id;
-	private int prof_skill_level; // 프로필 기술점수
+	private int prof_skill_level; // 프로필에 사용된 skill점수
 	
 	public int getTag_use_id() {
 		return tag_use_id;
