@@ -8,7 +8,7 @@ public class Follow {
 	private int mem_id_receiver;
 	private Date fw_date;
 	private Tag tag_name;
-	
+	  
 	public int getFw_id() {
 		return fw_id;
 	}
