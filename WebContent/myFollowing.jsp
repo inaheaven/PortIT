@@ -2,13 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/following.css" rel="stylesheet">
-      <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-      <!--main content start--><!-- assets/img폴더에 member파일 member_on파일 있음-->
-      <section id="main-content">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
+     <section id="main-content">
           <section class="wrapper site-min-height">
           <div class="col-md-12 col-sm-12 col-xs-12 mt fwlist">
+      	    <h3 class="formTitle text-center">팔로잉</h3>	
           	<div class="fwlist_box clearfix">
           		<div class="col-md-4 mb"> <!-- 반복 -->
           			<div class="image-hover">

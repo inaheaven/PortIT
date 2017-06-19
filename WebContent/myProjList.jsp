@@ -2,11 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 col-sm-12 col-xs-12 mt projlist">
+					<h3 class="formTitle text-center">내 프로젝트</h3>	
 					<div class="projlist_top clearfix">
-						<button type="button" class="btn common" onclick="location.href='/mypage?page=myProjRegister'">프로젝트 등록하기</button>
+						<button type="button" class="btn common" onclick="location.href='/page?page=myProjRegister'">프로젝트 등록하기</button>
 					</div>
 					<div class="proj_my">
 						<p>내가 등록한 프로젝트</p>

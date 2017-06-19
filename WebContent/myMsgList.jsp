@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/message.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<!--  Message List -->
@@ -17,7 +21,7 @@
 							</form>
 						</span> 
 						<span class="pull-right"> 
-							<a href="javascript:location.href='/mypage?page=myMsgSend'">
+							<a href="javascript:location.href='/page?page=myMsgSend'">
 								<button class="btn">Send New Message</button>
 							</a>
 						</span>
@@ -35,7 +39,7 @@
 									</a>
 								</span>
 								<span class="pull-right"> 
-									<a href="javascript:location.href='/mypage?page=myMsgSend'">
+									<a href="javascript:location.href='/page?page=myMsgSend'">
 										<button type="button" class="btn">메세지 보내기</button>
 									</a>
 									<a data-toggle="collapse" data-parent="#msgBoxList" href="#msgBoxOpen" class="updown collapsed"> 
@@ -71,7 +75,7 @@
 										</span>										
 									</div>
 									<div class="pull-right">
-										<button type="button" class="btn" onclick="location.href='/mypage?page=myMsgDetail'">더보기</button>
+										<button type="button" class="btn" onclick="location.href='/page?page=myMsgDetail'">더보기</button>
 									</div>					
 								</div>
 							</div> <!-- END - msgBoxOpen -->

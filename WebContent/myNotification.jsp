@@ -2,10 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/notification.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper site-min-height">
-				<div class="col-md-12 col-sm-12 col-xs-12 mt noti">				
+				<div class="col-md-12 col-sm-12 col-xs-12 mt noti">	
+					<h3 class="formTitle text-center">알림</h3>				
 					<div class="notiTable">			
 						<div class="form-group col-md-2">
 						  <select class="form-control pull-left" id="sort">

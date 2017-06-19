@@ -2,11 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/account.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
+
       <section id="main-content">
       	<section class="wrapper site-min-height">
         	<div class="col-md-12 mt myAccount">
           		<div class="col-md-8 center">
-          			<h3 class="accountTitle text-center">Delete Account</h3>
+          			<h3 class="accountTitle text-center">계정 탈퇴</h3>
           			<br><br>
           			<form class="form-horizontal" method="post" action="#">
           				<div class="deleteInfo center text-center">

@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/message.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 mt msg msgDetail">
@@ -15,10 +19,10 @@
 									</a>
 								</span>
 								<span class="pull-right"> 
-									<a href="javascript:location.href='/mypage?page=myMsgSend'">
+									<a href="javascript:location.href='/page?page=myMsgSend'">
 										<button type="button" class="btn">메세지 보내기</button>
 									</a>&nbsp;&nbsp;&nbsp;
-									<a href="javascript:location.href='/mypage?page=myMsgList'">
+									<a href="javascript:location.href='/page?page=myMsgList'">
 										<button type="button" class="btn">목록</button>
 									</a>
 								</span>								

@@ -20,7 +20,20 @@
 <link href="assets/css/custom.css" rel="stylesheet">
 <link href="assets/css/main.css" rel="stylesheet">
 
-<script src="assets/js/chart-master/Chart.js"></script>
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+<script class="include" type="text/javascript"
+	src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="assets/js/jquery.scrollTo.min.js"></script>
+<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+
+<!--common script for all pages-->
+<script src="assets/js/common-scripts.js"></script>
+<!-- <script>jQuery.noConflict();</script> -->
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -32,40 +45,22 @@
 <body>
 
 	<section id="container">
-		<%--
-			TOP BAR CONTENT & NOTIFICATIONS
-		--%>
 		<%--header start--%>
 		<jsp:include page="header.jsp"></jsp:include>
 		<%--header end--%>
+		
+		<%-- 내용 --%>	
+		<jsp:include page="${pageName}"></jsp:include>
+		
+		<%--footer start--%>
+		<jsp:include page="footer.jsp"></jsp:include>
+		<%--footer end--%>
 	</section>
 
 
+	
 
-	<%--
-      MAIN CONTENT
-	--%>
-	<section class="container">
-		<%--main content start--%>
-		<jsp:include page="main.jsp"></jsp:include>
-		<%--main content end--%>
-	</section>
-	<%--footer start--%>
-	<jsp:include page="footer.jsp"></jsp:include>
-	<%--footer end--%>
 
-	<!-- js placed at the end of the document so the pages load faster -->
-	<script src="assets/js/jquery.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-	<script class="include" type="text/javascript"
-		src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-	<script src="assets/js/jquery.scrollTo.min.js"></script>
-	<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-	<script src="assets/js/jquery-3.2.1.min.js"></script>
 
-	<!--common script for all pages-->
-	<script src="assets/js/common-scripts.js"></script>
 </body>
 </html>

@@ -40,10 +40,6 @@
 		<jsp:include page="header.jsp"></jsp:include>
 		<%--header end--%>
 		
-		<%--sidenavbar start--%>
-		<jsp:include page="my.jsp"></jsp:include>
-		<%--sidenavbar end--%>
-	
 		<%-- 내용 --%>		
 		<c:if test="${pageName eq null}">
 			<jsp:include page="myProf.jsp"></jsp:include>

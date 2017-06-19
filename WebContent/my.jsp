@@ -20,48 +20,48 @@
 			</div>       
 			<hr class="line" />
 			<li class="">
-				<a href="/mypage?page=myProf" id="myProf">
+				<a href="/page?page=myProf" id="myProf">
 				    <span>My Profile</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/mypage?page=myPfList" id="myPfList">
+				<a href="/page?page=myPfList" id="myPfList">
 				    <span>My Portfolio</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/mypage?page=myProjList" id="myProjList">
+				<a href="/page?page=myProjList" id="myProjList">
 				    <span>My Project</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/mypage?page=myBookmark" id="myBookmark">
+				<a href="/page?page=myBookmark" id="myBookmark">
 				    <span>Bookmarks</span>
 				</a>
 			</li>                  
 			<li class="">
-				<a href="/mypage?page=myFollowing" id="myFollowing">
+				<a href="/page?page=myFollowing" id="myFollowing">
 				    <span>Following</span>
 				</a>
 			</li>                  
 			<li class="">
-				<a href="/mypage?page=myNotification"  id="myNotification">
+				<a href="/page?page=myNotification"  id="myNotification">
 				    <span>Notification</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/mypage?page=myMsgList" id="myMsgList">
+				<a href="/page?page=myMsgList" id="myMsgList">
 				    <span>Message</span>
 				</a>
 			</li>
 			<hr class="line"/>
 			<li class="">
-				<a href="/mypage?page=myAccount" id="myAccount">
+				<a href="/page?page=myAccount" id="myAccount">
 				    <span>My Account</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/mypage?page=myDeleteAccount" id="myDeleteAccount">
+				<a href="/page?page=myDeleteAccount" id="myDeleteAccount">
 				    <span>Delete Account</span>
 				</a>
 			</li>

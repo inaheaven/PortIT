@@ -2,9 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/bookmark.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
       <section id="main-content">
           <section class="wrapper site-min-height">
           <div class="col-md-12 col-sm-12 col-xs-12 mt bmlist">
+          	<h3 class="formTitle text-center">북마크</h3>	
           	<div class="bmlist_box clearfix">
 				<div class="col-md-4 mb"> <!-- 반복 -->
 					<div class="image-hover">

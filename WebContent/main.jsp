@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<section class="container">
 <section class="wrapper site-min-height">
 	<div class="col-md-12 col-sm-12 col-xs-12 mt" id="main">
 		<div class="recommend">
@@ -354,5 +355,6 @@
 		</div>
 
 	</div>
+</section>
 </section>
 <!-- Timeline page end -->

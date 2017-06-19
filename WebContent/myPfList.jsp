@@ -2,9 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 col-sm-12 col-xs-12 mt pflist">
+					<h3 class="formTitle text-center">내 포트폴리오</h3>	
 					<!-- BASIC FORM ELELEMNTS -->
 					<div class="pflist_top col-md-12 center clearfix">						
 						<span class="pull-left sorting">
@@ -13,7 +18,7 @@
 							<a href="">인기순</a>
 						</span>
 						<span class="pull-right">
-							<button type="button" class="btn common" onclick="location.href='/mypage?page=myPfRegister'">포트폴리오 등록하기</button>
+							<button type="button" class="btn common" onclick="location.href='/page?page=myPfRegister'">포트폴리오 등록하기</button>
 						</span>
 					</div>
 					<div class="pflist_box clearfix">

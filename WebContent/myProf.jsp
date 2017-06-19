@@ -112,6 +112,10 @@ function fnSelectSnsInfo(snsName){
 		
 	});
 </script>
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
 
 		<section id="main-content">
 			<section class="wrapper site-min-height">				

@@ -94,11 +94,11 @@ var Script = function () {
         jQuery(this).parents(".panel").parent().remove();
     });
 
-
+/*
 //    tool tips
 
-    $('.tooltips').tooltip();
-
+    //$('.tooltips').tooltip();
+*/
 //    popovers
 
     $('.popovers').popover();

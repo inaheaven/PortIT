@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/message.css" rel="stylesheet">
+	<%--sidenavbar start--%>
+	<jsp:include page="my.jsp"></jsp:include>
+	<%--sidenavbar end--%>
+
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 mt msg msgSend">
@@ -21,7 +25,7 @@
 							</div>
 							<div class="msgBtn col-md-3 center">
 								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn" onclick="location.href='/mypage?page=myMsgList'">돌아가기</button>
+								<button type="button" class="btn" onclick="location.href='/page?page=myMsgList'">돌아가기</button>
 							</div>
 						</form>
 					</div>
