@@ -21,7 +21,7 @@ public class ProfileController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
-		
+		      
 		String cmd = req.getParameter("cmd");
 		String url ="";
 		//String mem_id = req.getSession().getAttribute("mem_id").toString();
