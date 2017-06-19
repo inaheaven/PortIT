@@ -156,7 +156,7 @@ public class ProfileDao {
 		String sql="select * from profile where prof_id =?";
 		
 		Profile dto = new Profile();
-		
+		   
 		try{
 			conn = pool.getConnection();
 			

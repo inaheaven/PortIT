@@ -32,7 +32,7 @@ public class BookmarkDao {
 			e.printStackTrace();
 		}
 	}
-
+  
 	/**
 	 * DB 연결
 	 */

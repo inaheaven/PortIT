@@ -33,7 +33,7 @@ public class FollowDao {
 			e.printStackTrace();
 		}
 	}
-	
+	  
 	/**
 	 * DB 연결
 	 */
