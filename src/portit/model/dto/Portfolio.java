@@ -2,6 +2,11 @@ package portit.model.dto;
 
 import java.util.Date;
 
+/**
+ * 포트폴리오 DTO
+ * @author gnsngck
+ *
+ */
 public class Portfolio {
 	private int pf_id;
 	private String pf_title;

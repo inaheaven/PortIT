@@ -1,7 +1,7 @@
 package portit.model.dto;
 
 /**
- * 태그 값 객체
+ * 태그 DTO
  * @author gnsngck
  *
  */

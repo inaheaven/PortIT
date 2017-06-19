@@ -1,7 +1,7 @@
 package portit.model.dto;
 
 /**
- * 게시물 내에서 태그사용 값 객체
+ * 게시물 내에서 태그사용 DTO
  * @author gnsngck
  *
  */
