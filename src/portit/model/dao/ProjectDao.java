@@ -127,7 +127,7 @@ public class ProjectDao {
 				stmt = conn.prepareStatement(sql_tag_id);
 				rs = stmt.executeQuery();
 				rs.next();
-				tag_id = rs.getInt("tag_id");				//전역변수로 tag_id를 미리설정해 놓았기 때문에 다른 토큰 지역에서 별도의 설정 불필요	
+				tag_id = rs.getInt("tag_id");			
 
 				sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(mypage_proj_tag_use_id.nextVal, ?, ?, ?)";
 				stmt = conn.prepareStatement(sql);
@@ -149,6 +149,14 @@ public class ProjectDao {
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
 
+				String sql_tag_id = "SELECT TAG_ID FROM TAG WHERE TAG_TYPE=? AND TAG_NAME=?";
+				stmt = conn.prepareStatement(sql_tag_id);
+				stmt.setString(1, tag_type);
+				stmt.setString(2, tag_name);
+				rs = stmt.executeQuery();
+				rs.next();
+				tag_id = rs.getInt("tag_id");	
+				
 				sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(mypage_proj_tag_use_id.nextVal, ?, ?, ?)";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, tag_use_type);
@@ -169,6 +177,15 @@ public class ProjectDao {
 				stmt.setString(1, tag_type);
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
+				
+
+				String sql_tag_id = "SELECT TAG_ID FROM TAG WHERE TAG_TYPE=? AND TAG_NAME=?";
+				stmt = conn.prepareStatement(sql_tag_id);
+				stmt.setString(1, tag_type);
+				stmt.setString(2, tag_name);
+				rs = stmt.executeQuery();
+				rs.next();
+				tag_id = rs.getInt("tag_id");	
 				
 				sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(mypage_proj_tag_use_id.nextVal, ?, ?, ?)";
 				stmt = conn.prepareStatement(sql);
@@ -194,6 +211,15 @@ public class ProjectDao {
 					stmt.setString(1, tag_type);
 					stmt.setString(2, tag_name);
 					rs = stmt.executeQuery();
+					
+
+					String sql_tag_id = "SELECT TAG_ID FROM TAG WHERE TAG_TYPE=? AND TAG_NAME=?";
+					stmt = conn.prepareStatement(sql_tag_id);
+					stmt.setString(1, tag_type);
+					stmt.setString(2, tag_name);
+					rs = stmt.executeQuery();
+					rs.next();
+					tag_id = rs.getInt("tag_id");	
 					
 					sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID, PROJ_NUMOFPERSON) VALUES(mypage_proj_tag_use_id.nextVal, ?, ?, ?, ?)";
 					stmt = conn.prepareStatement(sql);

@@ -42,54 +42,50 @@
 
 <!-- for adding rows button -->
 <script src="assets/js/jquery-3.2.1.min.js"></script>
+<link href="assets/css/custom.css" rel="stylesheet">
 
 <script>
-	var i=1;
-	
-	 $(document).ready(function() {
-		$("#insert").click(function(){
-			if(i==1){
+	var i = 1;
+
+	$(document).ready(function() {
+		$("#insert").click(function() {
+			if (i == 1) {
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-2").append($cloneRow);
 				i++;
-			}else if(i==2){
+			} else if (i == 2) {
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-3").append($cloneRow);
 				i++;
-			}else if(i==3){
+			} else if (i == 3) {
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-4").append($cloneRow);
 				i++;
-			}else if(i==4){
+			} else if (i == 4) {
 				var $cloneRow = $(this).parent().parent().clone(true);
 				$("#add-team-5").append($cloneRow);
 				i++;
-			}else{
+			} else {
 				alert("모집 분야수를 5개 이내로 제한합니다.");
 			}
 		});
 
-		$("#delete").click(function(){
-			if(i>1){
+		$("#delete").click(function() {
+			if (i > 1) {
 				$(this).parent().parent().remove();
 				i--;
-			}else{
+			} else {
 				alert("모집 분야수를 1개 이상으로 제한합니다.")
 			}
 		});
 	});
-
-	
 </script>
-
-
-
-
-
 </head>
 
 <body>
-<% request.setCharacterEncoding("UTF-8"); %>
+	<%
+		request.setCharacterEncoding("UTF-8");
+	%>
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
@@ -110,17 +106,18 @@
 				<div class="row mt">
 					<div class="col-lg-12">
 						<div class="form-panel">
-						<form action="mypage_proj_reg" class="form-horizontal style-form" method="post">
+							<form action="mypage_proj_reg" class="form-horizontal style-form"
+								method="post">
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">프로젝트 제목</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control"  name="proj_title">
+										<input type="text" class="form-control" name="proj_title">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">프로젝트 설명</label>
 									<div class="col-sm-10">
-										<textarea class="form-control"  name="proj_intro"
+										<textarea class="form-control" name="proj_intro"
 											placeholder="프로젝트 주제 , 목적등 자세한 설명을 작성하세요" rows="10"></textarea>
 									</div>
 								</div>
@@ -128,7 +125,7 @@
 									<label class="col-sm-2 col-sm-2 control-label">프로젝트 개발
 										환경</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control"  name="proj_env"
+										<input type="text" class="form-control" name="proj_env"
 											placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
 									</div>
 								</div>
@@ -158,7 +155,8 @@
 										<label class="control-label">필요 인원</label>
 									</div>
 									<div class="col-sm-1">
-										<input type="text" class="form-control" name="proj_numofperson">
+										<input type="text" class="form-control"
+											name="proj_numofperson">
 									</div>
 									<div class="col-sm-1">
 										<label class="control-label">명</label>
@@ -168,7 +166,7 @@
 										<button type='button' class='btn btn-default' id='delete'>삭제</button>
 									</div>
 								</div>
-								
+
 								<div id="add-team-2"></div>
 								<div id="add-team-3"></div>
 								<div id="add-team-4"></div>
@@ -180,8 +178,8 @@
 									<label class="col-sm-2 col-sm-2 control-label" for="date">프로젝트
 										모집 마감일</label>
 									<div class="col-sm-3">
-										<input class="form-control" id="proj_regenddate" name="proj_regenddate"
-											placeholder="MM/DD/YYYY" type="text" />
+										<input class="form-control" id="proj_regenddate"
+											name="proj_regenddate" placeholder="MM/DD/YYYY" type="text" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -189,46 +187,73 @@
 										기간</label> <label class="col-sm-2 control-label" for="date">프로젝트
 										예정 시작일</label>
 									<div class="col-sm-3">
-										<input class="form-control" id="proj_startdate" name="proj_startdate"
-											placeholder="MM/DD/YYYY" type="text" />
+										<input class="form-control" id="proj_startdate"
+											name="proj_startdate" placeholder="MM/DD/YYYY" type="text" />
 									</div>
 									<label class="col-sm-1 col-sm-1 control-label" for="date">예상
 										기간</label>
 									<div class="col-sm-2">
-										<input class="form-control" name="proj_period"
-											type="text" />
+										<input class="form-control" name="proj_period" type="text" />
 									</div>
 									<div class="col-sm-1 col-sm-1 control-label">
 										<label>일</label>
 									</div>
 								</div>
+
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">함께할 사람</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control">
+										<input type="text" class="form-control" readonly="readonly">
 									</div>
 									<div class="col-sm-2">
-										<button type="button" class="btn btn-default">검색</button>
+										<button type="button" class="btn btn-default"
+											data-toggle="modal" data-target="#searchModal">검색</button>
+									</div>
+									<!-- Modal for search -->
+									<div class="modal fade" id="searchModal" data-backdrop="static">
+										<!--  fade효과 및 data-backdrop 으로 닫기버튼시만 닫히도록 적용 -->
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h3>&nbsp;&nbsp;&nbsp;함께할 사람</h3>
+												</div>
+												
+												<!-- custom.css 를 이용하여 아이콘 내부에 입력하도록 설정함 -->
+												<div class="modal-body">
+														<div class="inner-addon left-addon">
+															<h5 class="col-sm-4"> 이름 또는 닉네임 검색</h5>
+															<i class="glyphicon glyphicon-search"></i>
+															<input class="col-sm-8" type="text" name="coworker" placeholder="프로젝트를 함께할 PortIT 사용자를 검색하세요." aria-describedby="inner-addon">
+														</div>
+														<p>&nbsp;</p>
+														<h4>검색 결과</h4>
+												</div>
+												
+												<div class="modal-footer">
+													<button class="btn btn-primary" data-dismiss="modal">닫기</button>
+												</div>
+
+										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">이미지 및
-										동영상</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-sm-2">
-										<button type="button" class="btn btn-default">업로드</button>
-									</div>
-								</div>
-								<div class="form-group" style="text-align: center;">
-									<button type="submit" class="btn btn-success">등록하기</button>
-									<button type="button" class="btn btn-danger">취소하기</button>
-								</div>
-							</form>
 						</div>
+ 
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label">소개 이미지 및
+								동영상</label>
+							<div class="col-sm-10">
+								<span class="col-sm-12 btn btn-default btn-file"><input
+									type="file"></span>
+							</div>
+						</div>
+						<div class="form-group" style="text-align: center;">
+							<button type="submit" class="btn btn-success">등록하기</button>
+							<button type="button" class="btn btn-danger">취소하기</button>
+						</div>
+						</form>
 					</div>
-					<!-- col-lg-12-->
+				</div>
+				<!-- col-lg-12-->
 				</div>
 				<!-- /row -->
 
@@ -265,21 +290,23 @@
 	<!--script for this page-->
 	<!-- datepicker script -->
 	<script>
-		$(document).ready(
-				function() {
-					var proj_regenddate_input = $('input[name="proj_regenddate"]'); //our date input has the name "date"
-					var proj_startdate_input = $('input[name="proj_startdate"]'); //our date input has the name "date"
-					var container = $('.bootstrap-iso form').length > 0 ? $(
-							'.bootstrap-iso form').parent() : "body";
-					var options = {
-						format : 'mm/dd/yyyy',
-						container : container,
-						todayHighlight : true,
-						autoclose : true,
-					};
-					proj_regenddate_input.datepicker(options);
-					proj_startdate_input.datepicker(options);
-				})
+		$(document)
+				.ready(
+						function() {
+							var proj_regenddate_input = $('input[name="proj_regenddate"]'); //our date input has the name "date"
+							var proj_startdate_input = $('input[name="proj_startdate"]'); //our date input has the name "date"
+							var container = $('.bootstrap-iso form').length > 0 ? $(
+									'.bootstrap-iso form').parent()
+									: "body";
+							var options = {
+								format : 'mm/dd/yyyy',
+								container : container,
+								todayHighlight : true,
+								autoclose : true,
+							};
+							proj_regenddate_input.datepicker(options);
+							proj_startdate_input.datepicker(options);
+						})
 	</script>
 </body>
 </html>

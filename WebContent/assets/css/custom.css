@@ -1,0 +1,14 @@
+.inner-addon{
+	position: relative;
+}
+
+.inner-addon .glyphicon{
+	position: absolute;
+	pointer-evenets: none;
+}
+
+.left-addon .glyphicon{left:100px;}
+.right-addon .glyphicon{right:20px;}
+
+.left-addon input {padding-left:20px;}
+.right-addon input {padding-right:30px;}
