@@ -2,7 +2,7 @@ package portit.model.dto;
 
 import java.util.Date;
 
-public class Portfolio {
+public class Timeline {
 	private int pf_id;
 	private String pf_title;
 	private String pf_intro;

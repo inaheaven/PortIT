@@ -38,11 +38,11 @@ import java.util.Vector;
  */
 public class DBConnectionMgr {
     private Vector<ConnectionObject> connections = new Vector<ConnectionObject>(10);
+  
     private String _driver = "oracle.jdbc.driver.OracleDriver",
-    		_url = "jdbc:oracle:thin:@localhost:1521:xe",
-    		_user = "user22",
-    		_password = "1111";
-
+    _url = "jdbc:oracle:thin:@localhost:1521:orcl",
+    _user = "user22",
+    _password = "1111";
     
     private boolean _traceOn = false;
     private boolean initialized = false;
@@ -56,7 +56,8 @@ public class DBConnectionMgr {
      unused connections are closed.
      */
 
-    public static DBConnectionMgr getInstance() {
+  //singleton 패턴으로 만들어짐(DBCP 인스턴스 생성)
+    public static DBConnectionMgr getInstance() {	
         if (instance == null) {
             synchronized (DBConnectionMgr.class) {
                 if (instance == null) {
@@ -78,6 +79,7 @@ public class DBConnectionMgr {
     }
 
 
+    //connection 객체를 빌려감
     /** Returns a Vector of java.sql.Connection objects */
     public Vector<ConnectionObject> getConnectionList() {
         return connections;
@@ -162,7 +164,7 @@ public class DBConnectionMgr {
         return c;
     }
 
-
+    //빌려간 conncetion객체를 반납
     /** Marks a flag in the ConnectionObject to indicate this connection is no longer in use */
     public synchronized void freeConnection(Connection c) {
         if (c == null)

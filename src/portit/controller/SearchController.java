@@ -20,12 +20,14 @@ public class SearchController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
-		
 		String cmd = req.getParameter("cmd");
-		String url = null;		
+		String url = null;
+		
+		//검색한 검색어를 저장하는 변수
+		String search_name = req.getParameter("search");	
 		
 		if(cmd.equals("SEARCH")){
-			url="/search.jsp";
+			url="/searchAll.jsp";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);
