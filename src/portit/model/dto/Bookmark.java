@@ -8,7 +8,7 @@ import java.lang.Math;
  *
  */
 public class Bookmark {
-	
+	  
 	private int bm_id = (int) (Math.random() * 10000000);
 	private int mem_id;
 	private int pf_id;
