@@ -38,6 +38,7 @@ import java.util.Vector;
  */
 public class DBConnectionMgr {
     private Vector<ConnectionObject> connections = new Vector<ConnectionObject>(10);
+<<<<<<< HEAD
     private String _driver = "oracle.jdbc.driver.OracleDriver",
     		_url = "jdbc:oracle:thin:@localhost:1521:orcl",
     		_user = "portit",
@@ -163,6 +164,135 @@ public class DBConnectionMgr {
     }
 
 
+=======
+  
+    private String _driver = "oracle.jdbc.driver.OracleDriver",
+    _url = "jdbc:oracle:thin:@localhost:1521:orcl",
+    _user = "user22",
+    _password = "1111";
+    
+    private boolean _traceOn = false;
+    private boolean initialized = false;
+    private int _openConnections = 50;
+    private static DBConnectionMgr instance = null;
+
+    public DBConnectionMgr() {
+    }
+
+    /** Use this method to set the maximum number of open connections before
+     unused connections are closed.
+     */
+
+  //singleton 패턴으로 만들어짐(DBCP 인스턴스 생성)
+    public static DBConnectionMgr getInstance() {	
+        if (instance == null) {
+            synchronized (DBConnectionMgr.class) {
+                if (instance == null) {
+                    instance = new DBConnectionMgr();
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    public void setOpenConnectionCount(int count) {
+        _openConnections = count;
+    }
+
+
+    public void setEnableTrace(boolean enable) {
+        _traceOn = enable;
+    }
+
+
+    //connection 객체를 빌려감
+    /** Returns a Vector of java.sql.Connection objects */
+    public Vector<ConnectionObject> getConnectionList() {
+        return connections;
+    }
+
+
+    /** Opens specified "count" of connections and adds them to the existing pool */
+    public synchronized void setInitOpenConnections(int count)
+            throws SQLException {
+        Connection c = null;
+        ConnectionObject co = null;
+
+        for (int i = 0; i < count; i++) {
+            c = createConnection();
+            co = new ConnectionObject(c, false);
+
+            connections.addElement(co);
+            trace("ConnectionPoolManager: Adding new DB connection to pool (" + connections.size() + ")");
+        }
+    }
+
+
+    /** Returns a count of open connections */
+    public int getConnectionCount() {
+        return connections.size();
+    }
+
+
+    /** Returns an unused existing or new connection.  */
+    public synchronized Connection getConnection()
+            throws Exception {
+        if (!initialized) {
+            Class<?> c = Class.forName(_driver);
+            DriverManager.registerDriver((Driver) c.newInstance());
+
+            initialized = true;
+        }
+
+
+        Connection c = null;
+        ConnectionObject co = null;
+        boolean badConnection = false;
+
+
+        for (int i = 0; i < connections.size(); i++) {
+            co = (ConnectionObject) connections.elementAt(i);
+
+            // If connection is not in use, test to ensure it's still valid!
+            if (!co.inUse) {
+                try {
+                    badConnection = co.connection.isClosed();
+                    if (!badConnection)
+                        badConnection = (co.connection.getWarnings() != null);
+                } catch (Exception e) {
+                    badConnection = true;
+                    e.printStackTrace();
+                }
+
+                // Connection is bad, remove from pool
+                if (badConnection) {
+                    connections.removeElementAt(i);
+                    trace("ConnectionPoolManager: Remove disconnected DB connection #" + i);
+                    continue;
+                }
+
+                c = co.connection;
+                co.inUse = true;
+
+                trace("ConnectionPoolManager: Using existing DB connection #" + (i + 1));
+                break;
+            }
+        }
+
+        if (c == null) {
+            c = createConnection();
+            co = new ConnectionObject(c, true);
+            connections.addElement(co);
+
+            trace("ConnectionPoolManager: Creating new DB connection #" + connections.size());
+        }
+
+        return c;
+    }
+
+    //빌려간 conncetion객체를 반납
+>>>>>>> refs/remotes/origin/Insu2
     /** Marks a flag in the ConnectionObject to indicate this connection is no longer in use */
     public synchronized void freeConnection(Connection c) {
         if (c == null)

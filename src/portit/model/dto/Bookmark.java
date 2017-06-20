@@ -1,5 +1,6 @@
 package portit.model.dto;
 
+<<<<<<< HEAD
 import java.util.Date;
 import java.lang.Math;
 /**
@@ -39,4 +40,8 @@ public class Bookmark {
 		this.bm_date = bm_date;
 	}
 	
+=======
+public class Bookmark {
+
+>>>>>>> refs/remotes/origin/Insu2
 }
