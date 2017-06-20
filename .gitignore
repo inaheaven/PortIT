@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+.DS_Store
+Thumbs.db
+=======
+>>>>>>> refs/remotes/origin/Insu2
+/build/
+*.class
+.settings/
+.classpath
+.project
