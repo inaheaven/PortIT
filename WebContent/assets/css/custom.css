@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+
+:lang(ko) {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+>>>>>>> refs/remotes/origin/dev-back-MsgByBG22
 
 /**************************** Header *****************************/
 .top-menu-right {
@@ -473,3 +480,4 @@ button.common:focus {
 	background-color: #E69138;
 	color: #fff;
 }
+
