@@ -1,0 +1,27 @@
+/***************** Main ********************/
+#main .recommend {
+	padding-left: 20px;
+}
+#main .recommend a {
+	font-size: 14px;
+	color: #A1BBD0;
+}
+#main .recommend a.active,
+#main .recommend a:active,
+#main .recommend a:hover,
+#main .recommend a:focus {
+	font-weight: bolder;
+	color: #E69138;
+}
+
+#main .mainLine {	
+	border-top: 1px solid #bebebe;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 100%;
+
+}
+
+#main .timeline {
+	margin-bottom: 30px;
+}

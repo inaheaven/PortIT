@@ -69,9 +69,12 @@ public class MemberJoinController extends HttpServlet {
 		// GET 요청일 경우 Front Controller에 가입 페이지 제공
 		// (주소로 접속, 링크 클릭)
 		req.setAttribute("viewUrl", "");
+		
+		doPost(req, resp);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+	
 		// POST 요청일 경우 가입 처리
 		// (폼 데이터 전송)
 		try {

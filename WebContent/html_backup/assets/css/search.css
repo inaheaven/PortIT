@@ -1,0 +1,117 @@
+/***************** Search All ********************/
+.search .keyword{
+	background-color: #E69138;
+	color: #F4E7D7  ;
+	margin-left: 10px;
+	padding: 7px;
+}
+
+.search .searchSorting {
+	border: 1px solid #A1BBD0;
+	border-radius: 10px;
+	padding: 30px 40px;
+	font-size: 14px;
+	margin-bottom: 50px;
+}
+
+.search .searchSorting .poptag {
+	background-color: #F4E7D7;
+	color: #E69138;
+	padding: 1px 6px;
+	margin-right: 5px;
+}
+.search .searchSorting .poptag:hover {
+	background-color: #E69138;
+	color: #F4E7D7;
+}
+
+.search .searchSorting hr {
+	border-top: 1px solid #A1BBD0 ;
+}
+
+.search .searchSorting #itemList .tagcondition {
+	background-color: #A1BBD0;
+	color: #fff;
+	padding: 1px 6px;	
+	margin: 3px;
+}
+.search .searchSorting #itemList .tagcondition > .delete {
+	background-color: #a6a6a6;
+	color: #fff;
+	padding: 1px 6px;
+	margin: -2px -7px -2px 6px;
+}
+.search .searchSorting #itemList .tagcondition > .delete:hover {
+	background-color: #474747;
+}
+
+.pfResult h4,
+.memResult h4,
+.projResult h4 {
+	margin-bottom: 30px;
+	color: #E69138;
+}
+
+.resultLine {
+	border-top: 1px solid #d6d6d6;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.moreBtn {
+	margin-right: 15px;
+	background-color: #E69138 ;
+	color: #F4E7D7;
+}
+.moreBtn:hover {
+	color: #fff;
+}
+
+
+
+.search .searchSorting a {
+	font-size: 14px;
+	color: #797979;
+	margin-right: 10px;
+}
+.search .searchSorting a.active,
+.search .searchSorting a:active,
+.search .searchSorting a:hover,
+.search .searchSorting a:focus {
+	font-weight: bolder;
+	color: #E69138;
+}
+
+
+/***************** Search Portfolio ********************/
+
+.searchKeyword input {
+	border: 1px solid #A1BBD0;
+	font-size: 18px;
+	height: 40px;
+}
+.searchKeyword i {
+	font-size: 24px;
+}
+
+.sortingBtn .common{
+	font-size: 18px;
+}
+
+
+/***************** Search Member ********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

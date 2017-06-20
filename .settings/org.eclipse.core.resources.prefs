@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 eclipse.preferences.version=1
 encoding//WebContent/myProf.html=UTF-8
 encoding//WebContent/myProf.jsp=UTF-8
 encoding/WebContent=UTF-8
 encoding/src=UTF-8
+=======
+eclipse.preferences.version=1
+encoding/<project>=UTF-8
+>>>>>>> refs/remotes/origin/dev-front
