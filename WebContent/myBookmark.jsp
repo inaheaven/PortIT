@@ -1,3 +1,12 @@
+<%@page import="portit.model.dto.Bookmark"%>
+<%@page import="java.util.List"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.*" %>
+<%@page import="javax.naming.*" %>
+<%@page import="javax.sql.DataSource"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>

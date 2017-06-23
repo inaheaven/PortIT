@@ -2,6 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/message.css" rel="stylesheet">
+<!-- JSP:useBean -->
+<jsp:useBean id="dao" class="portit.model.dao.MassageDao"/>
+
+
+<script>
+/* 	window.onload=function(){
+		//Ctrl에 접근해서 list 뽑아오기.
+		if(){
+		location.href="/Project2/msg?cmd=list";
+		}
+	}; */
+</script>
+
 	<%--sidenavbar start--%>
 	<jsp:include page="my.jsp"></jsp:include>
 	<%--sidenavbar end--%>
@@ -29,57 +42,56 @@
 					
 					<!-- Message List Body -->
 					<div class="panel-group msgListContent" id="msgBoxList">
-						<!--  반복  -->
+						<c:forEach var="msgSender" items="${msgSenderList}" begin="0" varStatus="status">
+						<!--  #################반복시작#################### -->
+
 						<div class="panel panel-default msgBox">
+							<!-- Head -->
 							<div class="panel-heading">
 								<span class="pull-left">
 									<a href="#">
 										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
-										<span class="msgSender">발신자 이름</span>
+										<span class="msgSender">${msgSender}</span>
 									</a>
 								</span>
 								<span class="pull-right"> 
-									<a href="javascript:location.href='/page?page=myMsgSend'">
+									<a href="/Project2/msg?cmd=send">
 										<button type="button" class="btn">메세지 보내기</button>
 									</a>
-									<a data-toggle="collapse" data-parent="#msgBoxList" href="#msgBoxOpen" class="updown collapsed"> 
+									<a data-toggle="collapse" data-parent="#msgBoxList" href="#m1_${status.count}" class="updown collapsed"> 
 										<i class="fa fa-chevron-down"></i>
 									</a>
 								</span>								
 							</div>
+							<!-- End_Head -->
 
-							<div id="msgBoxOpen" class="panel-collapse collapse">
+
+							<div id="m1_${status.count}" class="panel-collapse collapse">
 								<div class="panel-body">
-									<div class="msgContentBox mb clearfix"> <!-- 반복 -->
+					
+									<!--  Msg_Content -->
+									<div class="msgContentBox mb clearfix"> 
 										<span class="pull-left col-md-10 msgContent">
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+												내용내용내용내용내용내용내용^^
 										</span>
 										<span class="pull-right col-md-2">
-											<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>17.05.12 16:34</span>
+											<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>날짜^^</span>
 											<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></span>											
 										</span>										
 									</div>	
-									<div class="msgContentBox mb clearfix"> <!-- 반복 -->
-										<span class="pull-left col-md-10 msgContent">
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-											메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-										</span>
-										<span class="pull-right col-md-2">
-											<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>17.05.12 16:34</span>
-											<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></span>											
-										</span>										
-									</div>
+									<!--  END_Msg_Content -->
+									
 									<div class="pull-right">
-										<button type="button" class="btn" onclick="location.href='/page?page=myMsgDetail'">더보기</button>
+										<button type="button" class="btn" onclick="location.href='/Project2/msg?cmd=detail'">더보기</button>
 									</div>					
 								</div>
 							</div> <!-- END - msgBoxOpen -->
 						</div> <!-- END - msgBox -->
+
+									
+									
+						<!-- ##################### 반복 끝 ################## -->
+						</c:forEach>
 					</div> <!-- END - Message List Body  -->
 				</div> 
 			</section>
