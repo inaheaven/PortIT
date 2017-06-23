@@ -28,29 +28,24 @@
 								</span>								
 							</div>
 							<div class="panel-body">
+								
+							<!--  #######반복 시작 ############# -->
+								<c:forEach var="msg" items="${msgList}" varStatus="staus">
+							
 								<div class="msgContentBox mb clearfix"> <!-- 반복 -->
 									<span class="pull-left col-md-10 msgContent">
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
+									
+											${msg.msg_content}
+									
 									</span>
 									<span class="pull-right col-md-2">
 										<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>17.05.12 16:34</span>
 										<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></span>											
 									</span>										
 								</div>	
-								<div class="msgContentBox mb clearfix"> <!-- 반복 -->
-									<span class="pull-left col-md-10 msgContent">
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-										메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.메세지 내용입니다.
-									</span>
-									<span class="pull-right col-md-2">
-										<span style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i>17.05.12 16:34</span>											<span style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></span>											
-									</span>										
-								</div>
+								
+								</c:forEach>
+								<!--  ###########반복 끝############# -->
 								
 								<!-- 페이지네이션 -->
 								<div class="center"> 
