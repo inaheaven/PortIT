@@ -39,10 +39,10 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="signUpModalLabel">Sign Up</h4>
+						<h4 class="modal-title" id="signUpModalLabel">회원 가입</h4>
 					</div>
-					<div class="modal-body">
-						<form method="post" action="">
+					<form method="post" action="">
+						<div class="modal-body">						
 							<div class="form-group">
 								<label class="control-label">Email ID</label><br> <input
 									type="text" name="userid" class="form-control">
@@ -56,13 +56,12 @@
 									type="password" name="userpwcf" id="userpwcf"
 									class="form-control" onchange="fnPasswordConfirm()">
 							</div>
-							<div id="pwconfirm" class=""></div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn signup">Sign Up</button>
-					</div>
-
+							<div id="pwconfirm" class=""></div>						
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn signup">Sign Up</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

@@ -49,18 +49,15 @@
 		<jsp:include page="header.jsp"></jsp:include>
 		<%--header end--%>
 		
+		<%
+			String pageName = (String)request.getAttribute("pageName");
+		%>
 		<%-- 내용 --%>	
-		<jsp:include page="${pageName}"></jsp:include>
+		<jsp:include page="<%= pageName%>"></jsp:include>
 		
 		<%--footer start--%>
 		<jsp:include page="footer.jsp"></jsp:include>
 		<%--footer end--%>
 	</section>
-
-
-	
-
-
-
 </body>
 </html>
