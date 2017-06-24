@@ -2,16 +2,53 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/message.css" rel="stylesheet">
+
+
+<script>
+	var availableTags = [
+							'가나',
+							'가나쵸콜렛',
+							'갈갈이 삼형제',
+							'북마크',
+							'북까페',
+							'엄마',
+							'아빠',
+							'북소리',
+							'여러분',
+							'소문',
+							'소문난 식당',
+							'나나나',
+							'쇼',
+							'쇼팽',
+							'모나미',
+							'한강',
+							'강강수월래',
+							'강촌',
+							'제주도',
+							'삼총사',
+							'먹보',
+							'먹소리',
+							'수박',
+							'수박 겉핥기'
+						];
+	</script>
+
+	<script>
+	$(document).ready(function() {
+	    $("#msgText").autocomplete(availableTags,{ 
+	        matchContains: true,
+	        selectFirst: false
+	    });
+	});
+	</script>
+
+
+
+
+
+
 <script>
 
-
-//View->Controller  -MessageController
-// 컨트롤러 : /Project2/msg
-
-/*수정방안.
- 1.J_Query로 데이터 전송.
-	데이터에 어떻게 reqeust에 전달해야하나?
-*/
 
 /*  	
  $(document).ready(function() {
@@ -46,7 +83,7 @@ session.setAttribute("longin_id","2");
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 mt msg msgSend">
 					<div class="msgSendContent">
-						<form method="post" action="#" class="msgForm clearfix">
+						<form method="post" action="/empty/msg?cmd=list_send" class="msgForm clearfix">
 							<div class="form-group col-md-8 center" >
 								<label class="control-label" for="msgReceiver">받는 사람 </label><br>
 								<div class="">
@@ -61,7 +98,7 @@ session.setAttribute("longin_id","2");
 							</div>
 							<div class="msgBtn col-md-3 center">
 								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn" onclick="location.href='/page?page=myMsgList'">돌아가기</button>
+								<button type="button" class="btn" onclick="location.href='/empty/msg?cmd=list'">돌아가기</button>
 							</div>
 						</form>
 					</div>

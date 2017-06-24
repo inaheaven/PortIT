@@ -30,16 +30,17 @@ public class MessageController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		try {
+			
+			
+			
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
 			String url= "WebContent/msgList.html";
+			String pageName ="memberSearch.jsp";	//test page
 			
 			//Login된 Id session에서 추출.
 			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
 			
-			
-			/*ArrayList msgList = (ArrayList)session.getAttribute("msgList");
-			ArrayList msgListAll = (ArrayList)session.getAttribute("msgListAll");*/
 			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
 			
@@ -48,41 +49,39 @@ public class MessageController extends HttpServlet {
 			MessageModel model = new MessageModel(req,login_id);
 			
 			
+			//http://localhost:8080/empty/msg?cmd=list
+			
+			
+		
+			
 			
 			//msgList.jsp
 			//발신자목록  request!
 			 if(cmd.equals("list")){
 				//From msgDetail,msgSender
-				url="msgList.jsp";
+				 
+				url="myMsgList.jsp";
+				pageName="myMsgList.jsp";
 				
 				
-				//1.발신자 목록.
+				try{
+				//2.RoomList
+				list=model.roomList();
+				session.setAttribute("RoomList", list);
+				}
+				
+				catch(Exception err){
+					System.out.println("MessageController_cmd=list()에서 오류");
+					err.printStackTrace();
+				}
+				
+			/*	//테스트용
+				//발신자목록확인.
 				msgSenderList=model.getSenderList();
 				
-				session.setAttribute("msgSenderList", msgSenderList);
-				
-				
-				//2.수신메세지 목록 따오기 :From sender목록
-					//화면을 처음에 띄워줄때 서버요청없이 한번에 처리해주기위해 msg리스트를 처음에 넘겨야한다.
-					//여기서 msgSenderList만큼 반복을 돌아서 msg리스트를 넘겨야한다.
-				
-				/*	
-				 	Sender_id가 한글로 되어있기때문에 문제가 생긴다 식별자 오류.
-				//String[] reciveMsg= new String[msgSenderList.size()];
-			
 				for(int i=0; i<msgSenderList.size(); i++){
-					
-					//SenderList에 담긴 발신자의 대화내용 list
-					list=model.getReciveMsg((String)msgSenderList.get(i));
-					
-					String reciveMsg="rm_";
-					reciveMsg.concat(String.valueOf(i));
-					
-					
-					 reciveMsg[i]="reciveMsg";
-					reciveMsg[i]=reciveMsg[i].concat(String.valueOf(i));
-					
-					session.setAttribute(reciveMsg, list);
+					//내용 확인
+					System.out.println("Ctrl 발신자 ="+ msgSenderList.get(i));
 				}
 				*/
 			}
@@ -91,29 +90,40 @@ public class MessageController extends HttpServlet {
 			else if(cmd.equals("list_send")){
 				//From msgSend
 				
-				url="msgList.jsp";
+				url="myMsgList.jsp";
+				pageName="myMsgList.jsp";
 				
 				//DB_InPut Msg
 				model.insertMessage();
 
+				/*
+				최초에 list페이지에서 발신자 목록을 가지고왔기때문에 상관이 없다.
+				list페이지에서 나타나는 list는 발,수신자 list가 아니라 발신자 list다
+				따라서 내가 메세지를 송신하더라도 이 순위에는 영향이 생기지 않는다.
+				 
 				
 				//발신자 목록.
 				msgSenderList=model.getSenderList();
-				session.setAttribute("msgSenderList", msgSenderList);
+				session.setAttribute("msgSenderList", msgSenderList);*/
+				
 				
 				//~발신자로 부터의 수신메세지 목록
 			}
 			
-			
-			
-			
-			
 			else if(cmd.equals("detail")){
-				url="msgDetail.jsp";
-				//해당발신자의 mem_id를 어디서 넘겨받아야하나...?
+				//1.List에서 발신자이름을 받아온다.
+				String mem_id_Sender= req.getParameter("mem_id_sender");
 				
 				
-				//~발신자의 수신,발신 msg목록
+				url="myMsgDetail.jsp";
+
+				//대화방 with "mem_id_sender"
+				//2.발신자의 대화방을 얻어온다.
+				list=model.getChatRoom(mem_id_Sender);
+				session.setAttribute("chatroom", list);
+				
+				//발신자 이름 확인  Yes!
+				//System.out.println("Ctrl  "+mem_id_Sender);
 			}
 			
 			
@@ -122,14 +132,22 @@ public class MessageController extends HttpServlet {
 			else if(cmd.equals("send")){
 				//from msgList, msgDetail
 				
-				
-				url="msgSend.jsp";
+				url="myMsgSend.jsp";
 			}
 			
-			
-			
-
-			RequestDispatcher view=	req.getRequestDispatcher(url);
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+				req.setAttribute("pageName", url);
+				RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+				
+				
+			//RequestDispatcher view=	req.getRequestDispatcher(url);
 			view.forward(req,resp);
 		} catch (Exception e) {
 			e.printStackTrace();

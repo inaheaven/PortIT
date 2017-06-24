@@ -37,8 +37,6 @@
 
 
 
-<!-- JSP:useBean -->
-<jsp:useBean id="dao" class="portit.model.dao.MassageDao"/>
 
 
 <%
@@ -157,7 +155,7 @@ $(document).ready(function(){
 					</a></li>
 					<li class="sub-menu"><a href=""> <span>Notification</span>
 					</a></li>
-					<li class="sub-menu"><a href="/Project2/msg?cmd=list"> <span>Message</span>
+					<li class="sub-menu"><a href="/empty/msg?cmd=list"> <span>Message</span>
 					</a></li>
 					<hr class="line" />
 					<li class="sub-menu"><a href=""> <span>My Account</span>
