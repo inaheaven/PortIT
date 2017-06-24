@@ -22,7 +22,11 @@ public class MessageModel {
 		
 		//모델_DAO
 		//해당 사용자에 관한 db를 얻어야하기때문에 식별자를 전달한다.
-		this.dao= new MassageDao(login_id);
+
+		
+		//싱글톤 패턴을 위해 getInstace로 인스턴스를 공유라고 하는데 오류발생.. 원인은 모르겟음.
+		this.dao=new MassageDao();
+		dao.setLogin_id(_login_id);
 	}
 	
 	
@@ -57,6 +61,20 @@ public class MessageModel {
 	
 	
 	
+	//msgList.jsp
+	public ArrayList roomList(String keyField, String keyWord){
+		//Login_id에 생성된 모든 대화방List를 리턴한다.
+		
+		this.list = new ArrayList();
+		//dao 변수1: Type(이름,nick), 변수2: 검색어.
+		
+		//여기선 getmsgALL 이아니라 msgAllPack()가 선언되어야한다
+		this.list=dao.roomList(keyField,keyWord);
+		
+		return this.list;
+	}
+	
+	
 	
 	// msgDetail.jsp
 	// 대화방 with Msg_Sender
@@ -73,20 +91,7 @@ public class MessageModel {
 	
 	
 	
-	//msgList.jsp
-	public ArrayList roomList(){
-		//Login_id에 생성된 모든 대화방List를 리턴한다.
-		
-		this.list = new ArrayList();
-		//dao 변수1: Type(이름,nick), 변수2: 검색어.
-		
-		//여기선 getmsgALL 이아니라 msgAllPack()가 선언되어야한다
-		this.list=dao.roomList();
-		
-		
-		
-		return this.list;
-	}
+
 
 
 	

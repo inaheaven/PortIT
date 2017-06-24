@@ -4,18 +4,19 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="portit.model.dto.MessageDto"%>
 <link href="assets/css/message.css" rel="stylesheet">
+
 <!-- JSP:useBean -->
-<jsp:useBean id="dao" class="portit.model.dao.MassageDao"/>
+<%--<jsp:useBean id="dao" class="portit.model.dao.MassageDao"/> --%>
 <jsp:useBean id="dto" class="portit.model.dto.MessageDto"/>
 <jsp:useBean id="dto2" class="portit.model.dto.MessageDto"/>
 
+<%
 
+//컨트롤러에서 돌아옴
+String keyField = request.getParameter("keyField");
+String keyWord = request.getParameter("keyWord");
+%>
 
-
-
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 
@@ -42,9 +43,17 @@
 				<div class="col-md-12 mt msg msgList">
 					<div class="msgList_top">
 						<span class="pull-left">
-							<form class="form-inline" method="post" action="#">
+							<form class="form-inline" method="post" action="/empty/msg?cmd=list">
 								<div class="form-group">
-									<input type="text" class="form-control" id="msgSearch"
+								
+							<select name="keyField" size="1">
+								<option value="search_name"
+								<%if ("mem_name".equals(keyField)) {%>selected="selected" <%}%>>Name
+								<option value="search_content" 
+								<%if ("mem_EMAIL".equals(keyField)) {%> selected="selected" <%}%>>Content
+							</select>
+							
+							 <input type="text" class="form-control" id="keyWord" name="keyWord"
 										placeholder="Search Member">
 									<button class="btn" type="submit">Search</button>
 								</div>

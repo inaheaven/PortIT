@@ -12,7 +12,8 @@ import portit.model.db.DBConnectionMgr;
 import portit.model.dto.MessageDto;
 
 public class MassageDao{
-	
+			
+			
 /*
  insertMsg()		: ~에게 메세지 보내기.
  getChatRoom()		: ~와의 대화방(송,수신 msg)리턴
@@ -25,21 +26,12 @@ public class MassageDao{
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 	private int login_id;				//로그인한 사용자 MEM_ID
+
+	
+	//private String Name= convertToName(String.valueOf(login_id));
 	
 	
-	
-	public MassageDao(int _login_id){
-		try{
-			this.login_id=_login_id;
-			pool = DBConnectionMgr.getInstance();
-		}
-		catch(Exception err){
-			System.out.println("DBCP 인스턴스 참조 실패 : " + err);
-		}
-	}
-	
-	
-	public MassageDao(){
+	public MassageDao( ){
 		try{
 			pool = DBConnectionMgr.getInstance();
 		}
@@ -50,6 +42,59 @@ public class MassageDao{
 	
 	
 	
+	//싱글톤 실험.
+	private static MassageDao instance = new MassageDao();
+	
+	public static MassageDao getInstance() {
+		if(instance==null){
+			instance=new MassageDao();
+		}
+		return instance;
+	}
+	public void setLogin_id(int login_id) {
+		this.login_id = login_id;
+	}
+	
+	
+	
+	
+	
+	
+	
+	//roomList : 대화방목록
+	public ArrayList roomList(String keyField, String keyWord){
+		
+		//대화방 list 준비.
+		ArrayList Roomlist = new ArrayList();
+		
+		//발신자 목록.
+		ArrayList senderList;
+		
+		
+		//로그인한 계정의  발신자목록 (검색조건 추가가능)
+		//필터링 : 발신자 목록에서 한다.
+		senderList = (ArrayList) getSenderList(this.login_id,keyField, keyWord);
+	
+		
+		
+		for(int i=0; i<senderList.size();i++){
+			String mem_id_sender= (String)senderList.get(i);
+			
+			
+			//해당 발신자의 대화방을 Roomlist에 담는다..
+			Roomlist.add(getChatRoom(null,null,mem_id_sender,false));
+		}
+		return Roomlist;
+	}
+	
+	
+	
+	
+	
+	
+	
+
+
 	// msgSend.jsp (메세지 보내기) 확인!!
 	public void insertMsg(MessageDto dto){
 		String sql = "insert into Message"
@@ -118,12 +163,12 @@ public class MassageDao{
 				sql=sql.concat(" and MEM_ID_RECEIVER="+Msg_Sender+")");
 				}
 				sql=sql.concat(" order by msg_date desc");
-				
-				
 			}
 			
 			else{//검색조건  유
-				//sql =null; 
+				
+				//field값에 따른 조건 mail or 이름.
+				//조인해야함.
 			}
 			
 			
@@ -131,8 +176,11 @@ public class MassageDao{
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
-			//DB 인출확인
+			
+			
+			//메세지 삽입.
 			while(rs.next()){
+				
 				MessageDto Dto = new MessageDto();
 				Dto.setMsg_id(rs.getInt("MSG_ID"));
 				Dto.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
@@ -142,10 +190,7 @@ public class MassageDao{
 				Dto.setMsg_date(rs.getString("MSG_DATE"));
 				//Dto.setSender_Name(convertToName(String.valueOf(Dto.getMem_id_sender())));
 				//Dto.setSender_Nick(null);
-				
-				//System.out.println("dao  "+convertToName(String.valueOf(Dto.getMem_id_sender())));
 				list.add(Dto);
-				
 			}
 		}
 		catch(Exception err){
@@ -163,29 +208,71 @@ public class MassageDao{
 	
 	//메세지 발신자 List	(확인!)
 	//From msgList.jsp
-	public ArrayList getSenderList(int mem_id){
+	public ArrayList getSenderList(int mem_id,String keyField, String keyWord){
 		String sql = null;
 		String name = null;
 		ArrayList list = new ArrayList();
 		
 		try{
+			
+				//검색조건이 없다면...
+			if(keyWord==null){
+				
+				System.out.println("검색무");
+				
 				sql = "Select mem_ID_sender, max(MSG_DATE)" +
 						"From (select * from message where MEM_ID_RECEIVER= ";
 				sql = sql.concat(String.valueOf(mem_id));
 				sql = sql.concat(") group by (mem_ID_sender) ");
 				sql = sql.concat("order by max(MSG_DATE) desc");
-			
 				
 				con = pool.getConnection();
 				pstmt = con.prepareStatement(sql);
 				rs = pstmt.executeQuery();
-			
 				
-				
-			while(rs.next()){
-				list.add(rs.getString("MEM_ID_SENDER"));
+				while(rs.next()){
+					list.add(rs.getString("MEM_ID_SENDER"));
+				}
 				
 			}
+			//검색조건이 있다면.
+			else{
+				if(keyField.equals("search_name")){
+				//1차적으로 이름을 조회한다. rs가 null인경우 mail을 다시 조회한다.
+					
+					sql="SELECT distinct MEM_ID "+
+							" FROM MESSAGE INNER JOIN PROFILE "+
+							" ON MESSAGE.MEM_ID_SENDER = PROFILE.MEM_ID "+
+							" WHERE PROF_NAME like'%";
+					sql = sql.concat(keyWord+"%'");
+					
+					con = pool.getConnection();
+					pstmt = con.prepareStatement(sql , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					rs = pstmt.executeQuery();
+					
+					rs.last();	//총 레코드 수구하기
+					int totalRecord = rs.getRow();
+					rs.beforeFirst(); //커서를 다시 원상태로 복귀해서 자료를 읽을 준비를 해줌
+
+					//메일을 조회해라.
+					if(totalRecord==0){
+						System.out.println("DAO메일  "+sql);
+						sql="select MEM_ID from member where MEM_EMAIL like '%"+keyWord+"%' ";
+						
+						con = pool.getConnection();
+						pstmt = con.prepareStatement(sql);
+						rs = pstmt.executeQuery();
+					}
+				}
+				
+				
+				System.out.println("검색DAO "+sql);
+				while(rs.next()){
+					list.add(rs.getString("MEM_ID"));
+				}
+			}
+				
+			
 		}
 		catch(Exception err){
 			System.out.println("getMsgSender()에서 오류");
@@ -202,31 +289,7 @@ public class MassageDao{
 	
 	
 	
-	
-	//roomList : 대화방목록
-	public ArrayList roomList(){
-		
-		//대화방 list 준비.
-		ArrayList Roomlist = new ArrayList();
-		
-		//발신자 목록.
-		ArrayList senderList;
-		
-		
-		//로그인한 ID의 발신자목록을 받았습니다.
-		senderList = (ArrayList) getSenderList(this.login_id);
-		
-		
-		for(int i=0; i<senderList.size();i++){
-			//발신자
-			String mem_id_sender= (String)senderList.get(i);
-			
-			//해당 발신자의 대화방을 Room에 담는다..
-			Roomlist.add(getChatRoom(null,null,mem_id_sender,false));
-		}
-		return Roomlist;
-	}
-	
+
 	
 	
 	
@@ -234,7 +297,7 @@ public class MassageDao{
 	
 		//MEM_id를 한글이름으로 변환. (확인!)
 		//list에서 꺼내온값을 list에 다시 저장하기 때문에 mem_id를 문자열로 저장.
-		public String convertToName(String mem_id){
+		public  String convertToName(String mem_id){
 			
 			/*
 			 1.이름이 등록됐다면 이름으로 반환한다.

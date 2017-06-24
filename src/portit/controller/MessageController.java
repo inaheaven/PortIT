@@ -35,21 +35,20 @@ public class MessageController extends HttpServlet {
 			
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
+			String keyField = req.getParameter("keyField");
+			String keyWord = req.getParameter("keyWord");
 			String url= "WebContent/msgList.html";
 			String pageName ="memberSearch.jsp";	//test page
 			
 			//Login된 Id session에서 추출.
+			//모델 : Request와 login_id전달
 			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
+			MessageModel model = new MessageModel(req,login_id);
+			
 			
 			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
 			
-			
-			//모델 : Request와 login_id전달, 
-			MessageModel model = new MessageModel(req,login_id);
-			
-			
-			//http://localhost:8080/empty/msg?cmd=list
 			
 			
 		
@@ -64,9 +63,11 @@ public class MessageController extends HttpServlet {
 				pageName="myMsgList.jsp";
 				
 				
+				System.out.println("ctrl키워드확인 "+keyWord);
+				
 				try{
 				//2.RoomList
-				list=model.roomList();
+				list=model.roomList(keyField,keyWord);
 				session.setAttribute("RoomList", list);
 				}
 				
@@ -121,9 +122,6 @@ public class MessageController extends HttpServlet {
 				//2.발신자의 대화방을 얻어온다.
 				list=model.getChatRoom(mem_id_Sender);
 				session.setAttribute("chatroom", list);
-				
-				//발신자 이름 확인  Yes!
-				//System.out.println("Ctrl  "+mem_id_Sender);
 			}
 			
 			
@@ -140,14 +138,9 @@ public class MessageController extends HttpServlet {
 			 
 			 
 			 
-			 
-			 
-			 
-				req.setAttribute("pageName", url);
-				RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+			req.setAttribute("pageName", url);
+			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 				
-				
-			//RequestDispatcher view=	req.getRequestDispatcher(url);
 			view.forward(req,resp);
 		} catch (Exception e) {
 			e.printStackTrace();

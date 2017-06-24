@@ -19,7 +19,11 @@ public class MessageDto {
 	private String sender_Nick;		//발신자 별명
 	private String sender_Name;		//발신자 이름
 	
-	MassageDao dao = new MassageDao();
+	
+	//싱글톤 실험.
+	MassageDao dao = MassageDao.getInstance();
+	
+	
 	
 	
 	

@@ -37,8 +37,6 @@
 
 
 
-
-
 <%
 //로그인 : 메일
 //Session에 저장되는것 : mem_ID (DB에서 조회해야함.)
@@ -47,7 +45,7 @@ session.setAttribute("longin_id","2");
 
 <script>
 $(document).ready(function(){
-	
+	s
 			 $("#push").click(function(){
 					alert("버튼눌림");
 				});
@@ -158,9 +156,9 @@ $(document).ready(function(){
 					<li class="sub-menu"><a href="/empty/msg?cmd=list"> <span>Message</span>
 					</a></li>
 					<hr class="line" />
-					<li class="sub-menu"><a href=""> <span>My Account</span>
+					<li class="sub-menu"><a href="/empty/account?cmd=alter"> <span>My Account</span>
 					</a></li>
-					<li class="sub-menu"><a href=""> <span>Delete
+					<li class="sub-menu"><a href="/empty/account?cmd=delete"> <span>Delete
 								Account</span>
 					</a></li>
 				</ul>
