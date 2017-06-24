@@ -213,66 +213,77 @@ public class MassageDao{
 		String name = null;
 		ArrayList list = new ArrayList();
 		
-		try{
-			
-				//검색조건이 없다면...
-			if(keyWord==null){
-				
+		try {
+
+			// 검색조건이 없다면...
+			if (keyWord == null) {
+
 				System.out.println("검색무");
-				
-				sql = "Select mem_ID_sender, max(MSG_DATE)" +
-						"From (select * from message where MEM_ID_RECEIVER= ";
+
+				sql = "Select mem_ID_sender, max(MSG_DATE)" + "From (select * from message where MEM_ID_RECEIVER= ";
 				sql = sql.concat(String.valueOf(mem_id));
 				sql = sql.concat(") group by (mem_ID_sender) ");
 				sql = sql.concat("order by max(MSG_DATE) desc");
-				
+
 				con = pool.getConnection();
 				pstmt = con.prepareStatement(sql);
 				rs = pstmt.executeQuery();
-				
-				while(rs.next()){
+
+				while (rs.next()) {
 					list.add(rs.getString("MEM_ID_SENDER"));
 				}
-				
-			}
-			//검색조건이 있다면.
-			else{
-				if(keyField.equals("search_name")){
-				//1차적으로 이름을 조회한다. rs가 null인경우 mail을 다시 조회한다.
-					
-					sql="SELECT distinct MEM_ID "+
-							" FROM MESSAGE INNER JOIN PROFILE "+
-							" ON MESSAGE.MEM_ID_SENDER = PROFILE.MEM_ID "+
-							" WHERE PROF_NAME like'%";
-					sql = sql.concat(keyWord+"%'");
-					
-					con = pool.getConnection();
-					pstmt = con.prepareStatement(sql , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-					rs = pstmt.executeQuery();
-					
-					rs.last();	//총 레코드 수구하기
-					int totalRecord = rs.getRow();
-					rs.beforeFirst(); //커서를 다시 원상태로 복귀해서 자료를 읽을 준비를 해줌
 
-					//메일을 조회해라.
-					if(totalRecord==0){
-						System.out.println("DAO메일  "+sql);
-						sql="select MEM_ID from member where MEM_EMAIL like '%"+keyWord+"%' ";
-						
+			}
+			// 검색조건이 있다면.
+			else {
+				
+				//1.이름 검색.
+				if (keyField.equals("search_name")) {
+					// 1차적으로 이름을 조회한다. 
+					//resultset의 길이가 null인경우 mail을 키워드로 다시 조회한다.
+
+					sql = "SELECT distinct MEM_ID " + " FROM MESSAGE INNER JOIN PROFILE "
+							+ " ON MESSAGE.MEM_ID_SENDER = PROFILE.MEM_ID " + " WHERE PROF_NAME like'%";
+					sql = sql.concat(keyWord + "%'");
+
+					con = pool.getConnection();
+					pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					rs = pstmt.executeQuery();
+
+					rs.last(); // 총 레코드 수구하기
+					int totalRecord = rs.getRow();
+					rs.beforeFirst(); // 커서를 다시 원상태로 복귀해서 자료를 읽을 준비를 해줌
+
+					// 메일을 조회해라.
+					if (totalRecord == 0) {
+						System.out.println("DAO메일  " + sql);
+						sql = "select MEM_ID from member where MEM_EMAIL like '%" + keyWord + "%' ";
+
 						con = pool.getConnection();
 						pstmt = con.prepareStatement(sql);
 						rs = pstmt.executeQuery();
 					}
-				}
-				
-				
-				System.out.println("검색DAO "+sql);
-				while(rs.next()){
-					list.add(rs.getString("MEM_ID"));
+
+					System.out.println("검색DAO " + sql);
+					while (rs.next()) {
+						list.add(rs.getString("MEM_ID"));
+					}
+				} 
+			
+			//2.내용 검색.
+			else if (keyField.equals("search_content")) {
+						
+					sql = "select distinct MEM_ID_SENDER from MESSAGE where msg_content like'%"+keyWord+"%'";
+
+					con = pool.getConnection();
+					pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					rs = pstmt.executeQuery();
+
+					while (rs.next()) {
+						list.add(rs.getString("MEM_ID_SENDER"));
+					}
 				}
 			}
-				
-			
 		}
 		catch(Exception err){
 			System.out.println("getMsgSender()에서 오류");
@@ -286,10 +297,6 @@ public class MassageDao{
 }
 	
 	
-	
-	
-	
-
 	
 	
 	
@@ -353,7 +360,6 @@ public class MassageDao{
 			return name;
 	}
 	
-		
 
 	
 	
@@ -394,7 +400,25 @@ public class MassageDao{
 		
 		
 		
+	
+	// Delete.jsp
+	public void deleteAccount(int login_id){
+		String sql = "delete from MEMBER where MEM_ID=?";
 		
+		try{
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, login_id);
+			pstmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("deleteAccount()에서 오류");
+			err.printStackTrace();
+		}
+		finally{
+			pool.freeConnection(con, pstmt);
+		}
+	}
 		
 		
 		
@@ -409,27 +433,6 @@ public class MassageDao{
 		catch(Exception err){
 			System.out.println("updatePos()에서 오류");
 			err.printStackTrace();
-		}
-	}
-	
-	
-	
-	// Delete.jsp
-	public void deleteMessage(int b_num){
-		String sql = "delete from MESSAGE where b_num=?";
-		
-		try{
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, b_num);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("deleteMessage()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
 		}
 	}
 	

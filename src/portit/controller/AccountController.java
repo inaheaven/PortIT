@@ -11,14 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import portit.model.action.AccountModel;
 import portit.model.action.MessageModel;
 
 @WebServlet("/account")
 public class AccountController extends HttpServlet {
 	//컨트롤러
-	//model에서 request로부터 뽑아서 데이터에 저장하는작업.
-	
-	//view->frontCtrl ->컨트롤러 ->모델.
 	
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -32,7 +30,6 @@ public class AccountController extends HttpServlet {
 		try {
 			
 			
-			
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
 			String url= "WebContent/msgList.html";
@@ -41,11 +38,10 @@ public class AccountController extends HttpServlet {
 			//Login된 Id session에서 추출.
 			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
 			
-			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
 			
 			//모델 : Request와 login_id전달, 
-			MessageModel model = new MessageModel(req,login_id);
+			AccountModel model = new AccountModel(req, login_id);
 			
 			
 			
@@ -53,24 +49,28 @@ public class AccountController extends HttpServlet {
 				//From msgDetail,msgSender
 				url="myDeleteAccount.jsp";
 				
+				model.deleteAccount();
 				
 				try{
 				}
 				
 				catch(Exception err){
-					System.out.println("MessageController_cmd=list()에서 오류");
 					err.printStackTrace();
 				}
 			}
 			
 			
 			else if(cmd.equals("alter")){
-				//From msgSend
-				
+				try{
+			
 				url="myAccount.jsp";
+				model.alterAccount();
+				
+				}
+				catch(Exception err){
+					err.printStackTrace();
+				}
 			}
-			 
-			 
 			 
 			 
 			 
