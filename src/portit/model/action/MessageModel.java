@@ -22,7 +22,11 @@ public class MessageModel {
 		
 		//모델_DAO
 		//해당 사용자에 관한 db를 얻어야하기때문에 식별자를 전달한다.
-		this.dao= new MassageDao(login_id);
+
+		
+		//싱글톤 패턴을 위해 getInstace로 인스턴스를 공유라고 하는데 오류발생.. 원인은 모르겟음.
+		this.dao=new MassageDao();
+		dao.setLogin_id(_login_id);
 	}
 	
 	
@@ -47,89 +51,85 @@ public class MessageModel {
 		
 		
 		dto.setMem_id_sender(this.login_id);
-		dto.setMem_id_receiver(Integer.parseInt(req.getParameter("msgReceiver")));
+		dto.setMem_id_receiver(Integer.parseInt(dao.getMemId(req.getParameter("msgReceiver"))));
 		dto.setMsg_content(req.getParameter("msgText"));
 		dto.setMsg_isread("n");
 
 		//DB에 Input.
-		dao.insertMessage(dto);
+		dao.insertMsg(dto);
 	}
 	
 	
 	
-	// msgList.jsp
-	//~에게 받은 메세지.
-	public ArrayList getReciveMsg(String Msg_Sender){
-		this.list = new ArrayList();
+	//msgList.jsp
+	public ArrayList roomList(String keyField, String keyWord){
+		//Login_id에 생성된 모든 대화방List를 리턴한다.
 		
+		this.list = new ArrayList();
 		//dao 변수1: Type(이름,nick), 변수2: 검색어.
-		this.list=dao.getReciveMsg(null,null, Msg_Sender);
+		
+		//여기선 getmsgALL 이아니라 msgAllPack()가 선언되어야한다
+		this.list=dao.roomList(keyField,keyWord);
+		
+		return this.list;
+	}
+	
+	
+	
+	// msgDetail.jsp
+	// 대화방 with Msg_Sender
+	public ArrayList getChatRoom(String Msg_Sender){
+		//해당 User와 대화한 대화방을 return한다.
+		// (타입, 검색어, MSG_SENDER, 수신만:fail 수신+발신:true)
+		
+		this.list = new ArrayList();	//인스턴스 생성을 안해도된다.
+		this.list=dao.getChatRoom(null,null, Msg_Sender,true);
 		
 		return list;
 	}
 	
 	
-	//msgDetail.jsp
-	//~와 주고받은 메세지
-	public ArrayList getListAll(int Msg_Sender){
-		//0. DAO를 선언할때 생성자에 Mem_id를 전달한다.
-		//1.DB에서 현재 로그인된 사용자의 msgList를 얻어온다.
-		//list를 반환한다.
-		
-		
-		this.list = new ArrayList();
-		
-		//dao 변수1: Type(이름,nick), 변수2: 검색어.
-		this.list=dao.getMessageListAll(null,null,Msg_Sender);
-		return this.list;
-	}
-
+	
 	
 
+
+
 	
+	
+	
+/*	
 	//msgList.jsp
 	//발신자 목록!
+	//DAO에서 한글화 작업을 하기때문에 필요없다.
 	public ArrayList getSenderList(){
-		
+		//Login_id에게 보낸 발신자 List를 리턴한다.
 		
 		this.list = new ArrayList();
-		this.list=dao.getMsgSender(this.login_id);
+		this.list=dao.getSenderList(this.login_id);
 				
-		/*
+		
+		
 		 이름은 키값이 아니기때문에 식별자로써 할수없다.
 		 그럼 이름과 mem_id를 묶어서 키값으로 사용할 수 있다.
 		->DB에 접근할때. 이것을 통일된것이 닉네임.
-		 */
-		
-		
-		/*//한글이름으로 변환.
-		for(int i=0; i<list.size();i++){
-		
-			list.set(i, dao.convertToName((String)list.get(i)));
-			
-			1.list에서 mem_id를 꺼내온다.
-			2.DB에서 해당하는 한글이름을 출력받는다.
-			3.list에 다시 setting해준다. 
-		}*/
-		
+		 
 		
 		convertToName(list);
-		
 		return this.list;
-	}
+	}*/
 	
 	
 	
 	
-	
-	
+	/*
+	//애초에 dao에서 한글화 작업을 하기 때문에 필요가없다.
 	public ArrayList convertToName(ArrayList _list){
-		/*
+		
 		1.list에서 mem_id를 꺼내온다.
 		2.DB에서 해당하는 한글이름을 출력받는다.
 		3.list에 다시 setting해준다. 
 		4.변환된 한글화 List를 반환한다.
-		*/
+		
 		
 		//한글이름으로 변환.
 		for(int i=0; i<_list.size();i++){
@@ -137,4 +137,11 @@ public class MessageModel {
 		}
 		return _list;
 	}
+	*/
 }
+
+
+
+
+
+

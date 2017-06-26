@@ -50,18 +50,18 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myMsgList" id="myMsgList">
+				<a href="/empty/msg?cmd=list" id="myMsgList">
 				    <span>Message</span>
 				</a>
 			</li>
 			<hr class="line"/>
 			<li class="">
-				<a href="/page?page=myAccount" id="myAccount">
+				<a href="/empty/account?cmd=alter" id="myAccount">
 				    <span>My Account</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myDeleteAccount" id="myDeleteAccount">
+				<a href="/empty/account?cmd=delete" id="myDeleteAccount">
 				    <span>Delete Account</span>
 				</a>
 			</li>
