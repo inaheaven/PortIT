@@ -1,6 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="portit.model.dto.Profile"%>
+<%
+	String loginEmail = (String)session.getAttribute("loginEmail");
+	Profile prof = new Profile();
+%>
+
 <header class="header black-bg">
 	<!--logo start-->
 	<a href="/page?page=main" class="logo"><b>Port IT</b></a>
@@ -39,29 +45,32 @@
 					<li>
 						<p class="yellow">Notification</p>
 					</li>
-					<li><a href=""> <span>구분</span>&nbsp;/&nbsp; <span
-							class="time">Just now</span> <span class="message">[누구누구]님이
-								내 포트포리오를 좋아합니다.</span>
-					</a></li>
+					<li>
+						<a href=""> 
+							<span>구분</span>&nbsp;/&nbsp; 
+							<span class="time">Just now</span> 
+							<span class="message">[누구누구]님이 내 포트포리오를 좋아합니다.</span>
+						</a>
+					</li>
 					<li><a href="/page?page=myNotification">더보기</a></li>
 				</ul>
 			</li>
 			<li id="header_inbox_bar" class="dropdown mypage">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-					<img alt="avatar" src="assets/img/ui-danro.jpg" class="img-circle">
+					<img alt="profileImage" src="<%=prof.getProf_img() %>" class="img-circle">
 				</a>
 				<ul class="dropdown-menu extended inbox">
 					<div class="notify-arrow notify-arrow-yellow"></div>
 					<li>
-						<p class="yellow">김수연 님</p> <!-- 로그인한 -->
+						<p class="yellow"><%=loginEmail %> 님</p> <!-- 로그인한 -->
 					</li>
 					<li><a href="/page?page=myProf">내 프로필</a></li>
 					<li><a href="/page?page=myPfList">내 포트폴리오</a></li>
 					<li><a href="/page?page=myProjList">내 프로젝트</a></li>
 					<li><a href="/page?page=myBookmark">북마크</a></li>
-					<li><a href="/empty/msg?cmd=list">메세지</a></li>
-					<li><a href="/empty/account?cmd=alter">계정 설정</a></li>
-					<li><a class="logout" href="index.jsp">로그아웃</a></li> <!-- 로그아웃 처리해야함 - session 지우기 -->
+					<li><a href="/page?page=myMsgList">메세지</a></li>
+					<li><a href="/page?page=myAccount">계정 설정</a></li>
+					<li><a class="logout" href="/logout">로그아웃</a></li> <!-- 로그아웃 처리해야함 - session 지우기 -->
 				</ul>
 			</li>
 		</ul>
