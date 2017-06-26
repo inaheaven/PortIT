@@ -84,7 +84,7 @@ public class MassageDao{
 			
 			
 			//해당 발신자의 대화방을 Roomlist에 담는다..
-			Roomlist.add(getChatRoom(keyField,keyField,mem_id_sender,false));
+			Roomlist.add(getChatRoom(keyField,keyWord,mem_id_sender,false));
 		}
 		return Roomlist;
 	}
@@ -129,16 +129,15 @@ public class MassageDao{
 	
 	
 	// '특정발신자'와의 대화방.
-	public ArrayList getChatRoom(String Type, String Name, String Msg_Sender, Boolean All){
+	public ArrayList getChatRoom(String keyField, String keyWord, String Msg_Sender, Boolean All){
 		
 		ArrayList list = new ArrayList();
 		String sql = null;
 		
 		try{
 			//sql->connection->pstmt-rs
-			if(Type == null){
+			if(keyWord == null){
 				//쿼리문이 닉네임을 검색할때와 이름을 검색할때로 나뉘어야한다.
-				
 				//이 쿼리문은 profile이 생성되어있어야 등록이 가능하다. 따라서 profile 개설여부를 묻는 조건문이 필요하다
 				//혹은 쿼리문을 수정하여 name과 nick을 아예 빼버린다.
 				//그리고 dto에 담는 시점에서 converting을 한다.
@@ -165,12 +164,22 @@ public class MassageDao{
 				sql=sql.concat(" and MEM_ID_RECEIVER="+Msg_Sender+")");
 				}
 				sql=sql.concat(" order by msg_date desc");
+				
+				
+				
 			}
 			
 			else{//검색조건  유
 				
-				//field값에 따른 조건 mail or 이름.
-				//조인해야함.
+				if(keyField.equals("search_content")){
+					sql="select * from(select * FROM Message WHERE (mem_id_sender ="
+						+ Msg_Sender+" and MEM_ID_RECEIVER="+login_id+")) "+
+						"where MSG_Content like '%"+keyWord+"%' "+
+						"order by msg_date desc ";
+					
+					System.out.println("Dao 검색 "+sql);
+				}
+				
 			}
 			
 			
@@ -425,26 +434,7 @@ public class MassageDao{
 	
 	
 	
-	
-	
-	// Delete.jsp
-	public void deleteAccount(int login_id){
-		String sql = "delete from MEMBER where MEM_ID=?";
-		
-		try{
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, login_id);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("deleteAccount()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
-		}
-	}
+
 		
 		
 		

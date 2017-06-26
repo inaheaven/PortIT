@@ -18,8 +18,6 @@ public class MessageController extends HttpServlet {
 	//컨트롤러
 	//model에서 request로부터 뽑아서 데이터에 저장하는작업.
 	
-	//view->frontCtrl ->컨트롤러 ->모델.
-	
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doPost(req, resp);
@@ -63,6 +61,8 @@ public class MessageController extends HttpServlet {
 				pageName="myMsgList.jsp";
 				
 				
+				
+				
 				try{
 				//2.RoomList
 				list=model.roomList(keyField,keyWord);
@@ -74,15 +74,6 @@ public class MessageController extends HttpServlet {
 					err.printStackTrace();
 				}
 				
-			/*	//테스트용
-				//발신자목록확인.
-				msgSenderList=model.getSenderList();
-				
-				for(int i=0; i<msgSenderList.size(); i++){
-					//내용 확인
-					System.out.println("Ctrl 발신자 ="+ msgSenderList.get(i));
-				}
-				*/
 			}
 			
 			
