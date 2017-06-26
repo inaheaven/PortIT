@@ -9,13 +9,6 @@
 
 <title></title>
 
-<!-- J_Qurey -->
-<script type="text/javascript" src="jquery/lib/jquery.js"></script>
-<script type='text/javascript' src='jquery/lib/jquery.bgiframe.min.js'></script>
-<script type='text/javascript' src='jquery/lib/jquery.ajaxQueue.js'></script>
-<script type='text/javascript' src='jquery/jquery.autocomplete.js'></script>
-<link rel="stylesheet" type="text/css" href="jquery/jquery.autocomplete.css" />
-
 
 
 

@@ -4,6 +4,68 @@
 <link href="assets/css/message.css" rel="stylesheet">
 
 
+<script type="text/javascript" src="jquery/lib/jquery.js"></script>
+<script type='text/javascript' src='jquery/lib/jquery.bgiframe.min.js'></script>
+<script type='text/javascript' src='jquery/lib/jquery.ajaxQueue.js'></script>
+<script type='text/javascript' src='jquery/jquery.autocomplete.js'></script>
+<link rel="stylesheet" type="text/css" href="jquery/jquery.autocomplete.css" />
+
+
+
+
+  <script>
+      //custom select box
+	
+      function fnEnterContent() {
+    	  
+        	var msgReceiver = document.getElementById("msgReceiver").value;
+        	var msgText = document.getElementById("msgText").value;
+        	
+        	//삽입할 Div태그의 ID.
+        	var div_receive = document.getElementById("msgReceiver");
+        	var div_con = document.getElementById("Entercontents");
+        	
+        	
+        	//받는이
+        	if(msgReceiver.equal("")){
+        		console.log('받는사람 비었음');
+        		div_receive.classList.add('redLine');
+        		div_receive.innerHTML = "&nbsp;<span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;받는이를 입력해주세요.";
+        	}
+        	
+        	//내용
+        	if(msgText.equal("")){
+        		div_con.classList.add('redLine');
+        		div_con.innerHTML = "&nbsp;<span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;내용을 입력해주세요.";
+        	}
+        }
+      
+      
+      
+      
+      function fnNewPasswordConfirm() {
+        	var pw = document.getElementById("userpw").value;
+        	var pwcf = ""; // db 또는 세션에서 현재 비밀번호 가져오기
+        	var div = document.getElementById("pwconfirm");
+        	
+        	if(pw != pwcf){
+        		div.classList.remove('greenLine');
+        		div.classList.add('redLine');
+        		div.innerHTML = "&nbsp;<span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;새로운 비밀번호가 일치하지 않습니다.";
+        	}
+        	else {
+        		div.classList.remove('redLine');
+        		div.classList.add('greenLine');
+        		div.innerHTML = "&nbsp;<span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;새로운 비밀번호가 일치합니다.";
+        	}
+        }
+
+  </script>
+
+
+
+
+
 <script>
 	var availableTags = [
 							'가나',
@@ -35,7 +97,7 @@
 
 	<script>
 	$(document).ready(function() {
-	    $("#msgText").autocomplete(availableTags,{ 
+	    $("#msgReceiver").autocomplete(availableTags,{ 
 	        matchContains: true,
 	        selectFirst: false
 	    });
@@ -85,15 +147,17 @@ session.setAttribute("longin_id","2");
 					<div class="msgSendContent">
 						<form method="post" action="/empty/msg?cmd=list_send" class="msgForm clearfix">
 							<div class="form-group col-md-8 center" >
-								<label class="control-label" for="msgReceiver">받는 사람 </label><br>
+								<label class="control-label" for="msgReceiver">받는 사람 </label>
+								<div id="EnterReciver"></div><br>
 								<div class="">
-									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" value=""/>
+									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" value="" onchange="fnEnterContent()"/>
 								</div>
 							</div><br>
 							<div class="form-group col-md-8 center">
 								<label class="control-label" for="msgText">내용 </label><br>
+								<div id="Entercontents"></div> 
 								<div>
-									<input class="form-control" type="text" id="msgText" name="msgText" value=""/>
+									<input class="form-control" type="text" id="msgText" name="msgText" value="" onchange="fnEnterContent()"/>
 								</div>
 							</div>
 							<div class="msgBtn col-md-3 center">

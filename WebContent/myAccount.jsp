@@ -23,7 +23,7 @@
 	                  		<div align="center" class="form-group">
 	                              <label class="col-md-4 control-label">Current Password</label>
 	                              <div class="col-md-8">
-	                                  <input type="password" class="form-control" id="userpw" name="userpw" onchange="fnPasswordConfirm()">
+	                                  <input type="password" class="form-control" id="userpw" name="userpw" onchange="">
 	                              </div>
 	                        </div>
 	                        <div id="pwconfirm"></div> 
@@ -36,7 +36,7 @@
 	                        <div align="center" class="form-group">
 	                              <label class="col-md-4 control-label">Confirm New Password</label>
 	                              <div class="col-md-8">
-	                                  <input type="password"  class="form-control" id="newpwcf" name="newpwcf" onchange="fnNewPasswordConfirm()">
+	                                  <input type="password"  class="form-control" id="newpwcf" name="newpwcf" onchange="fnPasswordConfirm()">
 	                              </div>
 	                        </div>
 	                       	<div id="newpwconfirm"></div> 
@@ -56,6 +56,8 @@
   <script>
       //custom select box
 	
+      
+      //
       function fnPasswordConfirm() {
         	var pw = document.getElementById("newpw").value;
         	var pwcf = document.getElementById("newpwcf").value;
@@ -72,6 +74,9 @@
         		div.innerHTML = "&nbsp;<span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;새로운 비밀번호가 일치합니다.";
         	}
         }
+      
+      
+      
       
       function fnNewPasswordConfirm() {
         	var pw = document.getElementById("userpw").value;
