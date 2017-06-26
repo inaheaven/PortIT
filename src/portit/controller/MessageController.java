@@ -63,8 +63,6 @@ public class MessageController extends HttpServlet {
 				pageName="myMsgList.jsp";
 				
 				
-				System.out.println("ctrl키워드확인 "+keyWord);
-				
 				try{
 				//2.RoomList
 				list=model.roomList(keyField,keyWord);
@@ -92,7 +90,6 @@ public class MessageController extends HttpServlet {
 				//From msgSend
 				
 				url="myMsgList.jsp";
-				pageName="myMsgList.jsp";
 				
 				//DB_InPut Msg
 				model.insertMessage();
@@ -122,6 +119,9 @@ public class MessageController extends HttpServlet {
 				//2.발신자의 대화방을 얻어온다.
 				list=model.getChatRoom(mem_id_Sender);
 				session.setAttribute("chatroom", list);
+				
+				
+				
 			}
 			
 			
@@ -129,8 +129,24 @@ public class MessageController extends HttpServlet {
 			
 			else if(cmd.equals("send")){
 				//from msgList, msgDetail
-				
 				url="myMsgSend.jsp";
+			}
+			 
+			 
+			 
+			else if(cmd.equals("delete")){
+				//from msgList, msgDetail
+				
+				String msg_id= req.getParameter("msg_id");
+				
+				
+				model.deleteMsg(msg_id);
+				
+				
+				list=model.roomList(keyField,keyWord);
+				session.setAttribute("RoomList", list);
+				
+				url="myMsgList.jsp";
 			}
 			
 			 

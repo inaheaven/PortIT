@@ -89,6 +89,11 @@ public class MessageModel {
 	}
 	
 	
+	public void deleteMsg(String msg_id){
+		
+		//해당 msg삭제...
+		dao.deleteMsg(msg_id);
+	}
 	
 	
 

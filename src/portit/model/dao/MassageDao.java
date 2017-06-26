@@ -42,6 +42,8 @@ public class MassageDao{
 	
 	
 	
+	
+	
 	//싱글톤 실험.
 	private static MassageDao instance = new MassageDao();
 	
@@ -82,7 +84,7 @@ public class MassageDao{
 			
 			
 			//해당 발신자의 대화방을 Roomlist에 담는다..
-			Roomlist.add(getChatRoom(null,null,mem_id_sender,false));
+			Roomlist.add(getChatRoom(keyField,keyField,mem_id_sender,false));
 		}
 		return Roomlist;
 	}
@@ -180,7 +182,6 @@ public class MassageDao{
 			
 			//메세지 삽입.
 			while(rs.next()){
-				
 				MessageDto Dto = new MessageDto();
 				Dto.setMsg_id(rs.getInt("MSG_ID"));
 				Dto.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
@@ -400,6 +401,31 @@ public class MassageDao{
 		
 		
 		
+	
+	// Delete.jsp
+	public void deleteMsg(String msg_id){
+		
+		String sql = "delete from Message where msg_id=? ";
+		
+		
+		try{
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(msg_id));
+			pstmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("deleteMsg()에서 오류");
+			err.printStackTrace();
+		}
+		finally{
+			pool.freeConnection(con, pstmt);
+		}
+	}
+	
+	
+	
+	
 	
 	// Delete.jsp
 	public void deleteAccount(int login_id){

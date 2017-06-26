@@ -131,9 +131,11 @@ String keyWord = request.getParameter("keyWord");
 								msgNum=chatRoom.size();
 							}
 					
-							for(int j=0; j<msgNum;j++){	//메세지반복.
+							//메세지반복.
+							for(int j=0; j<msgNum;j++){	
 								dto2=(MessageDto) chatRoom.get(j);
 					%>
+								<form name="msgContentArr" method="post" action="/empty/msg?cmd=delete">
 									<!--  대화 내용시작. Msg_Content -->
 									<div class="msgContentBox mb clearfix"> 
 										<span class="pull-left col-md-10 msgContent">
@@ -141,10 +143,14 @@ String keyWord = request.getParameter("keyWord");
 										</span>
 									<div class="pull-right col-md-2" style="height: 55px">
 										<div style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i><%= dto2.getMsg_date()%></div>
-										<div style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></div>											
+										<div style="position:absolute; top: 20px; right: 0;">
+												<button type="submit" class="btn">삭제</button>
+												<input type="hidden" name="deleteMsg" value="<%=i%>,<%=j%>">
+												<input type="hidden" name="msg_id" value="<%=dto2.getMsg_id()%>">
+										</div>											
 									</div>
-										
 									</div>	
+								</form>
 									<!--  END_Msg_Content -->
 					<%
 							}	//메세지 반복.
