@@ -43,7 +43,7 @@ String keyWord = request.getParameter("keyWord");
 				<div class="col-md-12 mt msg msgList">
 					<div class="msgList_top">
 						<span class="pull-left">
-							<form class="form-inline" method="post" action="/empty/msg?cmd=list">
+							<form class="form-inline" method="post" action="/msg?cmd=list">
 								<div class="form-group">
 								
 							<select name="keyField" size="1">
@@ -60,7 +60,7 @@ String keyWord = request.getParameter("keyWord");
 							</form>
 						</span> 
 						<span class="pull-right"> 
-							<a href="/empty/msg?cmd=send">
+							<a href="/msg?cmd=send">
 								<button class="btn">Send New Message</button>
 							</a>
 						</span>
@@ -108,7 +108,7 @@ String keyWord = request.getParameter("keyWord");
 									</a>
 								</span>
 								<span class="pull-right"> 
-									<a href="/empty/msg?cmd=send">
+									<a href="/msg?cmd=send">
 										<button type="button" class="btn">Send</button>
 									</a>
 									<a data-toggle="collapse" data-parent="#msgBoxList" href="#m1_<%=i%>" class="updown collapsed"> 
@@ -149,7 +149,7 @@ String keyWord = request.getParameter("keyWord");
 					<%
 							}	//메세지 반복.
 					%>
-									<form name="more" method="post" action="/empty/msg?cmd=detail">
+									<form name="more" method="post" action="/msg?cmd=detail">
 										<input type="hidden" name="mem_id_sender" value="<%=mem_id_Sender%>">
 										<div class="pull-right">
 											<button type="submit" class="btn" >More</button>

@@ -56,10 +56,10 @@
 									</a>
 								</span>
 								<span class="pull-right"> 
-									<a href="/empty/msg?cmd=send">
+									<a href="/msg?cmd=send">
 										<button type="button" class="btn">메세지 보내기</button>
 									</a>&nbsp;&nbsp;&nbsp;
-									<a href="/empty/msg?cmd=list">
+									<a href="/msg?cmd=list">
 										<button type="button" class="btn">목록</button>
 									</a>
 								</span>								
