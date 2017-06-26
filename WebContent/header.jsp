@@ -59,8 +59,8 @@
 					<li><a href="/page?page=myPfList">내 포트폴리오</a></li>
 					<li><a href="/page?page=myProjList">내 프로젝트</a></li>
 					<li><a href="/page?page=myBookmark">북마크</a></li>
-					<li><a href="/page?page=myMsgList">메세지</a></li>
-					<li><a href="/page?page=myAccount">계정 설정</a></li>
+					<li><a href="/empty/msg?cmd=list">메세지</a></li>
+					<li><a href="/empty/account?cmd=alter">계정 설정</a></li>
 					<li><a class="logout" href="index.jsp">로그아웃</a></li> <!-- 로그아웃 처리해야함 - session 지우기 -->
 				</ul>
 			</li>

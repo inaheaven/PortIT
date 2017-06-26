@@ -9,6 +9,16 @@
 
 <title></title>
 
+<!-- J_Qurey -->
+<script type="text/javascript" src="jquery/lib/jquery.js"></script>
+<script type='text/javascript' src='jquery/lib/jquery.bgiframe.min.js'></script>
+<script type='text/javascript' src='jquery/lib/jquery.ajaxQueue.js'></script>
+<script type='text/javascript' src='jquery/jquery.autocomplete.js'></script>
+<link rel="stylesheet" type="text/css" href="jquery/jquery.autocomplete.css" />
+
+
+
+
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
@@ -29,7 +39,11 @@
 	src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="assets/js/jquery.scrollTo.min.js"></script>
 <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/jquery-3.2.1.js"></script>
+<!-- J-query -->
+
+
+
 
 <!--common script for all pages-->
 <script src="assets/js/common-scripts.js"></script>
