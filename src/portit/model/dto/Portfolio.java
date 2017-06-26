@@ -27,7 +27,7 @@ public class Portfolio {
 	/** 포트폴리오 공동작업인원 */
 	private int pf_numofperson;
 	/** 포트폴리오 URL */
-	private String pf_repository;
+	private String pf_url;
 	/** 포트폴리오 작성자 */
 	private String pf_prof_name;
 	/** 포트폴리오 태그 목록 - 언어 */
@@ -63,8 +63,8 @@ public class Portfolio {
 	public int getPf_numofperson() {
 		return pf_numofperson;
 	}
-	public String getPf_repository() {
-		return pf_repository;
+	public String getPf_url() {
+		return pf_url;
 	}
 	public String getPf_prof_name() {
 		return pf_prof_name;
@@ -114,8 +114,8 @@ public class Portfolio {
 		this.pf_numofperson = pf_numofperson;
 		return this;
 	}
-	public Portfolio setPf_repository(String pf_repository) {
-		this.pf_repository = pf_repository;
+	public Portfolio setPf_url(String pf_url) {
+		this.pf_url = pf_url;
 		return this;
 	}
 	public Portfolio setPf_prof_name(String pf_prof_name) {

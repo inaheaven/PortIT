@@ -1,8 +1,10 @@
 package portit.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +23,13 @@ public class PortfolioDao {
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 	
+	private MediaDao mediaDao;
+	
 	public PortfolioDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			conn = pool.getConnection();
+			mediaDao = new MediaDao();
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -84,7 +89,8 @@ public class PortfolioDao {
 						.setPf_intro(rs.getString("pf_intro"))
 						.setPf_regdate(rs.getDate("pf_regdate"))
 						.setPf_startdate(rs.getDate("pf_startdate"))
-						.setPf_enddate(rs.getDate("rs_enddate"));
+						.setPf_enddate(rs.getDate("rs_enddate"))
+						.setPf_url(rs.getString("pf_repository"));
 				
 				// 작성자명을 조회해서 DTO에 저장
 				sql = "SELECT prof.prof_name FROM profile prof "
@@ -173,18 +179,26 @@ public class PortfolioDao {
 	 * @param sort 정렬 기준
 	 * @return DTO 목록
 	 */
-	public List<Portfolio> selectList(String sort) {
+	public List<Portfolio> selectList(String sort, String keyword, List<Tag> tagList) {
 		List<Portfolio> portfolios = new ArrayList<Portfolio>();
+		
 		
 		// SELECT문 지정
 		String sql = "SELECT * FROM portfolio";
 		// 검색 조건 추가
-		sql += " ORDER BY "+sort;
+		if (!keyword.isEmpty()) {
+			sql += " WHERE pf_title LIKE '%" + keyword + "%'"
+					+ " OR pf_intro LIKE '%" + keyword + "%'";
+		}
+		if (!sort.isEmpty()) {
+			sql += " ORDER BY " + sort + " DESC";
+		}
 		
 		// DB에 접속해서 작업 실행
 		getConnection();
 		try {
 			stmt = conn.prepareStatement(sql);
+			
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				// DB 조회 결과를 DTO에 저장
@@ -194,7 +208,8 @@ public class PortfolioDao {
 						.setPf_intro(rs.getString("pf_intro"))
 						.setPf_regdate(rs.getDate("pf_regdate"))
 						.setPf_startdate(rs.getDate("pf_startdate"))
-						.setPf_enddate(rs.getDate("rs_enddate"));
+						.setPf_enddate(rs.getDate("rs_enddate"))
+						.setPf_url(rs.getString("pf_repository"));
 				
 				// 작성자명을 조회해서 DTO에 저장
 				sql = "SELECT prof.prof_name FROM profile prof "
@@ -286,10 +301,35 @@ public class PortfolioDao {
 	 * @param pf_id
 	 * @return 추가된 데이터 개수
 	 */
-	public int insert(int pf_id) {
+	public int insert(Portfolio portfolio) {
 		int rows = 0;
-		// INSERT문 지정
-		String sql = "";
+		try {
+			// INSERT문 지정
+			String sql = "INSERT INTO portfolio("
+					+ "pf_id, pf_title, pf_intro, pf_regdate, pf_like, "
+					+ "pf_startdate, pf_enddate, pf_numofperson, pf_repository"
+					+ ") VALUES(?,?,?,?,?,?,?,?,?)";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, portfolio.getPf_id());
+			stmt.setString(2, portfolio.getPf_title());
+			stmt.setString(3, portfolio.getPf_intro());
+			stmt.setString(4, "SYSDATE");
+			stmt.setInt(5, 0);
+			stmt.setDate(6, new Date(portfolio.getPf_startdate().getTime()));
+			stmt.setDate(7, new Date(portfolio.getPf_enddate().getTime()));
+			stmt.setInt(6, portfolio.getPf_numofperson());
+			stmt.setString(6, portfolio.getPf_url());
+			rows += stmt.executeUpdate();
+
+			// 태그사용 추가
+			
+			// 미디어 라이브러리 추가
+			
+			// 프로필과 포트폴리오 연결
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return rows;
 	}
 	
@@ -298,7 +338,7 @@ public class PortfolioDao {
 	 * @param pf_id
 	 * @return 수정된 데이터 개수
 	 */
-	public int update(int pf_id) {
+	public int update(Portfolio portfolio) {
 		int rows = 0;
 		// UPDATE문 지정
 		String sql = "";
@@ -310,24 +350,31 @@ public class PortfolioDao {
 	 * @param prof_id
 	 * @return 삭제된 데이터 개수
 	 */
-	public int delete(int pf_id) {
+	public int delete(Portfolio portfolio) {
 		int rows = 0;
 		// DELETE문 지정
 		String sql = null;
 		getConnection();
 		try {
 			// 미디어 데이터 삭제
+			mediaDao.delete(conn, "portfolio", portfolio.getPf_id());
 			
-			// 포트폴리오 데이터 삭제
-			sql = "DELETE FROM portfolio WHERE pf_id=?";
+			// 포트폴리오의 좋아요 데이터 삭제
+			sql = "DELETE FROM pf_like WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, pf_id);
-			rows += stmt.executeUpdate();
+			stmt.setInt(1, portfolio.getPf_id());
+			stmt.executeUpdate();
 			
 			// 내가 등록한 포트폴리오 데이터 삭제
 			sql = "DELETE FROM prof_pf WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, pf_id);
+			stmt.setInt(1, portfolio.getPf_id());
+			stmt.executeUpdate();
+			
+			// 포트폴리오 데이터 삭제
+			sql = "DELETE FROM portfolio WHERE pf_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, portfolio.getPf_id());
 			rows += stmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("DB 삭제 오류 :");

@@ -117,5 +117,13 @@ var Script = function () {
         })
     }
 
+ // add and remove button for media upload
+    $('#mediaAdd').click(function () {
+    	$('#mediaRows').append($(this).parent().clone(true));
+    });
+    $('#mediaRemove').click(function () {
+    	$(this).parent().empty().remove();
+    });
+    
 
 }();
