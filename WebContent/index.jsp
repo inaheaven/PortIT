@@ -54,8 +54,23 @@
         		div.classList.remove('redLine');
         		div.classList.add('greenLine');
         		div.innerHTML = "&nbsp;<span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;비밀번호가 일치합니다.";
+        		
         	}
         }
+        
+        function fnSubmit() {
+        	var pw = document.getElementById("userpw").value;
+        	var pwcf = document.getElementById("userpwcf").value;
+        	
+        	if(pw != pwcf) {
+        		confirm("비밀번호를 다시 확인하세요!");
+        	}
+        	else {
+        		document.getElementById("join").submit();
+        	}
+        }
+        
+        
     </script>
 
 </body>

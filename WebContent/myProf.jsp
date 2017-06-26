@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@page import="portit.model.dto.Profile"%>
 <%@page import="portit.model.dao.ProfileDao"%>
 <%@page import="java.sql.DriverManager"%>
@@ -7,12 +6,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="javax.naming.*" %>
 <%@page import="javax.sql.DataSource"%>
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<jsp:useBean id="dao" class="portit.model.dao.ProfileDao"></jsp:useBean>
-<jsp:useBean id="dto" class="portit.model.dto.Profile"></jsp:useBean>
-<% 
-	dao.addprofile(dto);
-%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <script src="assets/js/search.js"></script>
 <script language="javascript">
