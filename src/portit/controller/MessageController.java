@@ -1,6 +1,7 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -29,7 +30,8 @@ public class MessageController extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		try {
 			
-			
+			resp.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = resp.getWriter();
 			
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
@@ -40,7 +42,14 @@ public class MessageController extends HttpServlet {
 			
 			//Login된 Id session에서 추출.
 			//모델 : Request와 login_id전달
+			
 			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
+			
+			
+			//logind에서 받아온 값... 근데 어디 있냐..
+			//int loginId=Integer.parseInt((String)session.getAttribute("loginId"));
+			System.out.println(login_id);
+			
 			MessageModel model = new MessageModel(req,login_id);
 			
 			
@@ -58,8 +67,6 @@ public class MessageController extends HttpServlet {
 				//From msgDetail,msgSender
 				 
 				url="myMsgList.jsp";
-				pageName="myMsgList.jsp";
-				
 				
 				
 				
@@ -80,23 +87,36 @@ public class MessageController extends HttpServlet {
 			else if(cmd.equals("list_send")){
 				//From msgSend
 				
+				
+				
 				url="myMsgList.jsp";
 				
 				//DB_InPut Msg
-				model.insertMessage();
-
+				//입력확인.
+				Boolean InputCheck =model.insertMessage();
+				
+				//Msg 입력에 대한 경고메세지. JSP에서 Script function으로 수정하자.
+				if(InputCheck==true){
+					url="myMsgList.jsp";
+					out.println("<script>alert('메세지가 발송되었습니다..'); location.href='/msg?cmd=list_send';</script>");
+				}else{
+					
+					System.out.println("[CTRL]: 메세지를 다시 입력하세요");
+					out.println("<script>alert('메세지를 입력해주세요!'); location.href='/msg?cmd=send';</script>");
+					url="myMsgSend.jsp";
+				}
+				
+				
+				
 				/*
 				최초에 list페이지에서 발신자 목록을 가지고왔기때문에 상관이 없다.
 				list페이지에서 나타나는 list는 발,수신자 list가 아니라 발신자 list다
 				따라서 내가 메세지를 송신하더라도 이 순위에는 영향이 생기지 않는다.
 				 
-				
 				//발신자 목록.
 				msgSenderList=model.getSenderList();
 				session.setAttribute("msgSenderList", msgSenderList);*/
 				
-				
-				//~발신자로 부터의 수신메세지 목록
 			}
 			
 			else if(cmd.equals("detail")){
@@ -147,7 +167,6 @@ public class MessageController extends HttpServlet {
 			 
 			req.setAttribute("pageName", url);
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
-				
 			view.forward(req,resp);
 		} catch (Exception e) {
 			e.printStackTrace();

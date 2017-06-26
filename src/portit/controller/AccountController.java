@@ -59,7 +59,7 @@ public class AccountController extends HttpServlet {
 				//기본값.
 				url="myDeleteAccount.jsp";
 					 
-					 
+				
 				 deletePw=req.getParameter("userdeletepw");
 				 
 					if(deletePw!=null){

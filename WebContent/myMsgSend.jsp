@@ -60,6 +60,30 @@
         	}
         }
 
+      
+      function fnSubmit() {
+    	  
+       	var msgReceiver = document.getElementById("msgReceiver").value;
+    	var msgText = document.getElementById("msgText").value;
+    	  //널값이 아닐때...
+    	  
+    	 alert('함수접근확인!');
+    	//받는이
+    	if(msgReceiver.equal("")){
+    		
+    		
+    		div_receive.classList.add('redLine');
+    		div_receive.innerHTML = "&nbsp;<span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;받는이를 입력해주세요.";
+    	}
+    	
+    	//내용
+    	if(msgText.equal("")){
+    		div_con.classList.add('redLine');
+    		div_con.innerHTML = "&nbsp;<span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;내용을 입력해주세요.";
+    	}
+    	  
+    	  
+      }
   </script>
 
 
@@ -145,7 +169,7 @@ session.setAttribute("longin_id","2");
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 mt msg msgSend">
 					<div class="msgSendContent">
-						<form method="post" action="/empty/msg?cmd=list_send" class="msgForm clearfix">
+						<form method="post" action="/msg?cmd=list_send" class="msgForm clearfix">
 							<div class="form-group col-md-8 center" >
 								<label class="control-label" for="msgReceiver">받는 사람 </label>
 								<div id="EnterReciver"></div><br>
@@ -162,7 +186,7 @@ session.setAttribute("longin_id","2");
 							</div>
 							<div class="msgBtn col-md-3 center">
 								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn" onclick="location.href='/empty/msg?cmd=list'">돌아가기</button>
+								<button type="button" class="btn" onclick="location.href='/msg?cmd=list'">돌아가기</button>
 							</div>
 						</form>
 					</div>

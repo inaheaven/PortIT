@@ -376,23 +376,26 @@ public class MassageDao{
 	
 	public String getMemId(String mem_eamil){
 			/*
-			 1.이름이 등록됐다면 이름으로 반환한다.
-			 2.없다면 메일ID를 반환한다.  
+				Email to MemId
 			 */
 			
 			String sql = null;
 			String memId = null;
 			
 			try{
-					sql="select mem_id FROM member WHERE Mem_email like '%";
-					sql = sql.concat(mem_eamil)+"%' ";	
-	
-					con = pool.getConnection();
-					pstmt = con.prepareStatement(sql);
-					rs = pstmt.executeQuery();
 				
-				while(rs.next()){
-					memId= rs.getString("mem_id");
+				//null이 들어가면 조건문이 죽게된다... 모든값조회.
+				if(!mem_eamil.equals("")){
+						sql="select mem_id FROM member WHERE Mem_email like '%";
+						sql = sql.concat(mem_eamil)+"%' ";	
+		
+						con = pool.getConnection();
+						pstmt = con.prepareStatement(sql);
+						rs = pstmt.executeQuery();
+					
+					while(rs.next()){
+						memId= rs.getString("mem_id");
+					}
 				}
 			}
 			catch(Exception err){

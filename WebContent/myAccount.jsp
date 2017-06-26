@@ -12,7 +12,7 @@
           		<div class="col-md-8 center">
           			<h3 class="accountTitle text-center">내 계정</h3>
           			<br><br>
-          			<form class="form-horizontal" method="post" action="/empty/account?cmd=alter">
+          			<form class="form-horizontal" method="post" action="/account?cmd=alter">
 	                    <div class="form-group">
 	                        <label class="col-md-4 control-label">E-Mail</label>
 	                        <div class="col-md-8">

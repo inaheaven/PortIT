@@ -120,8 +120,8 @@ public class AccountDao{
 	
 	
 	// Delete.jsp
-	public void deleteAccount(int login_id){
-		String sql = "delete from MEMBER where MEM_ID=?";
+	public void deleteAccount(){
+		String sql = "delete from MEMBER where Mem_ID=?";
 		
 		try{
 			con = pool.getConnection();
