@@ -29,9 +29,13 @@ public class AccountController extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		try {
 			
-			
 			HttpSession session = req.getSession();
+			
+			// getParameter Form에서 name을 식별자로 한다. ID 아님.
 			String cmd= req.getParameter("cmd");
+			String deletePw;
+			
+			
 			String url= "WebContent/msgList.html";
 			String pageName ="memberSearch.jsp";	//test page
 			
@@ -45,26 +49,56 @@ public class AccountController extends HttpServlet {
 			
 			
 			
+			Boolean IdentityVerification=null;
+			
 			 if(cmd.equals("delete")){
-				//From msgDetail,msgSender
+				 url="myDeleteAccount.jsp";
+				 
+				 try{
+					 
+				//기본값.
 				url="myDeleteAccount.jsp";
-				
-				model.deleteAccount();
-				
-				try{
-				}
-				
+					 
+					 
+				 deletePw=req.getParameter("userdeletepw");
+				 
+					if(deletePw!=null){
+						IdentityVerification=model.deleteAccount();
+						
+							//조건: 삭제가 완료되면 메인으로
+						if(IdentityVerification==true){
+							System.out.println("AccountCtrl: 로그인아이디의 비밀번호와 일치합니다.");
+							
+							//메인화면으로
+							url="index.jsp";
+						}
+						else{//삭제실패=다시 삭제페이지.
+							System.out.println("AccountCtrl: 로그인아이디의 비밀번호와 일치하지않습니다.");
+							
+							url="myDeleteAccount.jsp";
+						}
+					}
+				 }
 				catch(Exception err){
 					err.printStackTrace();
 				}
-			}
-			
+			 }
+				 
 			
 			else if(cmd.equals("alter")){
 				try{
-			
-				url="myAccount.jsp";
-				model.alterAccount();
+					String userid=req.getParameter("userid");
+					String userpw=req.getParameter("userpw");
+					String newpw=req.getParameter("newpw");
+					String newpwcf=req.getParameter("newpwcf");
+					
+					url="myAccount.jsp";
+				
+					// 버튼을 눌렀을때만 동작해야한다.
+					if (newpwcf != null) {
+						model.alterAccount(userid, userpw, newpw, newpwcf);
+					}
+				
 				
 				}
 				catch(Exception err){

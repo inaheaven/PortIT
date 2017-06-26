@@ -12,31 +12,31 @@
           		<div class="col-md-8 center">
           			<h3 class="accountTitle text-center">내 계정</h3>
           			<br><br>
-          			<form class="form-horizontal" method="post" action="#">
+          			<form class="form-horizontal" method="post" action="/empty/account?cmd=alter">
 	                    <div class="form-group">
 	                        <label class="col-md-4 control-label">E-Mail</label>
 	                        <div class="col-md-8">
-	                            <input type="text" class="form-control" id="userid" value="email@email.com">
+	                            <input type="text" class="form-control" id="userid" name="userid" value="email@email.com">
 	                        </div>
 	                    </div>
                     	<div align="center">
 	                  		<div align="center" class="form-group">
 	                              <label class="col-md-4 control-label">Current Password</label>
 	                              <div class="col-md-8">
-	                                  <input type="password" class="form-control" id="userpw" onchange="fnPasswordConfirm()">
+	                                  <input type="password" class="form-control" id="userpw" name="userpw" onchange="fnPasswordConfirm()">
 	                              </div>
 	                        </div>
 	                        <div id="pwconfirm"></div> 
 	                  		<div align="center" class="form-group">
 	                              <label class="col-md-4 control-label">New Password</label>
 	                              <div class="col-md-8">
-	                                  <input type="password"  class="form-control" id="newpw">
+	                                  <input type="password"  class="form-control" id="newpw" name="newpw">
 	                              </div>
 	                        </div>
 	                        <div align="center" class="form-group">
 	                              <label class="col-md-4 control-label">Confirm New Password</label>
 	                              <div class="col-md-8">
-	                                  <input type="password"  class="form-control" id="newpwcf" onchange="fnNewPasswordConfirm()">
+	                                  <input type="password"  class="form-control" id="newpwcf" name="newpwcf" onchange="fnNewPasswordConfirm()">
 	                              </div>
 	                        </div>
 	                       	<div id="newpwconfirm"></div> 
