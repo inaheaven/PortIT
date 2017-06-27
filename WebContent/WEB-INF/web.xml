@@ -35,6 +35,15 @@
 		<servlet-name>mypage_proj_reg</servlet-name>
 		<url-pattern>/mypage_proj_reg</url-pattern>
 	</servlet-mapping>
+
+  <servlet>
+		<servlet-name>coworker_search</servlet-name>
+		<servlet-class>portit.controller.CoworkerSearchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>coworker_search</servlet-name>
+		<url-pattern>/coworker_search</url-pattern>
+	</servlet-mapping>
   
 
 </web-app>

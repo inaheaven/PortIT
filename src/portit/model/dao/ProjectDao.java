@@ -70,7 +70,8 @@ public class ProjectDao {
 		String proj_startdate = req.getParameter("proj_startdate"); // 프로젝트 시작일	
 		int proj_period = Integer.parseInt(req.getParameter("proj_period")); // 프로젝트	
 		String proj_regenddate = req.getParameter("proj_regenddate"); // 프로젝트 등록마감일
-
+		
+		
 		// 프로젝트 시작일과 등록마감일에 값의 포맷을 변경하여 sql문에 입력가능한 형태의 문자열로 재변환. 파싱 이용시 예외처리
 		try {
 			Date proj_startdate_format = new SimpleDateFormat("MM/dd/yyyy").parse(proj_startdate);
