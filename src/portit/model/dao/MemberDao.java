@@ -12,7 +12,7 @@ import portit.model.dto.Member;
 
 /**
  * 회원 관련 DAO
- * @author gnsngck
+ * @author 
  *
  */
 public class MemberDao {

@@ -116,6 +116,10 @@ var Script = function () {
             }, 2000)
         })
     }
+    
+ // datepicker
+    $('#start_date').datepicker();
+    $('#end_date').datepicker();
 
  // add and remove button for media upload
     $('#mediaAdd').click(function () {

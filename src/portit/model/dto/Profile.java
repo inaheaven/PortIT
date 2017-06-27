@@ -1,6 +1,5 @@
 package portit.model.dto;
 
-import java.lang.Math;
 import java.util.Date;
 
 /**

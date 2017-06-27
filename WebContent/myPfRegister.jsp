@@ -40,31 +40,31 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 환경</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="pf_tag_env" placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
+								<input type="text" class="form-control" name="pf_env" placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 언어</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="pf_tag_language" placeholder="ex) C, JAVA, Python 등">
+								<input type="text" class="form-control" name="pf_language" placeholder="ex) C, JAVA, Python 등">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 도구</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control"  name="pf_tag_tool" placeholder="ex) Eclipse, Visual Studio2013 등">
+								<input type="text" class="form-control" name="pf_tool" placeholder="ex) Eclipse, Visual Studio2013 등">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">수행 인원</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" name="pf_numofperson">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">담당 업무</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
+								<input type="text" class="form-control" name="pf_field" placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
 							</div>
 						</div>
 						<div class="form-group">
@@ -76,7 +76,7 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label">함께한 사람</label>
 							<div class="col-md-7">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" name="pf_coworker">
 							</div>
 							<div class="col-sm-2">
 								<button type="button" class="btn btn-default">검색</button>
