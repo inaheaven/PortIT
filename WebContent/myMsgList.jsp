@@ -217,10 +217,8 @@ String keyWord = request.getParameter("keyWord");
 <br><br>
 				<div align="center">
 					Go to Page
-					<%
-					if (nowBlock > 0) {
-				%>
-					<a href="msg?cmd=lp&nowBlock=<%=nowBlock - 1%>&nowPage=<%=pagePerBlock * (nowBlock + 1)%>">이전<%=pagePerBlock%>개
+					<%		if (nowBlock > 0) { %>
+					<a href="msg?cmd=lp&nowBlock=<%=nowBlock - 1%>&nowPage=<%=pagePerBlock * (nowBlock - 1)%>">이전<%=pagePerBlock%>개
 					</a>
 					<% } %>
 					:::

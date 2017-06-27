@@ -100,6 +100,18 @@ public class MessageController extends HttpServlet {
 					}
 			 }
 			
+			 else if(cmd.equals("lpDetail")){
+				 url="myMsgDetail.jsp";
+				 
+				 try{
+				 }
+				 
+				 catch(Exception err){
+					 System.out.println("MessageController_cmd=list()에서 오류");
+					 err.printStackTrace();
+				 }
+			 }
+			 
 			
 			else if(cmd.equals("list_send")){
 				//From msgSend

@@ -40,6 +40,35 @@
 					String name= firstMsg.getSender_Name();	
 					
 					
+					
+
+					// 페이징 기능 추가
+					int totalRecord = chatroom.size();		//총 대화방의 수.
+					int numPerPage = 5;						//한  대화방/대화방
+					int totalPage = 0;						//총 페이지 수.
+					int nowPage = 0;						//현재 페이지
+					int beginPerPage = 0;					//해당페이지의 시작점.(배열Index)
+					int pagePerBlock = 3;					//Page 블럭.(단위: 3페이지)
+					int totalBlock = 0;						//Total 블럭.
+					int nowBlock = 0;						//현재 블럭.
+					
+					totalPage = (int)Math.ceil((double)totalRecord/numPerPage);
+					
+					//Request에서 현재 페이지위치를 확인한다.
+					if(request.getParameter("nowPage")!=null)
+						nowPage = Integer.parseInt(request.getParameter("nowPage"));
+					
+					if(request.getParameter("nowBlock")!=null)
+						nowBlock = Integer.parseInt(request.getParameter("nowBlock"));
+					
+					totalBlock = (int)Math.ceil((double)totalPage/pagePerBlock);
+					
+					//시작페이지= 현재페이지*페이지당 대화방
+					beginPerPage = nowPage * numPerPage;
+				
+				
+					
+					
 					//내가 첫번째 발산지라면 수신자를 기록.
 					if(firstMsg.getMem_id_sender()==longin_id){	
 						
@@ -74,7 +103,13 @@
 							
 							
 							
-							<% for(int i=0; i<chatroom.size(); i++){
+							<% 
+								//출력범위를 정한다.
+								for(int i=beginPerPage; i<numPerPage+beginPerPage; i++){
+									if(i == totalRecord)
+										break;
+								
+								
 								MessageDto msg = (MessageDto) chatroom.get(i);
 								String msg_id= String.valueOf(msg.getMsg_id());
 							%>
@@ -110,19 +145,37 @@
 						</div>	
 								
 								
-								
-								
-								
-								
 								<!--  ###########반복 끝############# -->
 							<%
-								}
+								}	//반복끝..
 							%>
 								
 								<!-- 페이지네이션 -->
-								<div class="center"> 
-									1 2 3 4 5
-								</div>					
+								<div align="center">
+									Go to Page
+									<%		if (nowBlock > 0) { %>
+									<a href="msg?cmd=lpDetail&nowBlock=<%=nowBlock - 1%>&nowPage=<%=pagePerBlock * (nowBlock - 1)%>">이전<%=pagePerBlock%>개
+									</a>
+									<% } %>
+									:::
+									<%
+										for (int i = 0; i < pagePerBlock; i++) {
+											if ((nowBlock * pagePerBlock) + i == totalPage)
+												break;
+									%>
+									<a href="msg?cmd=lpDetail&nowPage=<%=(nowBlock * pagePerBlock) + i%>&nowBlock=<%=nowBlock%>"><%=(nowBlock * pagePerBlock) + i + 1%></a>&nbsp;&nbsp;&nbsp;
+									<% } %>
+									:::
+									<% if (totalBlock > nowBlock + 1) { %>
+									<a href="msg?cmd=lpDetail&nowBlock=<%=nowBlock + 1%>&nowPage=<%=pagePerBlock * (nowBlock + 1)%>">다음<%=pagePerBlock%>개
+									</a>
+									<% }%>
+								</div>
+												
+								
+								
+								
+												
 							</div>			
 								
 						</div> <!-- END - msgBoxOpen -->
