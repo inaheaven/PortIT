@@ -118,15 +118,42 @@ var Script = function () {
     }
     
  // datepicker
-    $('#start_date').datepicker();
-    $('#end_date').datepicker();
-
- // add and remove button for media upload
-    $('#mediaAdd').click(function () {
-    	$('#mediaRows').append($(this).parent().clone(true));
+    $(function() {
+    	var start_date_input = $('input[name="pf_startdate"]'); //our date input has the name "date"
+		var end_date_input = $('input[name="pf_enddate"]'); //our date input has the name "date"
+		var container = $('.bootstrap-iso form').length > 0 ? $(
+				'.bootstrap-iso form').parent() : "body";
+		var options = {
+			format : 'yy-mm-dd',
+			container : container,
+			todayHighlight : true,
+			autoclose : true,
+		};
+		start_date_input.datepicker(options);
+		end_date_input.datepicker(options);
     });
-    $('#mediaRemove').click(function () {
-    	$(this).parent().empty().remove();
+    
+    $(function() {
+    	$('#fileUpload').on('change', function() {
+    		$(this).siblings('#fileName').val($(this)[0].files[0].name);
+    	});
+    });
+    
+
+ // add and remove button for file upload
+    $(function() {
+    	var rows = 1;
+    	$('#mediaAdd').on('click', function () {
+    		var newRow = $('#mediaRow').clone(true).children('div.pull-right').prepend('<button type="button" class="btn btn-default" id="mediaRemove">삭제</button>');
+    		$('#mediaRows').append(newRow);
+    		rows++;
+        });
+        $('#mediaRemove').on('click', function () {
+        	if (rows > 1) {
+        		$(this).parent().parent().empty().remove();
+        		rows--;
+        	}
+        });
     });
     
 

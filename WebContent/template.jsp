@@ -10,10 +10,11 @@
 <title></title>
 
 <!-- Bootstrap core CSS -->
-<link href="assets/css/bootstrap.css" rel="stylesheet">
+<link href="assets/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 <!--external css-->
 <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="jquery/jquery.autocomplete.css" />
+<link href="assets/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+<!-- <link rel="stylesheet" type="text/css" href="jquery/jquery.autocomplete.css" /> -->
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
@@ -46,20 +47,20 @@
 	</section>
 	
 	<!-- JavaScript dependencies -->
-	<script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="assets/lib/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="assets/lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 	<!-- <script type="text/javascript" src="jquery/lib/jquery.js"></script> -->
-	<script type='text/javascript' src='jquery/lib/jquery.bgiframe.min.js'></script>
-	<script type='text/javascript' src='jquery/lib/jquery.ajaxQueue.js'></script>
-	<script type='text/javascript' src='jquery/jquery.autocomplete.js'></script>
+	<script src="assets/lib/bgiframe-3.0.1/jquery.bgiframe.js"></script>
+	<script src="assets/lib/jquery.ajaxQueue/dist/jquery.ajaxQueue.min.js"></script>
+	<!-- <script type='text/javascript' src='jquery/jquery.autocomplete.js'></script> -->
 	<!-- <script src="assets/js/jquery.js"></script> -->
-	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	<!-- <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>  -->
-	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-	<script class="include" type="text/javascript"
-		src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-	<script src="assets/js/jquery.scrollTo.min.js"></script>
-	<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+	<script src="assets/lib/jquery.ui.touch-punch.min.js"></script>
+	<script src="assets/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="assets/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.min.js"></script>
+	<script src="assets/lib/jquery.scrollTo/jquery.scrollTo.min.js"></script>
+	<script src="assets/lib/jquery.nicescroll/jquery.nicescroll.min.js"></script>
 	
 	<!--common script for all pages-->
 	<script src="assets/js/common-scripts.js"></script>

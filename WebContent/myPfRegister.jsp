@@ -11,8 +11,8 @@
 				<div class="col-md-12 col-sm-12 col-xs-12 mt pfreg">
 				<!-- BASIC FORM ELEMENTS -->
 				<div class="pfregForm">		
-					<h3 class="formTitle text-center">포트폴리오 등록</h3>			
-					<form class="form-horizontal style-form" method="post" action="/portfolios">
+					<h3 class="formTitle text-center">포트폴리오 등록</h3>
+					<form class="form-horizontal style-form" method="post" action="/portfolios" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-md-3 control-label">제목</label>
 							<div class="col-md-9">
@@ -23,12 +23,12 @@
 							<label class="col-md-3 control-label">작업 기간</label> 
 							<label class="col-md-1 control-label" for="date">시작일</label>
 							<div class="col-md-3">
-								<input class="form-control" id="start_date" name="pf_startdate" type="date" /> 
+								<input class="form-control" name="pf_startdate" type="date" /> 
 							</div>
 							<div class="col-md-1"></div>
 							<label class="col-md-1 control-label" for="date">종료일</label>
 							<div class="col-md-3">
-								<input class="form-control" id="end_date" name="pf_enddate" type="date" />
+								<input class="form-control" name="pf_enddate" type="date" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -75,24 +75,32 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">함께한 사람</label>
-							<div class="col-md-7">
-								<input type="text" class="form-control" name="pf_coworker">
-							</div>
-							<div class="col-sm-2">
-								<button type="button" class="btn btn-default">검색</button>
+							<div class="col-md-9">
+								<div class="input-group">
+									<input type="text" class="form-control" name="pf_coworker">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default">검색</button>
+									</span>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">이미지</label>
 							<div class="col-md-9" id="mediaRows">
-								<div class="row form-group">
-									<input type="file" name="media" class="col-md-8" />
-									<button type="button" class="btn btn-default" id="mediaAdd">추가</button>
-									<button type="button" class="btn btn-default" id="mediaRemove">삭제</button>
+								<div id="mediaRow">
+									<div class="form-inline pull-left">
+										<label for="fileUpload" class="btn btn-default">파일 선택</label>
+										<input type="text" class="form-control" id="fileName" disabled="disabled" />
+										<input type="file" id="fileUpload" name="media[]" />
+									</div>
+									<div class="pull-right">
+										<button type="button" class="btn btn-default" id="mediaAdd">추가</button>
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group text-center buttonDiv" >
+							<input type="hidden" name="mem_id" value="<%= session.getAttribute("mem_id") %>" />
 							<button type="submit" class="btn common">등록하기</button>&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn cancel" onclick="location.href='/page?page=myPfList'">취소하기</button>
 						</div>
