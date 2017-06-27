@@ -177,7 +177,6 @@ public class MassageDao{
 						"where MSG_Content like '%"+keyWord+"%' "+
 						"order by msg_date desc ";
 					
-					System.out.println("Dao 검색 "+sql);
 				}
 				
 			}
@@ -227,8 +226,6 @@ public class MassageDao{
 
 			// 검색조건이 없다면...
 			if (keyWord == null) {
-
-				System.out.println("검색무");
 
 				sql = "Select mem_ID_sender, max(MSG_DATE)" + "From (select * from message where MEM_ID_RECEIVER= ";
 				sql = sql.concat(String.valueOf(mem_id));
@@ -373,7 +370,7 @@ public class MassageDao{
 
 	
 	
-	
+	//MsgSend에서 보낼때...
 	public String getMemId(String mem_eamil){
 			/*
 				Email to MemId
@@ -411,7 +408,33 @@ public class MassageDao{
 	
 		
 		
-		
+	public String toEamil(String mem_id) {
+		/*
+		 * mem_id to Email
+		 */
+		String sql = null;
+		String e_mail=null;
+
+		try {
+			sql = "select Mem_email FROM member WHERE mem_id="+ mem_id;
+
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				e_mail = rs.getString("Mem_email");
+			}
+		} catch (Exception err) {
+			System.out.println("toEamil()에서 오류");
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+
+		return e_mail;
+	}
+	
+	
 		
 	
 	// Delete.jsp
@@ -437,7 +460,9 @@ public class MassageDao{
 	
 	
 	
-
+	
+	
+	
 		
 		
 		
@@ -489,6 +514,8 @@ public class MassageDao{
 		return result;
 	}
 	
+	
+
 	
 }
 

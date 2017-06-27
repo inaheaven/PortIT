@@ -1,13 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- Import -->
 <%@page import="java.util.ArrayList"%>
 <%@page import="portit.model.dto.MessageDto"%>
 <link href="assets/css/message.css" rel="stylesheet">
 
 <!-- JSP:useBean -->
-<%--<jsp:useBean id="dao" class="portit.model.dao.MassageDao"/> --%>
-<jsp:useBean id="dto" class="portit.model.dto.MessageDto"/>
 <jsp:useBean id="dto2" class="portit.model.dto.MessageDto"/>
 
 <%
@@ -73,22 +73,25 @@ String keyWord = request.getParameter("keyWord");
 						<%
 						ArrayList roomList; 
 						
-						//대화방 목록.
+						//대화방 목록.(수신메세지만 담겨있다.)
 						roomList= (ArrayList)session.getAttribute("RoomList");
 						
 						
 						int msgNum;
 						int mem_id_Sender;
 						
+						MessageDto dto3;
+						//인스턴스 생성이 필요없다. 인스턴스주소를 받아줄 변수만 필요하다.
+						
 						//i=발신자. j=메세지 갯수
 						for(int i=0; i<roomList.size();i++){		//발신자 명수만큼.
 							ArrayList chatRoom = new ArrayList(); 
 						
 							chatRoom= (ArrayList) roomList.get(i);	//대화방.
-							dto= (MessageDto) chatRoom.get(0);	//첫번째 메세지.
-							String name= dto.getSender_Name();	//메세지 발신자.
+							dto3= (MessageDto) chatRoom.get(0);	//첫번째 메세지.(모두 수신메세지)
+							String name= dto3.getSender_Name();	//메세지 발신자.
 							
-							mem_id_Sender = dto.getMem_id_sender();
+							mem_id_Sender = dto3.getMem_id_sender();
 							
 						%>
 						
@@ -106,15 +109,16 @@ String keyWord = request.getParameter("keyWord");
 										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
 										<span class="msgSender"><%=name%></span>
 									</a>
-								</span>
-								<span class="pull-right"> 
-									<a href="/msg?cmd=send">
-										<button type="button" class="btn">Send</button>
-									</a>
-									<a data-toggle="collapse" data-parent="#msgBoxList" href="#m1_<%=i%>" class="updown collapsed"> 
-										<i class="fa fa-chevron-down"></i>
-									</a>
-								</span>								
+								</span>	
+								<form name="msgSend" method="post" action="/msg?cmd=send">
+									<span class="pull-right"> 
+										<button type="submit" class="btn">Send</button>
+										<input type="hidden" name="mem_id_sender" value="<%=mem_id_Sender%>">
+										<a data-toggle="collapse" data-parent="#msgBoxList" href="#m1_<%=i%>" class="updown collapsed"> 
+											<i class="fa fa-chevron-down"></i>
+										</a>
+									</span>		
+								</form>						
 							</div>
 							<!-- End_Head -->
 
@@ -145,7 +149,6 @@ String keyWord = request.getParameter("keyWord");
 										<div style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i><%= dto2.getMsg_date()%></div>
 										<div style="position:absolute; top: 20px; right: 0;">
 												<button type="submit" class="btn">삭제</button>
-												<input type="hidden" name="deleteMsg" value="<%=i%>,<%=j%>">
 												<input type="hidden" name="msg_id" value="<%=dto2.getMsg_id()%>">
 										</div>											
 									</div>

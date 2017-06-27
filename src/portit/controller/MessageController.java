@@ -48,7 +48,8 @@ public class MessageController extends HttpServlet {
 			
 			//logind에서 받아온 값... 근데 어디 있냐..
 			//int loginId=Integer.parseInt((String)session.getAttribute("loginId"));
-			System.out.println(login_id);
+
+			
 			
 			MessageModel model = new MessageModel(req,login_id);
 			
@@ -121,8 +122,8 @@ public class MessageController extends HttpServlet {
 			
 			else if(cmd.equals("detail")){
 				//1.List에서 발신자이름을 받아온다.
-				String mem_id_Sender= req.getParameter("mem_id_sender");
-				
+				String mem_id_Sender=req.getParameter("mem_id_sender") ;
+			
 				
 				url="myMsgDetail.jsp";
 
@@ -130,9 +131,6 @@ public class MessageController extends HttpServlet {
 				//2.발신자의 대화방을 얻어온다.
 				list=model.getChatRoom(mem_id_Sender);
 				session.setAttribute("chatroom", list);
-				
-				
-				
 			}
 			
 			
@@ -140,20 +138,36 @@ public class MessageController extends HttpServlet {
 			
 			else if(cmd.equals("send")){
 				//from msgList, msgDetail
+				
+				
+				
+				//MsgList에서 전달 받았을때. 해당 발신자의 메일주소를 담아라.
+				if(req.getParameter("mem_id_sender")!=null){
+				
+				
+				String partnerEmail=model.toEmail(req.getParameter("mem_id_sender"));
+				
+				//MSGSend로 전달할때 session에 담아야하나? request에 담아야하나?
+				//session.setAttribute("partnerEmail", partnerEmail);
+				req.setAttribute("partnerEmail", partnerEmail);
+				
+				
+				}
+				
 				url="myMsgSend.jsp";
 			}
 			 
 			 
 			 
 			else if(cmd.equals("delete")){
-				//from msgList, msgDetail
+				//from msgList
 				
+				//JSP로부터 msg_id 전달받음.
 				String msg_id= req.getParameter("msg_id");
-				
 				
 				model.deleteMsg(msg_id);
 				
-				
+				//request단위로 바꿔서 Test해보기.
 				list=model.roomList(keyField,keyWord);
 				session.setAttribute("RoomList", list);
 				
@@ -161,6 +175,24 @@ public class MessageController extends HttpServlet {
 			}
 			
 			 
+			 
+			else if(cmd.equals("delete_detail")){
+				//from msgDetail
+				
+				//JSP로부터 msg_id 전달받음.
+				String msg_id= req.getParameter("msg_id");
+				
+				//request를 받아와야한다.
+				String mem_id_Sender=req.getParameter("mem_id_Sender");;
+				
+				model.deleteMsg(msg_id);
+				
+				//request단위로 바꿔서 Test해보기.
+				list=model.getChatRoom(mem_id_Sender);
+				session.setAttribute("chatroom", list);
+				
+				url="myMsgDetail.jsp";
+			}
 			 
 			 
 			 

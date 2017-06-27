@@ -124,6 +124,12 @@ public class MessageModel {
 		//해당 msg삭제...
 		dao.deleteMsg(msg_id);
 	}
+
+
+	
+	public String toEmail(String mem_id) {
+		return dao.toEamil(mem_id);
+	}
 	
 	
 

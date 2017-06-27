@@ -35,17 +35,14 @@
     
 
 
-
-
 <%
 //로그인 : 메일
 //Session에 저장되는것 : mem_ID (DB에서 조회해야함.)
-session.setAttribute("longin_id","999");
+session.setAttribute("longin_id","2");
 %>
 
 <script>
 $(document).ready(function(){
-	s
 			 $("#push").click(function(){
 					alert("버튼눌림");
 				});

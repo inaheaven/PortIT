@@ -26,24 +26,27 @@
 					
 					
 					<% 
-					ArrayList chatroom= (ArrayList)session.getAttribute("chatroom");
-					MessageDto firstMsg= (MessageDto) chatroom.get(0);//첫번째 메세지
-					int id;
-					String name= firstMsg.getSender_Name();	//발신자 이름.(수신발신이 섞여있음으로 안된다.)
-					//만약 첫번째 메세지의 Sender가 나라면 reiver이름을 저장해라.
-					
 					//접속유져를 기록하는 방법 : session
 					int longin_id = Integer.parseInt((String) session.getAttribute("longin_id"));
-								
 					
-					//If last sender was me....
+					
+					
+					ArrayList chatroom= (ArrayList)session.getAttribute("chatroom");
+					MessageDto firstMsg= (MessageDto) chatroom.get(0);//첫번째 메세지
+					
+					
+					//대화방 첫번째 메세지의 발신자 ID,이름.
+					int mem_id=firstMsg.getMem_id_sender();
+					String name= firstMsg.getSender_Name();	
+					
+					
+					//내가 첫번째 발산지라면 수신자를 기록.
 					if(firstMsg.getMem_id_sender()==longin_id){	
 						
 						//수신자의 mem_id_recever저장.
-						id=firstMsg.getMem_id_receiver();
-						
+						mem_id=firstMsg.getMem_id_receiver();
 						//한글화 convert
-						name=dao.convertToName(String.valueOf(id));
+						name=dao.convertToName(String.valueOf(mem_id));
 					}
 					
 					%>
@@ -55,14 +58,17 @@
 										<span class="msgSender"><%=name %></span>
 									</a>
 								</span>
+								<form name="msgSend" method="post" action="/msg?cmd=send">
+								
 								<span class="pull-right"> 
-									<a href="/msg?cmd=send">
-										<button type="button" class="btn">메세지 보내기</button>
-									</a>&nbsp;&nbsp;&nbsp;
+									<button type="submit" class="btn">메세지 보내기</button>
+									<input type="hidden" name="mem_id_sender" value="<%=mem_id%>" />
+									&nbsp;&nbsp;&nbsp;
 									<a href="/msg?cmd=list">
 										<button type="button" class="btn">목록</button>
 									</a>
-								</span>								
+								</span>		
+								</form>						
 							</div>
 							<div class="panel-body">
 							
@@ -70,6 +76,7 @@
 							
 							<% for(int i=0; i<chatroom.size(); i++){
 								MessageDto msg = (MessageDto) chatroom.get(i);
+								String msg_id= String.valueOf(msg.getMsg_id());
 							%>
 							<!--  #######반복 시작 ############# -->
 									
@@ -88,12 +95,24 @@
 									<div class="pull-<%=dir_1%> col-md-10 msgContent clearfix">
 										<%=msg.getMsg_content() %>
 									</div>
-									
-									<div class="pull-<%=dir_2%> col-md-2" style="height: 55px">
-										<div style="position:absolute; top: 0; right: 0;"><i class="fa fa-clock-o fa-fw"></i><%= msg.getMsg_date()%></div>
-										<div style="position:absolute; top: 20px; right: 0;"><button type="button" class="btn">삭제</button></div>											
+
+							<div class="pull-<%=dir_2%> col-md-2" style="height: 55px">
+								<div style="position: absolute; top: 0; right: 0;">
+									<i class="fa fa-clock-o fa-fw"></i><%=msg.getMsg_date()%></div>
+								<form name="msgSend" method="post" action="/msg?cmd=delete_detail">
+									<div style="position: absolute; top: 20px; right: 0;">
+										<button type="submit" class="btn">삭제</button>
 									</div>
-								</div>	
+									<input type="hidden" name="msg_id" value="<%=msg_id%>" />
+									<input type="hidden" name="mem_id_Sender" value="<%=mem_id%>" />
+								</form>
+							</div>
+						</div>	
+								
+								
+								
+								
+								
 								
 								<!--  ###########반복 끝############# -->
 							<%
