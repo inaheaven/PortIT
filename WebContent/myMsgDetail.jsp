@@ -88,15 +88,13 @@
 									</a>
 								</span>
 								<form name="msgSend" method="post" action="/msg?cmd=send">
-								
-								<span class="pull-right"> 
-									<button type="submit" class="btn">메세지 보내기</button>
-									<input type="hidden" name="mem_id_sender" value="<%=mem_id%>" />
-									&nbsp;&nbsp;&nbsp;
-									<a href="/msg?cmd=list">
-										<button type="button" class="btn">목록</button>
-									</a>
-								</span>		
+									<span class="pull-right"> 
+										<button type="submit" class="btn" >메세지 보내기</button>
+										<input type="hidden" name="mem_id_sender" value="<%=mem_id%>" />
+										&nbsp;&nbsp;&nbsp;
+											<button type="button" class="btn" onclick="location.href='/msg?cmd=list&renewal=n'">목록</button>
+											<input type="hidden" name="renewal" value="n" />
+									</span>		
 								</form>						
 							</div>
 							<div class="panel-body">

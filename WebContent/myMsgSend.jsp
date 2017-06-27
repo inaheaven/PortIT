@@ -10,10 +10,23 @@
 <script type='text/javascript' src='jquery/jquery.autocomplete.js'></script>
 <link rel="stylesheet" type="text/css" href="jquery/jquery.autocomplete.css" />
 
+<script src="assets/js/jquery-3.2.1.min.js"></script>
 
 
+<script>
 
-
+function fnSendMsg()  {
+	var msgReceiver = $("#msgReceiver").val();
+	var msgText = $("#msgText").val();
+	
+	if(msgReceiver==""||msgText==""){
+		alert("메세지를 입력하세요!");
+	}
+	else{
+		alert("메세지가 발송했습니다!");
+	}
+}
+</script>
 
 
 
@@ -67,8 +80,8 @@ if(partnerEmail==null){
 								<label class="control-label" for="msgReceiver">받는 사람 </label>
 								<div id="EnterReciver"></div><br>
 								<div class="">
-									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" value="<%=partnerEmail%>
-									" onchange="fnEnterContent()"/>
+									<input class="form-control" type="text" id="msgReceiver" name="msgReceiver" 
+									value="<%=partnerEmail%>" onchange="fnEnterContent()"/>
 								</div>
 							</div><br>
 							<div class="form-group col-md-8 center">
@@ -79,8 +92,8 @@ if(partnerEmail==null){
 								</div>
 							</div>
 							<div class="msgBtn col-md-3 center">
-								<button type="submit" class="btn">보내기</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn" onclick="location.href='/msg?cmd=list'">돌아가기</button>
+								<button type="submit" class="btn" onclick="fnSendMsg()">보내기</button>&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn" onclick="location.href='/msg?cmd=list&renewal=n'">돌아가기</button>
 							</div>
 						</form>
 					</div>

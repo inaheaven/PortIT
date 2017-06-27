@@ -271,7 +271,6 @@ public class MassageDao{
 						rs = pstmt.executeQuery();
 					}
 
-					System.out.println("검색DAO " + sql);
 					while (rs.next()) {
 						list.add(rs.getString("MEM_ID"));
 					}
@@ -371,21 +370,17 @@ public class MassageDao{
 	
 	
 	//MsgSend에서 보낼때...
-	public String getMemId(String mem_eamil){
-			/*
-				Email to MemId
-			 */
+	public String emailToMemId(String mem_eamil){
 			
 			String sql = null;
-			String memId = null;
+			String memId="0";
 			
 			try{
-				
+				System.out.println(mem_eamil.trim());
 				//null이 들어가면 조건문이 죽게된다... 모든값조회.
 				if(!mem_eamil.equals("")){
-						sql="select mem_id FROM member WHERE Mem_email like '%";
-						sql = sql.concat(mem_eamil)+"%' ";	
-		
+						sql="select mem_id FROM member WHERE Mem_email like '%"+mem_eamil.trim()+"%'" ;
+				
 						con = pool.getConnection();
 						pstmt = con.prepareStatement(sql);
 						rs = pstmt.executeQuery();

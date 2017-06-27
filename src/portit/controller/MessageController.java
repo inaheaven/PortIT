@@ -75,8 +75,19 @@ public class MessageController extends HttpServlet {
 				//2.RoomList
 				//굉장히 헤비한 요청...(Delete,Insert 등의 변화가 생기지 않으면 하지 않는게 좋다.)
 				//좀 라이트한 방식으로 변경할 필요성이 있다. 인터넷이 불안정하면 오류가 날 확률이 높다.
-				list=model.roomList(keyField,keyWord);
-				session.setAttribute("RoomList", list);
+					
+				//처음MsgList에 접근했을때
+				//삭제 이후 돌아왔을때
+				//검색이후 돌아왔을때
+				//갱신요청 유무를 정한다...
+					
+				String renewal= req.getParameter("renewal");
+				
+					//목록을 갱신할 필요가 있을때.
+					if(renewal==null){
+						list=model.roomList(keyField,keyWord);
+						session.setAttribute("RoomList", list);
+					}
 				}
 				
 				catch(Exception err){
@@ -118,21 +129,21 @@ public class MessageController extends HttpServlet {
 				
 				url="myMsgList.jsp";
 				
-				//DB_InPut Msg
+				
+				
 				//입력확인.
 				Boolean InputCheck =model.insertMessage();
 				
 				//Msg 입력에 대한 경고메세지. JSP에서 Script function으로 수정하자.
 				if(InputCheck==true){
-					url="myMsgList.jsp";
-					out.println("<script>alert('메세지가 발송되었습니다..'); location.href='/msg?cmd=list_send';</script>");
+					System.out.println("CTRL: 메세지전달성공");
+					//req.setAttribute("InputCheck","y");
+					url="myMsgSend.jsp";
 				}else{
-					
-					System.out.println("[CTRL]: 메세지를 다시 입력하세요");
-					out.println("<script>alert('메세지를 입력해주세요!'); location.href='/msg?cmd=send';</script>");
+					System.out.println("CTRL: 내용미입력");
+					//req.setAttribute("InputCheck", "n");
 					url="myMsgSend.jsp";
 				}
-				
 				
 				
 				/*
@@ -143,7 +154,6 @@ public class MessageController extends HttpServlet {
 				//발신자 목록.
 				msgSenderList=model.getSenderList();
 				session.setAttribute("msgSenderList", msgSenderList);*/
-				
 			}
 			
 			else if(cmd.equals("detail")){
@@ -172,12 +182,7 @@ public class MessageController extends HttpServlet {
 				
 				
 				String partnerEmail=model.toEmail(req.getParameter("mem_id_sender"));
-				
-				//MSGSend로 전달할때 session에 담아야하나? request에 담아야하나?
-				//session.setAttribute("partnerEmail", partnerEmail);
 				req.setAttribute("partnerEmail", partnerEmail);
-				
-				
 				}
 				
 				url="myMsgSend.jsp";
@@ -234,8 +239,6 @@ public class MessageController extends HttpServlet {
 	/*
 	 -페이지 이동별 불필요한 연산을 건너뛰도록 정리가 필요함.
 	 -URL을 깔끔하게 만들필요가 있음.
-	  
-	  
 	 */
 	
 	

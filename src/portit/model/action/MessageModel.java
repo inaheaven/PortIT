@@ -43,11 +43,19 @@ public class MessageModel {
 
 		boolean Inputconfirmation=true;
 		
+		String msgText=req.getParameter("msgText");
+		String msgReceiverEmail=req.getParameter("msgReceiver");
+		int mem_id_reciver=Integer.parseInt(dao.emailToMemId(msgReceiverEmail));
 		
-		System.out.println("Model받는이="+req.getParameter("msgReceiver"));		
+		if(mem_id_reciver==0||msgText.trim().equals("")){
+			//사용자 미입력.
+			return false;
+		}
 		
 		
 		dto = new MessageDto();
+		dto.setMem_id_sender(this.login_id);
+		
 		
 		//1.login할때 ID를 session에 저장한다.
 		//2.session에 저장된 ID를  mem_id_sender로 dto에 저장한다.
@@ -56,35 +64,30 @@ public class MessageModel {
 		//6.controller에서 ID를 전달하자.
 		
 		
-		dto.setMem_id_sender(this.login_id);
 		
-		if(dao.getMemId(req.getParameter("msgReceiver"))==null){
-			//보내는이 미입력. 0으로 저장.
+		//보내는이 미입력. 0으로 저장.
+		if(msgReceiverEmail==null){
 			dto.setMem_id_receiver(0);
 		}else{
 			//보내는이가 있으면 저장..
-			dto.setMem_id_receiver(Integer.parseInt(dao.getMemId(req.getParameter("msgReceiver"))));	
+			dto.setMem_id_receiver(mem_id_reciver);	
 		}
 		
-		
-		dto.setMsg_content(req.getParameter("msgText"));
+		dto.setMsg_content(msgText);
 		dto.setMsg_isread("n");
 
 		
 		//값이 입정상적으로 입력되었다면.
-		if((dto.getMsg_content()!=null)&&(dto.getMem_id_receiver()!=0)){
+		if((msgText!=null)&&(mem_id_reciver!=0)){
 			Inputconfirmation=true;
 			
-			System.out.println("model내용 "+dto.getMsg_content());
-			System.out.println("model받는이 "+dto.getMem_id_receiver());
 			
 			//DB에 Input.
 			dao.insertMsg(dto);
 		}else{
-			
-			System.out.println("메세지를 다시 입력하세요");
 			Inputconfirmation=false;
 		}
+		
 		
 		return Inputconfirmation;
 	}
