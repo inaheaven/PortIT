@@ -171,6 +171,8 @@ public class MassageDao{
 			
 			else{//검색조건  유
 				
+				
+				//내용검색.
 				if(keyField.equals("search_content")){
 					sql="select * from(select * FROM Message WHERE (mem_id_sender ="
 						+ Msg_Sender+" and MEM_ID_RECEIVER="+login_id+")) "+
@@ -178,6 +180,14 @@ public class MassageDao{
 						"order by msg_date desc ";
 					
 				}
+				//사람검색
+				else{
+					sql="select * from(select * FROM Message WHERE (mem_id_sender ="
+							+ Msg_Sender+" and MEM_ID_RECEIVER="+login_id+")) "+
+							"order by msg_date desc ";
+					
+				}
+				
 				
 			}
 			

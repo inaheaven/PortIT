@@ -46,11 +46,6 @@ public class MessageController extends HttpServlet {
 			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
 			
 			
-			//logind에서 받아온 값... 근데 어디 있냐..
-			//int loginId=Integer.parseInt((String)session.getAttribute("loginId"));
-
-			
-			
 			MessageModel model = new MessageModel(req,login_id);
 			
 			
@@ -85,6 +80,8 @@ public class MessageController extends HttpServlet {
 				
 					//목록을 갱신할 필요가 있을때.
 					if(renewal==null){
+						
+						
 						list=model.roomList(keyField,keyWord);
 						session.setAttribute("RoomList", list);
 					}

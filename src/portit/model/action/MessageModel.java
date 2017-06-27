@@ -69,7 +69,6 @@ public class MessageModel {
 		if(msgReceiverEmail==null){
 			dto.setMem_id_receiver(0);
 		}else{
-			//보내는이가 있으면 저장..
 			dto.setMem_id_receiver(mem_id_reciver);	
 		}
 		
@@ -98,10 +97,9 @@ public class MessageModel {
 	public ArrayList roomList(String keyField, String keyWord){
 		//Login_id에 생성된 모든 대화방List를 리턴한다.
 		
-		this.list = new ArrayList();
 		//dao 변수1: Type(이름,nick), 변수2: 검색어.
 		
-		//여기선 getmsgALL 이아니라 msgAllPack()가 선언되어야한다
+		
 		this.list=dao.roomList(keyField,keyWord);
 		
 		return this.list;
@@ -115,9 +113,10 @@ public class MessageModel {
 		//해당 User와 대화한 대화방을 return한다.
 		// (타입, 검색어, MSG_SENDER, 수신만:fail 수신+발신:true)
 		
-		this.list = new ArrayList();	//인스턴스 생성을 안해도된다.
-		this.list=dao.getChatRoom(null,null, Msg_Sender,true);
+		//[청소중]인스턴스 생성을 안해도된다.
+		//this.list = new ArrayList();	
 		
+		this.list=dao.getChatRoom(null,null, Msg_Sender,true);
 		return list;
 	}
 	
