@@ -64,7 +64,7 @@
 				<ul class="nav pull-right top-menu">
 					<li>
 						<form class="form-inline top-menu-search" method="post"
-							action="/PortIT/search?cmd=SEARCH">
+							action="/PortIt/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" />
@@ -345,13 +345,13 @@ ${port_list.size()}${port_list[1].tag_name}
 	}
 	</script>
 
-	<form name="pf_title" method="post" action="/PortIT/search?cmd=SEARCH">
+	<form name="pf_title" method="post" action="/PortIt/search?cmd=SEARCH">
 		<input type="hidden" name="pf_id" />
 	</form>
-	<form name="tag_name" method="post" action="/PortIT/search?cmd=SEARCH">
+	<form name="tag_name" method="post" action="/PortIt/search?cmd=SEARCH">
 		<input type="hidden" name="tag_name" />
 	</form>
-	<form name="prof_name" method="post" action="/PortIT/search?cmd=SEARCH">
+	<form name="prof_name" method="post" action="/PortIt/search?cmd=SEARCH">
 		<input type="hidden" name="prof_name" />
 	</form>
 	
@@ -363,7 +363,7 @@ ${port_list.size()}${port_list[1].tag_name}
 	}
 	</script>
 
-	<form name="mem_name" method="post" action="/PortIT/search?cmd=SEARCH">
+	<form name="mem_name" method="post" action="/PortIt/search?cmd=SEARCH">
 		<input type="hidden" name="mem_id" />
 	</form>
 	
@@ -375,7 +375,7 @@ ${port_list.size()}${port_list[1].tag_name}
 	}
 	</script>
 
-	<form name="proj_title" method="post" action="/PortIT/search?cmd=SEARCH">
+	<form name="proj_title" method="post" action="/PortIt/search?cmd=SEARCH">
 		<input type="hidden" name="proj_id" />
 	</form>
 
