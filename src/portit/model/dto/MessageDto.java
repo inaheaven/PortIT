@@ -105,7 +105,7 @@ public class MessageDto {
 		
 		
 		//send_id값이 저장되는순간 convert 되어 이름이 저장된다.
-		setSender_Name(dao.convertToName(String.valueOf(mem_id_sender)));
+		this.sender_Name=dao.convertToName(String.valueOf(mem_id_sender));
 		
 		
 		this.mem_id_sender = mem_id_sender;

@@ -70,9 +70,11 @@ public class MessageController extends HttpServlet {
 				url="myMsgList.jsp";
 				
 				
-				
 				try{
+					
 				//2.RoomList
+				//굉장히 헤비한 요청...(Delete,Insert 등의 변화가 생기지 않으면 하지 않는게 좋다.)
+				//좀 라이트한 방식으로 변경할 필요성이 있다. 인터넷이 불안정하면 오류가 날 확률이 높다.
 				list=model.roomList(keyField,keyWord);
 				session.setAttribute("RoomList", list);
 				}
@@ -81,14 +83,26 @@ public class MessageController extends HttpServlet {
 					System.out.println("MessageController_cmd=list()에서 오류");
 					err.printStackTrace();
 				}
-				
 			}
+			 
+			 
+			 //페이징 구현을 위한 경로
+			 // List를 뽑아오는 작업이 필요없다.
+			 else if(cmd.equals("lp")){
+					url="myMsgList.jsp";
+					
+					try{
+					}
+					
+					catch(Exception err){
+						System.out.println("MessageController_cmd=list()에서 오류");
+						err.printStackTrace();
+					}
+			 }
 			
 			
 			else if(cmd.equals("list_send")){
 				//From msgSend
-				
-				
 				
 				url="myMsgList.jsp";
 				
@@ -195,8 +209,6 @@ public class MessageController extends HttpServlet {
 			}
 			 
 			 
-			 
-			 
 			req.setAttribute("pageName", url);
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			view.forward(req,resp);
@@ -207,7 +219,12 @@ public class MessageController extends HttpServlet {
 	
 	
 	
-	
+	/*
+	 -페이지 이동별 불필요한 연산을 건너뛰도록 정리가 필요함.
+	 -URL을 깔끔하게 만들필요가 있음.
+	  
+	  
+	 */
 	
 	
 }
