@@ -11,14 +11,10 @@
 <jsp:useBean id="dto2" class="portit.model.dto.MessageDto"/>
 
 <%
-
 //컨트롤러에서 돌아옴
 String keyField = request.getParameter("keyField");
 String keyWord = request.getParameter("keyWord");
 %>
-
-
-
 
 <script>
 /* 	window.onload=function(){
