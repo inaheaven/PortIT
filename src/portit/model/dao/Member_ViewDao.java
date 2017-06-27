@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
-import portit.model.dto.Developer;
-import portit.model.dto.Profile;
-import portit.model.dto.Tag;
+import portit.model.dto.Member;
 
 /**
  * 개발자 구성 화면
  */
-public class Developer_ViewDao {
+public class Member_ViewDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
@@ -25,7 +23,7 @@ public class Developer_ViewDao {
 	/**
 	 * DB연결 생성자
 	 */
-	public Developer_ViewDao() {
+	public Member_ViewDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			con = pool.getConnection();
@@ -52,7 +50,7 @@ public class Developer_ViewDao {
 	/**
 	 * 사용된 태그명을 불러오는 메서드
 	 */
-	public List developer_info() {
+	public List member_info() {
 		ArrayList list = new ArrayList();
 		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
 				+ "from profile join tag_use "
@@ -65,13 +63,13 @@ public class Developer_ViewDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Developer many = new Developer(); 
-				many.setTag_name(rs.getString("tag_name"));
-				many.setProf_img(rs.getString("prof_img"));
-				many.setProf_name(rs.getString("prof_name"));
-				many.setProf_follower(rs.getInt("prof_follower"));
+				Member member = new Member(); 
+				member.setTag_name(rs.getString("tag_name"));
+				member.setProf_img(rs.getString("prof_img"));
+				member.setProf_name(rs.getString("prof_name"));
+				member.setProf_follower(rs.getInt("prof_follower"));
 
-				list.add(many);
+				list.add(member);
 			}
 		}
 

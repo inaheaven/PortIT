@@ -1,13 +1,128 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@page import="portit.model.dto.Project"%>
+<%@page import="java.util.List"%>
+<%@page import="portit.model.dto.Portfolio"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Dashboard">
+<meta name="keyword"
+	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+<title>DASHGUM - Bootstrap Admin Template</title>
+
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
 <link href="assets/css/search.css" rel="stylesheet">
+
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<section id="container">
+		<!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+		<!--header start-->
+		<header class="header black-bg">
+			<!--logo start-->
+			<a href="index.html" class="logo"><b>Port IT</b></a>
+			<!--logo end-->
+			<div class="nav notify-row" id="top_menu">
+				<!--  menu start -->
+				<ul class="nav top-menu">
+					<!-- settings start -->
+					<li><a href="">Member</a></li>
+					<li><a href="">Portfolio</a></li>
+					<li><a href="">Project</a> <li>
+					
+					<li><a href="">Community</a></li>
+				</ul>
+				<!--  menu end -->
+			</div>
+			
+			<div class="top-menu-right">
+				<ul class="nav pull-right top-menu">
+					<li>
+						<form class="form-inline top-menu-search" method="post"
+							action="/PortIT/search?cmd=SEARCH">
+							<div class="input-group">
+								<input type="text" class="form-control round-form" name="search"
+									size="20" placeholder="통합 검색" />
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default round-form">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</span>
+							</div>
+						</form>
+					</li>
+					<li id="header_inbox_bar" class="dropdown"><a
+						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+							<i class="fa fa-bell"></i> <span class="badge bg-theme"></span>
+					</a>
+						<ul class="dropdown-menu extended inbox">
+							<div class="notify-arrow notify-arrow-yellow"></div>
+							<li>
+								<p class="yellow">Notification</p>
+							</li>
+							<li><a href=""> <span>구분</span>&nbsp;/&nbsp; <span
+									class="time">Just now</span> <span class="message">[누구누구]님이
+										내 포트포리오를 좋아합니다.</span>
+							</a></li>
+							<li><a href="">더보기</a></li>
+						</ul></li>
+					<li id="header_inbox_bar" class="dropdown mypage"><a
+						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+							<img alt="avatar" src="assets/img/ui-danro.jpg"
+							class="img-circle">
+					</a>
+						<ul class="dropdown-menu extended inbox">
+							<div class="notify-arrow notify-arrow-yellow"></div>
+							<li>
+								<p class="yellow">김수연 님</p>
+							</li>
+							<li><a href="">내 프로필</a></li>
+							<li><a href="">팔로잉한 멤버</a> <a href="">북마크한 포트폴리오</a></li>
+							<li><a href="">개인정보 설정</a></li>
+							<li><a class="logout" href="login.html">로그아웃</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</header>
+		<!--header end-->
+	</section>
+
+
+		<!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+		<!--main content start-->
 		<section class="container">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 mt search" id="search">
 					<h2>
 						<span class="fa fa-search"></span>
-						<span class="keyword">${param.search}</span>						
+						<span class="keyword">${search}</span> 	
 					</h2>
 					<!-- 조건 검색 box -->					
 					<div class="searchSorting col-md-12 mt">	
@@ -22,21 +137,29 @@
 								</div>
 							</div>
 							<br><br>
-									
+							<!-- 						
+							<div class="mb">
+								<span class="sortKey">정렬</span>
+									<a href="#" class="active">최신순</a>
+									<a href="#">인기순</a>
+									<a href="#">랜덤</a>
+							</div>
+							 -->							
+							
 							<div class="sortKey col-md-1"><b>태그</b></div>										
 							<div class="col-md-11">	
 								<!-- 인기 태그 6개 띄우기 -->							
-								<input class="btn poptag" type="button"  value="java" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="c" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="c++" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="c#" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="jsp" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="servlet" onclick="fnAppendItem()"/>								
+								<input class="btn poptag" type="button" name="language" value="java" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="c" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="c++" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="c#" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="jsp" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="servlet" onclick="fnAppendItem()"/>								
 								.....
 							</div>
 							<br><br>
 							<div class="col-md-offset-1 col-md-4">
-								<input type="text" class="form-control taginput" id="language" placeholder="검색하고 싶은 태그를 입력하세요." onchange="fnAppendItem2()" />
+								<input type="text" class="form-control taginput" id="language" name="language" placeholder="검색하고 싶은 태그를 입력하세요." onchange="fnAppendItem2()" />
 							</div>		
 							<br><br>
 							<hr />
@@ -47,102 +170,115 @@
 					<br>	
 					<br>
 					<hr class="resultLine" id="pfResult"/>
+	
+${port_list.size()}${port_list[1].tag_name}
 					<!-- 포트폴리오 결과 -->
+									
 					<div class="pfResult mt mb" id="pfResult">
-						<h4>포트폴리오(200개)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-						<%
-							List list = portfolio.portfolio_info();
-							//request.setAttribute("list", list);
-							for (int i = 0; i < 4; i++) {
-								Portfolio port = (Portfolio) list.get(i);
-						%>						
+						<div class="col-md-12 mb">
+						<h4>포트폴리오(${port_list.size()} 건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+		
+		<c:if test="${port_list.size() != 0 }">
+				<c:forEach begin="0" end="${port_list.size()}" var="i" >	
+						<!-- 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
 								<div class="pfImg"></div>
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="">#<%=port.getTag_name() %>&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list[i].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
-											<a href=""><%=port.getPf_title() %></a>
+											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
 										</div>
 										<div class="pfBottom">
-											<span class="pfmemName"><a href=""><%=port.getProf_name() %></a></span> <span
-												class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like() %></span>
+											<span class="pfmemName">
+												<a href="javascript:prof_name('${port_list[i].prof_name}')">
+													${port_list[i].prof_name} </a>
+											</span> 
+											<span class="pfLikeCount">
+												<span class="fa fa-heart"></span>&nbsp;&nbsp;${port_list[i].pf_like}
+											</span>
 										</div>
 									</div>
 								</div>
 							</div>
+						</div>		
+					</c:forEach>
+			</c:if>	
+			<c:if test="${port_list.size() == 0 }">
+				검색된 결과가 없습니다.
+			</c:if>	
 						</div>
-						<%} %>
-									
-						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='port_search.html'">더 보기</button>							
-						</div>
+						
+							<div class="text-right">
+								<button type="button" class="btn moreBtn" onclick="location.href='pfSearch.jsp'">더 보기</button>							
+							</div>
+
 					</div>
-				
+			
 					<hr class="resultLine" id="memResult"/>
 
-					<!-- 인물 결과 -->
+					<!-- 멤버 결과 -->
 					<div class="memResult mt mb" >
-						<h4>인물(150명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+						<div class="col-md-12 mb">
+						<h4>멤버(${mem_list.size()}명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 						
-						<%
-							List list2 = developer.developer_info();
-							//request.setAttribute("list", list);
-							for (int i = 0; i < 4; i++) {
-								Developer dev = (Developer) list2.get(i);
-						%>	
-						<!-- 첫 번째 member-->
+		<c:if test="${mem_list.size() != 0 }">			
+				<c:forEach begin="0" end="${mem_list.size()}" var="i" >	
+						<!-- member -->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
 		          				<div class="simple-content text-center">	      
-			          				<img class="memImg img-circle" alt="avatar" src="<%=dev.getProf_img()%>"/>   
+			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
-			         					<div class="memName"><a href=""><%=dev.getProf_name() %></a></div>
-			         					<div class="memTag"><a href="">#<%=dev.getTag_name() %>&nbsp;</a></div>
+			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
+			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-			         						<span class="memFollowCount"><%=dev.getProf_follower() %></span>
+			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
 			         					</div>
 			         				</div>
 		          				</div>          				
 	          				</div>
 	          			</div> 
-	          			<%} %>
-						
-	
-						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='person_search.html'">더 보기</button>							
+        			</c:forEach>
+        	</c:if>	
+			<c:if test="${mem_list.size() == 0 }">
+				검색된 결과가 없습니다.
+			</c:if>	
 						</div>
+						
+								
+						<div class="text-right">
+							<button type="button" class="btn moreBtn" onclick="location.href='memSearch.jsp'">더 보기</button>							
+						</div>
+							
 					</div>
 						
 					<hr class="resultLine" id="projResult"/>
 
 					<!-- 프로젝트 결과 -->
 					<div class="projResult mt mb" >
-						<h4>프로젝트(60건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-						
-						<%
-							List list3 = project.project_info();
-							//request.setAttribute("list", list);
-							for (int i = 0; i < list3.size(); i++) {
-								Project proj = (Project) list3.get(i);
-							
-						%>
+						<h4>프로젝트(${proj_list.size()}건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+
+			<c:if test="${proj_list.size() != 0 }">
+				<c:forEach begin="0" end="${proj_list.size()}" var="i" >	
+					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
 	          				<div class="project-list">
 		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href=""><%=proj.getProj_title() %></a></div>
-		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href="">개설자 이름</a></div>
-		          					<div class="pjIntro">프로젝트 소개글이 출력됩니다. 글자 수는 제한합니다............</div>
-		          					<div class="pjTag"><a href="">#<%=proj.getTag_name() %>&nbsp;</a></div>         					
+		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
+		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
+		          		
+		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
+		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
 	          					</span>
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
 	          							<tr><td>백엔드개발자</td></tr>
-	          							<tr><td>3 명</td></tr>
+	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
 	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
@@ -150,16 +286,31 @@
 	          				</div>          			
 						</div>
 						<br><br>
-						<%} %>						
-						
+				</c:forEach>
+			</c:if>	
+			<c:if test="${proj_list.size() == 0 }">
+				검색된 결과가 없습니다.
+			</c:if>			
 						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='proj_search.html'">더 보기</button>							
+							<button type="button" class="btn moreBtn" onclick="location.href='projSearch.jsp'">더 보기</button>							
 						</div>
 					</div>
 				</div>
 			</section>
 			<!--/wrapper -->
 		</section>
+
+		<!--main content end-->
+		<!--footer start-->
+		<footer class="site-footer">
+			<div class="text-center">
+				2014 - Alvarez.is <a href="blank.html#" class="go-top"> <i
+					class="fa fa-angle-up"></i>
+				</a>
+			</div>
+		</footer>
+		<!--footer end-->
+	</section>
 
 	<!-- js placed at the end of the document so the pages load faster -->
 	<script src="assets/js/jquery.js"></script>
@@ -178,4 +329,56 @@
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
 	
+	<!-- 포트폴리오 정보 -->
+	<script>	
+	function pf_title(pf_id){
+		document.pf_title.pf_id.value = pf_id;
+		document.pf_title.submit();
+	}
+	function tag_name(tag_name){
+		document.tag_name.pf_id.value = tag_name;
+		document.tag_name.submit();	
+	}
+	function prof_name(prof_name){
+		document.prof_name.pf_id.value = prof_name;
+		document.prof_name.submit();
+	}
+	</script>
+
+	<form name="pf_title" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="pf_id" />
+	</form>
+	<form name="tag_name" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="tag_name" />
+	</form>
+	<form name="prof_name" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="prof_name" />
+	</form>
+	
+	<!-- 멤버 정보 -->
+	<script>	
+	function mem_name(mem_id){
+		document.mem_name.pf_id.value = mem_id;
+		document.mem_name.submit();
+	}
+	</script>
+
+	<form name="mem_name" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="mem_id" />
+	</form>
+	
+	<!-- 프로젝트 정보 -->
+	<script>	
+	function proj_title(proj_id){
+		document.proj_title.pf_id.value = proj_id;
+		document.proj_title.submit();
+	}
+	</script>
+
+	<form name="proj_title" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="proj_id" />
+	</form>
+
+			
 </body>
+</html>

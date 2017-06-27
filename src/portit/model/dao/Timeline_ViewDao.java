@@ -49,15 +49,22 @@ public class Timeline_ViewDao {
 	/**
 	 * 타임라인 정보를 불러오는 메서드	  
 	 */
-	public List timeline_info() {
+	public List timeline_info(int mem_id) {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
-				+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
-				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
-				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID";	
-		
+		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE ,portfolio.PF_REGDATE "
+				+ "from tag join tag_use "
+				+ "on tag.tag_id = tag_use.tag_id "
+				+ "join portfolio "
+				+ "on portfolio.PF_ID = tag_use.tag_use_type_id "
+				+ "join prof_pf "
+				+ "on portfolio.PF_ID = prof_pf.pf_id "
+				+ "join profile "
+				+ "on prof_pf.PROF_ID = Profile.PROF_ID  "
+				+ "join MEDIA_LIBRARY "
+				+ "on MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID "
+				+ "join pf_like "
+				+ "on pf_like.PF_ID = portfolio.pf_id "
+				+ "where pf_like.mem_id="+mem_id;
 		try {
 
 			pstmt = con.prepareStatement(sql);
@@ -76,7 +83,7 @@ public class Timeline_ViewDao {
 		}
 
 		catch (Exception err) {
-			System.out.println("portfolio_info() 에서 오류");
+			System.out.println("Timeline_info() 에서 오류");
 			err.printStackTrace();
 		}
 

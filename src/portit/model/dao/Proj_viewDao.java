@@ -52,7 +52,6 @@ public class Proj_viewDao {
 	 */
 	public List project_info() {
 		ArrayList list = new ArrayList();
-		//쿼리문에  trunc(project.proj_regenddate - sysdate) as "D-Day" 빠짐
 		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title,"
 						+ " tag.tag_name, project.proj_to, trunc(project.proj_regenddate - sysdate) "
 						+ "from tag join tag_use "

@@ -1,13 +1,7 @@
 package portit.model.dto;
 
-import java.lang.Math;
 import java.util.Date;
 
-/**
- * 사용자 프로필 DTO
- * @author gnsngck
- *
- */
 public class Profile {
 	private int prof_id;
 	private String prof_nick;

@@ -52,11 +52,11 @@ public class Portfolio_ViewDao {
 	public List portfolio_info() {
 		ArrayList list = new ArrayList();
 		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
+				+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
 				+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
 				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
 				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID";	
+				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID";
 		
 		try {
 
@@ -70,7 +70,7 @@ public class Portfolio_ViewDao {
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));
-
+				
 				list.add(portfolio);
 			}
 		}
