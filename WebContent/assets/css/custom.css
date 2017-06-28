@@ -473,3 +473,25 @@ button.common:focus {
 	background-color: #E69138;
 	color: #fff;
 }
+
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 0px;
+  pointer-events: none;
+  top: 10px;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  25px;     
+}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  50px; }
+.right-addon input { padding-right: 30px; }
+>>>>>>> refs/remotes/origin/dev-back-lsm

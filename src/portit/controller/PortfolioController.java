@@ -1,21 +1,19 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@SuppressWarnings("serial")
-public class PortfolioController extends HttpServlet {
-	
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		doPost(req, resp);
-	}
+public class PortfolioController implements Controller {
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		resp.setContentType("text/html; charset=UTF-8");
-	
+	@Override
+	public String[] execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ServletContext sc = req.getServletContext();
+		Map<String, String> map = (Map<String, String>) sc.getAttribute("formdata");
+		return null;
 	}
 }

@@ -153,12 +153,12 @@ $(document).ready(function(){
 					</a></li>
 					<li class="sub-menu"><a href=""> <span>Notification</span>
 					</a></li>
-					<li class="sub-menu"><a href="/msg?cmd=list"> <span>Message</span>
+					<li class="sub-menu"><a href="/empty/msg?cmd=list"> <span>Message</span>
 					</a></li>
 					<hr class="line" />
-					<li class="sub-menu"><a href="/account?cmd=alter"> <span>My Account</span>
+					<li class="sub-menu"><a href="/empty/account?cmd=alter"> <span>My Account</span>
 					</a></li>
-					<li class="sub-menu"><a href="/account?cmd=delete"> <span>Delete
+					<li class="sub-menu"><a href="/empty/account?cmd=delete"> <span>Delete
 								Account</span>
 					</a></li>
 				</ul>

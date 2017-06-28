@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 프론트 컨트롤러
  * 클라이언트의 서블릿 요청을 받아 기능을 해당 컨트롤러에게 분배하고 해당 컨트롤러의 처리 결과를 뷰에게 전달
  * @author gnsngck
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("*.do") /* HTML/JSP에서 .do로 끝나는 요청은 모두 서블릿 요청으로 간주하여 프론트 컨트롤러가 처리 */
+//@WebServlet("")
 public class FrontController extends HttpServlet {
 
 	@Override

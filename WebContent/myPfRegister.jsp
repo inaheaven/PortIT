@@ -9,86 +9,97 @@
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 col-sm-12 col-xs-12 mt pfreg">
-				<!-- BASIC FORM ELELEMNTS -->
+				<!-- BASIC FORM ELEMENTS -->
 				<div class="pfregForm">		
-					<h3 class="formTitle text-center">포트폴리오 등록</h3>			
-					<form class="form-horizontal style-form" method="post" action="#">
+					<h3 class="formTitle text-center">포트폴리오 등록</h3>
+					<form class="form-horizontal style-form" method="post" action="/upload" enctype="multipart/form-data">
 						<div class="form-group">
-							<label class="col-md-3 control-label">포트폴리오 제목</label>
+							<label class="col-md-3 control-label">제목</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control">
+								<input type="text" name="pf_title" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">포트폴리오 제작 기간</label> 
-							<label class="col-md-1 control-label" for="date">시작 	일</label>
+							<label class="col-md-3 control-label">작업 기간</label> 
+							<label class="col-md-1 control-label" for="date">시작일</label>
 							<div class="col-md-3">
-								<input class="form-control" id="start_date" name="start_date" type="date" /> 
+								<input class="form-control" name="pf_startdate" type="date" /> 
 							</div>
 							<div class="col-md-1"></div>
-							<label class="col-md-1 control-label" for="date">마감 일</label>
+							<label class="col-md-1 control-label" for="date">종료일</label>
 							<div class="col-md-3">
-								<input class="form-control" id="end_date" name="end_date" type="date" />
+								<input class="form-control" name="pf_enddate" type="date" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">포트폴리오 내용</label>
+							<label class="col-md-3 control-label">내용</label>
 							<div class="col-md-9">
-								<textarea class="form-control" placeholder="프로젝트 주제 , 목적 등 자세한 내용을 작성하세요.(2000byte 이내)" rows="10"></textarea>
+								<textarea class="form-control" name="pf_intro" placeholder="프로젝트 주제, 목적 등 자세한 내용을 작성하세요.(2000byte 이내)" rows="10"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 환경</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
+								<input type="text" class="form-control" name="pf_env" placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 언어</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) C, JAVA, Python 등">
+								<input type="text" class="form-control" name="pf_language" placeholder="ex) C, JAVA, Python 등">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 도구</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) Eclipse, Visual Studio2013 등">
+								<input type="text" class="form-control" name="pf_tool" placeholder="ex) Eclipse, Visual Studio2013 등">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">수행 인원</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" name="pf_numofperson">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">담당 업무</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
+								<input type="text" class="form-control" name="pf_field" placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Github URL</label>
+							<label class="col-md-3 control-label">URL</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) github URL">
+								<input type="text" name="pf_url" class="form-control" placeholder="ex) github URL">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">함께한 사람</label>
-							<div class="col-md-7">
-								<input type="text" class="form-control">
-							</div>
-							<div class="col-sm-2">
-								<button type="button" class="btn btn-default">검색</button>
+							<div class="col-md-9">
+								<div class="input-group">
+									<input type="text" class="form-control" name="pf_coworker">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default">검색</button>
+									</span>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">이미지 및 동영상</label>
-							<div class="col-md-9">
-								<input type="file" class="form-control">
+							<label class="col-md-3 control-label">이미지</label>
+							<div class="col-md-9" id="mediaRows">
+								<div id="mediaRow">
+									<div class="form-inline">
+										<label for="fileUpload" class="btn btn-default">파일 선택</label>
+										<input type="file" id="fileUpload" name="media[]" multiple="multiple" />
+										<span class="help-block">최대 9개의 파일을 선택할 수 있습니다.</span>
+									</div>
+									<ul id="fileList"></ul>
+								</div>
 							</div>
 						</div>
 						<div class="form-group text-center buttonDiv" >
+							<input type="hidden" name="mem_id" value="<%= session.getAttribute("mem_id") %>" />
+							<input type="hidden" name="articleType" value="portfolio" />
 							<button type="submit" class="btn common">등록하기</button>&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn cancel" onclick="location.href='/page?page=myPfList'">취소하기</button>
 						</div>

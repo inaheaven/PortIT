@@ -82,4 +82,3 @@ public class ProfileController extends HttpServlet {
 		String prof_nick = req.getParameter("prof_nick");*/
 	}
 }
-

@@ -51,11 +51,3 @@ public class MemberJoinController extends HttpServlet {
 //		view.forward(req, resp);
 	}
 }
-
-
-
-
-
-
-
-

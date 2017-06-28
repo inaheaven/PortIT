@@ -30,9 +30,9 @@ public class ControllerFactory {
      * @param servletPath 클라이언트가 요청한 서블릿 주소
      * @return 기능별 컨트롤러 인스턴스
      */
-	public Controller createController(String servletPath) {
-		if (servletPath.equals("")) {
-			return new InputController();
+	public Controller createController(String param) {
+		if (param.equals("portfolio")) {
+			return new PortfolioController();
 		}
 		else {
 			return null;
