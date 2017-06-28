@@ -45,7 +45,7 @@
 				</a>
 			</li>                  
 			<li class="">
-				<a href="/page?page=myNotification"  id="myNotification">
+				<a href="/page?page=myNotification&sort=all"  id="myNotification">
 				    <span>Notification</span>
 				</a>
 			</li>

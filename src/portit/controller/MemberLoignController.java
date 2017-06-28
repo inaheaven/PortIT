@@ -42,7 +42,7 @@ public class MemberLoignController extends HttpServlet {
 			session.setAttribute("loginEmail", checkMem.getMem_email());
 			session.setAttribute("loginPw", checkMem.getMem_password());
 			
-			out.println("<script>alert('로그인 성공!'); location.href='/page?page=main';</script>");
+			out.println("<script>location.href='/page?page=main';</script>");
 		}
 		else {
 			out.println("<script>alert('이메일 또는 비밀번호가 틀렸습니다.'); location.href='/index.jsp';</script>");			
