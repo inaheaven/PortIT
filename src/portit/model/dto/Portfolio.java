@@ -44,7 +44,22 @@ public class Portfolio {
 	private List<Profile> pf_coworkers;
 	/** 추천 포트폴리오 목록 */
 	private List<Portfolio> pf_recommends;
+    private String prof_name;
+    
+	public String getProf_name() {
+		return prof_name;
+	}
+	public void setProf_name(String prof_name) {
+		this.prof_name = prof_name;
+	}
+	private int bm_id;
 	
+	public int getBm_id() {
+		return bm_id;
+	}
+	public void setBm_id(int bm_id) {
+		this.bm_id = bm_id;
+	}
 	public int getPf_id() {
 		return pf_id;
 	}

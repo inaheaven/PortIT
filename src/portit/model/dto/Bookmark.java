@@ -13,7 +13,15 @@ public class Bookmark {
 	private int mem_id;
 	private int pf_id;
 	private Date bm_date;
-
+    private String prof_name;
+  
+    
+	public String getProf_name() {
+		return prof_name;
+	}
+	public void setProf_name(String prof_name) {
+		this.prof_name = prof_name;
+	}
 	public int getBm_id() {
 		return bm_id;
 	}

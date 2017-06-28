@@ -34,25 +34,9 @@ public class FollowController extends HttpServlet {
 			if (resultFollow.isEmpty()) {
 				resultFollow = new ArrayList<>();
 			}
-			////////////////////////임시/////////////////////////////
-			List<Follow> temp = new ArrayList<>();
-			Follow follow = new Follow();
-
-			follow.setProf_name("집엔DB없다1");
-			temp.add(follow);
-
-			follow = new Follow();
-			follow.setProf_name("집엔DB없다2");
-			temp.add(follow);
 			
-			follow = new Follow();
-			follow.setProf_name("집엔DB없다3");
-			temp.add(follow);
-			req.setAttribute("follow", temp);
-
-			////////////////////////임시/////////////////////////////
-
-			//			req.setAttribute("portfolio", resultPortfolio);
+			
+			req.setAttribute("portfolio", resultPortfolio);
 			url = "myFollowing.jsp";
 
 			req.setAttribute("pageName", url);

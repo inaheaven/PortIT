@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Bookmark;
 import portit.model.dto.Portfolio;
 
 /**
@@ -56,19 +57,22 @@ public class BookmarkDao {
 			e.printStackTrace();
 		}
 	}
-	public List<Portfolio> getMyBookmark() {
+	public List<Portfolio> getMyBookmark(int mem_id) {
 		List<Portfolio> portfolioList = new ArrayList<>();
-		String sql = "SELECT BM_ID , PF_TITLE,PF_LIKE,PF_NUMOFPERSON FROM BOOKMARK A ,PORTFOLIO B"
-				+ "WHERE A.PF_ID= B.PF_ID";
+		String sql = "SELECT BM_ID , PF_TITLE,PF_LIKE, PF_NUMOFPERSON FROM BOOKMARK A , PORTFOLIO B "
+				+ " WHERE A.PF_ID= B.PF_ID and a.mem_id = ?";
 
+		
 		try {
+			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				Portfolio pf = new Portfolio();
 				
-				pf.setBm_id(Integer.parseInt(rs.getString("bm_id")));
+				pf.setBm_id(rs.getInt("bm_id"));
 				pf.setPf_title(rs.getString("pf_title"));
 				pf.setPf_like(Integer.parseInt(rs.getString("pf_like")));
 				pf.setPf_numofperson(Integer.parseInt(rs.getString("pf_numofperson")));
@@ -94,8 +98,11 @@ public class BookmarkDao {
 			//BOOKMARK에 MEM_ID=? AND PF_ID=? 조회해서 데이터가 존재하면 delete 없으면 insert
 			conn = pool.getConnection();
 
-			sql = "MERGE INTO BOOKMARK B1" + "USING (SELECT MEM_ID, PF_ID FROM BOOKMARK WHERE MEM_ID=? AND PF_ID=?)B2" + "ON (B1.BM_ID=B2.BM_ID)" + "WHEN MATCHED THEN" + "DELETE FROM BOOKMARK WHERE MEM_ID =B1.MEM_ID"
-					+ "WHEN NOT MATCHED THEN" + "INSERT INTO BOOKMARK (BM_ID, MEM_ID,PF_ID,BM_DATE)" + "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE)";
+			sql = "MERGE INTO BOOKMARK B1" + "USING (SELECT MEM_ID, PF_ID FROM BOOKMARK WHERE MEM_ID=? AND PF_ID=?)B2" 
+					+ "ON (B1.BM_ID=B2.BM_ID)" + "WHEN MATCHED THEN" + "DELETE FROM BOOKMARK WHERE MEM_ID =B1.MEM_ID"
+					+ "WHEN NOT MATCHED THEN" + "INSERT INTO BOOKMARK (BM_ID, MEM_ID,PF_ID,BM_DATE)" 
+					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE)";
+			
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);

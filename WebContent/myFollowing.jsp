@@ -9,7 +9,10 @@
 
 <%
 	List<Follow> followList = (List) request.getAttribute("follow");
+if(portfolios.isEmpty()){
+	portfolios= new ArrayList();
 	
+}
 %>	
 </script>
 

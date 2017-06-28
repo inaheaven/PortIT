@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="portit.model.dto.Portfolio"%>
 <%@page import="portit.model.dto.Bookmark"%>
 <%@page import="java.util.List"%>
@@ -18,6 +19,10 @@
 
 <%
 	List<Portfolio> portfolios = (List)request.getAttribute("portfolio");
+	if(portfolios.isEmpty()){
+		portfolios= new ArrayList();
+		
+	}
 	
 %>	
 </script>

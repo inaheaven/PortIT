@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import portit.model.dao.BookmarkDao;
 import portit.model.dto.Portfolio;
@@ -23,7 +24,10 @@ public class BookmarkController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
-	
+		
+		HttpSession session = req.getSession();
+		int loginId = (int)session.getAttribute("loginId");
+		
 		String cmd = req.getParameter("cmd");
 		String url = null;
 		if (cmd.equals("BOOKMARK")) {
@@ -51,34 +55,8 @@ public class BookmarkController extends HttpServlet {
 			
 		} else if (cmd.equals("MYBOOKMARK")) {
 			BookmarkDao bmDao = new BookmarkDao();
-			List<Portfolio> resultPortfolio = bmDao.getMyBookmark();
+			List<Portfolio> resultPortfolio = bmDao.getMyBookmark(loginId);
 			
-			////////////////////////임시/////////////////////////////
-			List<Portfolio> temp = new ArrayList<>();
-			Portfolio portfolio= new Portfolio();
-
-			portfolio.setPf_title("집엔DB없다1");
-			portfolio.setPf_like(1);
-			portfolio.setPf_numofperson(2);
-			portfolio.setBm_id(1);
-			temp.add(portfolio);
-			
-			portfolio= new Portfolio();
-			portfolio.setPf_title("집엔DB없다2");
-			portfolio.setPf_like(3);
-			portfolio.setPf_numofperson(4);
-			portfolio.setBm_id(2);
-			temp.add(portfolio);
-			
-			portfolio= new Portfolio();
-			portfolio.setPf_title("집엔DB없다3");
-			portfolio.setPf_like(5);
-			portfolio.setPf_numofperson(6);
-			portfolio.setBm_id(3);
-			temp.add(portfolio);
-
-			
-			////////////////////////임시/////////////////////////////			
 			req.setAttribute("portfolio", resultPortfolio);
 			url="myBookmark.jsp";
 			
@@ -93,7 +71,7 @@ public class BookmarkController extends HttpServlet {
 				bmId = Integer.parseInt(req.getParameter("bm_id"));
 				bmDao.deleteBookmark(bmId);
 				
-				List<Portfolio> resultPortfolio = bmDao.getMyBookmark();
+				List<Portfolio> resultPortfolio = bmDao.getMyBookmark(loginId);
 				if(resultPortfolio.isEmpty()){
 					resultPortfolio = new ArrayList<>();
 				}
