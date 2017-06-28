@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("")
+//@WebServlet("")
 public class FrontController extends HttpServlet {
 
 	@Override

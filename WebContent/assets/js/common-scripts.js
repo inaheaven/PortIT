@@ -143,15 +143,15 @@ var Script = function () {
  // 업로드할 파일 삭제
     $(function() {
     	var rows = 1;
-    	$('input[type=file]').on('change', function() {
-    		var files = document.getElementById('media[]').files;
-    		for(var i=0; i<files.length; i++) {
-    			if (rows == 9) {
+    	$('input#fileUpload').on('change', function() {
+    		var filelist = document.getElementById($(this).attr('id')).files;
+    		for(var i=0; i<filelist.length; i++) {
+    			if (rows == 10) {
     				break;
     			}
-    			fileList.append('<li id="media">'+files[i]+' <a id="mediaRemove"><i class="fa fa-times"></i></a></li>');
+    			$('#fileList').append('<li id="media">'+filelist[i].name+' <a id="mediaRemove"><i class="fa fa-times"></i></a></li>');
     			rows++;
-    		}
+    		};
     	});
     	$('#mediaRemove').on('click', function() {
     		$(this).parent().empty.remove();
