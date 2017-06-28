@@ -12,7 +12,7 @@
 				<!-- BASIC FORM ELEMENTS -->
 				<div class="pfregForm">		
 					<h3 class="formTitle text-center">포트폴리오 등록</h3>
-					<form class="form-horizontal style-form" method="post" action="/Portfolio" enctype="multipart/form-data">
+					<form class="form-horizontal style-form" method="post" action="/upload" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-md-3 control-label">제목</label>
 							<div class="col-md-9">
@@ -88,14 +88,12 @@
 							<label class="col-md-3 control-label">이미지</label>
 							<div class="col-md-9" id="mediaRows">
 								<div id="mediaRow">
-									<div class="form-inline pull-left">
+									<div class="form-inline">
 										<label for="fileUpload" class="btn btn-default">파일 선택</label>
-										<input type="text" class="form-control" id="fileName" disabled="disabled" />
 										<input type="file" id="fileUpload" name="media[]" multiple="multiple" />
+										<span class="help-block">최대 9개의 파일을 선택할 수 있습니다.</span>
 									</div>
-									<div class="pull-right">
-										<button type="button" class="btn btn-default" id="mediaAdd">추가</button>
-									</div>
+									<ul id="fileList"></ul>
 								</div>
 							</div>
 						</div>

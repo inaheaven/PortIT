@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import portit.controller.MediaController;
+import portit.controller.UploadServlet;
 import portit.model.dto.Media;
 
 /**
@@ -152,7 +152,7 @@ public class MediaDao {
 		for (int i = 0; i < mediaList.size(); i++) {
 			pathList.add(mediaList.get(i).getMl_path());
 		}
-		MediaController mediaController = new MediaController();
+		UploadServlet mediaController = new UploadServlet();
 		mediaController.fileDelete(pathList);
 	}
 }

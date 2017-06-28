@@ -140,21 +140,25 @@ var Script = function () {
     });
     
 
- // add and remove button for file upload
+ // 업로드할 파일 삭제
     $(function() {
     	var rows = 1;
-    	$('#mediaAdd').on('click', function () {
-    		var newRow = $('#mediaRow').clone(true).children('div.pull-right').prepend('<button type="button" class="btn btn-default" id="mediaRemove">삭제</button>');
-    		$('#mediaRows').append(newRow);
-    		rows++;
-        });
-        $('#mediaRemove').on('click', function () {
-        	if (rows > 1) {
-        		$(this).parent().parent().empty().remove();
-        		rows--;
-        	}
-        });
+    	$('input[type=file]').on('change', function() {
+    		var files = document.getElementById('media[]').files;
+    		for(var i=0; i<files.length; i++) {
+    			if (rows == 9) {
+    				break;
+    			}
+    			fileList.append('<li id="media">'+files[i]+' <a id="mediaRemove"><i class="fa fa-times"></i></a></li>');
+    			rows++;
+    		}
+    	});
+    	$('#mediaRemove').on('click', function() {
+    		$(this).parent().empty.remove();
+    		rows--;
+    	});
     });
+    
     
 
 }();
