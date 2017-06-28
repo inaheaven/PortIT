@@ -9,6 +9,8 @@ function fnAppendItem(){
 	newSpan.innerHTML = window.event.target.value +"<input type='button' value='x' onclick='fnDeleteItem("+ count +")'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 	
 	var itemList = document.getElementById("itemList");
+	var sea = document.getElementById("sea");
+	
 	itemList.appendChild(newSpan);			
 }
 

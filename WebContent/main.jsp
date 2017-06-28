@@ -53,9 +53,9 @@
 				<!--  menu start -->
 				<ul class="nav top-menu">
 					<!-- settings start -->
-					<li><a href="">Member</a></li>
-					<li><a href="">Portfolio</a></li>
-					<li><a href="">Project</a>
+					<li><a href="/PortIt/memList.jsp">Member</a></li>
+					<li><a href="/PortIt/pfList.jsp">Portfolio</a></li>
+					<li><a href="/PortIt/projList.jsp">Project</a>
 					<li>
 					<li><a href="">Community</a></li>
 				</ul>
@@ -165,7 +165,7 @@
 								</c:if>
 								<div class="text-right">
 									<button type="button" class="btn moreBtn"
-										onclick="location.href='pfSearch.jsp'">더 보기</button>						
+										onclick="location.href='pfList.jsp'">더 보기</button>						
 								</div>
 							</div>
 						</div>
@@ -204,7 +204,7 @@
 								</c:if>
 								<div class="text-right">
 									<button type="button" class="btn moreBtn"
-										onclick="location.href='memSearch.jsp'">더 보기</button>
+										onclick="location.href='memList.jsp'">더 보기</button>
 								</div>
 							</div>
 						</div>
@@ -244,7 +244,7 @@
 										</c:if>
 										<div class="text-right">
 											<button type="button" class="btn moreBtn"
-												onclick="location.href='projSearch.jsp'">더 보기</button>
+												onclick="location.href='projList.jsp'">더 보기</button>
 										</div>
 
 									</div>

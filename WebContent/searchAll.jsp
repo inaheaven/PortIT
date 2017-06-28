@@ -126,8 +126,8 @@
 					</h2>
 					<!-- 조건 검색 box -->					
 					<div class="searchSorting col-md-12 mt">	
-						<form class="" method="post" action="">
-							
+						<form class="" id="sea" name="" method="post" action="">
+							<
 							<div class="">
 								<div class="sortKey col-md-1"><b>구분</b></div>
 								<div class="col-md-11">
@@ -171,15 +171,13 @@
 					<br>
 					<hr class="resultLine" id="pfResult"/>
 	
-${port_list.size()}${port_list[1].tag_name}
-					<!-- 포트폴리오 결과 -->
-									
+					<!-- 포트폴리오 결과 -->									
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
 						<h4>포트폴리오(${port_list.size()} 건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 		
-		<c:if test="${port_list.size() != 0 }">
-				<c:forEach begin="0" end="${port_list.size()}" var="i" >	
+		<c:if test="${port_list.size() != 0 && port_list.size()>0}">
+				<c:forEach begin="0" end="${port_list.size()-1}" var="i" >	
 						<!-- 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
@@ -211,11 +209,21 @@ ${port_list.size()}${port_list[1].tag_name}
 				검색된 결과가 없습니다.
 			</c:if>	
 						</div>
+						<form post="method" name="move" action="/PortIt/SearchView?cmd=PFSEARCH">
+							<input type ="hidden" name="list1"/>
 						
 							<div class="text-right">
-								<button type="button" class="btn moreBtn" onclick="location.href='pfSearch.jsp'">더 보기</button>							
+								<button type="submit" class="btn moreBtn" onclick="Search('${search}')">
+									<a href="SearchView?list1=<">더 보기</a></button>							
 							</div>
-
+						</form>
+					
+<script>
+	function Search(list1){
+		document.move.list1.value = list1;
+		document.move.submit();
+	}	
+</script>
 					</div>
 			
 					<hr class="resultLine" id="memResult"/>
@@ -225,8 +233,8 @@ ${port_list.size()}${port_list[1].tag_name}
 						<div class="col-md-12 mb">
 						<h4>멤버(${mem_list.size()}명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 						
-		<c:if test="${mem_list.size() != 0 }">			
-				<c:forEach begin="0" end="${mem_list.size()}" var="i" >	
+		<c:if test="${mem_list.size() != 0 && mem_list.size()>0}">			
+				<c:forEach begin="0" end="${mem_list.size()-1}" var="i" >	
 						<!-- member -->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
@@ -263,8 +271,8 @@ ${port_list.size()}${port_list[1].tag_name}
 					<div class="projResult mt mb" >
 						<h4>프로젝트(${proj_list.size()}건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 
-			<c:if test="${proj_list.size() != 0 }">
-				<c:forEach begin="0" end="${proj_list.size()}" var="i" >	
+			<c:if test="${proj_list.size() != 0 && proj_list.size()>0}">
+				<c:forEach begin="0" end="${proj_list.size()-1}" var="i" >	
 					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
 	          				<div class="project-list">

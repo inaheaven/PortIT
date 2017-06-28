@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import portit.model.dao.Portfolio_ViewDao;
+import portit.model.dao.ViewDao;
 import portit.model.dao.SearchDao;
 
-
+/**
+ * 
+ * 포트폴리오,멤버,프로젝트 각각의 페이지에서 검색하는 기능
+ */
 @WebServlet(urlPatterns="/SearchView")
 public class SearchViewController extends HttpServlet {
 	
@@ -29,7 +32,7 @@ public class SearchViewController extends HttpServlet {
 		HttpSession session = req.getSession();
 		
 		session.removeAttribute("search");
-		
+		//String list1 = req.getParameter("list1");
 		//검색어 결과
 		String pfSearch = req.getParameter("pfSearch");
 		String memSearch = req.getParameter("memSearch");
@@ -39,14 +42,17 @@ public class SearchViewController extends HttpServlet {
 		session.setAttribute("memSearch", memSearch);
 		session.setAttribute("projSearch", projSearch);
 		
+		SearchDao searchDao = new SearchDao();
+		List list;	
+		
+		//System.out.println(list1);		
+		//req.setAttribute("port_list", searchDao.searchAll_port(list1, true));
+		
+	
 		//포트폴리오 Dao 호출
 		//Controller -> Model로 넘겨주기
-		SearchDao searchDao = new SearchDao();
-		List list;
-		boolean lineup = true;
-		
 		if(memSearch==null && projSearch==null){	
-			list = searchDao.searchAll_port(pfSearch,lineup);		
+			list = searchDao.searchAll_port(pfSearch,true);		
 			req.setAttribute("port_list", list);
 		}
 		else if(pfSearch==null && projSearch==null){
@@ -60,7 +66,7 @@ public class SearchViewController extends HttpServlet {
 	
 		
 		if(cmd.equals("PFSEARCH")){
-			url="/pfSearch.jsp";
+			url="/pfSearch.jsp";			
 		}
 		else if(cmd.equals("MEMSEARCH")){
 			url="/memSearch.jsp";

@@ -177,8 +177,8 @@
 				</div>
 				<!-- END - 조건 검색 box -->
 
-				<c:if test="${mem_list.size() != 0 }">			
-				<c:forEach begin="0" end="${mem_list.size()}" var="i" >	
+				<c:if test="${mem_list.size() != 0 && mem_list.size()>0 }">			
+				<c:forEach begin="0" end="${mem_list.size()-1}" var="i" >	
 						<!-- member -->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
