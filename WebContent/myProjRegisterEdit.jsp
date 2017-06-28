@@ -140,6 +140,31 @@
 </script>
 </head>
 <body>
+
+<%
+	request.setCharacterEncoding("UTF-8");
+	String proj_id = request.getParameter("proj_id");
+	String proj_title = request.getParameter("proj_title");
+	String proj_intro = request.getParameter("proj_intro");
+	String proj_regdate = request.getParameter("proj_regdate"); 
+	String proj_startdate = request.getParameter("proj_startdate"); 
+	int proj_period = 3; //Integer.parseInt(request.getParameter("proj_period"));
+	String proj_regenddate = request.getParameter("proj_regenddate"); 
+	System.out.println(proj_title);
+	String proj_env = request.getParameter("proj_env");		
+	String proj_language = request.getParameter("proj_language");
+	String proj_tool = request.getParameter("proj_tool");
+	String proj_fields = request.getParameter("proj_field");			
+	String proj_numofperson_arr = request.getParameter("proj_numofperson"); 
+	
+
+	
+/* 	함께한 사람들 변수 받아오기!
+	String proj_coworker = request.getParameter("final_result_id");
+	String[] proj_coworkers = proj_coworker.split(",");	 
+*/
+	
+%>
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
@@ -168,22 +193,22 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 제목</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="proj_title"
+									<input type="text" class="form-control" name="proj_title" value="<%=proj_title%>"
 										required="true">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 설명</label>
 								<div class="col-md-9">
-									<textarea class="form-control" name="proj_intro"
+									<textarea class="form-control" name="proj_intro"  
 										placeholder="프로젝트 주제 , 목적등 자세한 설명을 작성하세요" rows="10"
-										required="true"></textarea>
+										required="true"><%=proj_intro%></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 개발 환경</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="proj_env"
+									<input type="text" class="form-control" name="proj_env" 
 										placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 "
 										required="true">
 								</div>
@@ -227,7 +252,7 @@
 								<label class="col-md-3 control-label" for="date">프로젝트 모집
 									마감일</label>
 								<div class="col-md-9">
-									<input class="form-control" id="proj_regenddate"
+									<input class="form-control" id="proj_regenddate" value="<%=proj_regenddate%>"
 										name="proj_regenddate" placeholder="MM/DD/YYYY" type="text"
 										required="true" />
 								</div>
@@ -238,13 +263,13 @@
 									<label class="col-md-3 control-label" for="date">프로젝트
 										예정 시작일</label>
 									<div class="col-md-3">
-										<input class="form-control" id="proj_startdate"
+										<input class="form-control" id="proj_startdate" value="<%=proj_startdate%>"
 											name="proj_startdate" placeholder="MM/DD/YYYY" type="text"
 											required="true" />
 									</div>
 									<label class="col-md-3 control-label" for="date">예상 기간</label>
 									<div class="col-md-2">
-										<input class="form-control" name="proj_period" type="text"
+										<input class="form-control" name="proj_period" type="text" value="<%=proj_period%>"
 											required="true" />
 									</div>
 									<div class="col-md-1 control-label">
@@ -257,7 +282,7 @@
 								<div class="col-sm-7">
 									<input type="text" class="form-control" readonly="readonly"
 										required="true" id="final_result">
-									<input type="hidden" class="form-control" name="final_result_id" id="final_result_id">
+									<input type="text" class="form-control" name="final_result_id" id="final_result_id">
 										
 								</div>
 								<div class="col-sm-2">

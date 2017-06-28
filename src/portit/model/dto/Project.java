@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Project {
 
-	private int proj_id = (int) (Math.random() * 100000000);
+	private int proj_id;
 	private String proj_title;
 	private String proj_intro;
 	private int proj_numofperson;

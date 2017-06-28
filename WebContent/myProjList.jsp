@@ -1,7 +1,40 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Dashboard">
+<meta name="keyword"
+	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+<title>PORTIT - MYPAGE</title>
+
+
 <link href="assets/css/profpfproj.css" rel="stylesheet">
+<!-- for adding rows button -->
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+<link href="assets/css/detailpage.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
 	<%--sidenavbar start--%>
 	<jsp:include page="my.jsp"></jsp:include>
 	<%--sidenavbar end--%>
@@ -19,16 +52,19 @@
 							<div class="panel-heading clearfix" role="tab" id="headingOne">
 								<h4 class="panel-title">
 									<span class="col-sm-3"> 프로젝트 제목 #1 </span> 
-									<span class="col-sm-6"> 프로젝트 지원 마감일까지 D-3</span>									
+									<span class="col-sm-6"> 프로젝트 지원 마감일까지 D-3</span>
+									<form action="/project_update">									
 									<span class="col-md-3 text-right">
-										<button type="button" class="btn common">수정</button>
+										<button type="submit" class="btn common">수정</button>
 										<button type="button" class="btn common">삭제</button>
 										<a class="updown collapsed" data-toggle="collapse"
 										data-parent="#accordion" href="#collapseOne"
 										aria-expanded="false" aria-controls="collapseOne"> 
 											<i class="fa fa-chevron-down"></i>
 										</a>
-									</span>									
+										<input type="hidden" name="proj_id" value="32">
+									</span>							
+									</form>		
 								</h4>
 							</div>
 							<div id="collapseOne" class="panel-collapse collapse"
@@ -80,136 +116,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading clearfix" role="tab" id="headingTwo">
-								<h4 class="panel-title">
-									<span class="col-sm-3"> 프로젝트 제목 #2 </span> 
-									<span class="col-sm-6"> 프로젝트 지원 마감일까지 D-3</span>									
-									<span class="col-md-3 text-right">
-										<button type="button" class="btn common">수정</button>
-										<button type="button" class="btn common">삭제</button>
-										<a class="updown collapsed" data-toggle="collapse"
-										data-parent="#accordion" href="#collapseTwo"
-										aria-expanded="false" aria-controls="collapseTwo"> 
-											<i class="fa fa-chevron-down"></i>
-										</a>
-									</span>
-								</h4>
-							</div>
-							<div id="collapseTwo" class="panel-collapse collapse"
-								role="tabpanel" aria-labelledby="headingTwo">
-								<div class="panel-body">
-									<div class="col-lg-6">
-										APPLICANTS
-										<hr>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">수락</button>
-										</div>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">수락</button>
-										</div>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">수락</button>
-										</div>
-									</div>
-									<div class="col-lg-6">
-										COWORKERS
-										<hr>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">삭제</button>
-										</div>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">삭제</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading clearfix" role="tab" id="headingThree">
-								<h4 class="panel-title">
-									<span class="col-sm-3"> 프로젝트 제목 #3 </span> 
-									<span class="col-sm-6"> 프로젝트 지원 마감일까지 D-3</span>									
-									<span class="col-md-3 text-right">
-										<button type="button" class="btn common">수정</button>
-										<button type="button" class="btn common">삭제</button>
-										<a class="updown collapsed" data-toggle="collapse"
-										data-parent="#accordion" href="#collapseThree"
-										aria-expanded="false" aria-controls="collapseThree"> 
-											<i class="fa fa-chevron-down"></i>
-										</a>
-									</span>
-								</h4>
-							</div>
-							<div id="collapseThree" class="panel-collapse collapse"
-								role="tabpanel" aria-labelledby="headingTwo">
-								<div class="panel-body">
-									<div class="col-lg-6">
-										APPLICANTS
-										<hr>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">수락</button>
-										</div>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">수락</button>
-										</div>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">수락</button>
-										</div>
-									</div>
-									<div class="col-lg-6">
-										COWORKERS
-										<hr>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">삭제</button>
-										</div>
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7">지원자 이름</div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default">삭제</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>						
+						
+											
 					</div>
 					<hr class="line" />
 					<div class="proj_apply">
@@ -225,31 +133,66 @@
 								</h4>
 							</div>
 						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading clearfix" role="tab" id="headingOne">
-								<h4 class="panel-title">
-									<span class="col-sm-3"> 프로젝트 제목 #4 </span> 
-									<span class="col-sm-6"> 프로젝트 지원 마감일까지 D-3</span>									
-									<span class="col-md-3 text-right">
-										<button type="button" class="btn common">지원 취소</button>
-									</span>
-								</h4>
-							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading clearfix" role="tab" id="headingOne">
-								<h4 class="panel-title">
-									<span class="col-sm-3"> 프로젝트 제목 #4 </span> 
-									<span class="col-sm-6"> 프로젝트 지원 마감일까지 D-3</span>									
-									<span class="col-md-3 text-right">
-										<button type="button" class="btn common">지원 취소</button>
-									</span>
-								</h4>
-							</div>
-						</div>
 					</div>
 				</div>
 			</section>
 			<!-- /wrapper -->
 		</section>
 
+
+	<!--footer start-->
+		<jsp:include page="footer.jsp"></jsp:include>
+		<!--footer end-->
+
+	<!-- js placed at the end of the document so the pages load faster -->
+	<script src="assets/js/jquery.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+	<script class="include" type="text/javascript"
+		src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="assets/js/jquery.scrollTo.min.js"></script>
+	<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+	<!--common script for all pages-->
+	<script src="assets/js/common-scripts.js"></script>
+
+	<!-- JS Libraries -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
+	<!-- Custom JS -->
+	<script type="text/javascript">
+		// 스크롤 변화에 따른 프로필 메뉴바 상단 고정
+		$("#portfolioNavbar").sticky({topSpacing:0, zIndex: '50'});
+		
+		// 스크롤 맨 위로
+		$("#BackToTop").on("click", function(e){
+			e.preventDefault();
+			$("html,body").animate({ scrollTop : 0 }, 500);
+		});
+	</script>
+
+	<!-- datepicker script -->
+	<script>
+		$(document)
+				.ready(
+						function() {
+							var proj_regenddate_input = $('input[name="proj_regenddate"]'); //our date input has the name "date"
+							var proj_startdate_input = $('input[name="proj_startdate"]'); //our date input has the name "date"
+							var container = $('.bootstrap-iso form').length > 0 ? $(
+									'.bootstrap-iso form').parent()
+									: "body";
+							var options = {
+								format : 'mm/dd/yyyy',
+								container : container,
+								todayHighlight : true,
+								autoclose : true,
+							};
+							proj_regenddate_input.datepicker(options);
+							proj_startdate_input.datepicker(options);
+						})
+	</script>
+
+
+</body>
+</html>
