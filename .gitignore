@@ -2,17 +2,12 @@
 
 ### Eclipse ###
 
-.metadata
 bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
+build/
+target/
 .settings/
-.loadpath
-.recommenders
+.classpath
+.project
 
 # External tool builders
 .externalToolBuilders/
