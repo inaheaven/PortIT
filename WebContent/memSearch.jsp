@@ -157,12 +157,12 @@
 						</div>
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
-							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c#" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem()" /> .....
+							<input class="btn poptag" type="button" value="JAVA" name="language1"  id="language1" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="C" name="language2" id="language2" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="c++" name="language3"   id="language3" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="c#" name="language4"  id="language4"  onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="jsp" name="language5"  id="language5"  onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="servlet" name="language6"  id="language6"  onclick="fnAppendItem()" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">

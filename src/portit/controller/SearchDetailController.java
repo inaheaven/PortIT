@@ -29,9 +29,17 @@ public class SearchDetailController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		
+		System.out.println("detailSearch 컨트롤러접근");
+		
+		
 		String cmd = req.getParameter("cmd");
+		
+		System.out.println("detailSearch 컨트롤러접근"+cmd);
+		
 		String url = null;
 		
+		
+		/*
 		//검색어 결과
 		String pfSearch = req.getParameter("pfSearch");
 		String memSearch = req.getParameter("memSearch");
@@ -40,11 +48,14 @@ public class SearchDetailController extends HttpServlet {
 		
 		//1~6까지의 값을 불러옴 1,3,5는 최신순 정렬 2,4,6은 인기순 정렬
 		int list_value=Integer.parseInt(req.getParameter("list_value"));
+		*/
+		
 		
 		//lineup = true(최신순) / false(인기순)
 		boolean lineup = true;
 	
 		SearchDao dao = new SearchDao();
+		/*
 		if(list_value == 1){
 			req.setAttribute("port_list",dao.searchAll_port(pfSearch, lineup));
 		}		
@@ -63,11 +74,22 @@ public class SearchDetailController extends HttpServlet {
 		else if(list_value == 6){
 			req.setAttribute("proj_list", dao.searchAll_proj("", !lineup));
 		}
-		
+		*/
 		
 		
 		
 		if(cmd.equals("PFDETAIL")){
+			
+			System.out.println("접근확인");
+			
+			String itemlist= req.getParameter("item_0");
+			String itemlist2= (String)req.getAttribute("item_0");
+			String xbutton= (String)req.getAttribute("xbutton");
+			
+			System.out.println("CTRL 데이터 확인1"+xbutton);
+			System.out.println("CTRL 데이터 확인2"+itemlist);
+			System.out.println("CTRL 데이터 확인3"+itemlist2);
+			
 			url="/pfSearch.jsp";
 		}
 		else if(cmd.equals("MEMDETAIL")){
