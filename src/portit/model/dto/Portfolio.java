@@ -3,12 +3,13 @@ package portit.model.dto;
 import java.util.Date;
 
 /**
- * 포트폴리오 DTO
+ * �룷�듃�뤃由ъ삤 DTO
  * @author 
  *
  */
 public class Portfolio {
 	private int pf_id;
+	private int bm_id;
 	private String pf_title;
 	private String pf_intro;
 	private Date pf_regdate;
@@ -21,6 +22,12 @@ public class Portfolio {
 	private String tag_name;
 	private String ml_path;
 	
+	public int getBm_id() {
+		return bm_id;
+	}
+	public void setBm_id(int bm_id) {
+		this.bm_id = bm_id;
+	}
 	public String getProf_name() {
 		return prof_name;
 	}

@@ -8,7 +8,14 @@ public class Follow {
 	private int mem_id_receiver;
 	private Date fw_date;
 	private Tag tag_name;
+	private String prof_name;
 	  
+	public String getProf_name() {
+		return prof_name;
+	}
+	public void setProf_name(String prof_name) {
+		this.prof_name = prof_name;
+	}
 	public int getFw_id() {
 		return fw_id;
 	}

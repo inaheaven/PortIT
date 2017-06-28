@@ -4,7 +4,7 @@ import java.lang.Math;
 import java.util.Date;
 
 /**
- * 사용자 프로필 DTO
+ * �궗�슜�옄 �봽濡쒗븘 DTO
  * @author gnsngck
  *
  */
@@ -15,12 +15,47 @@ public class Profile {
 	private String prof_intro;
 	private String prof_img = "/assets/img/user-basic.png";
 	private String prof_background;
-	private String prof_websit;
+	private String prof_website;
 	private String prof_github;
 	private String prof_facebook;
 	private Date prof_regdate;
 	private int prof_follower;
+	private String prof_language;
+	private String prof_tool;
+	private String prof_field;
+	private String tag_name;
+	private int prof_skill_level;
 	
+	public String getProf_language() {
+		return prof_language;
+	}
+	public void setProf_language(String prof_language) {
+		this.prof_language = prof_language;
+	}
+	public String getProf_tool() {
+		return prof_tool;
+	}
+	public void setProf_tool(String prof_tool) {
+		this.prof_tool = prof_tool;
+	}
+	public String getProf_field() {
+		return prof_field;
+	}
+	public void setProf_field(String prof_field) {
+		this.prof_field = prof_field;
+	}
+	public String getTag_name() {
+		return tag_name;
+	}
+	public void setTag_name(String tag_name) {
+		this.tag_name = tag_name;
+	}
+	public int getProf_skill_level() {
+		return prof_skill_level;
+	}
+	public void setProf_skill_level(int prof_skill_level) {
+		this.prof_skill_level = prof_skill_level;
+	}
 	public int getProf_id() {
 		return prof_id;
 	}
@@ -57,11 +92,11 @@ public class Profile {
 	public void setProf_background(String prof_background) {
 		this.prof_background = prof_background;
 	}
-	public String getProf_websit() {
-		return prof_websit;
+	public String getProf_website() {
+		return prof_website;
 	}
-	public void setProf_websit(String prof_websit) {
-		this.prof_websit = prof_websit;
+	public void setProf_website(String prof_website) {
+		this.prof_website = prof_website;
 	}
 	public String getProf_github() {
 		return prof_github;
