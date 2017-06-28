@@ -12,23 +12,24 @@
 				<!-- BASIC FORM ELEMENTS -->
 				<div class="pfregForm">		
 					<h3 class="formTitle text-center">포트폴리오 등록</h3>
-					<form class="form-horizontal style-form" method="post" action="/upload" enctype="multipart/form-data">
+					<form class="form-horizontal style-form" autocomplete="off" method="post" action="/upload" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-md-3 control-label">제목</label>
 							<div class="col-md-9">
-								<input type="text" name="pf_title" class="form-control">
+								<input type="text" name="pf_title" class="form-control" required="required">
+								<span class="help-block">반드시 입력하여야 합니다.</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">작업 기간</label> 
 							<label class="col-md-1 control-label" for="date">시작일</label>
 							<div class="col-md-3">
-								<input class="form-control" name="pf_startdate" type="date" /> 
+								<input class="form-control datepicker" name="pf_startdate" type="date" /> 
 							</div>
 							<div class="col-md-1"></div>
 							<label class="col-md-1 control-label" for="date">종료일</label>
 							<div class="col-md-3">
-								<input class="form-control" name="pf_enddate" type="date" />
+								<input class="form-control datepicker" name="pf_enddate" type="date" />
 							</div>
 						</div>
 						<div class="form-group">

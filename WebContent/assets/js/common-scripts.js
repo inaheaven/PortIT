@@ -119,43 +119,67 @@ var Script = function () {
     
  // datepicker
     $(function() {
-    	var start_date_input = $('input[name="pf_startdate"]'); //our date input has the name "date"
-		var end_date_input = $('input[name="pf_enddate"]'); //our date input has the name "date"
-		var container = $('.bootstrap-iso form').length > 0 ? $(
-				'.bootstrap-iso form').parent() : "body";
-		var options = {
-			format : 'yy-mm-dd',
-			container : container,
+		var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+		$.datepicker.setDefaults({
+			dateFormat : 'yy-mm-dd',
+			setDate : new Date(),
+			changeMonth: true, 
+	        changeYear: true,
+	        container : container,
 			todayHighlight : true,
 			autoclose : true,
-		};
-		start_date_input.datepicker(options);
-		end_date_input.datepicker(options);
+	        prevText: '이전 달',
+	        nextText: '다음 달',
+	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        showMonthAfterYear: true
+	    });
+		$('input[name=pf_startdate]').datepicker({
+			onSelect: function(selected) {
+				$('input[name=pf_enddate]').datepicker('option','minDate', selected)
+				}
+		});
+		$('input[name=pf_enddate]').datepicker({
+			onSelect: function(selected) {
+				$('input[name=pf_startdate]').datepicker('option','maxDate', selected)
+				}
+		});
     });
     
+ // Autocomplete
     $(function() {
-    	$('#fileUpload').on('change', function() {
-    		$(this).siblings('#fileName').val($(this)[0].files[0].name);
-    	});
+    	
     });
     
 
- // 업로드할 파일 삭제
+ // 업로드 파일 추가/삭제
     $(function() {
     	var rows = 1;
+    	var filelist = null;
     	$('input#fileUpload').on('change', function() {
-    		var filelist = document.getElementById($(this).attr('id')).files;
-    		for(var i=0; i<filelist.length; i++) {
+    		filelist = document.getElementById($(this).attr('id')).files;
+    		for (var i=0; i<filelist.length; i++) {
     			if (rows == 10) {
     				break;
     			}
-    			$('#fileList').append('<li id="media">'+filelist[i].name+' <a id="mediaRemove"><i class="fa fa-times"></i></a></li>');
+    			$('#fileList').append(
+    					'<li>'+filelist[i].name
+    					+' ('+filelist[i].type+', '+(filelist[i].size/(1024*1024)).toFixed(2)+'MB) '
+    					+'<a id="mediaRemove"><i class="fa fa-times"></i></a></li>'
+    					);
     			rows++;
-    		};
+    		}
     	});
-    	$('#mediaRemove').on('click', function() {
-    		$(this).parent().empty.remove();
-    		rows--;
+    	$('#fileList').on('click', '#mediaRemove', function() {
+    		var finfo = $(this).parent().parent().first().text();
+    		var fname= finfo.substr(0, finfo.lastIndexOf(' ('));
+    		alert(fname);
+    		/*for (var i=0; i<filelist.length; i++) {}*/
+    		/*$(this).parent('li').empty().remove();
+    		rows--;*/
     	});
     });
     
