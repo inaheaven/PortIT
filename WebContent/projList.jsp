@@ -21,7 +21,7 @@
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
 <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<jsp:useBean id="proj_viewDao" class="portit.model.dao.Proj_viewDao" />
+<jsp:useBean id="proj_viewDao" class="portit.model.dao.ViewDao" />
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">

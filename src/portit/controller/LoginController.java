@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import portit.model.dao.Member_ViewDao;
 import portit.model.dao.ViewDao;
-import portit.model.dao.Proj_viewDao;
-import portit.model.dao.Timeline_ViewDao;
 /**
  * 
  * @author isyi
@@ -35,15 +32,12 @@ public class LoginController extends HttpServlet{
 		String url = null;
 		
 		//dao 호출
-		ViewDao portfolio = new ViewDao();
-		Member_ViewDao member = new Member_ViewDao();
-		Proj_viewDao project = new Proj_viewDao();
-		Timeline_ViewDao timeline = new Timeline_ViewDao();
+		ViewDao viewDao = new ViewDao();
 				
-		List port_list = portfolio.portfolio_info();
-		List mem_list = member.member_info();
-		List proj_list = project.project_info();
-		List time_list = timeline.timeline_info(101);	//*************101은 임시값  timeline_info(mem_id)로 수정***********
+		List port_list = viewDao.portfolio_info();
+		List mem_list = viewDao.member_info();
+		List proj_list = viewDao.project_info();
+		List time_list = viewDao.timeline_info(101);	//*************101은 임시값  timeline_info(mem_id)로 수정***********
 	
 		//Model에서 가지고 온 정보를 View에 넘겨주기 위해 변수 선언
 		req.setAttribute("port_list", port_list);

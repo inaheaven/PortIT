@@ -12,14 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import portit.model.dao.ViewDao;
 import portit.model.dao.SearchDao;
 import portit.model.dto.Portfolio;
 
-/**
- * 정렬 / 태그 검색기능 
- *
- */
+
 @WebServlet(urlPatterns="/detailSearch")
 public class SearchDetailController extends HttpServlet {
 	
@@ -41,7 +37,6 @@ public class SearchDetailController extends HttpServlet {
 		String projSearch = req.getParameter("projSearch");
 		//pfSearch = pfSearch.toUpperCase();
 		
-		//정렬
 		//1~6까지의 값을 불러옴 1,3,5는 최신순 정렬 2,4,6은 인기순 정렬
 		int list_value=Integer.parseInt(req.getParameter("list_value"));
 		
@@ -50,19 +45,19 @@ public class SearchDetailController extends HttpServlet {
 	
 		SearchDao dao = new SearchDao();
 		if(list_value == 1){
-			req.setAttribute("port_list",dao.searchAll_port("", lineup));
+			req.setAttribute("port_list",dao.searchAll_port(pfSearch, lineup));
 		}		
 		else if(list_value == 2){
 			req.setAttribute("port_list",dao.searchAll_port("", !lineup));		
 		}
 		else if(list_value == 3){
-			req.setAttribute("mem_list", dao.searchAll_member("", lineup));
+			req.setAttribute("mem_list", dao.searchAll_member(memSearch, lineup));
 		}
 		else if(list_value == 4){
 			req.setAttribute("mem_list", dao.searchAll_member("", !lineup));
 		}
 		else if(list_value == 5){
-			req.setAttribute("proj_list", dao.searchAll_proj("", lineup));
+			req.setAttribute("proj_list", dao.searchAll_proj(projSearch, lineup));
 		}
 		else if(list_value == 6){
 			req.setAttribute("proj_list", dao.searchAll_proj("", !lineup));

@@ -12,7 +12,7 @@ import portit.model.dto.Portfolio;
 import portit.model.dto.Project;
 
 /**
- * 포트폴리오 구성 화면
+ * 개발자 구성 화면
  */
 public class ViewDao {
 
@@ -20,7 +20,8 @@ public class ViewDao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
-		
+	
+			
 	/**
 	 * DB연결 생성자
 	 */
@@ -46,6 +47,43 @@ public class ViewDao {
 			System.out.println("DB 접속해제 오류 - freeConnection()");
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 사용된 태그명을 불러오는 메서드
+	 */
+	public List member_info() {
+		ArrayList list = new ArrayList();
+		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
+				+ "from profile join tag_use "
+				+ "on tag_use.tag_use_type_id = profile.prof_id "
+				+ "join tag "
+				+ "on tag.tag_id = tag_use.tag_id"; 
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Member member = new Member(); 
+				member.setTag_name(rs.getString("tag_name"));
+				member.setProf_img(rs.getString("prof_img"));
+				member.setProf_name(rs.getString("prof_name"));
+				member.setProf_follower(rs.getInt("prof_follower"));
+
+				list.add(member);
+			}
+		}
+
+		catch (Exception err) {
+			System.out.println("developer_info() 에서 오류");
+			err.printStackTrace();
+		}
+
+		finally {
+			freeConnection();
+		}
+		return list;
 	}
 
 	/**
@@ -86,47 +124,11 @@ public class ViewDao {
 			freeConnection();
 		}
 		return list;
-	}	
-	
-	/**
-	 * 멤버 정보를 불러오는 메서드
-	 */
-	public List member_info() {
-		ArrayList list = new ArrayList();
-		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
-				+ "from profile join tag_use "
-				+ "on tag_use.tag_use_type_id = profile.prof_id "
-				+ "join tag "
-				+ "on tag.tag_id = tag_use.tag_id"; 
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Member member = new Member(); 
-				member.setTag_name(rs.getString("tag_name"));
-				member.setProf_img(rs.getString("prof_img"));
-				member.setProf_name(rs.getString("prof_name"));
-				member.setProf_follower(rs.getInt("prof_follower"));
-
-				list.add(member);
-			}
-		}
-
-		catch (Exception err) {
-			System.out.println("developer_info() 에서 오류");
-			err.printStackTrace();
-		}
-
-		finally {
-			freeConnection();
-		}
-		return list;
 	}
 	
+
 	/**
-	 * 프로젝트 정보를 불러오는 메서드
+	 * 프로젝트 간략 정보
 	 */
 	public List project_info() {
 		ArrayList list = new ArrayList();
@@ -163,6 +165,7 @@ public class ViewDao {
 		}
 		return list;
 	}
+	
 	/**
 	 * 타임라인 정보를 불러오는 메서드	  
 	 */
@@ -208,6 +211,5 @@ public class ViewDao {
 			freeConnection();
 		}
 		return list;
-	}	
-
+	}
 }

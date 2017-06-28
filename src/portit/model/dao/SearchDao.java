@@ -13,7 +13,7 @@ import portit.model.dto.Project;
 
 /**
  * 
- * 통합 검색시 포트폴리오, 멤버, 프로젝트의 필드값을 저장
+ * 통합 검색시, DB에서 자료 가지고 오기.
  *
  */
 public class SearchDao {
