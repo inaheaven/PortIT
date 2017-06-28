@@ -40,7 +40,7 @@ public class LoginController extends HttpServlet{
 		Proj_viewDao project = new Proj_viewDao();
 		Timeline_ViewDao timeline = new Timeline_ViewDao();
 				
-		List port_list = portfolio.portfolio_info();
+		List port_list = portfolio.portfolio_info(102);
 		List mem_list = member.member_info();
 		List proj_list = project.project_info();
 		List time_list = timeline.timeline_info(101);	//*************101은 임시값  timeline_info(mem_id)로 수정***********

@@ -175,7 +175,7 @@
 						<div class="tab-pane" id="memRecommend">
 							<div class="row mt">
 								<c:if test="${mem_list.size() != 0 }">
-									<c:forEach begin="0" end="3" var="i">
+									<c:forEach begin="0" end="2" var="i">
 										<!-- 첫 번째 member-->
 										<div class="col-md-3 mb">
 											<div class="member-simple">

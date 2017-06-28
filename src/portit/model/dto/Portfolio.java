@@ -3,6 +3,8 @@ package portit.model.dto;
 import java.util.Date;
 
 public class Portfolio {
+	
+	private int mem_id;
 	private int pf_id;
 	private String pf_title;
 	private String pf_intro;
@@ -15,6 +17,14 @@ public class Portfolio {
 	private String prof_name;
 	private String tag_name;
 	private String ml_path;
+	
+	
+	public int getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(int mem_id) {
+		this.mem_id = mem_id;
+	}
 	
 	public String getProf_name() {
 		return prof_name;
