@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * 포트폴리오 DTO
- * @author 
  *
  */
 public class Portfolio {
@@ -28,8 +27,12 @@ public class Portfolio {
 	private int pf_numofperson;
 	/** 포트폴리오 URL */
 	private String pf_url;
-	/** 포트폴리오 작성자 */
-	private String pf_prof_name;
+	/** 포트폴리오 작성자명 */
+	private String pf_authorName;
+	/** 포트폴리오 작성자 사진 */
+	private String pf_authorIcon;
+	/** 포트폴리오 태그 목록 - 개발환경 */
+	private List<Tag> pf_tags_env;
 	/** 포트폴리오 태그 목록 - 언어 */
 	private List<Tag> pf_tags_language;
 	/** 포트폴리오 태그 목록 - 툴 */
@@ -38,6 +41,10 @@ public class Portfolio {
 	private List<Tag> pf_tags_field;
 	/** 미디어 파일 목록 */
 	private List<Media> pf_mediae;
+	/** 공동 작업자 목록 */
+	private List<Profile> pf_coworkers;
+	/** 추천 포트폴리오 목록 */
+	private List<Portfolio> pf_recommends;
 	
 	public int getPf_id() {
 		return pf_id;
@@ -66,20 +73,32 @@ public class Portfolio {
 	public String getPf_url() {
 		return pf_url;
 	}
-	public String getPf_prof_name() {
-		return pf_prof_name;
+	public String getPf_authorName() {
+		return pf_authorName;
+	}
+	public String getPf_authorIcon() {
+		return pf_authorIcon;
+	}
+	public List<Tag> getPf_tags_env() {
+		return pf_tags_env;
 	}
 	public List<Tag> getPf_tags_language() {
 		return pf_tags_language;
 	}
-	public List<Tag> getPf_tag_tool() {
+	public List<Tag> getPf_tags_tool() {
 		return pf_tags_tool;
 	}
-	public List<Tag> getPf_tag_field() {
+	public List<Tag> getPf_tags_field() {
 		return pf_tags_field;
 	}
 	public List<Media> getPf_mediae() {
 		return pf_mediae;
+	}
+	public List<Profile> getPf_coworkers() {
+		return pf_coworkers;
+	}
+	public List<Portfolio> getPf_recommends() {
+		return pf_recommends;
 	}
 	
 	public Portfolio setPf_id(int pf_id) {
@@ -118,24 +137,40 @@ public class Portfolio {
 		this.pf_url = pf_url;
 		return this;
 	}
-	public Portfolio setPf_prof_name(String pf_prof_name) {
-		this.pf_prof_name = pf_prof_name;
+	public Portfolio setPf_authorName(String pf_authorName) {
+		this.pf_authorName = pf_authorName;
 		return this;
 	}
-	public Portfolio setPf_tags_language(List<Tag> pf_tags_languages) {
-		this.pf_tags_language = pf_tags_languages;
+	public Portfolio setPf_authorIcon(String pf_authorIcon) {
+		this.pf_authorIcon = pf_authorIcon;
 		return this;
 	}
-	public Portfolio setPf_tags_tool(List<Tag> pf_tags_tools) {
-		this.pf_tags_tool = pf_tags_tools;
+	public Portfolio setPf_tags_env(List<Tag> pf_tags_env) {
+		this.pf_tags_env = pf_tags_env;
 		return this;
 	}
-	public Portfolio setPf_tags_field(List<Tag> pf_tags_fields) {
-		this.pf_tags_field = pf_tags_fields;
+	public Portfolio setPf_tags_language(List<Tag> pf_tags_language) {
+		this.pf_tags_language = pf_tags_language;
+		return this;
+	}
+	public Portfolio setPf_tags_tool(List<Tag> pf_tags_tool) {
+		this.pf_tags_tool = pf_tags_tool;
+		return this;
+	}
+	public Portfolio setPf_tags_field(List<Tag> pf_tags_field) {
+		this.pf_tags_field = pf_tags_field;
 		return this;
 	}
 	public Portfolio setPf_mediae(List<Media> pf_mediae) {
 		this.pf_mediae = pf_mediae;
+		return this;
+	}
+	public Portfolio setPf_coworkers(List<Profile> pf_coworkers) {
+		this.pf_coworkers = pf_coworkers;
+		return this;
+	}
+	public Portfolio setPf_recommends(List<Portfolio> pf_recommends) {
+		this.pf_recommends = pf_recommends;
 		return this;
 	}
 	

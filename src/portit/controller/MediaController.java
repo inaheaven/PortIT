@@ -17,7 +17,6 @@ import javax.servlet.http.Part;
 
 /**
  * 미디어 라이브러리 컨트롤러
- * @author gnsngck
  *
  */
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*20)
@@ -47,6 +46,7 @@ public class MediaController {
 			fileSaveDir.mkdirs();
 		}
 
+		Part file = null;
 		for (Part part : req.getParts()) {
 			String fileName = getFileName(part);
 			String location = uploadFilePath + File.separator + fileName;

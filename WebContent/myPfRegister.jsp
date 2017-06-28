@@ -12,7 +12,7 @@
 				<!-- BASIC FORM ELEMENTS -->
 				<div class="pfregForm">		
 					<h3 class="formTitle text-center">포트폴리오 등록</h3>
-					<form class="form-horizontal style-form" method="post" action="/portfolios" enctype="multipart/form-data">
+					<form class="form-horizontal style-form" method="post" action="/Portfolio" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-md-3 control-label">제목</label>
 							<div class="col-md-9">
@@ -91,7 +91,7 @@
 									<div class="form-inline pull-left">
 										<label for="fileUpload" class="btn btn-default">파일 선택</label>
 										<input type="text" class="form-control" id="fileName" disabled="disabled" />
-										<input type="file" id="fileUpload" name="media[]" />
+										<input type="file" id="fileUpload" name="media[]" multiple="multiple" />
 									</div>
 									<div class="pull-right">
 										<button type="button" class="btn btn-default" id="mediaAdd">추가</button>
@@ -101,6 +101,7 @@
 						</div>
 						<div class="form-group text-center buttonDiv" >
 							<input type="hidden" name="mem_id" value="<%= session.getAttribute("mem_id") %>" />
+							<input type="hidden" name="articleType" value="portfolio" />
 							<button type="submit" class="btn common">등록하기</button>&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn cancel" onclick="location.href='/page?page=myPfList'">취소하기</button>
 						</div>
