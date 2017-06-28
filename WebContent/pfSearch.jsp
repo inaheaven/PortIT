@@ -122,7 +122,7 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/PortIt/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-					<input type="text" class="form-control" name="pfSearch" value="${sessionScope.search}" />
+					<input type="text" class="form-control" name="pfSearch" value="" />
 				</div>
 						<button type="submit" class="col-md-1 btn common" id="pfsubmit">
 							<i class="fa fa-search"></i>

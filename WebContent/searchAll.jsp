@@ -127,7 +127,7 @@
 					<!-- 조건 검색 box -->					
 					<div class="searchSorting col-md-12 mt">	
 						<form class="" id="sea" name="" method="post" action="">
-							<
+							
 							<div class="">
 								<div class="sortKey col-md-1"><b>구분</b></div>
 								<div class="col-md-11">
@@ -209,21 +209,14 @@
 				검색된 결과가 없습니다.
 			</c:if>	
 						</div>
-						<form post="method" name="move" action="/PortIt/SearchView?cmd=PFSEARCH">
-							<input type ="hidden" name="list1"/>
+						<form post="method" name="move" action="/PortIt/SearchView">
+							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="cmd" value="PFSEARCH"/>
 						
 							<div class="text-right">
-								<button type="submit" class="btn moreBtn" onclick="Search('${search}')">
-									<a href="SearchView?list1=<">더 보기</a></button>							
+								<button type="submit" class="btn moreBtn">더 보기</button>							
 							</div>
 						</form>
-					
-<script>
-	function Search(list1){
-		document.move.list1.value = list1;
-		document.move.submit();
-	}	
-</script>
 					</div>
 			
 					<hr class="resultLine" id="memResult"/>
@@ -256,12 +249,15 @@
 			<c:if test="${mem_list.size() == 0 }">
 				검색된 결과가 없습니다.
 			</c:if>	
-						</div>
+						</div>					
+						<form post="method" name="move" action="/PortIt/SearchView">
+							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="cmd" value="MEMSEARCH"/>
 						
-								
-						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='memSearch.jsp'">더 보기</button>							
-						</div>
+							<div class="text-right">
+								<button type="submit" class="btn moreBtn">더 보기</button>							
+							</div>
+						</form>
 							
 					</div>
 						
@@ -299,9 +295,14 @@
 			<c:if test="${proj_list.size() == 0 }">
 				검색된 결과가 없습니다.
 			</c:if>			
-						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='projSearch.jsp'">더 보기</button>							
-						</div>
+						<form post="method" name="move" action="/PortIt/SearchView">
+							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="cmd" value="PROJSEARCH"/>
+						
+							<div class="text-right">
+								<button type="submit" class="btn moreBtn">더 보기</button>							
+							</div>
+						</form>
 					</div>
 				</div>
 			</section>

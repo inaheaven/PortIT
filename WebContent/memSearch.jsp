@@ -258,15 +258,7 @@
 				});
 		
 	</script>
-	
-	<script>
-		$(document).ready(function(){
-			event.stopPropagation();
-			$("#memsubmit").trigger("click");
-		});
-	</script>
-	
-	
+		
 	<script>
 		//list_value = 3 이면 최신순 정렬 4이면 인기순
 		function detailSearch(list_value){

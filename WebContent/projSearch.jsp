@@ -263,13 +263,6 @@
 				});
 	</script>
 	
-	<script>
-		$(document).ready(function(){
-			event.stopPropagation();
-			$("#pfsubmit").trigger("click");
-		});
-		
-	</script>
 	
 	<script>
 		//list_value = 5 이면 최신순 정렬 6이면 인기순

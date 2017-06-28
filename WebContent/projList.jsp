@@ -121,11 +121,11 @@
 
 				<div class="col-md-12 mt mb">
 					<form class="col-md-10 searchKeyword" method="post"
-						action="/PortIT/SearchView?cmd=PROJSEARCH">
+						action="/PortIt/SearchView?cmd=PROJSEARCH">
 						<div class="form-group col-md-11">
 							<input type="text" class="form-control" name="projSearch" value="${sessionScope.search}"/>
 						</div>
-						<button type="submit" class="col-md-1 btn common" id="">
+						<button type="submit" class="col-md-1 btn common" >
 							<i class="fa fa-search"></i>
 						</button>
 					</form>
@@ -313,13 +313,6 @@
 				});
 	</script>
 	
-	<script>
-		$(document).ready(function(){
-			event.stopPropagation();
-			$("#pfsubmit").trigger("click");
-		});
-		
-	</script>
 	<script>
 		//list_value = 5 이면 최신순 정렬 6이면 인기순
 		function detailSearch(list_value){

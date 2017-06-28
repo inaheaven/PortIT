@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import portit.model.dao.ViewDao;
 /**
  * 
- * @author isyi
- * 로그인 성공시, main화면으로 이동하기 위한 컨트롤러
+ * @author
  *
  */
 @WebServlet(urlPatterns="/login")

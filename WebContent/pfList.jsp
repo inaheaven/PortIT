@@ -319,20 +319,7 @@
 							});
 				});
 	</script>
-
-	<script>
-		$(document).ready(function() {
-			//$("#pfsubmit").trigger("click");
-			//event.stopPropagation();
-		});
-	</script>
-	<script>
-		$(document).ready(function() {
-			event.stopPropagation();
-		});
-	</script>
-
-
+	
 	<script>
 		//list_value = 3 이면 최신순 정렬4이면 인기순
 		function detailSearch(list_value) {

@@ -132,7 +132,7 @@ public class ViewDao {
 	 */
 	public List project_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title,"
+		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title, project.proj_intro"
 						+ " tag.tag_name, project.proj_to, trunc(project.proj_regenddate - sysdate) "
 						+ "from tag join tag_use "
 						+ "on tag.tag_id = tag_use.tag_id "
@@ -148,6 +148,7 @@ public class ViewDao {
 				project.setTag_name(rs.getString("tag_name"));
 				project.setProj_title(rs.getString("proj_title"));
 				project.setProj_to(rs.getInt("proj_to"));
+				project.setProj_intro(rs.getString("proj_intro"));
 				
 				//project.setProj_regenddate(rs.getDate("proj_regenddate")); date형식 받는데 오류
 				
