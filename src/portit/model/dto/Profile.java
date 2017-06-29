@@ -87,6 +87,4 @@ public class Profile {
 	public void setProf_follower(int prof_follower) {
 		this.prof_follower = prof_follower;
 	}
-	
-	
 }

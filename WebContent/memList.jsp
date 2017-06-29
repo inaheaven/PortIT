@@ -27,7 +27,7 @@
 <link href="assets/css/style-responsive.css" rel="stylesheet">
 <link href="assets/css/custom.css" rel="stylesheet">
 <link href="assets/css/search.css" rel="stylesheet">
-
+<jsp:useBean id="member_viewDao" class="portit.model.dao.ViewDao"></jsp:useBean>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -109,7 +109,6 @@
 		<!--header end-->
 	</section>
 
-
 	<!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -123,9 +122,10 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=MEMSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="memSearch" value="${sessionScope.search}"/>
+							<input type="text" class="form-control" name="pfSearch"
+								value="${sessionScope.search}" />
 						</div>
-						<button type="submit" class="col-md-1 btn common" id="memsubmit">
+						<button type="submit" class="col-md-1 btn common" id="pfsubmit">
 							<i class="fa fa-search"></i>
 						</button>
 					</form>
@@ -139,7 +139,8 @@
 				</div>
 				<!-- 조건 검색 box -->
 				<div class="searchSorting col-md-12 collapse" id="searchSorting">
-					<form class="" method="post" name="detailsearch" action="/detailSearch?cmd=MEMDETAIL">
+					<form class="" method="post" name="detailsearch"
+						action="/detailSearch?cmd=MEMDETAIL">
 						<input type="hidden" name="list_value" />
 						<div class="">
 							<div class="sortKey col-md-1">
@@ -147,8 +148,7 @@
 							</div>
 							<div class="col-md-11">
 								<a href="javascript:detailSearch(3)">최신순</a> 
-								<a href="javascript:detailSearch(4)">인기순</a> 
-								<a href="#">랜덤</a>
+								<a href="javascript:detailSearch(4)">인기순</a>
 							</div>
 						</div>
 						<br> <br>
@@ -157,17 +157,24 @@
 						</div>
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
-							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c#" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem()" /> .....
+							<input class="btn poptag" type="button" value="JAVA"
+								name="language" onclick="fnAppendItem()" /> <input
+								class="btn poptag" type="button" value="C" name="language"
+								onclick="fnAppendItem()" /> <input class="btn poptag"
+								type="button" value="c++" name="language"
+								onclick="fnAppendItem()" /> <input class="btn poptag"
+								type="button" value="Eclipse" name="language"
+								onclick="fnAppendItem()" /> <input class="btn poptag"
+								type="button" value="jsp" name="language"
+								onclick="fnAppendItem()" /> <input class="btn poptag"
+								type="button" value="servlet" name="language"
+								onclick="fnAppendItem()" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
-							<input type="text" class="form-control taginput" id="language" name="language2"
-								placeholder="검색하고 싶은 태그를 입력하세요." onchange="fnAppendItem2()" />
+							<input type="text" class="form-control taginput" id="language"
+								name="language" placeholder="검색하고 싶은 태그를 입력하세요."
+								onchange="fnAppendItem2()" />
 						</div>
 						<br> <br>
 						<hr />
@@ -176,36 +183,88 @@
 					</form>
 				</div>
 				<!-- END - 조건 검색 box -->
-
-				<c:if test="${mem_list.size() != 0 && mem_list.size()>0 }">			
-				<c:forEach begin="0" end="${mem_list.size()-1}" var="i" >	
-						<!-- member -->
+<%	
+ 	List list = member_viewDao.member_info();
+ 
+ 	// 페이징 기능 추가
+ 		int totalRecord = list.size();	//전체 글의 갯수
+ 		int numPerPage = 4;				//한 페이지당 보여질 글의 갯수
+ 		int totalPage = 0;				//전체 페이지 수
+ 		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
+ 		int beginPerPage = 401;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
+ 		int pagePerBlock = 3;			//한 블록당 묶을 페이지 수 (값이 3이므로 1,2,3 / 4,5,6 / ..페이지로 묶임)
+ 		int totalBlock = 0;				//전체 블럭 갯수
+ 		int nowBlock = 0;				//현재 블럭
+ 		
+ 		totalPage = (int)Math.ceil((double)totalRecord/numPerPage);
+ 		
+ 		if(request.getParameter("nowPage")!=null)
+ 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+ 		
+ 		if(request.getParameter("nowBlock")!=null)
+ 			nowBlock = Integer.parseInt(request.getParameter("nowBlock"));
+ 		
+ 		totalBlock = (int)Math.ceil((double)totalPage/pagePerBlock);
+ 		
+ 		beginPerPage = nowPage * numPerPage;
+ 		
+ 		if(list.size() == 0){
+ 
+ 		}
+ 		else{
+ 			for(int i=beginPerPage; i< numPerPage+beginPerPage; i++){
+ 				if(i == totalRecord){	//마지막 페이지에 게시글이 5개가 아닐 때 오류가 나는 것 방지
+ 					break;
+ 			}
+ 		Member mem = (Member) list.get(i);
+ %>
+ 
+ 			<!-- member -->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
 		          				<div class="simple-content text-center">	      
-			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
+			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
+			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># <%=mem.getTag_name()%>&nbsp;</a></div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
+			         						<span class="memFollowCount"><%=mem.getProf_follower() %></span>
 			         					</div>
 			         				</div>
 		          				</div>          				
 	          				</div>
-	          			</div> 
-        			</c:forEach>
-        	</c:if>	
-			<c:if test="${mem_list.size() == 0 }">
-				검색된 결과가 없습니다.
-			</c:if>					
-				</div>
-
-				<!-- 페이지네이션 -->
-		
-		</section>
-		<! --/wrapper -->
+	          			</div> 	
+ <%
+ 		}
+ 	}
+ %>							
+ 				</div>
+ 
+ 				<!-- 페이지네이션 -->
+ 	<div align="center">		
+ 		<% if(nowBlock > 0){%>
+ 			<a href="memList.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
+ 		<% }%> 
+ 		:::
+ 		<%
+ 			for(int i=0; i<pagePerBlock; i++){
+ 				if((nowBlock*pagePerBlock)+i == totalPage)
+ 					break;
+ 		%>
+ 				<a href="memList.jsp?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+ 		<%
+ 			}
+ 		%>
+ 		::: 
+ 		<% if(totalBlock > nowBlock+1){%>
+ 			<a href="memList.jsp?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
+ 		<% }%>
+ 	</div>	
+ 		
+ 		</section>
+ 		<! --/wrapper -->
+ 
 	</section>
 
 	<!--main content end-->
@@ -230,7 +289,7 @@
 	<script src="assets/js/jquery.scrollTo.min.js"></script>
 	<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 	<script src="assets/js/jquery-3.2.1.min.js"></script>
-	
+
 	<!--common script for all pages-->
 	<script src="assets/js/common-scripts.js"></script>
 
@@ -240,13 +299,11 @@
 	<!--script for this page-->
 	<script>
 		$(document).ready(
-				
 				function() {
 					$('.updown').on(
 							'click',
 							function() {
 								var icon = $(this).find('i');
-
 								if (icon.hasClass("fa-chevron-down")) {
 									icon.addClass("fa-chevron-up").removeClass(
 											"fa-chevron-down");
@@ -256,15 +313,27 @@
 								}
 							});
 				});
-		
 	</script>
-		
+
 	<script>
-		//list_value = 3 이면 최신순 정렬 4이면 인기순
-		function detailSearch(list_value){
+		$(document).ready(function() {
+			//$("#pfsubmit").trigger("click");
+			//event.stopPropagation();
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			event.stopPropagation();
+		});
+	</script>
+
+
+	<script>
+		//list_value = 1 이면 최신순 정렬 2이면 인기순
+		function detailSearch(list_value) {
 			document.detailsearch.list_value.value = list_value;
 			document.detailsearch.submit();
-		}	
+		}
 	</script>
 </body>
 </html>
