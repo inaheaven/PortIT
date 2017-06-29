@@ -3,10 +3,13 @@ package portit.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Follow;
 import portit.model.dto.Profile;
 
 
@@ -288,4 +291,86 @@ public class ProfileDao {
 		}
 		
 	}
+	
+	
+	/**
+	 * 상세페이지를 위한 전체 select + dto에 저장
+	 */
+	public Profile selectForDetail(int mem_id) {
+		Profile pf = new Profile();
+		try {
+			conn = pool.getConnection();
+			
+			sql = "SELECT * FROM profile WHERE mem_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				pf.setProf_id(rs.getInt("prof_id"));
+				pf.setMem_id(rs.getInt("mem_id"));
+				pf.setProf_nick(rs.getString("prof_nick"));
+				pf.setProf_name(rs.getString("prof_name"));
+				pf.setProf_intro(rs.getString("prof_intro"));
+				pf.setProf_img(rs.getString("prof_img"));
+				pf.setProf_background(rs.getString("prof_background"));
+				pf.setProf_website(rs.getString("prof_website"));
+				pf.setProf_github(rs.getString("prof_github"));
+				pf.setProf_facebook(rs.getString("prof_facebook"));
+				pf.setProf_regdate(rs.getDate("prf_regdate"));
+				pf.setProf_follower(rs.getInt("prof_follower"));
+				
+				getTag(pf, rs.getInt(mem_id));
+				
+//				private String prof_language;
+//				private String prof_tool;
+//				private String prof_field;
+//				private String tag_name;
+//				private int prof_skill_level;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, stmt);
+		}
+		
+		return pf;
+	}
+	
+	/**
+	 *  profile에서 쓴 태그 
+	 */
+	public void getTag(Profile pf, int mem_id) {
+		try{
+			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ "WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'prof' AND tu.tag_use_type_id = ? "
+					+ "ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4";  // 랜덤하게 3개
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs2 = stmt.executeQuery();
+			
+			List<String> tags = new ArrayList<>();			
+			while(rs2.next()){	
+				tags.add(rs.getString("tag_name"));
+			}
+			pf.setTags(tags);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	/**
+	 * profile 의 portfolio
+	 * 
+	 */
+
+	
+	/**
+	 * profile 의 project
+	 */
 }
+
+
+
+
+

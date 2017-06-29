@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Profile {
 	private int prof_id;
+	private int mem_id;
 	private String prof_nick;
 	private String prof_name;
 	private String prof_intro;
@@ -21,11 +22,11 @@ public class Profile {
 	private Date prof_regdate;
 	private int prof_follower;
 
-//	private String prof_language;
-//	private String prof_tool;
-//	private String prof_field;
-//	private String tag_name;
-//	private int prof_skill_level;
+	private String prof_language;
+	private String prof_tool;
+	private String prof_field;
+	private String tag_name;
+	private int prof_skill_level;
 
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
@@ -33,8 +34,7 @@ public class Profile {
 	private List<TagUse> prof_skillset;
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
-
-	/*
+	
 	public String getProf_language() {
 		return prof_language;
 	}
@@ -65,12 +65,19 @@ public class Profile {
 	public void setProf_skill_level(int prof_skill_level) {
 		this.prof_skill_level = prof_skill_level;
 	}
-	*/
+	
 	public int getProf_id() {
 		return prof_id;
 	}
 	public void setProf_id(int prof_id) {
 		this.prof_id = prof_id;
+	}
+	
+	public int getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(int mem_id) {
+		this.mem_id = mem_id;
 	}
 	public String getProf_nick() {
 		return prof_nick;
@@ -106,9 +113,9 @@ public class Profile {
 	public String getProf_website() {
 		return prof_website;
 	}
-//	public String getProf_email() {
-//		return prof_email;
-//	}
+	public String getProf_email() {
+		return prof_email;
+	}
 		
 	public void setProf_email(String prof_email) {
 		this.prof_email = prof_email;
@@ -140,49 +147,5 @@ public class Profile {
 	}
 	public void setProf_follower(int prof_follower) {
 		this.prof_follower = prof_follower;
-	}
-	
-	
-	public List<Tag> getProf_tags_language() {
-		return prof_tags_language;
-	}
-	public Profile setProf_tags_language(List<Tag> prof_tags_language) {
-		this.prof_tags_language = prof_tags_language;
-		return this;
-	}
-	public List<Tag> getProf_tags_tool() {
-		return prof_tags_tool;
-	}
-	public Profile setProf_tags_tool(List<Tag> prof_tags_tool) {
-		this.prof_tags_tool = prof_tags_tool;
-		return this;
-	}
-	public List<Tag> getProf_tags_field() {
-		return prof_tags_field;
-	}
-	public Profile setProf_tags_field(List<Tag> prof_tags_field) {
-		this.prof_tags_field = prof_tags_field;
-		return this;
-	}
-	public List<TagUse> getProf_skillset() {
-		return prof_skillset;
-	}
-	public Profile setProf_skillset(List<TagUse> prof_skillset) {
-		this.prof_skillset = prof_skillset;
-		return this;
-	}
-	public List<Portfolio> getProf_myPf() {
-		return prof_myPf;
-	}
-	public Profile setProf_myPf(List<Portfolio> prof_myPf) {
-		this.prof_myPf = prof_myPf;
-		return this;
-	}
-	public List<Project> getProf_myProj() {
-		return prof_myProj;
-	}
-	public Profile setProf_myProj(List<Project> prof_myProj) {
-		this.prof_myProj = prof_myProj;
-		return this;
 	}
 }

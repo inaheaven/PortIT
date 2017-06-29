@@ -19,9 +19,7 @@ public class PageController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		System.out.println("Pagectrl");
-		
+	
 		String page = req.getParameter("page");
 		
 		
