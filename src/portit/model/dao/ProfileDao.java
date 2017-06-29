@@ -117,19 +117,21 @@ public class ProfileDao {
 		try{
 			
 			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_regdate) "
-					+ "values(prof_id.nextval, mem_id , ? , ? , ? , ? , ? , ? , sysdate)";
+					+ "values(prof_id.nextVal, ? , ? , ? , ? , ? , ? , ? , sysdate)";
 			
 				conn = pool.getConnection();
 				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, dto.getProf_img());
-				stmt.setString(2, dto.getProf_background());
-				stmt.setString(3, dto.getProf_name());
-				stmt.setString(4, dto.getProf_nick());
-				stmt.setString(5, dto.getProf_intro());
-				stmt.setString(6, dto.getProf_website());
+				stmt.setInt(1, mem_id);
+				stmt.setString(2, dto.getProf_img());
+				stmt.setString(3, dto.getProf_background());
+				stmt.setString(4, dto.getProf_name());
+				stmt.setString(5, dto.getProf_nick());
+				stmt.setString(6, dto.getProf_intro());
+				stmt.setString(7, dto.getProf_website());
 				
 				stmt.executeUpdate();
-				/*
+				
+			
 				//태그 테이블 입력
 				sql = "insert into tag(tag_id, tag_type, tag_name)"
 						+ "values(tag_id.nextVal,'language',?)";
@@ -138,7 +140,7 @@ public class ProfileDao {
 				stmt.setString(1, dto.getTag_name());
 				
 				stmt.executeUpdate();
-				
+			
 				//프로필 id를 가지고 오는 부분
 				sql = "select * from profile where mem_id ='"+mem_id+"'"
 						+ "order by prof_regdate desc";
@@ -162,13 +164,16 @@ public class ProfileDao {
 				
 				//태그 유즈 테이블 입력
 				sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
-						+ "values(tag_use_id.nextVal, 'profile', req_prof_id , req_tag_id , ?)";
+						+ "values(tag_use_id.nextVal, 'profile', ? , ? , ?)";
 				
 				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, dto.getProf_skill_level());
+				stmt.setInt(1, req_prof_id);
+				stmt.setInt(2, req_tag_id);
+				stmt.setInt(3, dto.getProf_skill_level());
 				
 				stmt.executeUpdate();
-				*/
+				
+				System.out.println("ok");
 				
 		}
 		

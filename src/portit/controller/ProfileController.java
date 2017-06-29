@@ -23,7 +23,7 @@ public class ProfileController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("test");
+		
 		resp.setContentType("text/html; charset=UTF-8");
 		      
 		String cmd = req.getParameter("cmd");
@@ -32,7 +32,6 @@ public class ProfileController extends HttpServlet {
 		//int mem_id = (int) req.getSession().getAttribute("mem_id");
 		//System.out.println(mem_id);
 		
-
 		ProfileDao profileDao = new ProfileDao();
 		Profile prof_reg = new Profile();
 		

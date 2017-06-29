@@ -150,13 +150,13 @@ function fnSelectSnsInfo(snsName){
 						<form action="/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
 							
 							<div class="form-group">
-								<label class="col-md-3 control-label">프로필 번호</label>
+								<label class="col-md-3 control-label"></label>
 								<div class="col-md-9">
 									<input type="hidden" class="form-control" name="prof_id">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-3 control-label">등록 날짜</label>
+								<label class="col-md-3 control-label"></label>
 								<div class="col-md-9">
 									<input type="hidden" class="form-control" name="prof_regdate">
 								</div>
@@ -178,21 +178,21 @@ function fnSelectSnsInfo(snsName){
 								<label class="col-md-3 control-label">이름</label>
 								<div class="col-md-9">
 									<input class="form-control" name ="prof_name" type="text"
-										placeholder="한글로 입력하세요." value="<%=dto.getProf_name() %>> ">			
+										placeholder="한글로 입력하세요." value=""/>			
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">닉네임</label>
 								<div class="col-md-9">
 									<input class="form-control" name ="prof_nick" type="text"
-										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="<%=dto.getProf_nick()%>">									
+										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="">									
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">소개</label>
 								<div class="col-md-9">
 									<textarea class="form-control" rows="5" name="prof_intro" 
-										placeholder="2000byte 이내로 입력하세요." value="<%=dto.getProf_intro()%>"></textarea>
+										placeholder="2000byte 이내로 입력하세요." value=""></textarea>
 								</div>
 							</div>
 							<div class="form-group">
