@@ -25,6 +25,9 @@ public class Profile {
 	private String prof_tool;
 	private String prof_field;
 	private String tag_name;
+	private String tag_name2;
+	private String tag_name3;
+	private String tag_name4;
 	private int prof_skill_level;
 
 	private List<Tag> prof_tags_language;
@@ -184,5 +187,26 @@ public class Profile {
 	public Profile setProf_myProj(List<Project> prof_myProj) {
 		this.prof_myProj = prof_myProj;
 		return this;
+	}
+	public String getProf_email() {
+		return prof_email;
+	}
+	public String getTag_name2() {
+		return tag_name2;
+	}
+	public void setTag_name2(String tag_name) {
+		this.tag_name2 = tag_name;
+	}
+	public String getTag_name3() {
+		return tag_name3;
+	}
+	public void setTag_name3(String tag_name) {
+		this.tag_name3 = tag_name;
+	}
+	public String getTag_name4() {
+		return tag_name4;
+	}
+	public void setTag_name4(String tag_name) {
+		this.tag_name4 = tag_name;
 	}
 }

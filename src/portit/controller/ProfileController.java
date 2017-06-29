@@ -31,11 +31,37 @@ public class ProfileController extends HttpServlet {
 		
 		//int mem_id = (int) req.getSession().getAttribute("mem_id");
 		//System.out.println(mem_id);
-		
 		ProfileDao profileDao = new ProfileDao();
 		Profile prof_reg = new Profile();
 		
-		prof_reg = profileDao.addprofile(prof_reg, 101);	
+		String prof_img = req.getParameter("prof_img");
+		String prof_background = req.getParameter("prof_background");
+		String prof_name = req.getParameter("prof_name");
+		String prof_nick = req.getParameter("prof_nick");
+		String prof_intro = req.getParameter("prof_intro");
+		String prof_website = req.getParameter("prof_website");
+		String tag_name = req.getParameter("tag_name");
+		String tag_name2 = req.getParameter("tag_name2");
+		String tag_name3 = req.getParameter("tag_name3");
+		String tag_name4 = req.getParameter("tag_name4");
+		int prof_skill_level = Integer.parseInt(req.getParameter("prof_skill_level"));
+		
+		prof_reg.setProf_img(prof_img);
+		prof_reg.setProf_background(prof_background);
+		prof_reg.setProf_name(prof_name);
+		prof_reg.setProf_nick(prof_nick);
+		prof_reg.setProf_intro(prof_intro);
+		prof_reg.setProf_website(prof_website);
+		prof_reg.setTag_name(tag_name);
+		prof_reg.setTag_name2(tag_name2);
+		prof_reg.setTag_name3(tag_name3);
+		prof_reg.setTag_name4(tag_name4);
+		prof_reg.setProf_skill_level(prof_skill_level);
+		
+		//101 -> mem_id로
+		profileDao.addprofile(prof_reg, 101);
+
+			
 		
 		if(cmd.equals("REGISTER")){
 			//return  new RegisterCommand();
@@ -44,6 +70,12 @@ public class ProfileController extends HttpServlet {
 		
 		RequestDispatcher view = req.getRequestDispatcher(url);
 		view.forward(req, resp);
+		
+		
+		
+		
+		
+		
 		
 		/*
 		if(cmd!=null && cmd.equals("REGISTER")){
