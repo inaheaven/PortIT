@@ -87,6 +87,7 @@
 										<span class="msgSender"><%=name %></span>
 									</a>
 								</span>
+                
 								<form name="msgSend" method="post" action="/msg?cmd=send">
 									<span class="pull-right"> 
 										<button type="submit" class="btn" >메세지 보내기</button>

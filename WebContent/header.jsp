@@ -2,11 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="portit.model.dto.Profile"%>
+<jsp:useBean id="dao" class="portit.model.dao.NotificationDao" />
 <%
 	String loginEmail = (String)session.getAttribute("loginEmail");
 	Profile prof = new Profile();
+	int loginId = (int)session.getAttribute("loginId");
 %>
-
+<c:set var="ntList" value="<%= dao.headerNoti(loginId) %>" />
 <header class="header black-bg">
 	<!--logo start-->
 	<a href="/page?page=main" class="logo"><b>Port IT</b></a>
@@ -38,21 +40,58 @@
 			</li>
 			<li id="header_inbox_bar" class="dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-					<i class="fa fa-bell"></i> <span class="badge bg-theme"></span>
+					<i class="fa fa-bell"></i>
+					<c:if test="${ntList.size() != 0 }">
+						<span class="hasAlarm"></span>
+					</c:if>
 				</a>
 				<ul class="dropdown-menu extended inbox">
 					<div class="notify-arrow notify-arrow-yellow"></div>
 					<li>
 						<p class="yellow">Notification</p>
 					</li>
-					<li>
-						<a href=""> 
-							<span>구분</span>&nbsp;/&nbsp; 
-							<span class="time">Just now</span> 
-							<span class="message">[누구누구]님이 내 포트포리오를 좋아합니다.</span>
-						</a>
-					</li>
-					<li><a href="/page?page=myNotification">더보기</a></li>
+					<c:if test="${ntList.size() != 0 }">
+						<c:forEach begin="0" end="4" var="i"> 
+							<li>
+							<c:if test="${ntList[i].nt_type eq 'like' }">
+								<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+	          						<span class="glyphicon glyphicon-heart"></span>&nbsp;/&nbsp; 
+	          						<span class="time">${ntList[i].nt_date }</span>
+	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 포트폴리오를 좋아합니다.</span>
+               					</a>
+          					</c:if>
+          					<c:if test="${ntList[i].nt_type  eq 'upload' }">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+	          						<span class="glyphicon glyphicon-upload"></span>&nbsp;/&nbsp; 
+	          						<span class="time">${ntList[i].nt_date }</span>
+	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 새로운 포트폴리오를 업로드했습니다.</span>
+               					</a>
+          					</c:if>
+          					<c:if test="${ntList[i].nt_type  eq 'message' }">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+	          						<span class="glyphicon glyphicon-envelope"></span>&nbsp;/&nbsp; 
+	          						<span class="time">${ntList[i].nt_date }</span>
+	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 메세지를 보냈습니다.</span>
+               					</a>
+          					</c:if>
+          					<c:if test="${ntList[i].nt_type  eq 'project' }">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+	          						<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;/&nbsp; 
+	          						<span class="time">${ntList[i].nt_date }</span>
+	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 프로젝트에 신청했습니다.</span>
+               					</a>
+          					</c:if>
+          					<c:if test="${ntList[i].nt_type  eq 'follow' }">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+	          						<span class="glyphicon glyphicon-plus"></span>&nbsp;/&nbsp; 
+	          						<span class="time">${ntList[i].nt_date }</span>
+	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 나를 팔로잉했습니다.</span>
+               					</a>
+          					</c:if>
+          					</li>
+						</c:forEach>
+					</c:if>
+					<li><a href="/page?page=myNotification&sort=all">더보기</a></li>
 				</ul>
 			</li>
 			<li id="header_inbox_bar" class="dropdown mypage">
@@ -68,6 +107,7 @@
 					<li><a href="/page?page=myPfList">내 포트폴리오</a></li>
 					<li><a href="/page?page=myProjList">내 프로젝트</a></li>
 					<li><a href="/page?page=myBookmark">북마크</a></li>
+					<li><a href="/page?page=myFollowing">팔로잉</a></li>
 					<li><a href="/page?page=myMsgList">메세지</a></li>
 					<li><a href="/page?page=myAccount">계정 설정</a></li>
 					<li><a class="logout" href="/logout">로그아웃</a></li> <!-- 로그아웃 처리해야함 - session 지우기 -->

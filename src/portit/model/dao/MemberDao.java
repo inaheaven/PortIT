@@ -45,7 +45,23 @@ public class MemberDao {
 			stmt.setString(1, member.getMem_email());
 			stmt.setString(2, member.getMem_password());
 			stmt.executeUpdate();
-			System.out.println("등록되엇음");
+			System.out.println("새로운 멤버 등록되엇음");
+			
+			// mem_id 가져오기
+			sql = "SELECT mem_id FROM member WHERE mem_email = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, member.getMem_email());
+			rs = stmt.executeQuery();
+			int v_mem_id = 0;
+			while(rs.next()) {	
+				v_mem_id = rs.getInt("mem_id");			
+			}
+			
+			// 멤버가 가입하면, profile 테이블에 prof_id, mem_id 값만 넣어지도록 한다.
+			sql = "INSERT INTO PROFILE(prof_id, mem_id) VALUES(seq_prof_id.nextVal, ?)";
+			stmt = conn.prepareStatement(sql); 
+			stmt.setInt(1, v_mem_id);
+			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

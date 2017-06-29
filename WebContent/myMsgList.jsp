@@ -144,6 +144,7 @@ String keyWord = request.getParameter("keyWord");
 										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
 										<span class="msgSender"><%=name%></span>
 									</a>
+
 								</span>	
 								<form name="msgSend" method="post" action="/msg?cmd=send">
 									<span class="pull-right"> 
