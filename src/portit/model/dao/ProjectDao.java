@@ -25,6 +25,10 @@ public class ProjectDao {
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 
+	Project dto;
+	
+	
+	
 	public ProjectDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
