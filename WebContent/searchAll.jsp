@@ -175,9 +175,39 @@
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
 						<h4>포트폴리오(${port_list.size()} 건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-		
-		<c:if test="${port_list.size() != 0 && port_list.size()>0}">
+	<!-- 검색 결과가 4개 이상일때 -->		
+		<c:if test="${port_list.size() != 0 && port_list.size()>0 && port_list.size()>3}">
 				<c:forEach begin="0" end="3" var="i" >	
+						<!-- 포트폴리오 -->
+						<div class="col-md-3 mb">
+							<div class="portfolio-simple">
+								<div class="pfImg"></div>
+								<div class="pfInfo">
+									<div class="simple-content">
+										<div class="pfTag">
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list[i].tag_name}&nbsp;</a>
+										</div>
+										<div class="pfTitle">
+											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
+										</div>
+										<div class="pfBottom">
+											<span class="pfmemName">
+												<a href="javascript:prof_name('${port_list[i].prof_name}')">
+													${port_list[i].prof_name} </a>
+											</span> 
+											<span class="pfLikeCount">
+												<span class="fa fa-heart"></span>&nbsp;&nbsp;${port_list[i].pf_like}
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>		
+					</c:forEach>
+			</c:if>	
+	<!-- 검색 결과가 4개 이상일때 -->
+		<c:if test="${port_list.size() != 0 && port_list.size()>0 && port_list.size()<=3}">
+				<c:forEach begin="0" end="${port_list.size()-1 }" var="i" >	
 						<!-- 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
@@ -225,9 +255,30 @@
 					<div class="memResult mt mb" >
 						<div class="col-md-12 mb">
 						<h4>멤버(${mem_list.size()}명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-						
-		<c:if test="${mem_list.size() != 0 && mem_list.size()>0}">			
+	<!-- 검색 결과가 4개 이상일때 -->					
+		<c:if test="${mem_list.size() != 0 && mem_list.size()>0 && mem_list.size()>3}">			
 				<c:forEach begin="0" end="3" var="i" >	
+						<!-- member -->
+						<div class="col-md-3 mb">
+	          				<div class="member-simple">
+		          				<div class="simple-content text-center">	      
+			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
+			         				<div>
+			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
+			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memFollow">
+			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
+			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
+			         					</div>
+			         				</div>
+		          				</div>          				
+	          				</div>
+	          			</div> 
+        			</c:forEach>
+        	</c:if>	
+      <!-- 검색결과가 4개 이하일때 -->  	
+		<c:if test="${mem_list.size() != 0 && mem_list.size()>0 && mem_list.size()<=3}">			
+				<c:forEach begin="0" end="${mem_list.size()-1 }" var="i" >	
 						<!-- member -->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
@@ -266,9 +317,35 @@
 					<!-- 프로젝트 결과 -->
 					<div class="projResult mt mb" >
 						<h4>프로젝트(${proj_list.size()}건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-
-			<c:if test="${proj_list.size() != 0 && proj_list.size()>0}">
+	<!-- 검색 결과가 4개 이상일때 -->
+			<c:if test="${proj_list.size() != 0 && proj_list.size()>0 && proj_list.size()>3}">
 				<c:forEach begin="0" end="3" var="i" >	
+					<!-- 프로젝트 -->
+						<div class="col-md-12 mb">
+	          				<div class="project-list">
+		          				<span class="pjInfoText">
+		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
+		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
+		          		
+		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
+		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
+	          					</span>
+	          					<span class="pjInfoTable">
+	          						<table class="table text-center">
+	          							<tr><td>백엔드개발자</td></tr>
+	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
+	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
+	          							<tr><td></td></tr>
+	          						</table>
+	          					</span>
+	          				</div>          			
+						</div>
+						<br><br>
+				</c:forEach>
+			</c:if>	
+		<!-- 검색 결과가 4개 이하일때 -->	
+			<c:if test="${proj_list.size() != 0 && proj_list.size()>0 && proj_list.size()<=3}">
+				<c:forEach begin="0" end="${proj_list.size()-1 }" var="i" >	
 					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
 	          				<div class="project-list">

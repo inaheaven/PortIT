@@ -255,7 +255,7 @@ public class SearchDao {
 		String sql = "";
 		if(lineup == true){
 			sql = "select * "
-				+ "from tag join tag_use "
+				+ " FROM tag join tag_use "
 				+ "on tag.tag_id = tag_use.tag_id "
 				+ "join project "
 				+ "on tag_use.tag_use_type_id = project.proj_id "
@@ -264,7 +264,7 @@ public class SearchDao {
 		}
 		else{
 			sql = "select * "
-					+ "from tag join tag_use "
+					+ " FROM tag join tag_use "
 					+ "on tag.tag_id = tag_use.tag_id "
 					+ "join project "
 					+ "on tag_use.tag_use_type_id = project.proj_id "
