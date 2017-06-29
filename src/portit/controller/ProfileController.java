@@ -65,7 +65,7 @@ public class ProfileController extends HttpServlet {
 		////////////////////////////101 -> mem_id로///////////////////////////////
 		profileDao.addprofile(prof_reg, 101);
 		req.setAttribute("prof_reg", prof_reg);
-		List list = profileDao.getProfile(prof_reg, 101);	
+		
 		
 		if(cmd.equals("REGISTER")){
 			//return  new RegisterCommand();

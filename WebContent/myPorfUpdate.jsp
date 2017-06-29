@@ -17,11 +17,13 @@
 </jsp:useBean>
 
 <%
-	int mem_id = Integer.parseInt(request.getParameter("mem_id"));
+	//int mem_id = Integer.parseInt(request.getParameter("mem_id"));
 
-	/////////////////101 -> mem_id로 //////////////
-	List list = dao.getProfile(dto,101);
+	/////////////////102 -> mem_id로 //////////////
+	Profile prof= dao.getProfile(102);
+
 %>
+<%=prof.getProf_intro()%>
 <script src="assets/js/search.js"></script>
 <script language="javascript">
 
@@ -176,20 +178,20 @@ function fnSelectSnsInfo(snsName){
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
 						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="prof_follower"
+							<input type="hidden" class="form-control" name="prof_follower" 
 								value="0">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">프로필 사진</label>
 						<div class="col-md-9">
-							<input type="file" class="form-control" name="prof_img">
+							<input type="file" class="form-control" name="prof_img" value="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">배경 사진</label>
 						<div class="col-md-9">
-							<input type="file" class="form-control" name="prof_background">
+							<input type="file" class="form-control" name="prof_background" value="">
 						</div>
 
 					</div>
@@ -197,28 +199,28 @@ function fnSelectSnsInfo(snsName){
 						<label class="col-md-3 control-label">이름</label>
 						<div class="col-md-9">
 							<input class="form-control" name="prof_name" type="text"
-								placeholder="한글로 입력하세요." value="<%=dto.getProf_name() %>" />
+								placeholder="한글로 입력하세요." value="<%=prof.getProf_name() %>" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">닉네임</label>
 						<div class="col-md-9">
 							<input class="form-control" name="prof_nick" type="text"
-								placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)">
+								placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="<%=prof.getProf_nick()%>">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">소개</label>
 						<div class="col-md-9">
 							<textarea class="form-control" rows="5" name="prof_intro"
-								placeholder="2000byte 이내로 입력하세요."></textarea>
+								placeholder="2000byte 이내로 입력하세요." value="<%=prof.getProf_intro()%>"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 언어</label>
 						<div class="col-md-9">
 							<input class="form-control" id="Prof_language" type="text"
-								name="tag_name" placeholder="ex) C, JAVA, Python 등">
+								name="tag_name" placeholder="ex) C, JAVA, Python 등" value="">
 						</div>
 					</div>
 					<div class="form-group">
@@ -226,7 +228,7 @@ function fnSelectSnsInfo(snsName){
 						<div class="col-md-9">
 							<input class="form-control" id="disabledInput" type="text"
 								name="tag_name2"
-								placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등">
+								placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등" value="">
 						</div>
 					</div>
 					<div class="form-group">
@@ -234,7 +236,7 @@ function fnSelectSnsInfo(snsName){
 						<div class="col-md-9">
 							<input class="form-control" id="disabledInput" type="text"
 								name="tag_name3"
-								placeholder="ex) 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등">
+								placeholder="ex) 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등" value="">
 						</div>
 					</div>
 					<div class="form-group">
@@ -283,9 +285,8 @@ function fnSelectSnsInfo(snsName){
 					</div>
 
 					<div class="form-group text-center buttonDiv">
-						<button type="submit" class="btn common" onclick="profRegister()">등록하기</button>
+						<button type="submit" class="btn common" onclick="profRegister()">수정하기</button>
 						&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn cancel" onclick="profalter()">수정하기</button>
 
 					</div>
 				</form>

@@ -11,19 +11,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <%
-	Profile dto = (Profile)request.getAttribute("profile");
-	if(dto==null){
-		dto = new Profile();
-	}
 
- 	int mem_id = Integer.parseInt(request.getParameter("mem_id"));
- 	request.setAttribute("mem_id",mem_id);
- 	
- 	int prof_id = Integer.parseInt(request.getParameter("prof_id"));
- 	
- 	if(prof_id==null){
- 		response.sendRedirect("/page?page=myProfUpdate");
- 	}
+ 
 %>
 <script src="assets/js/search.js"></script>
 <script language="javascript">
@@ -200,7 +189,7 @@ function fnSelectSnsInfo(snsName){
 						<label class="col-md-3 control-label">이름</label>
 						<div class="col-md-9">
 							<input class="form-control" name="prof_name" type="text"
-								placeholder="한글로 입력하세요." value="<%=dto.getProf_name() %>" />
+								placeholder="한글로 입력하세요." value="" />
 						</div>
 					</div>
 					<div class="form-group">

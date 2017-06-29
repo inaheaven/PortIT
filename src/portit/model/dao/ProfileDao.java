@@ -20,39 +20,42 @@ public class ProfileDao {
 	public ProfileDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
+			conn = pool.getConnection();
+
 		} catch (Exception e) {
-			System.out.println("而ㅻ꽖�뀡 �� �삤瑜� - MemberDao()");
+			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
-	 * DB �뿰寃�
+	 * DB 연결
 	 */
 	private void getConnection() {
 		try {
 			conn = pool.getConnection();
-			if (conn != null)
-				System.out.println("DB �젒�냽");
+			if (conn != null) System.out.println("DB 접속");
 		} catch (Exception e) {
-			System.out.println("DB �젒�냽 �삤瑜� - getConnection()");
+			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * DB �뿰寃� �빐�젣
+	 * DB 접속 해제
 	 */
 	private void freeConnection() {
 		try {
 			pool.freeConnection(conn, stmt, rs);
-			if (conn != null)
-				System.out.println("DB �젒�냽 �빐�젣");
+			if (conn != null) {
+				System.out.println("DB 접속 해제");
+			}
 		} catch (Exception e) {
-			System.out.println("DB �젒�냽�빐�젣 �삤瑜� - freeConnection()");
+			System.out.println("DB 접속해제 오류 :");
 			e.printStackTrace();
 		}
 	}
+	
 
 	/**
 	 * 프로필 등록(프로필 테이블 + 태크 테이블에 있는 정보 등록)
@@ -253,6 +256,7 @@ public class ProfileDao {
 			stmt.setInt(12, dto.getProf_follower());
 			stmt.setString(14, dto.getTag_name());
 			stmt.setInt(15, dto.getProf_skill_level());
+			
 			stmt.executeUpdate();
 			
 		} catch (Exception err) {
@@ -266,46 +270,53 @@ public class ProfileDao {
 	/**
 	 *	프로필 리스트
 	 */
-	public List getProfile(Profile dto, int mem_id) {
-		ArrayList list = new ArrayList();
-		sql = "select * from profile";
-		
+	public Profile getProfile(int mem_id) {
+		Profile dto = new Profile();
+		sql = "select * from profile where mem_id= 102";
+
 		try {
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-
 			while (rs.next()) {
-				Profile profile = new Profile();
-				profile.setProf_id(rs.getInt("prof_id"));
-				profile.setProf_nick(rs.getString("prof_nick"));
-				profile.setTag_name(rs.getString("tag_name"));
-				profile.setTag_name2(rs.getString("tag_name2"));
-				profile.setTag_name3(rs.getString("tag_name3"));
-				profile.setTag_name4(rs.getString("tag_name4"));
-				profile.setProf_img(rs.getString("prof_img"));
-				profile.setProf_background(rs.getString("prof_background"));
-				profile.setProf_name(rs.getString("prof_name"));
-				profile.setProf_follower(rs.getInt("prof_follower"));
-				profile.setProf_website(rs.getString("prof_website"));
-				profile.setProf_github(rs.getString("prof_github"));
-				profile.setProf_facebook(rs.getString("prof_facebook"));
-				profile.setProf_regdate(rs.getDate("prof_regdate"));
-				profile.setProf_follower(rs.getInt("prof_follower"));
-				profile.setProf_language(rs.getString("prof_language"));
-				profile.setProf_tool(rs.getString("prof_tool"));
-				profile.setProf_field(rs.getString("prof_field"));
-				profile.setProf_skill_level(rs.getInt("prof_skill_level"));
 				
-
-				list.add(profile);
+				dto.setProf_id(rs.getInt("prof_id"));
+				dto.setProf_nick(rs.getString("prof_nick"));
+				/*
+				dto.setTag_name(rs.getString("tag_name"));
+				dto.setTag_name2(rs.getString("tag_name2"));
+				dto.setTag_name3(rs.getString("tag_name3"));
+				dto.setTag_name4(rs.getString("tag_name4"));
+				*/
+				dto.setProf_intro(rs.getString("prof_intro"));
+				dto.setProf_img(rs.getString("prof_img"));
+				dto.setProf_background(rs.getString("prof_background"));
+				dto.setProf_name(rs.getString("prof_name"));
+				dto.setProf_follower(rs.getInt("prof_follower"));
+				dto.setProf_website(rs.getString("prof_website"));
+				dto.setProf_github(rs.getString("prof_github"));
+				dto.setProf_facebook(rs.getString("prof_facebook"));
+				dto.setProf_regdate(rs.getDate("prof_regdate"));
+				dto.setProf_follower(rs.getInt("prof_follower"));
+				dto.setProf_language(rs.getString("prof_language"));
+				dto.setProf_tool(rs.getString("prof_tool"));
+				dto.setProf_field(rs.getString("prof_field"));
+				dto.setProf_skill_level(rs.getInt("prof_skill_level"));
+				
+				System.out.println("dao" + dto.getProf_nick());
 			}
+			
 		} 
 		catch (Exception err) {
-			System.out.println("updateProfile : " + err);
+			System.out.println("getProfile 오류: " + err);
 		} finally {
 			freeConnection();
 		}
 		
-		return list;
+		return dto;
+	}
+
+	private void add(Profile dto) {
+		// TODO Auto-generated method stub
+		
 	}
 }
