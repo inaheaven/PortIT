@@ -29,7 +29,6 @@ public class MessageController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		try {
-			
 			resp.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = resp.getWriter();
 			
@@ -43,7 +42,7 @@ public class MessageController extends HttpServlet {
 			//Login된 Id session에서 추출.
 			//모델 : Request와 login_id전달
 			
-			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
+			int login_id = (int) session.getAttribute("loginId");
 			
 			
 			MessageModel model = new MessageModel(req,login_id);
@@ -51,11 +50,6 @@ public class MessageController extends HttpServlet {
 			
 			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
-			
-			
-			
-		
-			
 			
 			//msgList.jsp
 			//발신자목록  request!
