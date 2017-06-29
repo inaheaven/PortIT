@@ -8,6 +8,8 @@ import java.util.List;
  *
  */
 public class Portfolio {
+	/**작성자 멤버아이디**/
+	private int mem_id;
 	/** 포트폴리오 글번호 */
 	private int pf_id;
 	/** 포트폴리오 제목 */
@@ -44,8 +46,19 @@ public class Portfolio {
 	private List<Profile> pf_coworkers;
 	/** 추천 포트폴리오 목록 */
 	private List<Portfolio> pf_recommends;
+	
+	//추가
+	private String prof_nick;
+	
+	
     private String prof_name;
     
+	public int getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(int mem_id) {
+		this.mem_id = mem_id;
+	}
 	public String getProf_name() {
 		return prof_name;
 	}
@@ -186,6 +199,16 @@ public class Portfolio {
 	public Portfolio setPf_recommends(List<Portfolio> pf_recommends) {
 		this.pf_recommends = pf_recommends;
 		return this;
+	}
+	public void setMl_path(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+	public String getProf_nick() {
+		return prof_nick;
+	}
+	public void setProf_nick(String prof_nick) {
+		this.prof_nick = prof_nick;
 	}
 	
 }

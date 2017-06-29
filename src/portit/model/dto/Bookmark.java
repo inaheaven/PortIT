@@ -1,7 +1,7 @@
 package portit.model.dto;
 
 import java.util.Date;
-import java.lang.Math;
+import java.util.List;
 /**
  * 
  * @author hyang
@@ -9,13 +9,40 @@ import java.lang.Math;
  */
 public class Bookmark {
 	  
+	
 	private int bm_id;
 	private int mem_id;
 	private int pf_id;
 	private Date bm_date;
     private String prof_name;
-  
+    private String ml_path;
+	private String pf_title;
+    private int pf_like;
+    private List<String> tags;
+    private String prof_nick;
     
+    
+	public String getProf_nick() {
+		return prof_nick;
+	}
+	public String getMl_path() {
+		return ml_path;
+	}
+	public void setMl_path(String ml_path) {
+		this.ml_path = ml_path;
+	}
+	public String getPf_title() {
+		return pf_title;
+	}
+	public void setPf_title(String pf_title) {
+		this.pf_title = pf_title;
+	}
+	public int getPf_like() {
+		return pf_like;
+	}
+	public void setPf_like(int pf_like) {
+		this.pf_like = pf_like;
+	}
 	public String getProf_name() {
 		return prof_name;
 	}
@@ -46,5 +73,13 @@ public class Bookmark {
 	public void setBm_date(Date bm_date) {
 		this.bm_date = bm_date;
 	}
-
+    public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+	public void setProf_nick(String string) {
+		
+	}
 }

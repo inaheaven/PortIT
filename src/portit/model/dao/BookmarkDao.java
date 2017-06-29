@@ -18,8 +18,9 @@ import portit.model.dto.Portfolio;
 public class BookmarkDao {
 	private Connection conn;
 	private PreparedStatement stmt;
-	private ResultSet rs;
+	private ResultSet rs, rs2, rs3;
 	private DBConnectionMgr pool;
+	String sql = "";
 
 	public BookmarkDao() {
 		try {
@@ -31,96 +32,157 @@ public class BookmarkDao {
 	}
 
 	/**
-	 * DB �뿰寃�
+	 * 내가 북마크한 리스트 가져오기
+	 * @param pf_id 
+	 * 
+	 * @param mem_id2
+	 * @param mem_id(세션의
+	 *            loginId)
+	 * @return list
 	 */
-	private void getConnection() {
+	
+	public List myBookmark(int mem_id) {
+		ArrayList bmList = new ArrayList();
 		try {
 			conn = pool.getConnection();
-			if (conn != null)
-				System.out.println("DB �젒�냽");
+			sql = "SELECT BOOK.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH "
+				+ " FROM BOOKMARK BOOK INNER JOIN PORTFOLIO PORT ON BOOK.PF_ID = PORT.PF_ID "
+		        + " JOIN MEDIA_LIBRARY MEDIA ON PORT.PF_ID = MEDIA.ML_TYPE_ID"
+		        + " JOIN MEMBER M ON M.MEM_ID = BOOK.MEM_ID JOIN PROFILE P ON M.MEM_ID = P.MEM_ID "
+		        + " WHERE BOOK.MEM_ID = ?";
+		        
+					
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs = stmt.executeQuery();
+
+			
+			while (rs.next()) {
+				Bookmark bm = new Bookmark();
+				bm.setBm_id(rs.getInt("bm_id"));
+				bm.setMem_id(rs.getInt("mem_id"));
+				bm.setPf_id(rs.getInt("pf_id"));
+				bm.setBm_date(rs.getDate("bm_date"));
+				bm.setMl_path(rs.getString("ml_path"));
+				bm.setProf_nick(rs.getString("prof_nick"));
+				bm.setPf_title(rs.getString("pf_title"));
+				bm.setPf_like(rs.getInt("pf_like"));
+				int pf_id = rs.getInt("pf_id");
+				
+							
+				getTag(bm, pf_id);
+				bmList.add(bm);
+			}
 		} catch (Exception e) {
-			System.out.println("DB �젒�냽 �삤瑜� - getConnection()");
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, stmt, rs);
+		}
+		return bmList;
+	}
+
+	/**
+	 * 북마크한 사람의 포트폴리오 정보 가지고오기 (이미지, 제목, 좋아요수, 작성자이름 )
+	 * 
+	 * @param mem_id
+	 * @return
+	 */
+	/*
+	public Bookmark getPortfolio(Bookmark bm, int mem_id) {
+		/*
+		 * String sql =
+		 * "select * from member join bookmark on member.mem_id = bookmark.mem_id"
+		 * + "join portfolio on portfolio.pf_id = bookmark.pf_id" +
+		 * "where  member.mem_id = '"+ mem_id+"'" ;
+		 */
+/*
+		try {
+			sql = "select distinct Member.mem_id, PORTFOLIO.PF_ID, MEDIA_LIBRARY.ML_PATH, portfolio.PF_TITLE ,Profile.PROF_NICK, portfolio.PF_LIKE "
+					+ "FROM media_library, Profile, portfolio, prof_pf, tag_use, member "
+					+ "where prof_pf.PROF_ID = Profile.PROF_ID  and prof_pf.PF_ID = portfolio.PF_ID  "
+					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID and Profile.mem_id=member.mem_id "
+					+ "and Member.mem_id= ? " ;
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs2 = stmt.executeQuery();
+
+			if(rs2.next()) {
+				System.out.println("구동");
+				bm.setMem_id(rs.getInt("mem_id"));
+				bm.setPf_id(rs.getInt("PF_ID"));
+				
+				bm.setProf_name(rs.getString("prof_name"));
+				
+			}
+		}
+
+		catch (Exception e) {
+			 e.printStackTrace();
+		}
+		return bm;
+	}
+*/
+	/**
+	 * 북마크한 사람의 프로필 중에서 태그 부분 종합해서 가져오기
+	 * 
+	 * @param bm_id
+	 */
+	public void getTag(Bookmark bm, int pf_id) {
+		try {
+			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ "WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' AND tu.tag_use_type_id = ? "
+					+ "ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4"; // 랜덤하게
+																		// 3개
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, pf_id);
+			rs3 = stmt.executeQuery();
+
+			List<String> tags = new ArrayList<>();
+			while (rs3.next()) {
+				tags.add(rs3.getString("tag_name"));
+			}
+			bm.setTags(tags);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * DB �뿰寃� �빐�젣
+	 * 포트폴리오에서 북마크 버튼 눌렀을 때 북마크 추가 되는 부분
+	 * 
+	 * @param pf_id
+	 * @param mem_id
 	 */
-	private void freeConnection() {
-		try {
-			pool.freeConnection(conn, stmt, rs);
-			if (conn != null)
-				System.out.println("DB �젒�냽 �빐�젣");
-		} catch (Exception e) {
-			System.out.println("DB �젒�냽�빐�젣 �삤瑜� - freeConnection()");
-			e.printStackTrace();
-		}
-	}
-	public List<Portfolio> getMyBookmark(int mem_id) {
-		List<Portfolio> portfolioList = new ArrayList<>();
-		String sql = "SELECT BM_ID , PF_TITLE,PF_LIKE, PF_NUMOFPERSON FROM BOOKMARK A , PORTFOLIO B "
-				+ " WHERE A.PF_ID= B.PF_ID and a.mem_id = ?";
 
-		
-		try {
-			conn = pool.getConnection();
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, mem_id);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				Portfolio pf = new Portfolio();
-				
-				pf.setBm_id(rs.getInt("bm_id"));
-				pf.setPf_title(rs.getString("pf_title"));
-				pf.setPf_like(Integer.parseInt(rs.getString("pf_like")));
-				pf.setPf_numofperson(Integer.parseInt(rs.getString("pf_numofperson")));
-				portfolioList.add(pf);
-			}
-		} catch (Exception err) {
-			System.out.println("getList() : " + err);
-		} finally {
-			freeConnection();
-		}
-
-		return portfolioList;
-
-	}
-
-	// BOOKMARK 異붽�
-	public Portfolio addBookmark(int pf_id, int mem_id) {
-		String sql = "";
-		Portfolio portfolio = new Portfolio();
-
+	public void addBookmark(int pf_id, int mem_id) {
 		try {
 
-			//BOOKMARK에 MEM_ID=? AND PF_ID=? 조회해서 데이터가 존재하면 delete 없으면 insert
+			// BOOKMARK에 MEM_ID=? AND PF_ID=? 조회해서 데이터가 존재하면 delete 없으면 insert
 			conn = pool.getConnection();
 
-			sql = "MERGE INTO BOOKMARK B1" + "USING (SELECT MEM_ID, PF_ID FROM BOOKMARK WHERE MEM_ID=? AND PF_ID=?)B2" 
+			sql = "MERGE INTO BOOKMARK B1" + "USING (SELECT MEM_ID, PF_ID FROM BOOKMARK WHERE MEM_ID=? AND PF_ID=?)B2"
 					+ "ON (B1.BM_ID=B2.BM_ID)" + "WHEN MATCHED THEN" + "DELETE FROM BOOKMARK WHERE MEM_ID =B1.MEM_ID"
-					+ "WHEN NOT MATCHED THEN" + "INSERT INTO BOOKMARK (BM_ID, MEM_ID,PF_ID,BM_DATE)" 
+					+ "WHEN NOT MATCHED THEN" + "INSERT INTO BOOKMARK (BM_ID, MEM_ID,PF_ID,BM_DATE)"
 					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE)";
-			
 
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, mem_id);
-			stmt.setInt(2, pf_id);
-			stmt.setInt(3, mem_id);
-			stmt.setInt(4, pf_id);
+			stmt.setInt(1, pf_id);
+			stmt.setInt(2, mem_id);
+			stmt.setInt(3, pf_id);
+			stmt.setInt(4, mem_id);
 			stmt.executeUpdate(sql);
 
 		} catch (Exception err) {
 			System.out.println("getList() : " + err);
-		} finally {
-			freeConnection();
 		}
-		return portfolio;
-
 	}
 
-	// BOOKMARK �궘�젣
+	/**
+	 * mybookmark페이지에서 x버튼 눌러서 삭제
+	 * 
+	 * @param bm_id
+	 */
 	public void deleteBookmark(int bm_id) {
 		String sql = "delete from bookmark where bm_id =" + bm_id + "";
 
@@ -130,9 +192,6 @@ public class BookmarkDao {
 			stmt.executeUpdate();
 		} catch (Exception err) {
 			System.out.println("DBCP �뿰寃� �떎�뙣 : " + err);
-		} finally {
-			freeConnection();
 		}
-
 	}
 }

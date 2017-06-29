@@ -35,16 +35,16 @@ public class BookmarkController extends HttpServlet {
 			//pf_id를 가져온다고 하고 진행
 
 			//존재하면 DELETE 없으면 INSERT
-			int pfId = 0, memId = 0;
+			int pf_id = 0, mem_id = 0;
 			if (req.getParameter("pf_id") != null) {
-				pfId = Integer.parseInt(req.getParameter("pf_id"));
+				pf_id = Integer.parseInt(req.getParameter("pf_id"));
 			}
 			if (req.getParameter("mem_id") != null) {
-				memId = Integer.parseInt(req.getParameter("mem_id"));
+				mem_id = Integer.parseInt(req.getParameter("mem_id"));
 			}
 
 			BookmarkDao bmDao = new BookmarkDao();
-			bmDao.addBookmark(pfId, memId);
+			bmDao.addBookmark(pf_id, mem_id);
 			System.out.println("존재하면 DELETE 없으면 INSERT");
 
 			//엑스버튼 누를때 dto에서 deletebookmark 실행page?page=myBookmark
@@ -55,7 +55,7 @@ public class BookmarkController extends HttpServlet {
 			
 		} else if (cmd.equals("MYBOOKMARK")) {
 			BookmarkDao bmDao = new BookmarkDao();
-			List<Portfolio> resultPortfolio = bmDao.getMyBookmark(loginId);
+			List<Portfolio> resultPortfolio = bmDao.myBookmark(loginId);
 			
 			req.setAttribute("portfolio", resultPortfolio);
 			url="myBookmark.jsp";
@@ -66,12 +66,11 @@ public class BookmarkController extends HttpServlet {
 			
 		}else if (cmd.equals("MYBOOKMARKDELETE")) {
 			BookmarkDao bmDao = new BookmarkDao();
-			int bmId=0;
+			int bm_id=0;
 			if(req.getParameter("bm_id")!=null){
-				bmId = Integer.parseInt(req.getParameter("bm_id"));
-				bmDao.deleteBookmark(bmId);
-				
-				List<Portfolio> resultPortfolio = bmDao.getMyBookmark(loginId);
+				bm_id = Integer.parseInt(req.getParameter("bm_id"));
+				bmDao.deleteBookmark(bm_id);
+				List<Portfolio> resultPortfolio = bmDao.myBookmark(bm_id);
 				if(resultPortfolio.isEmpty()){
 					resultPortfolio = new ArrayList<>();
 				}
