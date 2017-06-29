@@ -6,6 +6,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <jsp:useBean id="profile" class="portit.model.dto.Profile" />
+
+<%
+	int loginId = (int)session.getAttribute("loginId");
+	int mem_id = Integer.parseInt(request.getParameter("id"));
+	Profile profile = request.getAttribute("profile");
+
+%>
+<jsp:useBean id="follow" class="portit.model.dao.FollowDao"/>
+<c:set var="isFollow" value="<%= follow.isFollowing(loginId, mem_id) %>" />
+
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +73,12 @@
 					<%= profile.getProf_follower() %>
 				</h4>
 				<div class="actions">
-					<button type="button" class="btn common" onclick="location.href='#'">+ Follow</button>					
+					<c:if test="${isFollow == false}">			
+						<button type="button" class="btn common" onclick="location.href='/follow?act=add&mem_id=<%=mem_id%>'">+ Follow</button>	
+					</c:if>
+					<c:if test="${isFollow == true }">
+						<button type="button" class="btn common" onclick="location.href='/follow?act=cancel&mem_id=<%=mem_id%>'">Following</button>	
+					</c:if>				
 				</div>
 			</div>
 		</section><!-- /Profile header -->
