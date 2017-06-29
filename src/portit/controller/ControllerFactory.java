@@ -32,7 +32,7 @@ public class ControllerFactory {
      */
 	public Controller createController(String param) {
 		if (param.equals("portfolio")) {
-			return new PortfolioController();
+			return new PortfolioAddController();
 		}
 		else {
 			return null;

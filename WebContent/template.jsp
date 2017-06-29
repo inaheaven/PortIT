@@ -13,8 +13,9 @@
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
 <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="jquery/jquery.autocomplete.css" />
+<link href="assets/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+<link href="assets/css/tokenize2.min.css" rel="stylesheet" />
+<link href="jquery/jquery.autocomplete.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
@@ -48,7 +49,7 @@
 
 	<!--  JavaScript dependencies -->
 	<script src="assets/js/jquery-3.2.1.min.js"></script>
-	<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+	<script src="assets/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
 	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
@@ -56,6 +57,7 @@
 	<script src="assets/js/jquery.nicescroll.js"></script>
 	<script src="jquery/lib/jquery.ajaxQueue.js"></script>
 	<script src="jquery/lib/jquery.bgiframe.min.js"></script>
+	<script src="assets/js/tokenize2.min.js"></script>
 	<script src="jquery/jquery.autocomplete.js"></script>
 	
 	<!--common script for all pages-->

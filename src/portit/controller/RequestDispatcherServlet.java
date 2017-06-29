@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @SuppressWarnings("serial")
 //@WebServlet("")
-public class FrontController extends HttpServlet {
+public class RequestDispatcherServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

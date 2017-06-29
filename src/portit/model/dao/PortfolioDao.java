@@ -14,7 +14,7 @@ import portit.model.dto.Tag;
 import portit.model.dto.Media;
 
 /**
- * 포트폴리오 구성 화면
+ * 포트폴리오 DAO
  */
 public class PortfolioDao {
 
@@ -100,7 +100,7 @@ public class PortfolioDao {
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				rs.next();
-				portfolio.setPf_prof_name(rs.getString(1));
+				portfolio.setPf_authorName(rs.getString(1));
 				
 				// 좋아요 수를 조회해서 DTO에 저장
 				sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
@@ -176,12 +176,13 @@ public class PortfolioDao {
 	
 	/**
 	 * 전체 데이터 조회
-	 * @param sort 정렬 기준
+	 * @param sort 정렬할 칼럼
+	 * @param keyword 검색어
+	 * @param tagList 검색에 사용할 태그
 	 * @return DTO 목록
 	 */
 	public List<Portfolio> selectList(String sort, String keyword, List<Tag> tagList) {
 		List<Portfolio> portfolios = new ArrayList<Portfolio>();
-		
 		
 		// SELECT문 지정
 		String sql = "SELECT * FROM portfolio";
@@ -190,6 +191,7 @@ public class PortfolioDao {
 			sql += " WHERE pf_title LIKE '%" + keyword + "%'"
 					+ " OR pf_intro LIKE '%" + keyword + "%'";
 		}
+		
 		if (!sort.isEmpty()) {
 			sql += " ORDER BY " + sort + " DESC";
 		}
@@ -219,7 +221,7 @@ public class PortfolioDao {
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				rs.next();
-				portfolio.setPf_prof_name(rs.getString(1));
+				portfolio.setPf_authorName(rs.getString(1));
 				
 				// 좋아요 수를 조회해서 DTO에 저장
 				sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
@@ -327,7 +329,6 @@ public class PortfolioDao {
 			
 			// 프로필과 포트폴리오 연결
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return rows;
@@ -383,6 +384,35 @@ public class PortfolioDao {
 			freeConnection();
 		}
 		return rows;
+	}
+	
+	
+	// 특정인이 작성한 데이터 조회
+	public List<Portfolio> selectSomeones(int mem_id) {
+		List<Portfolio> portfolios = new ArrayList<Portfolio>();
+		getConnection();
+		try {
+			String sql = "SELECT prof_id FROM profile WHERE mem_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				int prof_id = rs.getInt("prof_id");
+				sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, prof_id);
+				rs = stmt.executeQuery();
+				while(rs.next()) {
+					portfolios.add(selectOne(rs.getInt("pf_id")));
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("");
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return portfolios;
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,28 +39,62 @@ public class UploadServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
+		// GET 요청일 경우 등록 페이지로 포워딩
+		String articleType = req.getParameter("post");
+		String actionType = req.getParameter("type");
+		RequestDispatcher rd = null;
+		if ("profile".equals(articleType)) {
+			rd = req.getRequestDispatcher("");
+			rd.forward(req, resp);
+		} else if ("portfolio".equals(articleType)) {
+			rd = req.getRequestDispatcher("/page?page=myPfRegister");
+			rd.forward(req, resp);
+		} else if ("project".equals(articleType)) {
+			rd = req.getRequestDispatcher("");
+			rd.forward(req, resp);
+		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// POST 요청일 때 등록 처리
+		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
+		
+		if (!ServletFileUpload.isMultipartContent(req)) {
+			try {
+				throw new Exception("요청이 multipart/form-data로 인코딩되지 않았습니다.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		List<String> fileNames = fileUpload(req, resp);
-		ServletContext sc = req.getServletContext();
-		sc.setAttribute("fileNames", fileNames);
-		Map<String, String> map = (Map<String, String>) sc.getAttribute("formdata");
-		for(String str : fileNames) {
-			System.out.println(str);
+		req.setAttribute("fileNames", fileNames);
+		
+		String[] viewUrl = null;
+		
+		String articleType = req.getParameter("type");
+		if ("profile".equals(articleType)) {
+			/*Controller profileController = ControllerFactory.getInstance().createController("profile");
+			viewUrl = profileController.execute(req, resp);*/
+		} else if ("portfolio".equals(articleType)) {
+			Controller portfolioAddController = ControllerFactory.getInstance().createController("portfolioAdd");
+			viewUrl = portfolioAddController.execute(req, resp);
+		} else if ("project".equals(articleType)) {
+			/*Controller projectController = ControllerFactory.getInstance().createController("project");
+			viewUrl = projectController.execute(req, resp);*/
 		}
-		for (String key : map.keySet()) {
-			System.out.printf("%s : %s \n", key, map.get(key));
-		}
-		if ("profile".equals(map.get("atricleType"))) {
-			
-		} else if ("portfolio".equals(map.get("atricleType"))) {
-			Controller portfolioController = ControllerFactory.getInstance().createController("portfolio");
-		} else if ("project".equals(map.get("atricleType"))) {
-			
+		
+		RequestDispatcher rd = null;
+		if (viewUrl[0].startsWith("inc")) {
+			rd = req.getRequestDispatcher(viewUrl[1]);
+			rd.include(req, resp);
+		} else if (viewUrl[0].startsWith("fwd")) {
+			rd = req.getRequestDispatcher(viewUrl[1]);
+			rd.forward(req, resp);
+		} else {
+			resp.sendRedirect(viewUrl[1]);
 		}
 	}
 	
@@ -74,16 +109,7 @@ public class UploadServlet extends HttpServlet {
 	public List<String> fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<String> fileNames = new ArrayList<String>();
 		
-		if (!ServletFileUpload.isMultipartContent(req)) {
-			try {
-				throw new Exception("요청이 multipart/form-data로 인코딩되지 않았습니다.");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		ServletContext sc = req.getServletContext();
-		String saveDir = sc.getRealPath("") + UPLOAD_DIR;
+		String saveDir = req.getServletContext().getRealPath("") + UPLOAD_DIR;
 		
 		// 저장할 디렉토리가 없으면 생성
 		File fileSaveDir = new File(saveDir);
@@ -104,16 +130,21 @@ public class UploadServlet extends HttpServlet {
 			for(FileItem item : items) {
 				if (item.isFormField()) {
 					// isFormField()의 반환값이 true이면 일반 파라미터로 처리
-					map.put(item.getFieldName(), item.getString());
-					sc.setAttribute("formdata", map);
+					map.put(
+							new String(item.getFieldName().getBytes("ISO-8859-1"), "UTF-8")
+							, new String(item.getString().getBytes("ISO-8859-1"), "UTF-8")
+							);
+					req.setAttribute("formData", map);
 				} else {
 					// isFormField()의 반환값이 false이면 파일로 처리
-					if (item.getContentType().startsWith("image/")) {
-						String path = saveDir + File.separator + getFileName(item);
-						item.write(new File(path));
-						fileNames.add(path);
-					} else {
-						throw new Exception("이미지파일만 업로드할 수 있습니다.");
+					if (item != null && item.getSize() > 0) {
+						if (item.getContentType().startsWith("image/")) {
+							String path = saveDir + File.separator + getFileName(item);
+							item.write(new File(path));
+							fileNames.add(path);
+						} else {
+							throw new Exception("이미지파일만 업로드할 수 있습니다.");
+						}
 					}
 				}
 			}

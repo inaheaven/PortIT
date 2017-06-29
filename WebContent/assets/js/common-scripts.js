@@ -149,37 +149,42 @@ var Script = function () {
 		});
     });
     
- // Autocomplete
+ // Tokenize2
     $(function() {
-    	
+    	$('select[name^=pf_tags_]').tokenize2(function() {
+    		$(this).append('<option value="value">value</option>');
+    	});
     });
     
 
  // 업로드 파일 추가/삭제
     $(function() {
-    	var rows = 1;
+    	var rows = 0;
     	var filelist = null;
     	$('input#fileUpload').on('change', function() {
     		filelist = document.getElementById($(this).attr('id')).files;
     		for (var i=0; i<filelist.length; i++) {
-    			if (rows == 10) {
+    			if (rows == 9) {
     				break;
     			}
     			$('#fileList').append(
     					'<li>'+filelist[i].name
     					+' ('+filelist[i].type+', '+(filelist[i].size/(1024*1024)).toFixed(2)+'MB) '
-    					+'<a id="mediaRemove"><i class="fa fa-times"></i></a></li>'
+    					+'<a id="mediaRemove" style="cursor:pointer"><i class="fa fa-times"></i></a></li>'
     					);
     			rows++;
     		}
     	});
     	$('#fileList').on('click', '#mediaRemove', function() {
-    		var finfo = $(this).parent().parent().first().text();
-    		var fname= finfo.substr(0, finfo.lastIndexOf(' ('));
-    		alert(fname);
-    		/*for (var i=0; i<filelist.length; i++) {}*/
-    		/*$(this).parent('li').empty().remove();
-    		rows--;*/
+    		for (var i=0; i<filelist.length; i++) {
+    			var finfo = $(this).parent('li').first().text();
+    			var fname= finfo.substr(0, finfo.lastIndexOf(' ('));
+    			if (fname == filelist[i].name) {
+    				delete filelist.item(i);
+    				$(this).parent('li').empty().remove();
+    	    		rows--;
+    			}
+    		}
     	});
     });
     
