@@ -62,7 +62,7 @@
 				<ul class="nav pull-right top-menu">
 					<li>
 						<form class="form-inline top-menu-search" method="post"
-							action="/PortIt/search?cmd=SEARCH">
+							action="/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" /> <span class="input-group-btn">
@@ -121,7 +121,7 @@
 
 				<div class="col-md-12 mt mb">
 					<form class="col-md-10 searchKeyword" method="post"
-						action="/PortIt/SearchView?cmd=PROJSEARCH">
+						action="/SearchView?cmd=PROJSEARCH">
 						<div class="form-group col-md-11">
 							<input type="text" class="form-control" name="projSearch" value="${sessionScope.search}"/>
 						</div>
@@ -139,7 +139,7 @@
 				</div>
 				<!-- 조건 검색 box -->
 				<div class="searchSorting col-md-12 collapse" id="searchSorting">
-					<form class="" method="post" name="detailsearch" action="/PortIt/detailSearch?cmd=PROJDETAIL">
+					<form class="" method="post" name="detailsearch" action="/detailSearch?cmd=PROJDETAIL">
 						<input type="hidden" name="list_value"/>
 						<div class="">
 							<div class="sortKey col-md-1">

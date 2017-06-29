@@ -66,7 +66,7 @@
 				<ul class="nav pull-right top-menu">
 					<li>
 						<form class="form-inline top-menu-search" method="post"
-							action="/PortIt/search?cmd=SEARCH">
+							action="/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" /> <span class="input-group-btn">

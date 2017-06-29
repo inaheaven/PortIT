@@ -64,7 +64,7 @@
 				<ul class="nav pull-right top-menu">
 					<li>
 						<form class="form-inline top-menu-search" method="post"
-							action="/PortIt/search?cmd=SEARCH">
+							action="/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" />
@@ -209,7 +209,7 @@
 				검색된 결과가 없습니다.
 			</c:if>	
 						</div>
-						<form post="method" name="move" action="/PortIt/SearchView">
+						<form post="method" name="move" action="/SearchView">
 							<input type ="hidden" name="list2" value="${search}"/>
 							<input type ="hidden" name="cmd" value="PFSEARCH"/>
 						
@@ -250,7 +250,7 @@
 				검색된 결과가 없습니다.
 			</c:if>	
 						</div>					
-						<form post="method" name="move" action="/PortIt/SearchView">
+						<form post="method" name="move" action="/SearchView">
 							<input type ="hidden" name="list2" value="${search}"/>
 							<input type ="hidden" name="cmd" value="MEMSEARCH"/>
 						
@@ -295,7 +295,7 @@
 			<c:if test="${proj_list.size() == 0 }">
 				검색된 결과가 없습니다.
 			</c:if>			
-						<form post="method" name="move" action="/PortIt/SearchView">
+						<form post="method" name="move" action="/SearchView">
 							<input type ="hidden" name="list2" value="${search}"/>
 							<input type ="hidden" name="cmd" value="PROJSEARCH"/>
 						
@@ -352,15 +352,17 @@
 		document.prof_name.pf_id.value = prof_name;
 		document.prof_name.submit();
 	}
+	
+	<!--
 	</script>
 
-	<form name="pf_title" method="post" action="/PortIt/search?cmd=SEARCH">
+	<form name="pf_title" method="post" action="/search?cmd=SEARCH">
 		<input type="hidden" name="pf_id" />
 	</form>
-	<form name="tag_name" method="post" action="/PortIt/search?cmd=SEARCH">
+	<form name="tag_name" method="post" action="/search?cmd=SEARCH">
 		<input type="hidden" name="tag_name" />
 	</form>
-	<form name="prof_name" method="post" action="/PortIt/search?cmd=SEARCH">
+	<form name="prof_name" method="post" action="/search?cmd=SEARCH">
 		<input type="hidden" name="prof_name" />
 	</form>
 	
@@ -372,7 +374,7 @@
 	}
 	</script>
 
-	<form name="mem_name" method="post" action="/PortIt/search?cmd=SEARCH">
+	<form name="mem_name" method="post" action="/search?cmd=SEARCH">
 		<input type="hidden" name="mem_id" />
 	</form>
 	
@@ -384,10 +386,10 @@
 	}
 	</script>
 
-	<form name="proj_title" method="post" action="/PortIt/search?cmd=SEARCH">
+	<form name="proj_title" method="post" action="/search?cmd=SEARCH">
 		<input type="hidden" name="proj_id" />
 	</form>
-
+	-->
 			
 </body>
 </html>
