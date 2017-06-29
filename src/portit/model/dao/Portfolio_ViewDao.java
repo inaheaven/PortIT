@@ -95,7 +95,6 @@ public class Portfolio_ViewDao {
 	// Delete.jsp
 	public void deletePortforio(int Portforio_Id){
 		
-		System.out.println("DAO삭제" );
 		String sql = "delete from prof_pf where pf_id=?";
 		try{
 			con = pool.getConnection();

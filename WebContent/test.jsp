@@ -29,7 +29,7 @@
 <c:if test="${mem_list.size() == 0 }">
 	검색된 결과가 없습니다.
 </c:if>	
-	</script>
+
 
 </body>
 </html>

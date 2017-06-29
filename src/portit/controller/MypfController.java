@@ -31,18 +31,8 @@ public class MypfController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
-		String cmd = req.getParameter("cmd");
-		String url = null;
-		String action=req.getParameter("cmdAction");
-		String param=req.getParameter("param");
-		String mem_id=null;
-		String pf_id=null;
 		
 		
-		//dao 선언
-		Portfolio_ViewDao dao = new Portfolio_ViewDao();
-				
-	
 		/*
 		 전달받을 파라미터 : 
 		 -CMD:경로(ist), 
@@ -50,10 +40,17 @@ public class MypfController extends HttpServlet{
 		 -매개변수:mem_ID, PF_ID.... 
 		 */
 		
+		String cmd = req.getParameter("cmd");
+		String action=req.getParameter("cmdAction");
+		String param=req.getParameter("param");
+		String url = null;
+		String mem_id=null;
+		String pf_id=null;
 		
-		param=req.getParameter("param");
-		action=req.getParameter("cmdAction");
 		
+		//dao 선언
+		Portfolio_ViewDao dao = new Portfolio_ViewDao();
+				
 		
 		System.out.println("CTRL_CMD  "+cmd);
 		System.out.println("CTRL파라미터  "+param);
@@ -69,7 +66,6 @@ public class MypfController extends HttpServlet{
 			
 			//delete버튼이 눌리면...
 			if("delete".equals(action)){
-				
 				dao.deletePortforio(Integer.parseInt(param));
 			}
 			
@@ -82,6 +78,7 @@ public class MypfController extends HttpServlet{
 		
 		//포트폴리오수정.
 		else if (cmd.equals("modify")){
+			//파라미터 : PF_ID
 			
 			System.out.println("수정페이지로  pf_id값 전달" + param);
 			req.setAttribute("param", param);
@@ -102,8 +99,6 @@ public class MypfController extends HttpServlet{
 		//프로필상세페이지..
 		else if (cmd.equals("profile")){
 			//파라미터: MEM_ID
-			//COworker의값이되야한다...
-
 			
 			System.out.println("프로필상세  MEM_ID값 전달" + param);
 			req.setAttribute("param", param);
@@ -113,7 +108,6 @@ public class MypfController extends HttpServlet{
 		
 		//포트폴리오등록하기.
 		else if (cmd.equals("add")){
-			//파라미터: 
 			
 			System.out.println("포트폴리오등록하기   페이지로이동.");
 			req.setAttribute("param", param);
@@ -125,7 +119,6 @@ public class MypfController extends HttpServlet{
 		else if (cmd.equals("tag")){
 			//파라미터:  tag이름
 			
-			
 			System.out.println("테그검색에 전달" + param);
 			req.setAttribute("param", param);
 			url="/태그 페이지....jsp";
@@ -135,8 +128,6 @@ public class MypfController extends HttpServlet{
 		
 		req.setAttribute("pageName", url);
 		RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
-		
-		
 		view.forward(req,resp);
 	}
 }

@@ -37,7 +37,6 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
@@ -46,16 +45,14 @@
 		<!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
-		<!--header start-->
-		<header class="header black-bg"> </header>
-		<!--header end-->
+		
+		
+		
 		<!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-		<!--main content start-->
 
 		<!--main content start-->
-
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 col-sm-12 col-xs-12 mt">
@@ -107,20 +104,24 @@
 								
 								<!-- 자료형이 3개마다<div class="row">가 생성되어야한다...  -->
 								<!-- 나중에 다시해보자.. -->
-											<div class="row">
-											
-											
-										<%
-											
-										for(int i=0;i<totalRecord; i++){
-											Portfolio dto = (Portfolio) portforio_list.get(i);
-										%>
 								
-											<!-- 반복시작 -->
-											
-												
+								
+								<%		for(int i=0;i<totalRecord; i++){
+											Portfolio dto = (Portfolio) portforio_list.get(i);
+								%>
+								
+								
+								<%		if(i==0||i==2||i==5){
+								%>
+										 <div class="row">
+								<%		}	
+								%>
+								
+								
+										
+								
+										<!-- 반복시작 -->
 										<div class="col-md-4 mb">
-											
 										<div class="image-hover">
 											<div class="portfolio-simple" style="margin-left:5%;">
 												<div class="pfImg"></div>
@@ -169,16 +170,19 @@
 											</div>
 											</div>
 										</div>
+										<!-- 반복끝 -->
 										
+								<%		if(i==0||i==2||i==5){
+								%>
+										</div>
+										<!--/END 1ST ROW OF PANELS -->
+								<%		}
+								%>								
 								
 										
-									</form>
-									<%
-									}	
-									%>
-											</div>
-								<!--/END 1ST ROW OF PANELS -->
-								
+								<%	}//List반복.
+								%>	
+								</form>
 								
 						</div>
 					</div>
@@ -189,12 +193,6 @@
 			</section>
 			<!-- /wrapper -->
 		</section>
-		
-		
-		
-		
-		
-		
 	</section>
 
 
@@ -228,15 +226,11 @@
 		document.frmList.cmdAction.value =_action;
 		document.frmList.param.value =_param;
 		
-		
-		
 		//해당 폼 submit
 		document.frmList.submit();
 		
 		
-		
 		/* 	
-		
 		frmDelete.pf_id.value = pf_id;
 		document.frmDelete.submit();
 		
@@ -254,10 +248,8 @@
 		
 		-폼에 접근해서 submit() 
 		document.frmDelete.submit();
-		
 		*/
 	}
-	
 	
 	
 	
@@ -270,10 +262,6 @@
 		document.search.submit();
 	}
 	
-	function fnRead(b_num){
-		document.frmRead.b_num.value = b_num;
-		document.frmRead.submit();
-	}
 </script>
 	
 	

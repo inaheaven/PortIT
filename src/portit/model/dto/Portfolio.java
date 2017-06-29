@@ -19,6 +19,8 @@ public class Portfolio {
 	private String ml_path;
 	
 	
+	
+	
 	public int getMem_id() {
 		return mem_id;
 	}
