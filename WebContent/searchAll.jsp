@@ -177,7 +177,7 @@
 						<h4>포트폴리오(${port_list.size()} 건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 		
 		<c:if test="${port_list.size() != 0 && port_list.size()>0}">
-				<c:forEach begin="0" end="${port_list.size()-1}" var="i" >	
+				<c:forEach begin="0" end="3" var="i" >	
 						<!-- 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
@@ -227,7 +227,7 @@
 						<h4>멤버(${mem_list.size()}명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 						
 		<c:if test="${mem_list.size() != 0 && mem_list.size()>0}">			
-				<c:forEach begin="0" end="${mem_list.size()-1}" var="i" >	
+				<c:forEach begin="0" end="3" var="i" >	
 						<!-- member -->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
@@ -268,7 +268,7 @@
 						<h4>프로젝트(${proj_list.size()}건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 
 			<c:if test="${proj_list.size() != 0 && proj_list.size()>0}">
-				<c:forEach begin="0" end="${proj_list.size()-1}" var="i" >	
+				<c:forEach begin="0" end="3" var="i" >	
 					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
 	          				<div class="project-list">
