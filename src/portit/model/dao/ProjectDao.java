@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
 import portit.model.dto.Project;
+import portit.model.dto.Tag;
 
 public class ProjectDao {
 
@@ -77,13 +78,33 @@ public class ProjectDao {
 		String proj_regenddate;
 		
 		int proj_tag_id;	String proj_tag_name;				//TAG_USE 테이블에서 값을 가져올때 사용하기 위한 변수 
-
-		ArrayList<String> proj_env = new ArrayList<>();
-		ArrayList<String> proj_language = new ArrayList<>();
-		ArrayList<String> proj_tool = new ArrayList<>();
-		ArrayList<String> proj_field = new ArrayList<>();
-		ArrayList<Integer> proj_numofperson = new ArrayList<>();
+		int proj_numofperson = 0;
+		ArrayList<Integer> numofperson_list = new ArrayList<>();
 		
+		String env;
+		ArrayList<String> proj_env_list = new ArrayList<>();
+		String lang;
+		ArrayList<String> proj_language_list = new ArrayList<>();
+		String tool;
+		ArrayList<String> proj_tool_list = new ArrayList<>();
+		String field;
+		ArrayList<String> proj_field_list = new ArrayList<>();
+		
+		ArrayList<Project> update_list = new ArrayList<>();
+		ArrayList<Tag> env_list = new ArrayList<>();
+		ArrayList<Tag> lang_list = new ArrayList<>();
+		ArrayList<Tag> tool_list = new ArrayList<>();
+		ArrayList<Tag> field_list = new ArrayList<>();
+		ArrayList<Profile> prof_list = new ArrayList<>();
+		
+		//dto
+		Project project = new Project();
+		Tag env_tag = new Tag();
+		Tag field_tag = new Tag();
+		Tag lang_tag = new Tag();
+		Tag tool_tag = new Tag();
+		Profile profile = new Profile();
+
 		try {
 			//project 테이블에서 필요한 값 불러오기
 			String proj_sql = "SELECT * FROM PROJECT WHERE PROJ_ID = ?";
@@ -99,18 +120,46 @@ public class ProjectDao {
 			proj_period = rs.getInt("proj_period"); 
 			proj_regenddate = rs.getString("proj_regenddate");
 			
-
-			//project 테이블에서 필요한 값 불러오기		
+			
+			
+			//Member 테이블에서 필요한 값 불러오기
+			String member_id_sql = "SELECT MEM_ID FROM PROJ_APP WHERE PROJ_ID = ?";
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(member_id_sql);
+			stmt.setString(1, req_proj_id); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
+			rs = stmt.executeQuery();
+			rs.next();
+			int mem_id = rs.getInt("mem_id");
+			String member_name_sql = "SELECT PROF_NAME, PROF_NICK FROM PROFILE WHERE MEM_ID = ?";
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(member_name_sql);
+			stmt.setInt(1, mem_id); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
+			rs = stmt.executeQuery();
+			rs.next();
+			String prof_name = rs.getString("prof_name");
+			String prof_nick = rs.getString("prof_nick");
+			profile.setProf_name(prof_name);
+			profile.setProf_nick(prof_nick);
+			prof_list.add(profile);
+			
+			
+			//Tag 테이블에서 필요한 값 불러오기		
 			String tag_sql = "SELECT TAG_ID, PROJ_NUMOFPERSON FROM TAG_USE WHERE TAG_USE_TYPE='PROJ_REG' AND TAG_USE_TYPE_ID=?";
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(tag_sql);
 			stmt.setString(1, req_proj_id);
 			rs = stmt.executeQuery();
 			ArrayList<Integer> tag_id_list = new ArrayList<>();
+			
 			while(rs.next()){
 				proj_tag_id = rs.getInt("TAG_ID");
-				proj_numofperson.add(proj_tag_id);
+				proj_numofperson = rs.getInt("PROJ_NUMOFPERSON");
+				if(rs.getInt("PROJ_NUMOFPERSON")!=0){
+					numofperson_list.add(proj_numofperson);
+				}
+				tag_id_list.add(proj_tag_id);
 			}
+			
 			Iterator<Integer> tag = tag_id_list.iterator();
 			while(tag.hasNext()){
 				proj_tag_id = tag.next();
@@ -122,37 +171,46 @@ public class ProjectDao {
 				rs.next();
 				proj_tag_name = rs.getString("TAG_NAME");
 				String tag_type = rs.getString("TAG_TYPE");
-
 				if(tag_type.equals("env")){
-					proj_env.add(proj_tag_name);
+					env = proj_tag_name;
+					proj_env_list.add(env);
+					env_tag.setProj_env_list(proj_env_list);
+					env_list.add(env_tag);
 				}else if(tag_type.equals("field")){
-					proj_field.add(proj_tag_name);
+					field = proj_tag_name;
+					proj_field_list.add(field);
+					field_tag.setProj_field_list(proj_field_list);
+					field_list.add(field_tag);
 				}else if(tag_type.equals("language")){
-					proj_language.add(proj_tag_name);
+					lang = proj_tag_name;
+					proj_language_list.add(lang);
+					lang_tag.setProj_lang_list(proj_language_list);
+					lang_list.add(lang_tag);
 				}else if(tag_type.equals("tool")){
-					proj_tool.add(proj_tag_name);
+					tool = proj_tag_name;
+					proj_tool_list.add(tool);
+					tool_tag.setProj_tool_list(proj_tool_list);
+					tool_list.add(tool_tag);
 				}
 			}
-			
-			System.out.println(proj_title);
-			
-			req.setAttribute("proj_id", req_proj_id);
-			req.setAttribute("proj_title", proj_title);
-			req.setAttribute("proj_intro", proj_intro);
-			req.setAttribute("proj_regdate", proj_regdate);
-			req.setAttribute("proj_startdate", proj_startdate);
-			req.setAttribute("proj_period", proj_period);
-			req.setAttribute("proj_regenddate", proj_regenddate);
-			req.setAttribute("proj_env", proj_env);
-			req.setAttribute("proj_language", proj_language);
-			req.setAttribute("proj_tool", proj_tool);
-			req.setAttribute("proj_field", proj_field);
-			req.setAttribute("proj_numofperson", proj_numofperson);
-			
-			System.out.println("되야지!!!");
+			project.setProj_numofperson(numofperson_list);
+			project.setProj_id(Integer.parseInt(req_proj_id));
+			project.setProj_title(proj_title);
+			project.setProj_intro(proj_intro);
+			project.setProj_regdate(proj_regdate);
+			project.setProj_startdate(proj_startdate);
+			project.setProj_period(proj_period);
+			project.setProj_regenddate(proj_regenddate);
+			update_list.add(project);
 
-			RequestDispatcher rp = req.getRequestDispatcher("myProjRegisterEdit.jsp");
-			rp.forward(req, resp);
+			req.setAttribute("list", update_list);
+			req.setAttribute("env_list", env_list);
+			req.setAttribute("language_list", lang_list);
+			req.setAttribute("tool_list", tool_list);
+			req.setAttribute("field_list", field_list);
+			req.setAttribute("prof_list", prof_list);
+			RequestDispatcher view = req.getRequestDispatcher("myProjRegisterEdit.jsp");
+			view.forward(req, resp);
 			
 		} catch (Exception e) {
 			System.out.println("read_proj오류"+e);
@@ -367,29 +425,6 @@ public class ProjectDao {
 
 	}
 
-	// 프로젝트 수정
-	public void updateProj(HttpServletRequest req, HttpServletResponse resp) {
-		getConnection();
-		try {
-			Project project = new Project();
-			String sql = "UPDATE PROJECT " + "set PROJ_TITLE=?, PROJ_INTRO=?," + "PROJ_REGDATE=sysdate,"
-					+ "PROJ_STARTDATE=?, PROJ_PERIOD=?,PROJ_REGENDDATE=?" + " where PROJ_ID=?";
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, project.getProj_title());
-			stmt.setString(2, project.getProj_intro());
-			stmt.setDate(3, (java.sql.Date) project.getProj_startdate());
-			stmt.setInt(4, project.getProj_period());
-			stmt.setDate(5, (java.sql.Date) project.getProj_regenddate());
-			stmt.setInt(6, project.getProj_id());
-			stmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println("updateProj()에서 오류" + e);
-		} finally {
-			freeConnection();
-		}
-	}
-	
-	
 
 
 

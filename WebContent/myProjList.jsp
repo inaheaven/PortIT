@@ -62,7 +62,7 @@
 										aria-expanded="false" aria-controls="collapseOne"> 
 											<i class="fa fa-chevron-down"></i>
 										</a>
-										<input type="hidden" name="proj_id" value="32">
+										<input type="hidden" name="proj_id" value="35">
 									</span>							
 									</form>		
 								</h4>
