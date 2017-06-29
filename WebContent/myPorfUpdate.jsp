@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="portit.model.dto.Profile"%>
 <%@page import="portit.model.dao.ProfileDao"%>
 <%@page import="java.sql.DriverManager"%>
@@ -10,20 +11,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-<%
-	Profile dto = (Profile)request.getAttribute("profile");
-	if(dto==null){
-		dto = new Profile();
-	}
+<jsp:useBean id="dao" class="portit.model.dao.ProfileDao" />
+<jsp:useBean id="dto" class="portit.model.dto.Profile" >
+	<jsp:setProperty name="dto" property="*"/>
+</jsp:useBean>
 
- 	int mem_id = Integer.parseInt(request.getParameter("mem_id"));
- 	request.setAttribute("mem_id",mem_id);
- 	
- 	int prof_id = Integer.parseInt(request.getParameter("prof_id"));
- 	
- 	if(prof_id==null){
- 		response.sendRedirect("/page?page=myProfUpdate");
- 	}
+<%
+	int mem_id = Integer.parseInt(request.getParameter("mem_id"));
+
+	/////////////////101 -> mem_id로 //////////////
+	List list = dao.getProfile(dto,101);
 %>
 <script src="assets/js/search.js"></script>
 <script language="javascript">
@@ -157,7 +154,7 @@ function fnSelectSnsInfo(snsName){
 	<section class="wrapper site-min-height">
 		<div class="col-md-12 mt profreg">
 			<div class="profregForm">
-				<h3 class="formTitle text-center">프로필 등록</h3>
+				<h3 class="formTitle text-center">프로필 수정</h3>
 				<form action="/register?cmd=REGISTER" method="post"
 					class="form-horizontal style-form">
 
@@ -258,8 +255,7 @@ function fnSelectSnsInfo(snsName){
 							<div class="col-md-2">
 								<button type="button" class="btn common" id="snsAdd">추가</button>
 							</div>
-							<br>
-							<br>
+							<br> <br>
 							<div id="snsList">
 								<table class="col-md-12">
 
@@ -281,8 +277,7 @@ function fnSelectSnsInfo(snsName){
 							<div class="col-md-2">
 								<button type="button" class="btn common" onclick="addSkill()">추가</button>
 							</div>
-							<br>
-							<br>
+							<br> <br>
 							<div id="skillList"></div>
 						</div>
 					</div>
@@ -290,7 +285,7 @@ function fnSelectSnsInfo(snsName){
 					<div class="form-group text-center buttonDiv">
 						<button type="submit" class="btn common" onclick="profRegister()">등록하기</button>
 						&nbsp;&nbsp;&nbsp;
-						<button type="reset" class="btn cancel">다시 쓰기</button>
+						<button type="button" class="btn cancel" onclick="profalter()">수정하기</button>
 
 					</div>
 				</form>

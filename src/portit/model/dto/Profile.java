@@ -106,9 +106,7 @@ public class Profile {
 		this.prof_background = prof_background;
 	}
 
-	public String getProf_website() {
-		return prof_website;
-	}
+
 //	public String getProf_email() {
 //		return prof_email;
 //	}
@@ -117,9 +115,7 @@ public class Profile {
 		this.prof_email = prof_email;
 	}
 
-	public void setProf_website(String prof_website) {
-		this.prof_website = prof_website;
-	}
+	
 	public String getProf_github() {
 		return prof_github;
 	}
@@ -208,5 +204,11 @@ public class Profile {
 	}
 	public void setTag_name4(String tag_name) {
 		this.tag_name4 = tag_name;
+	}
+	public String getProf_website() {
+		return prof_website;
+	}
+	public void setProf_website(String prof_website) {
+		this.prof_website = prof_website;
 	}
 }

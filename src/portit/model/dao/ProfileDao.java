@@ -3,8 +3,8 @@ package portit.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
@@ -60,8 +60,8 @@ public class ProfileDao {
 	public Profile addprofile(Profile dto, int mem_id) {
 		try {
 
-			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_regdate) "
-					+ "values(prof_id.nextVal, ? , ? , ? , ? , ? , ? , ? , sysdate)";
+			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_regdate, prof_follower) "
+					+ "values(prof_id.nextVal, ? , ? , ? , ? , ? , ? , ? , sysdate, ?)";
 
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -72,6 +72,7 @@ public class ProfileDao {
 			stmt.setString(5, dto.getProf_nick());
 			stmt.setString(6, dto.getProf_intro());
 			stmt.setString(7, dto.getProf_website());
+			stmt.setInt(8, dto.getProf_follower());
 
 			stmt.executeUpdate();
 
@@ -227,118 +228,13 @@ public class ProfileDao {
 	}
 
 	/**
-	 * 관심 툴  입력
+	 *	프로필 수정 
 	 */
-	public Profile addprofile2(Profile dto, int mem_id) {
-		try {
-			
-		}
+	public void updateProfile(Profile dto, int mem_id) {
 
-		catch (Exception err) {
-			System.out.println("addprofile에서 오류 " + err);
-		} finally {
-			freeConnection();
-		}
-		return dto;
-	}
-
-	
-	/**
-	 * 관심 분야 입력
-	 */
-	public Profile addprofile3(Profile dto, int mem_id) {
-		try {
-			
-		}
-
-		catch (Exception err) {
-			System.out.println("addprofile에서 오류 " + err);
-		} finally {
-			freeConnection();
-		}
-		return dto;
-	}
-	
-	/**
-	 *  스킬 및 점수 입력
-	 */
-	public Profile addprofile4(Profile dto, int mem_id) {
-
-		try {
-			
-		}
-
-		catch (Exception err) {
-			System.out.println("addprofile에서 오류 " + err);
-		} finally {
-			freeConnection();
-		}
-		return dto;
-	}
-
-	/**
-	 * �봽濡쒗븘 �닔�젙 �엯�젰�뻽�뜕 寃껋쓣 遺덈윭�삩�떎.
-	 * 
-	 * @param profile
-	 */
-
-	public Profile getProfile(int mem_id) {
-		String sql = "SELECT PROFILE.PROF_IMG, PROFILE.PROF_BACKGROUND, PROFILE.PROF_NAME, "
-				+ "PROFILE.PROF_NICK, PROFILE.PROF_INTRO, TAG_USE.TAG_USE_TYPE, TAG_USE.TAG_USE_TYPE, TAG_USE.TAG_USE_TYPE,"
-				+ "PROFILE.WEBSITE, PROFILE.GITBUB, PROFILE.FACEBOOK, PROFILE.FOLLOWER, TAG_USE.TAG_USE_TYPE,"
-				+ "TAG_USE.PROF_SKILL_LEVEL " + "FROM PROFILE, TAG_USE"
-				+ "WHERE PROFILE.MEM_ID = TAG_USE.TAG_USE_TYPE_ID and TAG_USE.TAG_ID = TAG.TAG_ID";
-
-		Profile dto = new Profile();
-
-		try {
-			conn = pool.getConnection();
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, mem_id);
-			rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				dto.setProf_id(mem_id);
-				dto.setProf_img(rs.getString("prof_img"));
-				dto.setProf_background(rs.getString("prof_background"));
-				dto.setProf_name(rs.getString("prof_name"));
-				dto.setProf_nick(rs.getString("prof_nick"));
-				dto.setProf_intro(rs.getString("prof_intro"));
-				dto.setProf_language(rs.getString("prof_laguage"));
-				dto.setProf_tool(rs.getString("prof_tool"));
-				dto.setProf_field(rs.getString("prof_field"));
-				dto.setProf_website(rs.getString("prof_website"));
-				dto.setProf_github(rs.getString("prof_github"));
-				dto.setProf_facebook(rs.getString("prof_facebook"));
-				dto.setProf_follower(rs.getInt("prof_follower"));
-				dto.setTag_name(rs.getString("tag_name"));
-				dto.setProf_skill_level(rs.getInt("prof_skill_level"));
-
-			}
-		} catch (Exception err) {
-			System.out.println("profile() : " + err);
-		} finally {
-			freeConnection();
-		}
-		return dto;
-
-	}
-
-	/**
-	 * �봽濡쒗븘 �닔�젙 ��(�궡�슜媛� �닔�젙)
-	 * 
-	 * @param dto
-	 */
-
-	public void updateProfile(Profile dto) {
-
-		String sql = "UPDATE PROFILE SET prof_img=?, prof_background=?, prof_name=?, prof_nick=?, "
-				+ "prof_intro=?, prof_language=?, prof_tool=?, prof_field=?, prof_website=?, "
-				+ "prof_github=?, prof_facebook=?, prorof_follower=?" + ",Tag_name=?, prof_skill_level=?"
-				+ "WHERE prof_id=?";
-
-		sql = "UPDATE TAG_USE SET TAG_TYPE=? AND PROF_SKILL_LEVEL=?";
+		sql = "update profile set prof_img='?', prof_background='?', "
+				+ "prof_name='?', prof_nick='?', prof_intro='?', prof_website='?'"
+				+ " where mem_id = " + mem_id;
 
 		try {
 			conn = pool.getConnection();
@@ -358,11 +254,58 @@ public class ProfileDao {
 			stmt.setString(14, dto.getTag_name());
 			stmt.setInt(15, dto.getProf_skill_level());
 			stmt.executeUpdate();
+			
 		} catch (Exception err) {
-			System.out.println("DBCP �뿰寃� �떎�뙣 : " + err);
+			System.out.println("updateProfile : " + err);
 		} finally {
 			freeConnection();
 		}
 
+	}
+	
+	/**
+	 *	프로필 리스트
+	 */
+	public List getProfile(Profile dto, int mem_id) {
+		ArrayList list = new ArrayList();
+		sql = "select * from profile";
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Profile profile = new Profile();
+				profile.setProf_id(rs.getInt("prof_id"));
+				profile.setProf_nick(rs.getString("prof_nick"));
+				profile.setTag_name(rs.getString("tag_name"));
+				profile.setTag_name2(rs.getString("tag_name2"));
+				profile.setTag_name3(rs.getString("tag_name3"));
+				profile.setTag_name4(rs.getString("tag_name4"));
+				profile.setProf_img(rs.getString("prof_img"));
+				profile.setProf_background(rs.getString("prof_background"));
+				profile.setProf_name(rs.getString("prof_name"));
+				profile.setProf_follower(rs.getInt("prof_follower"));
+				profile.setProf_website(rs.getString("prof_website"));
+				profile.setProf_github(rs.getString("prof_github"));
+				profile.setProf_facebook(rs.getString("prof_facebook"));
+				profile.setProf_regdate(rs.getDate("prof_regdate"));
+				profile.setProf_follower(rs.getInt("prof_follower"));
+				profile.setProf_language(rs.getString("prof_language"));
+				profile.setProf_tool(rs.getString("prof_tool"));
+				profile.setProf_field(rs.getString("prof_field"));
+				profile.setProf_skill_level(rs.getInt("prof_skill_level"));
+				
+
+				list.add(profile);
+			}
+		} 
+		catch (Exception err) {
+			System.out.println("updateProfile : " + err);
+		} finally {
+			freeConnection();
+		}
+		
+		return list;
 	}
 }

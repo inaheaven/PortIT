@@ -2,6 +2,7 @@ package portit.controller;
 
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,8 +30,9 @@ public class ProfileController extends HttpServlet {
 		String cmd = req.getParameter("cmd");
 		String url ="";
 		
-		//int mem_id = (int) req.getSession().getAttribute("mem_id");
-		//System.out.println(mem_id);
+		int mem_id = Integer.parseInt(req.getParameter("mem_id"));
+		req.setAttribute("mem_id", mem_id);
+		
 		ProfileDao profileDao = new ProfileDao();
 		Profile prof_reg = new Profile();
 		
@@ -45,6 +47,7 @@ public class ProfileController extends HttpServlet {
 		String tag_name3 = req.getParameter("tag_name3");
 		String tag_name4 = req.getParameter("tag_name4");
 		int prof_skill_level = Integer.parseInt(req.getParameter("prof_skill_level"));
+		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
 		
 		prof_reg.setProf_img(prof_img);
 		prof_reg.setProf_background(prof_background);
@@ -57,11 +60,12 @@ public class ProfileController extends HttpServlet {
 		prof_reg.setTag_name3(tag_name3);
 		prof_reg.setTag_name4(tag_name4);
 		prof_reg.setProf_skill_level(prof_skill_level);
+		prof_reg.setProf_skill_level(prof_follower);
 		
-		//101 -> mem_id로
+		////////////////////////////101 -> mem_id로///////////////////////////////
 		profileDao.addprofile(prof_reg, 101);
-
-			
+		req.setAttribute("prof_reg", prof_reg);
+		List list = profileDao.getProfile(prof_reg, 101);	
 		
 		if(cmd.equals("REGISTER")){
 			//return  new RegisterCommand();
