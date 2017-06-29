@@ -9,6 +9,7 @@ import java.util.List;
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Bookmark;
 import portit.model.dto.Portfolio;
+import portit.model.dto.Tag;
 
 /**
  * 
@@ -64,13 +65,13 @@ public class BookmarkDao {
 				bm.setPf_id(rs.getInt("pf_id"));
 				bm.setBm_date(rs.getDate("bm_date"));
 				bm.setMl_path(rs.getString("ml_path"));
-				bm.setProf_nick(rs.getString("prof_nick"));
+				bm.setProf_nick(rs.getString("prof_nick"));//여기랑
 				bm.setPf_title(rs.getString("pf_title"));
 				bm.setPf_like(rs.getInt("pf_like"));
 				int pf_id = rs.getInt("pf_id");
 				
 							
-				getTag(bm, pf_id);
+				bm.setTags(getTag(bm, pf_id));
 				bmList.add(bm);
 			}
 		} catch (Exception e) {
@@ -126,11 +127,12 @@ public class BookmarkDao {
 	 * 북마크한 사람의 프로필 중에서 태그 부분 종합해서 가져오기
 	 * 
 	 * @param bm_id
-	 */
-	public void getTag(Bookmark bm, int pf_id) {
+	 *///여기는 태그부분 여기서 태그 찾아와서 띄워줘야행 # 옆에다가  왜 두개야? 태그 불러오는 쿼리가 복잡해서 두개로 나눠서 메소드 
+	
+	public List<String> getTag(Bookmark bm, int pf_id) {
 		try {
 			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ "WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' AND tu.tag_use_type_id = ? "
+					+ "WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'PF' AND tu.tag_use_type_id = ? "
 					+ "ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4"; // 랜덤하게
 																		// 3개
 
@@ -141,11 +143,13 @@ public class BookmarkDao {
 			List<String> tags = new ArrayList<>();
 			while (rs3.next()) {
 				tags.add(rs3.getString("tag_name"));
+				
 			}
-			bm.setTags(tags);
+			return tags; 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	/**
@@ -161,11 +165,19 @@ public class BookmarkDao {
 			// BOOKMARK에 MEM_ID=? AND PF_ID=? 조회해서 데이터가 존재하면 delete 없으면 insert
 			conn = pool.getConnection();
 
-			sql = "MERGE INTO BOOKMARK B1" + "USING (SELECT MEM_ID, PF_ID FROM BOOKMARK WHERE MEM_ID=? AND PF_ID=?)B2"
-					+ "ON (B1.BM_ID=B2.BM_ID)" + "WHEN MATCHED THEN" + "DELETE FROM BOOKMARK WHERE MEM_ID =B1.MEM_ID"
-					+ "WHEN NOT MATCHED THEN" + "INSERT INTO BOOKMARK (BM_ID, MEM_ID,PF_ID,BM_DATE)"
+			sql = "MERGE INTO BOOKMARK  USING DUAL"
+					+ "ON (MEM_ID=104 and PF_ID=402 ) WHEN MATCHED THEN UPDATE SET bm_ID=?  DELETE  WHERE MEM_ID=104 and PF_ID=? "
+					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE)"
 					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE)";
-
+/*//CREATE SEQUENCE SEQ_TAG_ID
+	           INCREMENT BY 1
+	           START WITH   1
+	           MAXVALUE 9999999999999999999999999999
+	           NOCYCLE
+	           NOCACHE;
+	           *
+	           * 시퀀스 
+	           **/
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, pf_id);
 			stmt.setInt(2, mem_id);

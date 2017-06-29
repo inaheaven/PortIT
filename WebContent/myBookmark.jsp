@@ -21,7 +21,6 @@
 	System.out.println("add = "+portfolios);
 	if(portfolios.isEmpty()){
 		portfolios= new ArrayList();
-		System.out.println("isempty");
 	}
 	
 %>	
@@ -47,14 +46,14 @@
 											<div class="simple-content">
 												<div class="pfTag">
 													<% for(int j=0; j<port.getTags().size(); j++) { %>
-													#<a href=""><%= port.getTags().get(j)%></a>&nbsp;
+													<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
 													<%} %>
 												</div>
 												<div class="pfTitle">
 													<a href=""><%=port.getPf_title() %></a>
 												</div>
 												<div class="pfBottom">
-													<span class="pfmemName"><a href=""><%=port.getProf_name() %> </a></span> 
+													<span class="pfmemNam"><a href=""><%=port.getProf_nick() %></a></span> 
 													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like() %></span>
 												</div>
 											</div>

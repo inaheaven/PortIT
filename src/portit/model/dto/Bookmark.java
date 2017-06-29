@@ -17,13 +17,17 @@ public class Bookmark {
     private String prof_name;
     private String ml_path;
 	private String pf_title;
-    private int pf_like;
+    
+	private int pf_like;
     private List<String> tags;
     private String prof_nick;
     
     
-	public String getProf_nick() {
+    public String getProf_nick() {
 		return prof_nick;
+	}
+	public void setProf_nick(String prof_nick) {
+		this.prof_nick = prof_nick;
 	}
 	public String getMl_path() {
 		return ml_path;
@@ -79,7 +83,5 @@ public class Bookmark {
 	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
-	public void setProf_nick(String string) {
-		
-	}
+	
 }
