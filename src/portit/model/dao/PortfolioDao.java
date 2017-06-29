@@ -187,11 +187,13 @@ public class PortfolioDao {
 		// SELECT문 지정
 		String sql = "SELECT * FROM portfolio";
 		// 검색 조건 추가
+		if (!keyword.isEmpty() || tagList != null) {
+			sql += " WHERE";
+		}
 		if (!keyword.isEmpty()) {
-			sql += " WHERE pf_title LIKE '%" + keyword + "%'"
+			sql += " pf_title LIKE '%" + keyword + "%'"
 					+ " OR pf_intro LIKE '%" + keyword + "%'";
 		}
-		
 		if (!sort.isEmpty()) {
 			sql += " ORDER BY " + sort + " DESC";
 		}
@@ -312,7 +314,7 @@ public class PortfolioDao {
 					+ "pf_startdate, pf_enddate, pf_numofperson, pf_repository"
 					+ ") VALUES(?,?,?,?,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, portfolio.getPf_id());
+			stmt.setString(1, "seq_pf_id.nextVal");
 			stmt.setString(2, portfolio.getPf_title());
 			stmt.setString(3, portfolio.getPf_intro());
 			stmt.setString(4, "SYSDATE");
@@ -324,8 +326,18 @@ public class PortfolioDao {
 			rows += stmt.executeUpdate();
 
 			// 태그사용 추가
+			sql = "INSERT INTO tag_use("
+					+ "tag_use_id, tag_use_type, tag_use_type_id, tag_id"
+					+ ") VALUES(?, ?, ?, ?)";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "seq_tag_use_id.nextVal");
+			stmt.setString(2, "portfolio");
+			stmt.setInt(3, portfolio.getPf_id());
+			stmt.setString(4, );
+			rows += stmt.executeUpdate();
 			
 			// 미디어 라이브러리 추가
+			
 			
 			// 프로필과 포트폴리오 연결
 		} catch (SQLException e) {
