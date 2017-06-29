@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.portlet.PortletFileUpload;
+
 import portit.model.dao.ProfileDao;
 import portit.model.dto.Profile;
 @WebServlet("/register")
@@ -27,7 +29,24 @@ public class ProfileController extends HttpServlet {
 		String cmd = req.getParameter("cmd");
 		String url ="";
 		
-		int mem_id = (int) req.getSession().getAttribute("mem_id");
+		//int mem_id = (int) req.getSession().getAttribute("mem_id");
+		//System.out.println(mem_id);
+		
+
+		ProfileDao profileDao = new ProfileDao();
+		Profile prof_reg = new Profile();
+		
+		prof_reg = profileDao.addprofile(prof_reg, 101);	
+		
+		if(cmd.equals("REGISTER")){
+			//return  new RegisterCommand();
+			url="/myProf.jsp";
+		}
+		
+		RequestDispatcher view = req.getRequestDispatcher(url);
+		view.forward(req, resp);
+		
+		/*
 		if(cmd!=null && cmd.equals("REGISTER")){
 			
 		Profile dto = new Profile();
@@ -42,7 +61,7 @@ public class ProfileController extends HttpServlet {
 		Profile resultDto = dao.addprofile(dto, mem_id);
 		req.setAttribute("profile", resultDto);
 		
-		/*
+		
 		 * dto �뿉 蹂��닔 �꽔湲�
 		 * dao濡� insert 泥섎━ Dto dto = dao.addprofile(dto);
 		 * dto瑜� request �뿉 �냽�꽦�쑝濡� 吏��젙 request.setAttribute("dto", dto)
@@ -56,14 +75,8 @@ public class ProfileController extends HttpServlet {
 		 * %>
 		 * value="<%=dto.get??? %>"
 		 * */
-		if(cmd.equals("REGISTER")){
-			//return  new RegisterCommand();
-			url="/myProf.jsp";
-		}
 		
-		RequestDispatcher view = req.getRequestDispatcher(url);
-		view.forward(req, resp);
-		
+	/*	
 	}else if(cmd!=null && cmd.equals("UPDATE")){
 		Profile dto = new Profile();
 		String prof_name = req.getParameter("Prof_name");
@@ -77,7 +90,7 @@ public class ProfileController extends HttpServlet {
 		dao.updateProfile(dto);
 		System.out.println("updatetest");
 	}
-
+*/
 	/*public Profile profile(HttpServletRequest req){
 		String prof_nick = req.getParameter("prof_nick");*/
 	}

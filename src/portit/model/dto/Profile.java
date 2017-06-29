@@ -21,11 +21,11 @@ public class Profile {
 	private Date prof_regdate;
 	private int prof_follower;
 
-//	private String prof_language;
-//	private String prof_tool;
-//	private String prof_field;
-//	private String tag_name;
-//	private int prof_skill_level;
+	private String prof_language;
+	private String prof_tool;
+	private String prof_field;
+	private String tag_name;
+	private int prof_skill_level;
 
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
@@ -34,7 +34,7 @@ public class Profile {
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
 
-	/*
+	
 	public String getProf_language() {
 		return prof_language;
 	}
@@ -65,7 +65,7 @@ public class Profile {
 	public void setProf_skill_level(int prof_skill_level) {
 		this.prof_skill_level = prof_skill_level;
 	}
-	*/
+	
 	public int getProf_id() {
 		return prof_id;
 	}

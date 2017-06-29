@@ -110,6 +110,77 @@ public class ProfileDao {
 		}
 		return flag;
 	}
+	/**
+	 * 프로필 등록
+	 */
+	public Profile addprofile(Profile dto, int mem_id) {
+		try{
+			
+			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_regdate) "
+					+ "values(prof_id.nextval, mem_id , ? , ? , ? , ? , ? , ? , sysdate)";
+			
+				conn = pool.getConnection();
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, dto.getProf_img());
+				stmt.setString(2, dto.getProf_background());
+				stmt.setString(3, dto.getProf_name());
+				stmt.setString(4, dto.getProf_nick());
+				stmt.setString(5, dto.getProf_intro());
+				stmt.setString(6, dto.getProf_website());
+				
+				stmt.executeUpdate();
+				/*
+				//태그 테이블 입력
+				sql = "insert into tag(tag_id, tag_type, tag_name)"
+						+ "values(tag_id.nextVal,'language',?)";
+				
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, dto.getTag_name());
+				
+				stmt.executeUpdate();
+				
+				//프로필 id를 가지고 오는 부분
+				sql = "select * from profile where mem_id ='"+mem_id+"'"
+						+ "order by prof_regdate desc";
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				
+				rs.next();
+				int req_prof_id = rs.getInt("prof_id");
+				
+				
+				//태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
+				sql = "select * from tag join tag_use on tag.tag_id = tag_use.tag_id "
+						+ "join profile on tag_use_type_id = profile.prof_id "
+						+ "where mem_id = '"+mem_id+"'"
+						+ "order by prof_regdate desc";
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				
+				rs.next();
+				int req_tag_id = rs.getInt("tag_id");
+				
+				//태그 유즈 테이블 입력
+				sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
+						+ "values(tag_use_id.nextVal, 'profile', req_prof_id , req_tag_id , ?)";
+				
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, dto.getProf_skill_level());
+				
+				stmt.executeUpdate();
+				*/
+				
+		}
+		
+		catch(Exception err){
+			System.out.println("addprofile에서 오류 " + err);
+		}
+		finally{
+			freeConnection();
+		}
+		return dto;
+	}
+	
 	
 	/**
 	 * �봽濡쒗븘 �엯�젰 
@@ -118,6 +189,7 @@ public class ProfileDao {
 	 * @return 
 	 * @return
 	 */
+	/*
 	public Profile addprofile(Profile dto, int mem_id) {
 		
 		String sql = "UPDATE PROFILE SET prof_img=?, prof_background=?, prof_name=?, prof_nick=?, "
@@ -147,7 +219,7 @@ public class ProfileDao {
 				stmt.executeUpdate();
 				
 				//list.add(dto);
-				/*
+				
 				Profile myProf = this.getProfile(mem_id);
 				
 				sql="INSERT INTO TAG(TAG_ID,TAG_NAME) VALUES(seq_tag_id.nextval,?)";
@@ -184,7 +256,7 @@ public class ProfileDao {
 				sql="INSERT INTO TAGUSE(TAG_USE_ID,TAG_USE_TYPE,TAG_USE_TYPE_ID,TAG_ID) "
 					+ "VALUES(MEM_ID,PROF_field,SEQ_TAG_USE_ID.NEXTVAL,MEM_ID)";
 					//prof_field tag,taguse 테이블에 입력
-*/				
+				
 			}
 		
 			catch(Exception err){
@@ -195,11 +267,13 @@ public class ProfileDao {
 		}
 			return dto;
 	}
+	*/
 	/**
 	 * �봽濡쒗븘 �닔�젙  
 	 * �엯�젰�뻽�뜕 寃껋쓣 遺덈윭�삩�떎.
 	 * @param profile
 	 */
+	
 	public Profile getProfile(int mem_id){
 		String sql="SELECT PROFILE.PROF_IMG, PROFILE.PROF_BACKGROUND, PROFILE.PROF_NAME, "
 				+ "PROFILE.PROF_NICK, PROFILE.PROF_INTRO, TAG_USE.TAG_USE_TYPE, TAG_USE.TAG_USE_TYPE, TAG_USE.TAG_USE_TYPE,"

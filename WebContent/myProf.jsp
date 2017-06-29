@@ -150,44 +150,56 @@ function fnSelectSnsInfo(snsName){
 						<form action="/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
 							
 							<div class="form-group">
+								<label class="col-md-3 control-label">프로필 번호</label>
+								<div class="col-md-9">
+									<input type="hidden" class="form-control" name="prof_id">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">등록 날짜</label>
+								<div class="col-md-9">
+									<input type="hidden" class="form-control" name="prof_regdate">
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-md-3 control-label">프로필 사진</label>
 								<div class="col-md-9">
-									<input type="file" class="form-control">
+									<input type="file" class="form-control" name="prof_img">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">배경 사진</label>
 								<div class="col-md-9">
-									<input type="file" class="form-control">
+									<input type="file" class="form-control" name="prof_background">
 								</div>
 					
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">이름</label>
 								<div class="col-md-9">
-									<input class="form-control" id="Prof_name" name ="Prof_name" type="text"
+									<input class="form-control" name ="prof_name" type="text"
 										placeholder="한글로 입력하세요." value="<%=dto.getProf_name() %>> ">			
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">닉네임</label>
 								<div class="col-md-9">
-									<input class="form-control" id="Prof_nick" name ="Prof_nick" type="text"
+									<input class="form-control" name ="prof_nick" type="text"
 										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="<%=dto.getProf_nick()%>">									
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">소개</label>
 								<div class="col-md-9">
-									<textarea class="form-control" rows="5" name="Prof_intro" id="Prof_intro" 
+									<textarea class="form-control" rows="5" name="prof_intro" 
 										placeholder="2000byte 이내로 입력하세요." value="<%=dto.getProf_intro()%>"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 언어</label>
 								<div class="col-md-9">
-									<input class="form-control" id="Prof_language" type="text"
-										placeholder="ex) C, JAVA, Python 등" value="<%=dto.getProf_language()%>">
+									<input class="form-control" id="Prof_language" type="text" name="tag_name"
+										placeholder="ex) C, JAVA, Python 등" value="">
 								</div>
 							</div>
 							<div class="form-group">
@@ -216,7 +228,7 @@ function fnSelectSnsInfo(snsName){
 										</select>
 									</div>
 									<div class="col-md-7">										
-										<input type="text" class="form-control" id ="snsText" name="snsText"/>
+										<input type="text" class="form-control" name="prof_website"/>
 									</div>
 									<div class="col-md-2">
 										<button type="button" class="btn common" id="snsAdd">추가</button>
@@ -232,8 +244,8 @@ function fnSelectSnsInfo(snsName){
 							<div class="form-group">
 								<label class="col-md-3 control-label">Skill</label>
 								<div class="col-md-9">
-									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명" value="<%=dto.getTag_name() %>"></div>
-									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요" value="<%=dto.getProf_skill_level() %>"></div>
+									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명" value=""></div>
+									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요" value="" name="prof_skill_level"></div>
 									<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">추가</button></div>
 									<br><br>
 									<div id="skillList">
