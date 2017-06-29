@@ -32,28 +32,22 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-
-
 
 
 <%
 //로그인 : 메일
 //Session에 저장되는것 : mem_ID (DB에서 조회해야함.)
-session.setAttribute("longin_id","3");
+session.setAttribute("longin_id","2");
 %>
 
 <script>
 $(document).ready(function(){
-	s
 			 $("#push").click(function(){
 					alert("버튼눌림");
 				});
 		});
 
 </script>
-
-
 </head>
 
 <body>

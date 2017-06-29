@@ -116,14 +116,17 @@ public class AccountDao{
 	
 	
 		
-	//2.계정삭제
-	public void deleteAccount( ){
-		String sql = "delete from MEMBER where MEM_ID=?";
+
+	
+	
+	// Delete.jsp
+	public void deleteAccount(){
+		String sql = "delete from MEMBER where Mem_ID=?";
 		
 		try{
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, this.login_id);
+			pstmt.setInt(1, login_id);
 			pstmt.executeUpdate();
 		}
 		catch(Exception err){
@@ -134,7 +137,8 @@ public class AccountDao{
 			pool.freeConnection(con, pstmt);
 		}
 	}
-
+	
+	
 
 	
 	//비밀번호, 아이디를 변경한다.
