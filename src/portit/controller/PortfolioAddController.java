@@ -3,6 +3,7 @@ package portit.controller;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +26,16 @@ import portit.model.dto.Tag;
 public class PortfolioAddController implements Controller {
 
 	@Override
-	public String[] execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, String> formData = (Map<String, String>) req.getAttribute("formData");
 		List<String> fileNames = (List<String>) req.getAttribute("fileNames");
+		for (String key : formData.keySet()) {
+			System.out.printf("%s : %s\n", key, formData.get(key));
+		}
+		for (String filename : fileNames) {
+			System.out.println(filename);
+		}
 		
 		// 태그, 공동 작업자 관련 처리
 		List<Tag> envTagList = new ArrayList<Tag>();
@@ -37,27 +44,27 @@ public class PortfolioAddController implements Controller {
 		List<Tag> fieldTagList = new ArrayList<Tag>();
 		List<Profile> coworkerList = new ArrayList<Profile>();
 		for (String key : formData.keySet()) {
-			if (key.startsWith("pf_tags_") && "env".equals(key.substring(8))) {
+			if (key.equals("pf_tags_env")) {
 				String[] pf_tags_env = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_env.length; i++) {
 					envTagList.add(new Tag().setTag_type("env").setTag_name(pf_tags_env[i]));
 				}
-			} else if (key.startsWith("pf_tags_") && "language".equals(key.substring(8))) {
+			} else if (key.equals("pf_tags_language")) {
 				String[] pf_tags_language = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_language.length; i++) {
 					langTagList.add(new Tag().setTag_type("language").setTag_name(pf_tags_language[i]));
 				}
-			} else if (key.startsWith("pf_tags_") && "tool".equals(key.substring(8))) {
+			} else if (key.equals("pf_tags_tool")) {
 				String[] pf_tags_tool = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_tool.length; i++) {
 					toolTagList.add(new Tag().setTag_type("tool").setTag_name(pf_tags_tool[i]));
 				}
-			} else if (key.startsWith("pf_tags_") && "field".equals(key.substring(8))) {
+			} else if (key.equals("pf_tags_field")) {
 				String[] pf_tags_field = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_field.length; i++) {
 					fieldTagList.add(new Tag().setTag_type("field").setTag_name(pf_tags_field[i]));
 				}
-			} else if ("coworker".equals(key.substring(3))) {
+			} else if (key.equals("pf_coworkers")) {
 				String[] pf_coworker = toArray(formData.get(key));
 				for (int i = 0; i < pf_coworker.length; i++) {
 					coworkerList.add(new Profile().setProf_nick(pf_coworker[i]));
@@ -77,10 +84,11 @@ public class PortfolioAddController implements Controller {
 		try {
 			portfolio.setPf_title(formData.get("pf_title"))
 					.setPf_intro(formData.get("pf_intro").replaceAll("\\r\\n", "<br />"))
-					.setPf_startdate(DateFormat.getInstance().parse(formData.get("pf_startdate")))
+					.setPf_startdate(new SimpleDateFormat("yyyy-MM-dd").parse(formData.get("pf_startdate")))
 					.setPf_enddate(DateFormat.getInstance().parse(formData.get("pf_enddate")))
 					.setPf_numofperson(Integer.parseInt(formData.get("pf_numofperson")))
 					.setPf_url(formData.get("pf_url"))
+					.setPf_tags_env(envTagList)
 					.setPf_tags_language(langTagList)
 					.setPf_tags_tool(toolTagList)
 					.setPf_tags_field(fieldTagList)
@@ -90,11 +98,15 @@ public class PortfolioAddController implements Controller {
 			e.printStackTrace();
 		}
 		// DAO의 추가 메서드 호출
-		portfolioDao.insert(portfolio);
+		try {
+			portfolioDao.insert(portfolio);
+		} catch (Exception e) {
+			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
+		}
 		
 		// 뷰 URL 반환
-		return new String[]{"", "/page?page=myPfList"};
-		//return null;
+		String viewUrl = "rdr:/page?page=myPfList";
+		return viewUrl;
 	}
 	
 	/**
@@ -113,9 +125,8 @@ public class PortfolioAddController implements Controller {
 	private String[] toArray(String str) {
 		StringTokenizer tkn = new StringTokenizer(str, ", ");
 		String[] arr = new String[tkn.countTokens()];
-		int i = 0;
-		while (tkn.hasMoreElements()) {
-			arr[i++] = tkn.nextToken();
+		for (int i = 0; tkn.hasMoreElements(); i++) {
+			arr[i] = tkn.nextToken();
 		}
 		return arr;
 	}

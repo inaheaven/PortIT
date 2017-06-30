@@ -23,20 +23,8 @@ public class ModifyServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// GET 요청일 경우 등록 페이지로 포워딩
-		String articleType = req.getParameter("post");
-		String actionType = req.getParameter("type");
-		RequestDispatcher rd = null;
-		if ("profile".equals(articleType)) {
-			rd = req.getRequestDispatcher("");
-			rd.forward(req, resp);
-		} else if ("portfolio".equals(articleType)) {
-			rd = req.getRequestDispatcher("/page?page=myPfModify");
-			rd.forward(req, resp);
-		} else if ("project".equals(articleType)) {
-			rd = req.getRequestDispatcher("");
-			rd.forward(req, resp);
-		}
+		// GET 요청일 경우 이동
+		resp.sendRedirect("/page?page=myPfList");
 	}
 	
 	@Override
@@ -57,7 +45,7 @@ public class ModifyServlet extends HttpServlet {
 		List<String> fileNames = uploadController.fileUpload(req, resp);
 		req.setAttribute("fileNames", fileNames);
 		
-		String[] viewUrl = null;
+		String viewUrl = null;
 		
 		String articleType = req.getParameter("type");
 		if ("profile".equals(articleType)) {
@@ -72,14 +60,14 @@ public class ModifyServlet extends HttpServlet {
 		}
 		
 		RequestDispatcher rd = null;
-		if (viewUrl[0].startsWith("inc")) {
-			rd = req.getRequestDispatcher(viewUrl[1]);
+		if (viewUrl.substring(0, 2).equals("inc")) {
+			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.include(req, resp);
-		} else if (viewUrl[0].startsWith("fwd")) {
-			rd = req.getRequestDispatcher(viewUrl[1]);
+		} else if (viewUrl.substring(0, 2).equals("fwd")) {
+			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.forward(req, resp);
 		} else {
-			resp.sendRedirect(viewUrl[1]);
+			resp.sendRedirect(viewUrl.substring(4));
 		}
 	}
 

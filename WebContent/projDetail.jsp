@@ -295,13 +295,14 @@ project = (Project) request.getAttribute("project");
 				</div>
 				<%
 					List<Profile> coworkers = project.getProj_coworkers();
-					for (int idx = 0; idx < coworkers.size(); idx++) {
-						Profile profile = coworkers.get(idx);
-						if (idx == 0 || idx % 4 == 0) {
+					if (coworkers != null && coworkers.size() > 0) {
+						for (int idx = 0; idx < coworkers.size(); idx++) {
+							Profile profile = coworkers.get(idx);
+							if (idx == 0 || idx % 4 == 0) {
 				%>
 				<div class="row collaboList">
 					<%
-						}
+							}
 					%>
 					<div class="col-md-3 mb">
 						<div class="member-simple">
@@ -331,11 +332,18 @@ project = (Project) request.getAttribute("project");
 					</div>
 					<!-- member-simple end -->
 					<%
-						if (idx == 0 || idx % 4 == 0) {
+							if (idx == 0 || idx % 4 == 0) {
 					%>
 				</div>
 				<%
-					}
+							}
+						}
+					} else {
+				%>
+				<div class="row collaboList">
+					<p class="text-center">아직 이 프로젝트에 지원한 사람이 없습니다.</p>
+				</div>
+				<%
 					}
 				%>
 			</div>

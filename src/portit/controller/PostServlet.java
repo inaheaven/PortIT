@@ -2,6 +2,7 @@ package portit.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,20 +24,8 @@ public class PostServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// GET 요청일 경우 등록 페이지로 포워딩
-		String articleType = req.getParameter("post");
-		String actionType = req.getParameter("type");
-		RequestDispatcher rd = null;
-		if ("profile".equals(articleType)) {
-			rd = req.getRequestDispatcher("");
-			rd.forward(req, resp);
-		} else if ("portfolio".equals(articleType)) {
-			rd = req.getRequestDispatcher("/page?page=myPfRegister");
-			rd.forward(req, resp);
-		} else if ("project".equals(articleType)) {
-			rd = req.getRequestDispatcher("");
-			rd.forward(req, resp);
-		}
+		// GET 요청일 경우 이동
+		resp.sendRedirect("/page?page=main");
 	}
 	
 	@Override
@@ -54,32 +43,33 @@ public class PostServlet extends HttpServlet {
 		}
 		
 		FileUploadController uploadController = new FileUploadController();
-		List<String> fileNames = uploadController.fileUpload(req, resp);
-		req.setAttribute("fileNames", fileNames);
+		uploadController.fileUpload(req, resp);
+		req.setAttribute("formData", req.getAttribute("formData"));
+		req.setAttribute("fileNames", req.getAttribute("fileNames"));
 		
-		String[] viewUrl = null;
-		
+		String viewUrl = "";
 		String articleType = req.getParameter("type");
 		if ("profile".equals(articleType)) {
 			/*Controller profileController = ControllerFactory.getInstance().createController("profile");
 			viewUrl = profileController.execute(req, resp);*/
 		} else if ("portfolio".equals(articleType)) {
-			Controller portfolioAddController = ControllerFactory.getInstance().createController("portfolioAdd");
+			PortfolioAddController portfolioAddController = new PortfolioAddController();
 			viewUrl = portfolioAddController.execute(req, resp);
 		} else if ("project".equals(articleType)) {
 			/*Controller projectController = ControllerFactory.getInstance().createController("project");
 			viewUrl = projectController.execute(req, resp);*/
 		}
-		
+		System.out.println("viewUrl: " + viewUrl);
+		System.out.println(viewUrl.substring(0, 2)+"/"+viewUrl.substring(4));
 		RequestDispatcher rd = null;
-		if (viewUrl[0].startsWith("inc")) {
-			rd = req.getRequestDispatcher(viewUrl[1]);
+		if (viewUrl.substring(0, 2).equals("inc")) {
+			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.include(req, resp);
-		} else if (viewUrl[0].startsWith("fwd")) {
-			rd = req.getRequestDispatcher(viewUrl[1]);
+		} else if (viewUrl.substring(0, 2).equals("fwd")) {
+			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.forward(req, resp);
 		} else {
-			resp.sendRedirect(viewUrl[1]);
+			resp.sendRedirect(viewUrl.substring(4));
 		}
 	}
 

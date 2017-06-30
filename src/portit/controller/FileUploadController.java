@@ -34,7 +34,7 @@ public class FileUploadController {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public List<String> fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<String> fileNames = new ArrayList<String>();
 		
 		String saveDir = req.getServletContext().getRealPath("") + UPLOAD_DIR;
@@ -62,7 +62,6 @@ public class FileUploadController {
 							new String(item.getFieldName().getBytes("ISO-8859-1"), "UTF-8")
 							, new String(item.getString().getBytes("ISO-8859-1"), "UTF-8")
 							);
-					req.setAttribute("formData", map);
 				} else {
 					// isFormField()의 반환값이 false이면 파일로 처리
 					if (item != null && item.getSize() > 0) {
@@ -76,12 +75,13 @@ public class FileUploadController {
 					}
 				}
 			}
+			req.setAttribute("formData", map);
+			req.setAttribute("fileNames", fileNames);
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return fileNames;
 		
 	}
 	

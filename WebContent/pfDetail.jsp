@@ -269,14 +269,15 @@ portfolio = (Portfolio) request.getAttribute("portfolio");
 				</div>
 				<%
 					List<Profile> coworkers = portfolio.getPf_coworkers();
-					for (int idx = 0; idx < coworkers.size(); idx++) {
-						Profile profile = coworkers.get(idx);
-						if (idx == 0 || idx % 4 == 0) {
+					if (coworkers != null && coworkers.size() > 0) {
+						for (int idx = 0; idx < coworkers.size(); idx++) {
+							Profile profile = coworkers.get(idx);
+							if (idx == 0 || idx % 4 == 0) {
 				%>
 				<div class="row collaboList">
-					<%
-						}
-					%>
+				<%
+							}
+				%>
 					<div class="col-md-3 mb">
 						<div class="member-simple">
 							<div class="simple-content text-center">
@@ -305,11 +306,18 @@ portfolio = (Portfolio) request.getAttribute("portfolio");
 					</div>
 					<!-- member-simple end -->
 					<%
-						if (idx == 0 || idx % 4 == 0) {
+							if (idx == 0 || idx % 4 == 0) {
 					%>
 				</div>
 				<%
-					}
+							}
+						}
+					} else {
+				%>
+				<div class="row collaboList">
+					<p class="text-center">이 작업을 같이 수행한 사람이 없습니다.</p>
+				</div>
+				<%
 					}
 				%>
 			</div>
@@ -324,13 +332,14 @@ portfolio = (Portfolio) request.getAttribute("portfolio");
 				</div>
 				<%
 					List<Portfolio> recommends = portfolio.getPf_recommends();
-					for (int idx = 0; idx < recommends.size(); idx++) {
-						Portfolio r = recommends.get(idx);
-						if (idx == 0 || idx % 4 == 0) {
+					if (coworkers != null && coworkers.size() > 0) {
+						for (int idx = 0; idx < recommends.size(); idx++) {
+							Portfolio r = recommends.get(idx);
+							if (idx == 0 || idx % 4 == 0) {
 				%>
 				<div class="row recoList">
 					<%
-						}
+							}
 					%>
 					<div class="col-md-3 mb">
 						<div class="portfolio-simple">
@@ -359,11 +368,18 @@ portfolio = (Portfolio) request.getAttribute("portfolio");
 					</div>
 					<!-- portfolio-simple end -->
 					<%
-						if (idx == 0 || idx % 4 == 0) {
+							if (idx == 0 || idx % 4 == 0) {
 					%>
 				</div>
 				<%
-					}
+							}
+						}
+					} else {
+				%>
+				<div class="row recoList">
+					<p class="text-center">이 작업과 비슷한 작업이 없습니다.</p>
+				</div>
+				<%
 					}
 				%>
 			</div>

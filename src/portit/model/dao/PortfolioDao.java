@@ -557,42 +557,42 @@ public class PortfolioDao {
 	 * @param prof_id
 	 * @return 삭제된 데이터 개수
 	 */
-	public int delete(Portfolio portfolio) {
+	public int delete(int pf_id) {
 		int rows = 0;
 		getConnection();
 		try {
 			// 미디어 데이터 삭제
-			mediaDao.delete(conn, "portfolio", portfolio.getPf_id());
+			mediaDao.delete(conn, "portfolio", pf_id);
 			
 			// 포트폴리오의 좋아요 데이터 삭제
 			String sql = "DELETE FROM pf_like WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, portfolio.getPf_id());
+			stmt.setInt(1, pf_id);
 			stmt.executeUpdate();
 			
 			// 공동 작업자 삭제
 			sql = "DELETE FROM pf_coworker WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, portfolio.getPf_id());
+			stmt.setInt(1, pf_id);
 			stmt.executeUpdate();
 			
 			// 태그 사용 삭제
 			sql = "DELETE FROM tag_use WHERE tag_use_type=? AND tag_use_type_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "portfolio");
-			stmt.setInt(2, portfolio.getPf_id());
+			stmt.setInt(2, pf_id);
 			stmt.executeUpdate();
 			
 			// 내가 등록한 포트폴리오 데이터 삭제
 			sql = "DELETE FROM prof_pf WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, portfolio.getPf_id());
+			stmt.setInt(1, pf_id);
 			stmt.executeUpdate();
 			
 			// 포트폴리오 데이터 삭제
 			sql = "DELETE FROM portfolio WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, portfolio.getPf_id());
+			stmt.setInt(1, pf_id);
 			rows += stmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("DB 삭제 오류 :");

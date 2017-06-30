@@ -12,7 +12,7 @@
 				<!-- BASIC FORM ELEMENTS -->
 				<div class="pfregForm">		
 					<h3 class="formTitle text-center">포트폴리오 등록</h3>
-					<form class="form-horizontal style-form" autocomplete="off" method="post" action="/post" enctype="multipart/form-data">
+					<form class="form-horizontal style-form" autocomplete="off" method="post" action="/post?type=portfolio" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-md-3 control-label">제목</label>
 							<div class="col-md-9">
@@ -101,7 +101,7 @@
 						</div>
 						<div class="form-group text-center buttonDiv" >
 							<input type="hidden" name="mem_id" value="<%= session.getAttribute("mem_id") %>" />
-							<input type="hidden" name="articleType" value="portfolio" />
+							<input type="hidden" name="type" value="portfolio" />
 							<button type="submit" class="btn common">등록하기</button>&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn cancel" onclick="javascript:history.back()">취소하기</button>
 						</div>

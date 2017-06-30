@@ -137,13 +137,14 @@ profile = (Profile) request.getAttribute("profile");
 				</div>
 				<%
 					List<Portfolio> myPf = profile.getProf_myPf();
-					for (int idx = 0; idx < myPf.size(); idx++) {
-						Portfolio pf = myPf.get(idx);
-						if (idx == 0 || idx % 4 == 0) {
+					if (myPf != null && myPf.size() > 0) {
+						for (int idx = 0; idx < myPf.size(); idx++) {
+							Portfolio pf = myPf.get(idx);
+							if (idx == 0 || idx % 4 == 0) {
 				%>
 				<div class="row recoList">
 					<%
-						}
+							}
 					%>
 					<div class="col-md-3 mb">
 						<div class="portfolio-simple">
@@ -172,11 +173,18 @@ profile = (Profile) request.getAttribute("profile");
 					</div>
 					<!-- portfolio-simple end -->
 					<%
-						if (idx == 0 || idx % 4 == 0) {
+							if (idx == 0 || idx % 4 == 0) {
 					%>
 				</div>
 				<%
-					}
+							}
+						}
+					} else {
+				%>
+				<div class="row recoList">
+					<p class="text-center">아직 등록한 포트폴리오가 없습니다.</p>
+				</div>
+				<%
 					}
 				%>
 			</div>
@@ -197,8 +205,9 @@ profile = (Profile) request.getAttribute("profile");
 				</div>
 				<%
 					List<Project> myProj = profile.getProf_myProj();
-					for (int idx = 0; idx < myProj.size(); idx++) {
-						Project proj = myProj.get(idx);
+					if (myProj != null && myProj.size() > 0) {
+						for (int idx = 0; idx < myProj.size(); idx++) {
+							Project proj = myProj.get(idx);
 				%>
 				<div class="row">
 					<div class="col-md-12 mb">
@@ -212,13 +221,13 @@ profile = (Profile) request.getAttribute("profile");
 								</div>
 								<div class="pjIntro"><%= proj.getProj_intro() %></div>
 								<div class="pjTag">
-									<% for (Tag tag : project.getProj_tags_language()) { %>
+									<% for (Tag tag : proj.getProj_tags_language()) { %>
 									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
 									<% } %>
 								</div>
 							</span> <span class="pjInfoTable">
 								<table class="table text-center">
-									<% for (Tag tag : project.getProj_tags_field()) { %>
+									<% for (Tag tag : proj.getProj_tags_field()) { %>
 									<tr>
 										<td><span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span> / <%= proj.getProj_numofperson() %> 명</td>
 									</tr>
@@ -234,6 +243,18 @@ profile = (Profile) request.getAttribute("profile");
 						</div>
 					</div>
 				</div>
+				<%
+						}
+					} else {
+				%>
+				<div class="row">
+					<div class="col-md-12">
+						<p class="text-center">아직 등록한 프로젝트가 없습니다.</p>
+					</div>
+				</div>
+				<%
+					}
+				%>
 				<!-- project-list end -->
 			</div>
 		</section><!-- /Projects -->

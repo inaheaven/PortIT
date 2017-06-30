@@ -22,17 +22,16 @@ import portit.model.dto.Tag;
  * 포트폴리오 조회 컨트롤러
  *
  */
-public class PortfolioViewController implements Controller {
+public class PortfolioDeleteController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int pf_id = Integer.parseInt(req.getParameter("id"));
 		PortfolioDao portfolioDao = new PortfolioDao();
-		Portfolio portfolio = portfolioDao.selectOne(pf_id);
-		req.setAttribute("portfolio", portfolio);
+		portfolioDao.delete(pf_id);
 		
 		// 뷰 URL 반환
-		String viewUrl = "fwd:/pfDetail.jsp";
+		String viewUrl = "rdr:/page/page?myPfList";
 		return viewUrl;
 	}
 

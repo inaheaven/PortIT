@@ -25,7 +25,7 @@ import portit.model.dto.Tag;
 public class PortfolioModifyController implements Controller {
 
 	@Override
-	public String[] execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, String> formData = (Map<String, String>) req.getAttribute("formData");
 		List<String> fileNames = (List<String>) req.getAttribute("fileNames");
@@ -37,27 +37,27 @@ public class PortfolioModifyController implements Controller {
 		List<Tag> fieldTagList = new ArrayList<Tag>();
 		List<Profile> coworkerList = new ArrayList<Profile>();
 		for (String key : formData.keySet()) {
-			if (key.startsWith("pf_tags_") && "env".equals(key.substring(8))) {
+			if (key.equals("pf_tags_env")) {
 				String[] pf_tags_env = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_env.length; i++) {
 					envTagList.add(new Tag().setTag_type("env").setTag_name(pf_tags_env[i]));
 				}
-			} else if (key.startsWith("pf_tags_") && "language".equals(key.substring(8))) {
+			} else if (key.equals("pf_tags_language")) {
 				String[] pf_tags_language = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_language.length; i++) {
 					langTagList.add(new Tag().setTag_type("language").setTag_name(pf_tags_language[i]));
 				}
-			} else if (key.startsWith("pf_tags_") && "tool".equals(key.substring(8))) {
+			} else if (key.equals("pf_tags_tool")) {
 				String[] pf_tags_tool = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_tool.length; i++) {
 					toolTagList.add(new Tag().setTag_type("tool").setTag_name(pf_tags_tool[i]));
 				}
-			} else if (key.startsWith("pf_tags_") && "field".equals(key.substring(8))) {
+			} else if (key.equals("pf_tags_field")) {
 				String[] pf_tags_field = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_field.length; i++) {
 					fieldTagList.add(new Tag().setTag_type("field").setTag_name(pf_tags_field[i]));
 				}
-			} else if ("coworker".equals(key.substring(3))) {
+			} else if (key.equals("pf_coworkers")) {
 				String[] pf_coworker = toArray(formData.get(key));
 				for (int i = 0; i < pf_coworker.length; i++) {
 					coworkerList.add(new Profile().setProf_nick(pf_coworker[i]));
@@ -93,8 +93,8 @@ public class PortfolioModifyController implements Controller {
 		portfolioDao.update(portfolio);
 		
 		// 뷰 URL 반환
-		return new String[]{"", "/page?page=myPfList"};
-		//return null;
+		String viewUrl = "rdr:/page?page=myPfList";
+		return viewUrl;
 	}
 	
 	/**
@@ -113,9 +113,8 @@ public class PortfolioModifyController implements Controller {
 	private String[] toArray(String str) {
 		StringTokenizer tkn = new StringTokenizer(str, ", ");
 		String[] arr = new String[tkn.countTokens()];
-		int i = 0;
-		while (tkn.hasMoreElements()) {
-			arr[i++] = tkn.nextToken();
+		for (int i = 0; tkn.hasMoreElements(); i++) {
+			arr[i] = tkn.nextToken();
 		}
 		return arr;
 	}

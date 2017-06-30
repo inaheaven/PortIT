@@ -122,7 +122,7 @@
 						</div>
 						<div class="form-group text-center buttonDiv" >
 							<input type="hidden" name="mem_id" value="<%= session.getAttribute("mem_id") %>" />
-							<input type="hidden" name="articleType" value="portfolio" />
+							<input type="hidden" name="type" value="portfolio" />
 							<button type="submit" class="btn common">수정하기</button>&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn cancel" onclick="javascript:history.back()">취소하기</button>
 						</div>
