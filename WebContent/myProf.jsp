@@ -8,12 +8,6 @@
 <%@page import="javax.sql.DataSource"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-<%
-	Profile dto = (Profile)request.getAttribute("profile");
-	if(dto==null){
-		dto = new Profile();
-	}
-%>
 <script src="assets/js/search.js"></script>
 <script language="javascript">
 
@@ -22,12 +16,12 @@
 // window.onload = function() { location.href="/register"; };
 
 function profRegister(){
-	
+	location.href="/myProf.jsp";
 	alert("프로필이 정상적으로 등록 되었습니다.");
 }
 
 function profalter(){
-	location.href="/register?cmd=UPDATE"
+	location.href="/myProf.jsp";
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
 //skill 추가
@@ -166,28 +160,28 @@ function fnSelectSnsInfo(snsName){
 								<label class="col-md-3 control-label">이름</label>
 								<div class="col-md-9">
 									<input class="form-control" id="Prof_name" name ="Prof_name" type="text"
-										placeholder="한글로 입력하세요." value="<%=dto.getProf_name() %>> ">			
+										placeholder="한글로 입력하세요." value=" ">			
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">닉네임</label>
 								<div class="col-md-9">
 									<input class="form-control" id="Prof_nick" name ="Prof_nick" type="text"
-										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="<%=dto.getProf_nick()%>">									
+										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="">									
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">소개</label>
 								<div class="col-md-9">
 									<textarea class="form-control" rows="5" name="Prof_intro" id="Prof_intro" 
-										placeholder="2000byte 이내로 입력하세요." value="<%=dto.getProf_intro()%>"></textarea>
+										placeholder="2000byte 이내로 입력하세요." value=""></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 언어</label>
 								<div class="col-md-9">
 									<input class="form-control" id="Prof_language" type="text"
-										placeholder="ex) C, JAVA, Python 등" value="<%=dto.getProf_language()%>">
+										placeholder="ex) C, JAVA, Python 등" value="">
 								</div>
 							</div>
 							<div class="form-group">
@@ -232,8 +226,8 @@ function fnSelectSnsInfo(snsName){
 							<div class="form-group">
 								<label class="col-md-3 control-label">Skill</label>
 								<div class="col-md-9">
-									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명" value="<%=dto.getTag_name() %>"></div>
-									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요" value="<%=dto.getProf_skill_level() %>"></div>
+									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명" value=">"></div>
+									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요" value=""></div>
 									<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">추가</button></div>
 									<br><br>
 									<div id="skillList">

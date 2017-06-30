@@ -42,10 +42,8 @@ public class BookmarkController extends HttpServlet {
 			if (req.getParameter("mem_id") != null) {
 				mem_id = Integer.parseInt(req.getParameter("mem_id"));
 			}
-
 			BookmarkDao bmDao = new BookmarkDao();
 			bmDao.addBookmark(pf_id, mem_id);
-			System.out.println("존재하면 DELETE 없으면 INSERT");
 
 			//엑스버튼 누를때 dto에서 deletebookmark 실행page?page=myBookmark
 
