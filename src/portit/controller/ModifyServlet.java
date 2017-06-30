@@ -42,8 +42,9 @@ public class ModifyServlet extends HttpServlet {
 		}
 		
 		FileUploadController uploadController = new FileUploadController();
-		List<String> fileNames = uploadController.fileUpload(req, resp);
-		req.setAttribute("fileNames", fileNames);
+		uploadController.fileUpload(req, resp);
+		req.setAttribute("formData", req.getAttribute("formData"));
+		req.setAttribute("fileNames", req.getAttribute("fileNames"));
 		
 		String viewUrl = null;
 		
@@ -59,11 +60,12 @@ public class ModifyServlet extends HttpServlet {
 			viewUrl = projectController.execute(req, resp);*/
 		}
 		
+		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		RequestDispatcher rd = null;
-		if (viewUrl.substring(0, 2).equals("inc")) {
+		if (viewUrl.substring(0, 3).equals("inc")) {
 			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.include(req, resp);
-		} else if (viewUrl.substring(0, 2).equals("fwd")) {
+		} else if (viewUrl.substring(0, 3).equals("fwd")) {
 			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.forward(req, resp);
 		} else {

@@ -85,7 +85,7 @@ public class PortfolioAddController implements Controller {
 			portfolio.setPf_title(formData.get("pf_title"))
 					.setPf_intro(formData.get("pf_intro").replaceAll("\\r\\n", "<br />"))
 					.setPf_startdate(new SimpleDateFormat("yyyy-MM-dd").parse(formData.get("pf_startdate")))
-					.setPf_enddate(DateFormat.getInstance().parse(formData.get("pf_enddate")))
+					.setPf_enddate(new SimpleDateFormat("yyyy-MM-dd").parse(formData.get("pf_enddate")))
 					.setPf_numofperson(Integer.parseInt(formData.get("pf_numofperson")))
 					.setPf_url(formData.get("pf_url"))
 					.setPf_tags_env(envTagList)

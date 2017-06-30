@@ -348,7 +348,8 @@ public class PortfolioDao {
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
 			List<Tag> pf_tags_tool = portfolio.getPf_tags_tool();
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
-			sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
+			sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)"
+					+ " WHERE NOT EXISTS(SELECT * FROM tag)";
 			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < pf_tags_env.size(); i++) {
 				stmt.setString(1, "env");
@@ -455,7 +456,7 @@ public class PortfolioDao {
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
 			sql = "INSERT INTO tag(tag_id, tag_type, tag_name)"
 					+ " VALUES(seq_tag_id.nextVal,?,?)"
-					+ " WHERE NOT tag_name=?";
+					+ " WHERE NOT EXISTS(SELECT * FROM tag)";
 			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < pf_tags_env.size(); i++) {
 				stmt.setString(1, "env");

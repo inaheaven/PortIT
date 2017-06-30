@@ -59,13 +59,12 @@ public class PostServlet extends HttpServlet {
 			/*Controller projectController = ControllerFactory.getInstance().createController("project");
 			viewUrl = projectController.execute(req, resp);*/
 		}
-		System.out.println("viewUrl: " + viewUrl);
-		System.out.println(viewUrl.substring(0, 2)+"/"+viewUrl.substring(4));
+		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		RequestDispatcher rd = null;
-		if (viewUrl.substring(0, 2).equals("inc")) {
+		if (viewUrl.substring(0, 3).equals("inc")) {
 			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.include(req, resp);
-		} else if (viewUrl.substring(0, 2).equals("fwd")) {
+		} else if (viewUrl.substring(0, 3).equals("fwd")) {
 			rd = req.getRequestDispatcher(viewUrl.substring(4));
 			rd.forward(req, resp);
 		} else {
