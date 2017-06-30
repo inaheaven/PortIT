@@ -132,8 +132,9 @@ public class BookmarkDao {
 	public List<String> getTag(Bookmark bm, int pf_id) {
 		try {
 			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ "WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'PF' AND tu.tag_use_type_id = ? "
-					+ "ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4"; // 랜덤하게
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'PF' "
+					+ " AND tu.tag_use_type_id = ? "
+					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 "; // 랜덤하게
 																		// 3개
 
 			stmt = conn.prepareStatement(sql);
@@ -147,7 +148,7 @@ public class BookmarkDao {
 			}
 			return tags; 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("TAG() : 여기 에러나지마라 " + e);
 		}
 		return null;
 	}
@@ -165,28 +166,28 @@ public class BookmarkDao {
 			// BOOKMARK에 MEM_ID=? AND PF_ID=? 조회해서 데이터가 존재하면 delete 없으면 insert
 			conn = pool.getConnection();
 
-			sql = "MERGE INTO BOOKMARK  USING DUAL"
-					+ "ON (MEM_ID=104 and PF_ID=402 ) WHEN MATCHED THEN UPDATE SET bm_ID=?  DELETE  WHERE MEM_ID=104 and PF_ID=? "
-					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE)"
-					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE)";
-/*//CREATE SEQUENCE SEQ_TAG_ID
-	           INCREMENT BY 1
-	           START WITH   1
-	           MAXVALUE 9999999999999999999999999999
-	           NOCYCLE
-	           NOCACHE;
-	           *
-	           * 시퀀스 
-	           **/
+			sql = "MERGE INTO BOOKMARK  USING DUAL ON (MEM_ID=? and PF_ID=? ) "
+					+ "WHEN MATCHED THEN UPDATE SET bm_ID=4  DELETE  WHERE MEM_ID=? and PF_ID=? "
+					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE) "
+					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE) ";
+					/*//CREATE SEQUENCE SEQ_TAG_ID
+						           INCREMENT BY 1
+						           START WITH   1
+						           MAXVALUE 9999999999999999999999999999
+						           NOCYCLE
+						           NOCACHE;
+						           *
+						           * 시퀀스 
+						           **/
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, pf_id);
-			stmt.setInt(2, mem_id);
-			stmt.setInt(3, pf_id);
-			stmt.setInt(4, mem_id);
-			stmt.executeUpdate(sql);
+			stmt.setInt(1, mem_id);
+			stmt.setInt(2, pf_id);
+			stmt.setInt(3, mem_id);
+			stmt.setInt(4, pf_id);
+			stmt.executeUpdate();
 
 		} catch (Exception err) {
-			System.out.println("getList() : " + err);
+			System.out.println("getList() : 여기 에러나지마라 " + err);
 		}
 	}
 
@@ -203,7 +204,7 @@ public class BookmarkDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.executeUpdate();
 		} catch (Exception err) {
-			System.out.println("DBCP �뿰寃� �떎�뙣 : " + err);
+			System.out.println("DBCP  : " + err);
 		}
 	}
 }
