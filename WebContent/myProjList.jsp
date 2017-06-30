@@ -34,6 +34,37 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+<script>
+$(document).ready(
+
+    function() {
+    	var httpRequest=null;
+         $("#delete_my_reg").click(function() {
+        	 alert("1");
+        		httpRequest = new XMLHttpRequest();
+        		var name = "7"
+        		alert(name);
+        		var param = "/project_delete?proj_id="+name;
+        		
+        		httpRequest.open("GET", param, true);
+        		httpRequest.onreadystatechange = callback;
+        		httpRequest.send(null);
+        		
+        		  $(this).parent().parent().parent().parent().remove();
+                  $(this).next().remove();
+        	});
+         
+});
+     	function callback(){
+    		if(httpRequest.readyState == 4){
+    			if(httpRequest.status == 200){
+    				alert("1");
+    			}
+    		}
+    	}
+</script>    
+    
 </head>
 	<%--sidenavbar start--%>
 	<jsp:include page="my.jsp"></jsp:include>
@@ -56,13 +87,12 @@
 									<form action="/project_update">									
 									<span class="col-md-3 text-right">
 										<button type="submit" class="btn common">수정</button>
-										<button type="button" class="btn common">삭제</button>
-										<a class="updown collapsed" data-toggle="collapse"
+ 										<button type="button" class="btn common" id="delete_my_reg">삭제</button>										<a class="updown collapsed" data-toggle="collapse"
 										data-parent="#accordion" href="#collapseOne"
 										aria-expanded="false" aria-controls="collapseOne"> 
 											<i class="fa fa-chevron-down"></i>
 										</a>
-										<input type="hidden" name="proj_id" value="35">
+										<input type="hidden" name="proj_id" value="50">
 									</span>							
 									</form>		
 								</h4>
@@ -171,28 +201,5 @@
 			$("html,body").animate({ scrollTop : 0 }, 500);
 		});
 	</script>
-
-	<!-- datepicker script -->
-	<script>
-		$(document)
-				.ready(
-						function() {
-							var proj_regenddate_input = $('input[name="proj_regenddate"]'); //our date input has the name "date"
-							var proj_startdate_input = $('input[name="proj_startdate"]'); //our date input has the name "date"
-							var container = $('.bootstrap-iso form').length > 0 ? $(
-									'.bootstrap-iso form').parent()
-									: "body";
-							var options = {
-								format : 'mm/dd/yyyy',
-								container : container,
-								todayHighlight : true,
-								autoclose : true,
-							};
-							proj_regenddate_input.datepicker(options);
-							proj_startdate_input.datepicker(options);
-						})
-	</script>
-
-
 </body>
 </html>

@@ -1,6 +1,7 @@
 package portit.model.dto;
 
 import java.lang.Math;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -20,6 +21,22 @@ public class Profile {
 	private String prof_facebook;
 	private Date prof_regdate;
 	private int prof_follower;
+	private ArrayList<String> prof_name_list = new ArrayList<>();
+	private ArrayList<String> prof_nick_list = new ArrayList<>();
+	
+	public ArrayList<String> getProf_nick_list() {
+		return prof_nick_list;
+	}
+	public void setProf_nick_list(ArrayList<String> prof_nick_list) {
+		this.prof_nick_list = prof_nick_list;
+	}
+	public ArrayList<String> getProf_name_list() {
+		return prof_name_list;
+	}
+	public void setProf_name_list(ArrayList<String> prof_name_list) {
+		this.prof_name_list = prof_name_list;
+	}
+	
 	
 	public int getProf_id() {
 		return prof_id;

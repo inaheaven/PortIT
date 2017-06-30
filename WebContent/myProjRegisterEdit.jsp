@@ -179,7 +179,7 @@
 
 						<h3 class="formTitle text-center">프로젝트 등록</h3>
 						<form class="form-horizontal style-form" method="post"
-							action="mypage_proj_reg">
+							action="project_update_save">
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 제목</label>
 								<div class="col-md-9">
@@ -190,80 +190,83 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<c:forEach var="result" items="${list}">
 
-									<label class="col-md-3 control-label">프로젝트 설명</label>
-									<div class="col-md-9">
+								<label class="col-md-3 control-label">프로젝트 설명</label>
+								<div class="col-md-9">
+									<c:forEach var="result" items="${list}">
 										<textarea class="form-control" name="proj_intro"
 											placeholder="프로젝트 주제 , 목적등 자세한 설명을 작성하세요" rows="10"
 											required="true">${result.proj_intro}</textarea>
-									</div>
-								</c:forEach>
+									</c:forEach>
+								</div>
 
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 개발 환경</label>
-								<c:forEach begin="0" end="${env_list.size()-1}" var="i">
 
-									<div class="col-md-9">
+								<div class="col-md-9">
+									<c:forEach begin="0" end="${env_list.size()-1}" var="i">
 										<input type="text" class="form-control" name="proj_env"
 											value="${env_list[i].proj_env_list[i]}"
 											placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 "
 											required="true">
-									</div>
-								</c:forEach>
+									</c:forEach>
+								</div>
 
 							</div>
 							<div class="form-group">
-								<c:forEach begin="0" end="${language_list.size()-1}" var="i">
-									<label class="col-md-3 control-label">프로젝트 개발 언어</label>
-									<div class="col-md-9">
+								<label class="col-md-3 control-label">프로젝트 개발 언어</label>
+								<div class="col-md-9">
+									<c:forEach begin="0" end="${language_list.size()-1}" var="i">
 										<input type="text" class="form-control" name="proj_language"
 											value="${language_list[i].proj_lang_list[i]}"
 											placeholder="ex) C, JAVA, Python 등" required="true">
-									</div>
-								</c:forEach>
+									</c:forEach>
+								</div>
 							</div>
 							<div class="form-group">
 
-								<c:forEach begin="0" end="${tool_list.size()-1}" var="i">
-									<label class="col-md-3 control-label">프로젝트 개발 도구</label>
-									<div class="col-md-9">
+								<label class="col-md-3 control-label">프로젝트 개발 도구</label>
+								<div class="col-md-9">
+									<c:forEach begin="0" end="${tool_list.size()-1}" var="i">
 										<input type="text" class="form-control" name="proj_tool"
 											value="${tool_list[i].proj_tool_list[i]}"
 											placeholder="ex) Eclipse, Visual Studio2013 등"
 											required="true">
-									</div>
-								</c:forEach>
+									</c:forEach>
+								</div>
 							</div>
 
 							<div class="form-group" id="add-team">
-									<c:forEach begin="0" end="${field_list.size()-1}" var="i">
 								<label class="col-md-3 control-label">모집 분야</label>
 								<div class="col-md-9">
-										<div class="col-md-5" id="add-team-input">
+									<div class="col-md-5" id="add-team-input">
+										<c:forEach begin="0" end="${field_list.size()-1}" var="i">
 											<input type="text" class="form-control" name="proj_field"
 												value="${field_list[i].proj_field_list[i]}"
 												placeholder="ex) 기획, 설계, 프론트, 백엔드 등" required="true">
+										</c:forEach>
+									</div>
+									<div class="col-md-2">
+										<label class="control-label">인원 수</label>
+									</div>
+									<div class="col-md-2">
+										<c:forEach begin="0" end="${field_list.size()-1}" var="i">
 
-										</div>
-										<div class="col-md-2">
-											<label class="control-label">인원 수</label>
-										</div>
-										<div class="col-md-2">
 											<input type="text" class="form-control"
 												value="${list[0].proj_numofperson[i]}"
 												name="proj_numofperson" required="true">
-										</div>
+										</c:forEach>
+
+									</div>
 									<div class="col-md-3">
 										<button type="button" class="btn btn-default" id="insert">추가</button>
 										<button type='button' class='btn btn-default' id='delete'>삭제</button>
 									</div>
 								</div>
 								<div id="add-team-2"></div>
-									</c:forEach>
 							</div>
-						
+
 							<div class="form-group">
 								<label class="col-md-3 control-label" for="date">프로젝트 모집
 									마감일</label>
@@ -272,21 +275,20 @@
 
 										<input class="form-control" id="proj_regenddate"
 											value="${result.proj_regenddate}" name="proj_regenddate"
-											placeholder="MM/DD/YYYY" type="text" required="true" />
+											placeholder="MM/DD/YYYY" type="date" required="true" />
 									</c:forEach>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 운영 기간</label>
 								<div class="col-md-9">
-									<label class="col-md-3 control-label" for="date">프로젝트
+									<label class="col-md-2 control-label" for="date">
 										예정 시작일</label>
-									<div class="col-md-3">
+									<div class="col-md-4">
 										<c:forEach var="result" items="${list}">
-
 											<input class="form-control" id="proj_startdate"
 												value="${result.proj_startdate}" name="proj_startdate"
-												placeholder="MM/DD/YYYY" type="text" required="true" />
+												placeholder="MM/DD/YYYY" type="date" required="true" />
 										</c:forEach>
 									</div>
 									<label class="col-md-3 control-label" for="date">예상 기간</label>
@@ -305,15 +307,24 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">함께할 사람</label>
 								<div class="col-sm-7">
-								<c:forEach var="prof_list" items="${prof_list}">
-									<input type="text" class="form-control" readonly="readonly" value="${prof_list.prof_name}(${prof_list.prof_nick})"
-										required="true" id="final_result"> 
-								</c:forEach>
-								<c:forEach var="result" items="${list}">
-										<input type="text"
-										class="form-control" name="final_result_id" value="${result.proj_id}" 
-										id="final_result_id">
-								</c:forEach>
+									<c:forEach var="prof_list" items="${prof_list}">
+										<input type="text" class="form-control" readonly="readonly"
+											value="${prof_list.prof_name}(${prof_list.prof_nick})"
+											required="true" id="final_result">
+									</c:forEach>
+									
+									<%-- <c:forEach begin="0" end="${prof_list.size()-1}" var="i">
+											<input type="text" class="form-control" name="proj_field"
+												value="${prof_list[0].prof_name[i]}"
+												placeholder="ex) 기획, 설계, 프론트, 백엔드 등" required="true">
+										</c:forEach>
+										 --%>
+										
+									<c:forEach var="prof_list" items="${prof_list}">
+										<input type="text" class="form-control"
+											name="final_result_id" value="${prof_list.prof_id}"
+											id="final_result_id">
+									</c:forEach>
 								</div>
 								<div class="col-sm-2">
 									<button type="button" class="btn btn-default" id="hello"
@@ -334,7 +345,8 @@
 											<div class="modal-body">
 												<div class="inner-addon left-addon col-sm-10">
 													<span class="glyphicon glyphicon-search"></span> <input
-														type="text" class="form-control" name="coworker" id="coworker_search"
+														type="text" class="form-control" name="coworker"
+														id="coworker_search"
 														placeholder="프로젝트를 함께할 PortIT 사용자를 검색하세요." />
 												</div>
 												<button type="button" class="btn btn-default"
@@ -438,28 +450,5 @@
 			}, 500);
 		});
 	</script>
-
-	<!-- datepicker script -->
-	<script>
-		$(document)
-				.ready(
-						function() {
-							var proj_regenddate_input = $('input[name="proj_regenddate"]'); //our date input has the name "date"
-							var proj_startdate_input = $('input[name="proj_startdate"]'); //our date input has the name "date"
-							var container = $('.bootstrap-iso form').length > 0 ? $(
-									'.bootstrap-iso form').parent()
-									: "body";
-							var options = {
-								format : 'mm/dd/yyyy',
-								container : container,
-								todayHighlight : true,
-								autoclose : true,
-							};
-							proj_regenddate_input.datepicker(options);
-							proj_startdate_input.datepicker(options);
-						})
-	</script>
-
-
 </body>
 </html>

@@ -228,18 +228,18 @@
 									마감일</label>
 								<div class="col-md-9">
 									<input class="form-control" id="proj_regenddate"
-										name="proj_regenddate" placeholder="MM/DD/YYYY" type="text"
+										name="proj_regenddate" placeholder="MM/DD/YYYY" type="date"
 										required="true" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 운영 기간</label>
 								<div class="col-md-9">
-									<label class="col-md-3 control-label" for="date">프로젝트
+									<label class="col-md-2 control-label" for="date">
 										예정 시작일</label>
-									<div class="col-md-3">
-										<input class="form-control" id="proj_startdate"
-											name="proj_startdate" placeholder="MM/DD/YYYY" type="text"
+									<div class="col-md-4">
+											<input class="form-control" id="proj_startdate"
+											name="proj_startdate" placeholder="MM/DD/YYYY" type="date"
 											required="true" />
 									</div>
 									<label class="col-md-3 control-label" for="date">예상 기간</label>
@@ -378,6 +378,7 @@
 	</script>
 
 	<!-- datepicker script -->
+	<!-- 
 	<script>
 		$(document)
 				.ready(
@@ -397,7 +398,7 @@
 							proj_startdate_input.datepicker(options);
 						})
 	</script>
-
+ -->
 
 </body>
 </html>

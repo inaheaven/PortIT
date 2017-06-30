@@ -22,7 +22,6 @@ public class ProjectController extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		ProjectDao dao = new ProjectDao();
-		
 		dao.reg_pro(req, resp);
 		
 		resp.sendRedirect("myProjList.jsp");

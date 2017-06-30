@@ -13,13 +13,10 @@ public class Tag {
 	private String tag_type;
 	private String tag_name;
 	
-	private ArrayList<String> proj_env_list;
-	private ArrayList<String> proj_tool_list;
-	private ArrayList<String> proj_field_list;
-	private ArrayList<String> proj_lang_list;
-	
-	
-	
+	private ArrayList<String> proj_env_list = new ArrayList<>();
+	private ArrayList<String> proj_tool_list  = new ArrayList<>();
+	private ArrayList<String> proj_field_list = new ArrayList<>();
+	private ArrayList<String> proj_lang_list  = new ArrayList<>();
 	
 	public ArrayList<String> getProj_env_list() {
 		return proj_env_list;

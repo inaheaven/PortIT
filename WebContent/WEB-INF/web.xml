@@ -44,4 +44,23 @@
 		<servlet-name>project_update</servlet-name>
 		<url-pattern>/project_update</url-pattern>
 	</servlet-mapping>
+	
+  <servlet>
+		<servlet-name>project_delete</servlet-name>
+		<servlet-class>portit.controller.ProjectDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>project_delete</servlet-name>
+		<url-pattern>/project_delete</url-pattern>
+	</servlet-mapping>
+  
+  <servlet>
+		<servlet-name>project_update_save</servlet-name>
+		<servlet-class>portit.controller.ProjectUpdateSaveController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>project_update_save</servlet-name>
+		<url-pattern>/project_update_save</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
