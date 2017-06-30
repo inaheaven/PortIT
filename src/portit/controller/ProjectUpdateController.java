@@ -1,6 +1,8 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import portit.model.dao.ProjectDao;
+import portit.model.dto.Project;
 
 public class ProjectUpdateController extends HttpServlet {
 	
@@ -24,15 +27,12 @@ public class ProjectUpdateController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		String proj_id = req.getParameter("proj_id");
-		System.out.println(proj_id+"!!!!!");
 
 		ProjectDao dao = new ProjectDao();
-		
-		
+		ArrayList<Project> list = new ArrayList<>();
 		dao.read_proj(req, resp);
-
-		String test = req.getParameter("proj_numofperson");
-		System.out.println(test+"!!!!");
+		
+		
 		
 		/*
 		String page = req.getParameter("page");
