@@ -30,7 +30,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myProjList" id="myProjList">
+				<a href="myproj?cmd=list" id="myProjList">
 				    <span>My Project</span>
 				</a>
 			</li>

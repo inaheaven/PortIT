@@ -66,7 +66,7 @@
 					</li>
 					<li><a href="/page?page=myProf">내 프로필</a></li>
 					<li><a href="/page?page=myPfList">내 포트폴리오</a></li>
-					<li><a href="/page?page=myProjList">내 프로젝트</a></li>
+					<li><a href="/myproj?cmd=list">내 프로젝트</a></li>
 					<li><a href="/page?page=myBookmark">북마크</a></li>
 					<li><a href="/page?page=myMsgList">메세지</a></li>
 					<li><a href="/page?page=myAccount">계정 설정</a></li>
