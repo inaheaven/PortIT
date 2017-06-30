@@ -146,7 +146,7 @@ public class MessageController extends HttpServlet {
 			
 			else if(cmd.equals("detail")){
 				//1.List에서 발신자이름을 받아온다.
-				String mem_id_Sender=req.getParameter("mem_id_sender") ;
+				String mem_id_Sender=req.getParameter("mem_id_sender");
 			
 				
 				url="myMsgDetail.jsp";
@@ -157,7 +157,18 @@ public class MessageController extends HttpServlet {
 				session.setAttribute("chatroom", list);
 			}
 			
+			else if(cmd.equals("ntdetail")){
+				//1.List에서 발신자이름을 받아온다.
+				int mem_id_Sender=Integer.parseInt(req.getParameter("sender"));
 			
+				
+				url="myMsgDetail.jsp";
+
+				//대화방 with "mem_id_sender"
+				//2.발신자의 대화방을 얻어온다.
+				list=model.getChatRoom(String.valueOf(mem_id_Sender));
+				session.setAttribute("chatroom", list);
+			}
 			
 			
 			else if(cmd.equals("send")){

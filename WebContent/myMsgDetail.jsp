@@ -27,7 +27,7 @@
 					
 					<% 
 					//접속유져를 기록하는 방법 : session
-					int longin_id = Integer.parseInt((String) session.getAttribute("longin_id"));
+					int longin_id = Integer.parseInt((String) session.getAttribute("loginId"));
 					
 					
 					

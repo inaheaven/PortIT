@@ -132,7 +132,7 @@ public class ViewDao {
 	 */
 	public List project_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title, project.proj_intro"
+		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title, project.proj_intro,"
 						+ " tag.tag_name, project.proj_to, trunc(project.proj_regenddate - sysdate) "
 						+ "from tag join tag_use "
 						+ "on tag.tag_id = tag_use.tag_id "

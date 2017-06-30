@@ -46,7 +46,8 @@ public class NotificationController extends HttpServlet {
 		}
 		// isread 가져오기
 		else if(act.equals("getread")) {
-			int nt_id = Integer.parseInt(req.getParameter("id")); // 선택한 nt_id
+			int nt_id = Integer.parseInt(req.getParameter("id")); // 선택한 nt_id	
+			System.out.println("nt_id : " + nt_id);
 			char isread = nt.getNt_isread(nt_id);
 			out.println(isread);
 		}
