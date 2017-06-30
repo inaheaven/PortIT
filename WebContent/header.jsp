@@ -68,7 +68,7 @@
                					</a>
           					</c:if>
           					<c:if test="${ntList[i].nt_type  eq 'message' }">
-          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/msg?cmd=detail&mem_id_sender=${ntList[i].mem_id_sender}');">
 	          						<span class="glyphicon glyphicon-envelope"></span>&nbsp;/&nbsp; 
 	          						<span class="time">${ntList[i].nt_date }</span>
 	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 메세지를 보냈습니다.</span>

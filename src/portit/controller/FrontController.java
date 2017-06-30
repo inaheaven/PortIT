@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 @WebServlet("*.do") /* HTML/JSP에서 .do로 끝나는 요청은 모두 서블릿 요청으로 간주하여 프론트 컨트롤러가 처리 */
 public class FrontController extends HttpServlet {
-
+/*
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
@@ -55,5 +55,5 @@ public class FrontController extends HttpServlet {
 			rd.forward(req, resp);
 		}
 	}
-
+*/
 }

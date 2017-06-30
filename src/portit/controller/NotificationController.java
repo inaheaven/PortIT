@@ -56,8 +56,5 @@ public class NotificationController extends HttpServlet {
 			req.setAttribute("sort2", sort); // value 값을 'sort'라는 request 변수에 저장
 			resp.sendRedirect("/page?page=myNotification&sort=" + sort);
 		}
-		
-//		RequestDispatcher view = req.getRequestDispatcher("/page?page=myNotification");		
-//		view.forward(req, resp);
 	}
 }

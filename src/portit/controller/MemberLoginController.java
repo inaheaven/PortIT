@@ -53,7 +53,7 @@ public class MemberLoginController extends HttpServlet {
 			List port_list = viewDao.portfolio_info();
 			List mem_list = viewDao.member_info();
 			List proj_list = viewDao.project_info();
-			List time_list = viewDao.timeline_info(loginId);	//*************101은 임시값  timeline_info(mem_id)로 수정***********
+			List time_list = viewDao.timeline_info(loginId);
 		
 			//Model에서 가지고 온 정보를 View에 넘겨주기 위해 변수 선언
 			req.setAttribute("port_list", port_list);

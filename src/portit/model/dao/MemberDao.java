@@ -45,7 +45,6 @@ public class MemberDao {
 			stmt.setString(1, member.getMem_email());
 			stmt.setString(2, member.getMem_password());
 			stmt.executeUpdate();
-			System.out.println("새로운 멤버 등록되엇음");
 			
 			// mem_id 가져오기
 			sql = "SELECT mem_id FROM member WHERE mem_email = ?";

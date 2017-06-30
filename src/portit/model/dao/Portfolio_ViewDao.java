@@ -38,7 +38,7 @@ public class Portfolio_ViewDao {
 		try {
 			pool.freeConnection(con, pstmt, rs);
 			if (con != null) {
-				System.out.println("DB 접속 해제");
+				//System.out.println("DB 접속 해제");
 			}
 		} catch (Exception e) {
 			System.out.println("DB 접속해제 오류 - freeConnection()");

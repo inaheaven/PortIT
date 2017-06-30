@@ -101,7 +101,7 @@ public class MassageDao{
 	public void insertMsg(MessageDto dto){
 		String sql = "insert into Message"
 			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
+			+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
 	
 		try{
 			con = pool.getConnection();
@@ -111,6 +111,24 @@ public class MassageDao{
 			pstmt.setInt(2, dto.getMem_id_receiver());
 			pstmt.setString(3, dto.getMsg_content());
 			pstmt.setString(4, dto.getMsg_isread());
+			pstmt.executeUpdate();
+			
+			sql = "SELECT msg_id FROM message WHERE mem_id_sender = ? and mem_id_receiver = ? ORDER BY mem_id DESC" ;
+			pstmt = con.prepareStatement(sql);
+	 		pstmt.setInt(1, dto.getMem_id_sender());
+			pstmt.setInt(2, dto.getMem_id_receiver());
+			rs = pstmt.executeQuery();
+			int msg_id = 0;
+			if(rs.next()){
+				msg_id = rs.getInt("msg_id");
+			}
+					
+			// 메세지 보내면 Notification 테이블에도 insert 하기
+			sql = "INSERT INTO notification(nt_id, mem_id_sender, mem_id_receiver, nt_date, nt_type, nt_type_id, nt_isread) "
+					+ "VALUES(seq_nt_id.nextVal, ? ,?, sysdate, 'message', ?, 'f')";
+			pstmt.setInt(1, dto.getMem_id_sender());
+			pstmt.setInt(2, dto.getMem_id_receiver());
+			pstmt.setInt(3, msg_id);
 			pstmt.executeUpdate();
 		}
 		

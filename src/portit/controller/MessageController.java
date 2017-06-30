@@ -17,9 +17,7 @@ import portit.model.action.MessageModel;
 @WebServlet("/msg")
 public class MessageController extends HttpServlet {
 	//컨트롤러
-	//model에서 request로부터 뽑아서 데이터에 저장하는작업.
-	
-	
+	//model에서 request로부터 뽑아서 데이터에 저장하는작업.	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doPost(req, resp);
 	}
@@ -46,7 +44,6 @@ public class MessageController extends HttpServlet {
 			
 			
 			MessageModel model = new MessageModel(req,login_id);
-			
 			
 			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
