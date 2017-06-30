@@ -5,10 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
@@ -83,24 +80,27 @@ public class ProjectDao {
 
 		int proj_tag_id; // 테그 테이블에서 사용할 변수
 		String proj_tag_name; // 테그명
-		String env;
+		String env="";
 		ArrayList<String> proj_env_list = new ArrayList<>();
-		String lang;
+		String lang="";
 		ArrayList<String> proj_language_list = new ArrayList<>();
-		String tool;
+		String tool="";
 		ArrayList<String> proj_tool_list = new ArrayList<>();
-		String field;
+		String field="";
 		ArrayList<String> proj_field_list = new ArrayList<>();
 		int proj_numofperson = 0;
 		ArrayList<Integer> numofperson_list = new ArrayList<>();
-		String prof_name;
-		String prof_nick;
+	
+		String prof_name="";
+		String prof_nick="";
 		ArrayList<String> prof_name_list = new ArrayList<>();
 		ArrayList<String> prof_nick_list = new ArrayList<>();
-		String coworker;
-		ArrayList<String> coworker_list = new ArrayList<>();
-		int prof_id =0;
+
+		int coworker=0;
+		ArrayList<Integer> coworker_list = new ArrayList<>();
 		
+		int prof_id = 0;
+
 		// dto
 		Project project = new Project();
 		Tag env_tag = new Tag();
@@ -140,41 +140,44 @@ public class ProjectDao {
 		}
 
 		// 검색시 활용하기 위한 회원 아이디 번호
-		int mem_id = 0;
-
-		// Member 테이블에서 필요한 값 불러오기
+		ArrayList<Integer> mem_id_list = new ArrayList<>();
 		try {
-			String member_id_sql = "SELECT MEM_ID FROM PROJ_APP WHERE PROJ_ID = ?";
-			conn = pool.getConnection();
-			stmt = conn.prepareStatement(member_id_sql);
-			stmt.setString(1, req_proj_id); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				rs.next();
-				mem_id = rs.getInt("mem_id");
+			// count를 이용하여 프로젝트에 참여하는 인원수를 구해서 이후 해당 값만큼 반복하여 멤버리스트에추가
+			
+				String sql_coworker = "SELECT MEM_ID FROM PROJ_APP WHERE PROJ_ID = ?";
+				stmt = conn.prepareStatement(sql_coworker);
+				stmt.setString(1, req_proj_id);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					mem_id_list.add(rs.getInt("mem_id"));
 			}
-			;
 		} catch (Exception e) {
-			System.out.println("project_app 테이블 쿼리 오류" + e);
+			System.out.println("멤버 테이블에서 멤버 아이디 검색" + e);
 		}
 
 		try {
-			String member_name_sql = "SELECT PROF_ID, PROF_NAME, PROF_NICK FROM PROFILE WHERE MEM_ID = ?";
-			conn = pool.getConnection();
-			stmt = conn.prepareStatement(member_name_sql);
-			stmt.setInt(1, mem_id); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
-			rs = stmt.executeQuery();
-			while (rs.next()) {
+			Iterator<Integer> iter = mem_id_list.iterator();
+			while (iter.hasNext()) {
+				String member_name_sql = "SELECT PROF_ID, PROF_NAME, PROF_NICK FROM PROFILE WHERE MEM_ID = ?";
+				conn = pool.getConnection();
+				stmt = conn.prepareStatement(member_name_sql);
+				stmt.setInt(1, iter.next()); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
+				rs = stmt.executeQuery();
+				rs.next();
 				prof_id = rs.getInt("prof_id");
 				prof_name = rs.getString("prof_name");
 				prof_nick = rs.getString("prof_nick");
+				
+				coworker_list.add(prof_id);
 				prof_name_list.add(prof_name);
 				prof_nick_list.add(prof_nick);
 				
+				profile.setProf_id_list(coworker_list);
 				profile.setProf_name_list(prof_name_list);
 				profile.setProf_nick_list(prof_nick_list);
-				prof_list.add(profile);
+				
 			}
+			prof_list.add(profile);
 		} catch (Exception e) {
 			System.out.println("profile 테이블 쿼리 오류");
 		}
@@ -197,7 +200,6 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("TAG_USE테이블 쿼리 오류" + e);
 		}
-
 		Iterator<Integer> tag = tag_id_list.iterator();
 		try {
 			while (tag.hasNext()) {
@@ -258,11 +260,11 @@ public class ProjectDao {
 		try {
 			view.forward(req, resp);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("read함수 에러");
 		}
 
 	}
+
 	/**
 	 * 프로젝트 등록
 	 * 
@@ -303,15 +305,15 @@ public class ProjectDao {
 		int proj_id = 0;
 		String proj_coworker = req.getParameter("final_result_id");
 		String[] proj_coworkers = proj_coworker.split(",");
-		
+
 		try {
 			for (int i = 0; i < proj_coworkers.length; i++) {
 				String sql_coworker = "SELECT MEM_ID FROM MEMBER WHERE PROF_ID = ?";
 				stmt = conn.prepareStatement(sql_coworker);
 				stmt.setString(1, proj_coworkers[i]);
 				rs = stmt.executeQuery();
-				while(rs.next()){
-				mem_id_list.add(rs.getInt("mem_id"));
+				while (rs.next()) {
+					mem_id_list.add(rs.getInt("mem_id"));
 				}
 			}
 		} catch (Exception e) {
@@ -334,7 +336,6 @@ public class ProjectDao {
 			Iterator<Integer> mem_id_iter = mem_id_list.iterator();
 			while (mem_id_iter.hasNext()) {
 				mem_id = mem_id_iter.next();
-				System.out.println(mem_id);
 				stmt.setInt(1, mem_id);
 				stmt.setInt(2, proj_id);
 				rs = stmt.executeQuery();
@@ -610,13 +611,11 @@ public class ProjectDao {
 		int proj_period = Integer.parseInt(req.getParameter("proj_period")); // 프로젝트
 		String proj_regenddate = req.getParameter("proj_regenddate"); // 프로젝트
 																		// 등록마감일
-
 		try {
 			// 폼에 입력받은 데이터를 프로젝트 테이블에 입력
-							
+
 			String sql = "UPDATE PROJECT SET PROJ_TITLE=?, PROJ_INTRO=?, "
-					+ "PROJ_REGDATE=sysdate, PROJ_STARTDATE=?, PROJ_PERIOD=?, PROJ_REGENDDATE=?"
-					+ "WHERE PROJ_ID=?";
+					+ "PROJ_REGDATE=sysdate, PROJ_STARTDATE=?, PROJ_PERIOD=?, PROJ_REGENDDATE=?" + "WHERE PROJ_ID=?";
 
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -644,8 +643,8 @@ public class ProjectDao {
 				stmt = conn.prepareStatement(sql_coworker);
 				stmt.setString(1, proj_coworkers[i]);
 				rs = stmt.executeQuery();
-				while(rs.next()){
-				mem_id_list.add(rs.getInt("mem_id"));
+				while (rs.next()) {
+					mem_id_list.add(rs.getInt("mem_id"));
 				}
 			}
 		} catch (Exception e) {

@@ -282,8 +282,8 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 운영 기간</label>
 								<div class="col-md-9">
-									<label class="col-md-2 control-label" for="date">
-										예정 시작일</label>
+									<label class="col-md-2 control-label" for="date"> 예정
+										시작일</label>
 									<div class="col-md-4">
 										<c:forEach var="result" items="${list}">
 											<input class="form-control" id="proj_startdate"
@@ -307,23 +307,14 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">함께할 사람</label>
 								<div class="col-sm-7">
-									<c:forEach var="prof_list" items="${prof_list}">
+									<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
 										<input type="text" class="form-control" readonly="readonly"
-											value="${prof_list.prof_name}(${prof_list.prof_nick})"
+											value="${prof_list[0].prof_name_list[i]}(${prof_list[0].prof_nick_list[i]})"
 											required="true" id="final_result">
 									</c:forEach>
-									
-									<%-- <c:forEach begin="0" end="${prof_list.size()-1}" var="i">
-											<input type="text" class="form-control" name="proj_field"
-												value="${prof_list[0].prof_name[i]}"
-												placeholder="ex) 기획, 설계, 프론트, 백엔드 등" required="true">
-										</c:forEach>
-										 --%>
-										
-									<c:forEach var="prof_list" items="${prof_list}">
-										<input type="text" class="form-control"
-											name="final_result_id" value="${prof_list.prof_id}"
-											id="final_result_id">
+									<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
+										<input type="text" class="form-control" name="final_result_id"
+											value="${prof_list[0].prof_id_list[i]}" id="final_result_id">
 									</c:forEach>
 								</div>
 								<div class="col-sm-2">
@@ -400,7 +391,7 @@
 							</div>
 							<div></div>
 							<div class="form-group text-center buttonDiv">
-								<button type="submit" class="btn common">등록하기</button>
+								<button type="submit" class="btn common">수정하기</button>
 								&nbsp;&nbsp;&nbsp;
 								<button type="button" class="btn cancel"
 									onclick="location.href='/page?page=myProjList'">취소하기</button>
