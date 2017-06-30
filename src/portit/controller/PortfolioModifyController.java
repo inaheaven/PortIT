@@ -19,10 +19,10 @@ import portit.model.dto.Profile;
 import portit.model.dto.Tag;
 
 /**
- * 포트폴리오 작성 컨트롤러
+ * 포트폴리오 수정 컨트롤러
  *
  */
-public class PortfolioAddController implements Controller {
+public class PortfolioModifyController implements Controller {
 
 	@Override
 	public String[] execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -90,7 +90,7 @@ public class PortfolioAddController implements Controller {
 			e.printStackTrace();
 		}
 		// DAO의 추가 메서드 호출
-		portfolioDao.insert(portfolio);
+		portfolioDao.update(portfolio);
 		
 		// 뷰 URL 반환
 		return new String[]{"", "/page?page=myPfList"};

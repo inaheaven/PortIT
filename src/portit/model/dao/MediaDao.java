@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import portit.controller.UploadServlet;
+import portit.controller.Controller;
+import portit.controller.ControllerFactory;
+import portit.controller.FileDeleteController;
+import portit.controller.PostServlet;
 import portit.model.dto.Media;
 
 /**
@@ -61,48 +64,13 @@ public class MediaDao {
 		try {
 			sql = "INSERT INTO media_library"
 					+ "(ml_id, ml_type, ml_type_id, ml_path) "
-					+ "VALUES(?,?,?,?)";
+					+ "VALUES(seq_ml_id.nextVal,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, media.getMl_id());
 			stmt.setString(2, media.getMl_type());
 			stmt.setInt(3, media.getMl_type_id());
 			stmt.setString(4, media.getMl_path());
 			rows = stmt.executeUpdate();
-			return rows;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return rows;
-	}
-	
-	/**
-	 * 미디어 정보 수정
-	 * @param conn 작업을 요청하는 DB 커넥션
-	 * @param articleType 게시물 구분
-	 * @param articleId 게시물 ID
-	 * @return 작업된 행 갯수
-	 */
-	public int update(Connection conn, String articleType, int articleId) {
-		int rows = 0;
-		try {
-			// 기존 정보 조회
-			List<Media> mediaList = selectList(conn, articleType, articleId);
-			
-			// 기존 파일 삭제
-			deleteFile(mediaList);
-			
-			// DB에서 수정
-			sql = "UPDATE media_library SET ml_id=?, ml_type=?, ml_type_id=?, ml_path=?";
-			stmt = conn.prepareStatement(sql);
-			while (rows < mediaList.size()) {
-				Media currentMedia = mediaList.get(rows);
-				stmt.setInt(1, currentMedia.getMl_id());
-				stmt.setString(2, currentMedia.getMl_type());
-				stmt.setInt(3, currentMedia.getMl_type_id());
-				stmt.setString(4, currentMedia.getMl_path());
-				stmt.executeUpdate();
-				rows++;
-			}
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,12 +115,12 @@ public class MediaDao {
 	 * MediaController의 삭제 메서드 호출
 	 * @param mediaList
 	 */
-	public void deleteFile(List<Media> mediaList) { 
+	private void deleteFile(List<Media> mediaList) { 
 		List<String> pathList = new ArrayList<String>();
 		for (int i = 0; i < mediaList.size(); i++) {
 			pathList.add(mediaList.get(i).getMl_path());
 		}
-		UploadServlet mediaController = new UploadServlet();
-		mediaController.fileDelete(pathList);
+		FileDeleteController deleteController = new FileDeleteController();
+		deleteController.fileDelete(pathList);
 	}
 }

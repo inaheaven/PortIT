@@ -31,6 +31,8 @@ public class Portfolio {
 	private String pf_authorName;
 	/** 포트폴리오 작성자 사진 */
 	private String pf_authorIcon;
+	/** 포트폴리오 태그 목록 - 환경 */
+	private List<Tag> pf_tags_env;
 	/** 포트폴리오 태그 목록 - 언어 */
 	private List<Tag> pf_tags_language;
 	/** 포트폴리오 태그 목록 - 툴 */
@@ -76,6 +78,9 @@ public class Portfolio {
 	}
 	public String getPf_authorIcon() {
 		return pf_authorIcon;
+	}
+	public List<Tag> getPf_tags_env() {
+		return pf_tags_env;
 	}
 	public List<Tag> getPf_tags_language() {
 		return pf_tags_language;
@@ -138,6 +143,10 @@ public class Portfolio {
 	}
 	public Portfolio setPf_authorIcon(String pf_authorIcon) {
 		this.pf_authorIcon = pf_authorIcon;
+		return this;
+	}
+	public Portfolio setPf_tags_env(List<Tag> pf_tags_env) {
+		this.pf_tags_env = pf_tags_env;
 		return this;
 	}
 	public Portfolio setPf_tags_language(List<Tag> pf_tags_language) {

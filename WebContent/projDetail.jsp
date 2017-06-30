@@ -2,10 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
+<%@ page import="portit.model.dao.*"%>
 <%@ page import="portit.model.dto.*"%>
 <!DOCTYPE html>
 <html lang="ko">
+<jsp:useBean id="projectDao" class="portit.model.dao.ProjectDao" />
 <jsp:useBean id="project" class="portit.model.dto.Project" />
+<%
+request.setCharacterEncoding("UTF-8");
+project = (Project) request.getAttribute("project");
+%>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

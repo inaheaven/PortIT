@@ -5,7 +5,12 @@
 <%@ page import="portit.model.dto.*"%>
 <!DOCTYPE html>
 <html lang="ko">
+<jsp:useBean id="portfolioDao" class="portit.model.dao.PortfolioDao" />
 <jsp:useBean id="portfolio" class="portit.model.dto.Portfolio" />
+<%
+request.setCharacterEncoding("UTF-8");
+portfolio = (Portfolio) request.getAttribute("portfolio");
+%>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Profile {
 	private int prof_id;
+	private int mem_id;
 	private String prof_nick;
 	private String prof_name;
 	private String prof_intro;
@@ -33,6 +34,10 @@ public class Profile {
 
 	public int getProf_id() {
 		return prof_id;
+	}
+	
+	public int getMem_id() {
+		return mem_id;
 	}
 
 	public String getProf_nick() {
@@ -105,6 +110,11 @@ public class Profile {
 
 	public Profile setProf_id(int prof_id) {
 		this.prof_id = prof_id;
+		return this;
+	}
+	
+	public Profile setMem_id(int mem_id) {
+		this.mem_id = mem_id;
 		return this;
 	}
 
