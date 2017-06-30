@@ -167,7 +167,7 @@ public class BookmarkDao {
 			conn = pool.getConnection();
 
 			sql = "MERGE INTO BOOKMARK  USING DUAL ON (MEM_ID=? and PF_ID=? ) "
-					+ "WHEN MATCHED THEN UPDATE SET bm_ID=?  DELETE  WHERE MEM_ID=? and PF_ID=? "
+					+ "WHEN MATCHED THEN UPDATE SET bm_ID=1  DELETE  WHERE MEM_ID=? and PF_ID=? "
 					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE) "
 					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE) ";
 					/*//CREATE SEQUENCE SEQ_TAG_ID
@@ -184,6 +184,8 @@ public class BookmarkDao {
 			stmt.setInt(2, pf_id);
 			stmt.setInt(3, mem_id);
 			stmt.setInt(4, pf_id);
+			stmt.setInt(5, mem_id);
+			stmt.setInt(6, pf_id);
 			stmt.executeUpdate();
 
 		} catch (Exception err) {
