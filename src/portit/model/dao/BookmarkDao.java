@@ -132,7 +132,7 @@ public class BookmarkDao {
 	public List<String> getTag(Bookmark bm, int pf_id) {
 		try {
 			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'PF' "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' "
 					+ " AND tu.tag_use_type_id = ? "
 					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 "; // 랜덤하게
 																		// 3개
