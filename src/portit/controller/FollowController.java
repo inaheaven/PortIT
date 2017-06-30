@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import portit.model.dao.BookmarkDao;
 import portit.model.dao.FollowDao;
@@ -26,44 +27,34 @@ public class FollowController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
 
-		String cmd = req.getParameter("cmd");
-		String url = null;
-		if (cmd.equals("SELECT")) {
-			FollowDao flDao = new FollowDao();
-			List<Follow> resultFollow = flDao.getFollow();
-			if (resultFollow.isEmpty()) {
-				resultFollow = new ArrayList<>();
-			}
+		FollowDao fw = new FollowDao();
+		
+		HttpSession session = req.getSession();
+		int loginId = (int) session.getAttribute("loginId");
+		String act = req.getParameter("act");
+		
+		// 팔로우 삭제 ( 마이페이지에서 )
+		if (act.equals("delete")) {
+			int fw_id = Integer.parseInt(req.getParameter("fw_id"));
+			fw.delete(fw_id);
 			
+			resp.sendRedirect("/page?page=myFollowing");
+		}
+		
+		// 팔로우 등록
+		else if (act.equals("add")) {
+			int mem_id = Integer.parseInt(req.getParameter("mem_id"));
+			fw.insert(loginId, mem_id);
 			
-			req.setAttribute("portfolio", resultPortfolio);
-			url = "myFollowing.jsp";
-
-			req.setAttribute("pageName", url);
-			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
-			view.forward(req, resp);
-
-		} else if (cmd.equals("FOLLOWDELETE")) {
-			FollowDao flDao = new FollowDao();
-			int fw_id = 0;
-			if (req.getParameter("fw_id") != null) {
-				fw_id = Integer.parseInt(req.getParameter("fw_id"));
-				flDao.deleteFollow(fw_id);
-
-				List<Follow> resultFollow = flDao.getFollow();
-				if (resultFollow.isEmpty()) {
-					resultFollow = new ArrayList<>();
-				}
-				req.setAttribute("follow", resultFollow);
-
-			}
-			url = "myFollowing.jsp";
-
-			req.setAttribute("pageName", url);
-			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
-			view.forward(req, resp);
-
+			resp.sendRedirect(""); // 해당 멤버 디테일 페이지로 
+		}
+		
+		// 팔로우 취소 ( 멤버 상세 페이지에서 )
+		else if (act.equals("cancel")) {
+			int mem_id = Integer.parseInt(req.getParameter("mem_id"));
+			fw.cancel(loginId, mem_id);
 		}
 	}
 
 }
+
