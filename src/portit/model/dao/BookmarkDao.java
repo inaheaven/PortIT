@@ -193,6 +193,8 @@ public class BookmarkDao {
 		}
 	}
 
+	
+	
 	/**
 	 * mybookmark페이지에서 x버튼 눌러서 삭제
 	 * 
