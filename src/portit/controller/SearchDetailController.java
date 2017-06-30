@@ -65,13 +65,13 @@ public class SearchDetailController extends HttpServlet {
 		
 		
 		if(cmd.equals("PFDETAIL")){
-			url="/pfSearch.jsp";
+			url="/page?page=pfSearch";
 		}
 		else if(cmd.equals("MEMDETAIL")){
-			url="/memSearch.jsp";
+			url="/page?page=memSearch";
 		}
 		else if(cmd.equals("PROJDETAIL")){
-			url="projSearch.jsp";
+			url="/page?page=projSearch";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

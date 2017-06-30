@@ -2,123 +2,14 @@
 <%@page import="portit.model.dto.Timeline"%>
 <%@page import="portit.model.dto.Project"%>
 <%@page import="portit.model.dto.Portfolio"%>
+<%@page import="portit.model.dto.Developer"%>
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="Dashboard">
-<meta name="keyword"
-	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-
-<title>DASHGUM - Bootstrap Admin Template</title>
-
-<!-- Bootstrap core CSS -->
-<link href="assets/css/bootstrap.css" rel="stylesheet">
-<!--external css-->
-<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-<!-- Custom styles for this template -->
-<link href="assets/css/style.css" rel="stylesheet">
-<link href="assets/css/style-responsive.css" rel="stylesheet">
-<link href="assets/css/custom.css" rel="stylesheet">
+	pageEncoding="UTF-8"%>	
 <link href="assets/css/main.css" rel="stylesheet">
-
-<script src="assets/js/chart-master/Chart.js"></script>
-
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-
 <body>
-	<section id="container">
-		<!-- **********************************************************************************************************************************************************
-      TOP BAR CONTENT & NOTIFICATIONS
-      *********************************************************************************************************************************************************** -->
-		<!--header start-->
-		<header class="header black-bg">
-			<!--logo start-->
-			<a href="index.html" class="logo"><b>Port IT</b></a>
-			<!--logo end-->
-			<div class="nav notify-row" id="top_menu">
-				<!--  menu start -->
-				<ul class="nav top-menu">
-					<!-- settings start -->
-					<li><a href="/PortIt/memList.jsp">Member</a></li>
-					<li><a href="/PortIt/pfList.jsp">Portfolio</a></li>
-					<li><a href="/PortIt/projList.jsp">Project</a>
-					<li>
-					<li><a href="">Community</a></li>
-				</ul>
-				<!--  menu end -->
-			</div>
-
-			<div class="top-menu-right">
-				<ul class="nav pull-right top-menu">
-					<li>
-						<form class="form-inline top-menu-search" method="post"
-							action="/search?cmd=SEARCH">
-							<div class="input-group">
-								<input type="text" class="form-control round-form" name="search"
-									size="20" placeholder="통합 검색" /> <span class="input-group-btn">
-									<button type="submit" class="btn btn-default round-form">
-										<span class="glyphicon glyphicon-search"></span>
-									</button>
-								</span>
-							</div>
-						</form>
-					</li>
-					<li id="header_inbox_bar" class="dropdown"><a
-						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-							<i class="fa fa-bell"></i> <span class="badge bg-theme"></span>
-					</a>
-						<ul class="dropdown-menu extended inbox">
-							<div class="notify-arrow notify-arrow-yellow"></div>
-							<li>
-								<p class="yellow">Notification</p>
-							</li>
-							<li><a href=""> <span>구분</span>&nbsp;/&nbsp; <span
-									class="time">Just now</span> <span class="message">[누구누구]님이
-										내 포트포리오를 좋아합니다.</span>
-							</a></li>
-							<li><a href="">더보기</a></li>
-						</ul></li>
-					<li id="header_inbox_bar" class="dropdown mypage"><a
-						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-							<img alt="avatar" src="assets/img/ui-danro.jpg"
-							class="img-circle">
-					</a>
-						<ul class="dropdown-menu extended inbox">
-							<div class="notify-arrow notify-arrow-yellow"></div>
-							<li>
-								<p class="yellow">김수연 님</p>
-							</li>
-							<li><a href="">내 프로필</a></li>
-							<li><a href="">팔로잉한 멤버</a> <a href="">북마크한 포트폴리오</a></li>
-							<li><a href="">개인정보 설정</a></li>
-							<li><a class="logout" href="login.html">로그아웃</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</header>
-		<!--header end-->
-	</section>
-
-
-
-	<!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-	<!--main content start-->
 	<section class="container">
 		<section class="wrapper site-min-height">
 			<div class="col-md-12 col-sm-12 col-xs-12 mt" id="main">
@@ -163,10 +54,6 @@
 								<c:if test="${port_list.size() == 0 }">
 									검색된 결과가 없습니다.
 								</c:if>
-								<div class="text-right">
-									<button type="button" class="btn moreBtn"
-										onclick="location.href='pfList.jsp'">더 보기</button>						
-								</div>
 							</div>
 						</div>
 		
@@ -202,10 +89,6 @@
 								<c:if test="${mem_list.size() == 0 }">
 									검색된 결과가 없습니다.
 								</c:if>
-								<div class="text-right">
-									<button type="button" class="btn moreBtn"
-										onclick="location.href='memList.jsp'">더 보기</button>
-								</div>
 							</div>
 						</div>
 
@@ -242,11 +125,6 @@
 										<c:if test="${proj_list.size() == 0 }">
 											검색된 결과가 없습니다.
 										</c:if>
-										<div class="text-right">
-											<button type="button" class="btn moreBtn"
-												onclick="location.href='projList.jsp'">더 보기</button>
-										</div>
-
 									</div>
 								</div>
 							</div>
@@ -265,7 +143,7 @@
 					</h3>
 
 
-					<c:if test="${time_list.size() != 0 }">
+					<c:if test="${time_list.size() != 0 && time_list.size() > 0}">
 						<c:forEach begin="0" end="${time_list.size()-1}" var="i">
 							<!-- 첫번째 타임라인 -->
 							<div class="col-md-12 mt">
@@ -308,32 +186,3 @@
 		</section>
 		<!-- Timeline page end -->
 	</section>
-
-	<! --/wrapper -->
-	<!--main content end-->
-	<!--footer start-->
-	<footer class="site-footer">
-		<div class="text-center">
-			2014 - Alvarez.is <a href="blank.html#" class="go-top"> <i
-				class="fa fa-angle-up"></i>
-			</a>
-		</div>
-	</footer>
-	<!--footer end-->
-	</section>
-
-	<!-- js placed at the end of the document so the pages load faster -->
-	<script src="assets/js/jquery.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-	<script class="include" type="text/javascript"
-		src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-	<script src="assets/js/jquery.scrollTo.min.js"></script>
-	<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-	<script src="assets/js/jquery-3.2.1.min.js"></script>
-
-	<!--common script for all pages-->
-	<script src="assets/js/common-scripts.js"></script>
-</body>
-</html>

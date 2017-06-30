@@ -17,9 +17,9 @@
 		<!--  menu start -->
 		<ul class="nav top-menu">
 			<!-- settings start -->
-			<li><a href="/page?page=memSearch">Member</a></li>
-			<li><a href="/page?page=pfSearch">Portfolio</a></li>
-			<li><a href="/page?page=projSearch">Project</a></li>
+			<li><a href="/page?page=memList">Member</a></li>
+			<li><a href="/page?page=pfList">Portfolio</a></li>
+			<li><a href="/page?page=projList">Project</a></li>
 			<!-- <li><a href="">Community</a></li> -->
 		</ul>
 		<!--  menu end -->
@@ -27,7 +27,7 @@
 	<div class="top-menu-right">
 		<ul class="nav pull-right top-menu">
 			<li>
-				<form class="form-inline top-menu-search" method="post" action="">
+				<form class="form-inline top-menu-search" method="post" action="/search?cmd=SEARCH">
 					<div class="input-group">
 						<input type="text" class="form-control round-form" name="search" size="20" placeholder="통합 검색" /> 
 							<span class="input-group-btn">

@@ -67,21 +67,21 @@ public class SearchViewController extends HttpServlet {
 				list = searchDao.searchAll_port(list2,lineup);		
 				req.setAttribute("port_list", list);
 			}			
-			url="/pfSearch.jsp";
+			url="/page?page=pfSearch";
 		}
 		else if(cmd.equals("MEMSEARCH")){
 			if(list2 != null){
 				list = searchDao.searchAll_member(list2,lineup);		
 				req.setAttribute("mem_list", list);
 			}			
-			url="/memSearch.jsp";
+			url="/page?page=memSearch";
 		}
 		else if(cmd.equals("PROJSEARCH")){
 			if(list2 != null){
 				list = searchDao.searchAll_proj(list2,lineup);		
 				req.setAttribute("proj_list", list);
 			}
-			url="/projSearch.jsp";
+			url="/page?page=projSearch";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

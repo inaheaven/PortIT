@@ -5,8 +5,9 @@ function fnAppendItem(){
 	var newSpan = document.createElement("span"); 
 	
 	newSpan.setAttribute("id","item_" + count);
-	
-	newSpan.innerHTML = window.event.target.value +"<input type='button' value='x' onclick='fnDeleteItem("+ count +")'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+	newSpan.setAttribute("class", "btn");
+	newSpan.className += " tagcondition";
+	newSpan.innerHTML = window.event.target.value +"<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("+ count +")'/>"
 	
 	var itemList = document.getElementById("itemList");
 	var sea = document.getElementById("sea");
@@ -28,9 +29,11 @@ function fnAppendItem2(){
 	var newSpan = document.createElement("span"); 
 	
 	newSpan.setAttribute("id","item_" + count);
+	newSpan.setAttribute("class", "btn");
+	newSpan.className += " tagcondition";
 	var choice = document.getElementById("language").value;
 	
-	newSpan.innerHTML = window.event.target.value +"<input type='button' value='x' onclick='fnDeleteItem("+ count +")'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+	newSpan.innerHTML = window.event.target.value +"<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("+ count +")'/>"
 	
 	var itemList = document.getElementById("itemList");
 	itemList.appendChild(newSpan);
