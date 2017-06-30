@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="portit.model.dto.Portfolio"%>
 <%@page import="portit.model.dto.Bookmark"%>
 <%@page import="java.util.List"%>
@@ -12,12 +13,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/bookmark.css" rel="stylesheet">
-
 <script src="assets/js/search.js"></script>
 <script language="javascript">
 
 <%
-	List<Portfolio> portfolios = (List)request.getAttribute("portfolio");
+	List<Bookmark> portfolios = (List)request.getAttribute("portfolio");
+	System.out.println("add = "+portfolios);
+	if(portfolios.isEmpty()){
+		portfolios= new ArrayList();
+	}
 	
 %>	
 </script>
@@ -32,7 +36,7 @@
           	<div class="bmlist_box clearfix">
           					<% 
           					for(int i=0; i<portfolios.size(); i++){
-          					
+          						Bookmark port = portfolios.get(i);
          					%>
          					<div class="col-md-4 mb"> <!-- 반복 -->
 								<div class="image-hover">
@@ -41,20 +45,22 @@
 										<div class="pfInfo">
 											<div class="simple-content">
 												<div class="pfTag">
-													<a href="">#태그---> &nbsp;</a>
+													<% for(int j=0; j<port.getTags().size(); j++) { %>
+													<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+													<%} %>
 												</div>
 												<div class="pfTitle">
-													<a href=""><%=portfolios.get(i).getPf_title() %></a>
+													<a href=""><%=port.getPf_title() %></a>
 												</div>
 												<div class="pfBottom">
-													<span class="pfmemName"><a href=""><%=portfolios.get(i).getPf_numofperson() %> </a></span> 
-													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=portfolios.get(i).getPf_like() %></span>
+													<span class="pfmemNam"><a href=""><%=port.getProf_nick() %></a></span> 
+													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like() %></span>
 												</div>
 											</div>
 										</div>
 										<div class="top-hover-right">
 											<div class="after-hover" >
-												<button type="button" id ="hover"<%=i %> class="btn btn-hover" onclick="location.href='/serial?cmd=MYBOOKMARKDELETE&bm_id=<%=portfolios.get(i).getBm_id() %>'">
+												<button type="button" id ="hover"<%=i %> class="btn btn-hover" onclick="location.href='/serial?cmd=MYBOOKMARKDELETE&bm_id=<%=port.getBm_id() %>'">
 													<span class="glyphicon glyphicon-remove"></span>
 												</button>
 											</div>
