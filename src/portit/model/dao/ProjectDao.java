@@ -662,7 +662,7 @@ public class ProjectDao {
 			System.out.println("검색 내용PROJECT_APP에 입력 쿼리" + e);
 		}
 		try {
-			String insert_proj_app_sql = "INSERT INTO PROJ_APP(PROJ_APP_ID, MEM_ID, PROJ_ID, PROJ_APP_REGDATE, PROJ_APP_CONFIRM) VALUES(seq_PROJ_APP_ID.nextval, ?, ?, sysdate, 't')";
+			String insert_proj_app_sql = "UPDATE PROJ_APP SET MEM_ID=4 WHERE PROJ_ID=? AND MEM_ID=?";
 			stmt = conn.prepareStatement(insert_proj_app_sql);
 			Iterator<Integer> mem_id_iter = mem_id_list.iterator();
 			while (mem_id_iter.hasNext()) {
