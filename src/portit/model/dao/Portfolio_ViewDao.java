@@ -93,13 +93,16 @@ public class Portfolio_ViewDao {
 	
 	
 	// Delete.jsp
-	public void deletePortforio(int Portforio_Id){
+	public void deletePortforio(String Portforio_Id){
 		
-		String sql = "delete from prof_pf where pf_id=?";
+		
+		String sql = "delete from project where proj_id='"+Portforio_Id+"'";
+		//cascade 옵션을 삽입해야합니다.
+		
+		
 		try{
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, Portforio_Id);
 			pstmt.executeUpdate();
 		}
 		catch(Exception err){
@@ -110,4 +113,9 @@ public class Portfolio_ViewDao {
 			pool.freeConnection(con, pstmt);
 		}
 	}
+
+	
+
+	
+	
 }

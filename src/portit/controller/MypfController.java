@@ -123,7 +123,6 @@ public class MypfController extends HttpServlet{
 		}
 		
 		
-		
 		req.setAttribute("pageName", url);
 		RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 		view.forward(req,resp);

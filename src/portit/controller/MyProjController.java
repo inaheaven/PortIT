@@ -1,6 +1,7 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,9 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
+import portit.model.action.ProjcetModel;
 import portit.model.dao.Portfolio_ViewDao;
 import portit.model.dao.ProjectDao;
+import portit.model.dto.Project;
+import portit.model.dto.ProjectApp_mem;
 /**
  * 
  * @author isyi
@@ -32,6 +37,14 @@ public class MyProjController extends HttpServlet{
 		
 		
 		/*
+			
+			남은적업
+				아코디언 오류
+				내가 지원한 프로젝트 업로드...
+		 */
+		
+		
+		/*
 		 전달받을 파라미터 : 
 		 -CMD:경로(ist), 
 		 -action:행동(delete)
@@ -41,93 +54,117 @@ public class MyProjController extends HttpServlet{
 		String cmd = req.getParameter("cmd");
 		String action=req.getParameter("cmdAction");
 		String param=req.getParameter("param");
+		String param2=req.getParameter("param2");
+		String login_id="102";	//세션에서 값을 받는다.
 		String url = null;
 		String mem_id=null;
 		String pf_id=null;
-		
+		ProjcetModel model=new ProjcetModel(req, login_id);
+
 		
 		//dao 선언
 		Portfolio_ViewDao dao = new Portfolio_ViewDao();
 		ProjectDao daoPRO = new ProjectDao();
-				
+		List list;
+		
 		
 		System.out.println("CTRL_CMD  "+cmd);
 		System.out.println("CTRL파라미터  "+param);
+		System.out.println("CTRL파라미터2  "+param2);
 		System.out.println("CTRLcmd액션  "+action);
 		
-		
-		
+
 		
 		//포트폴리오 리스트
-		if(cmd.equals("list")){
-			//파라미터 : pf_id
+		if("list".equals(cmd)){
 		
 			
-			//delete버튼이 눌리면...
-			if("delete".equals(action)){
-				dao.deletePortforio(Integer.parseInt(param));
+	//수락버튼				
+			if("join".equals(action)){
+				//param:해당 지원자의 mem_id
+				
+				//y값으로 업데이트하기.
+				model.pjJoin(param);
 			}
 			
-			//로그정보 MEM_id 102
-			List port_list = dao.portfolio_info(102);
-			req.setAttribute("port_list", port_list);
+			
+	//PJ삭제버튼.	
+			else if("delete".equals(action)){
+				//param:해당 팀원의 mem_id
+				dao.deletePortforio(param);
+			}
+			
+			
+			
+	//멤버삭제.
+			else if("mem_delete".equals(action)){
+				//param1: PJ_ID				What?
+				//param1: 지원지의 mem_id		Who?
+				
+				model.mem_delete(param,param2);
+			}
+			
+			
+			
+	//(n)지원 취소
+			else if("cancle".equals(action)){
+				//param: 지원PJ의 PJ_ID
+				
+				
+				model.pjCancle(param,login_id);
+			}
+			
+			
+			
+			
+			
+			
+			//내가 등록한 프로젝트 정보...
+			list= model.regPjList(login_id);
+			req.setAttribute("regPjInform", list);
+			
+			
+			
+			//내가 지원한 프로젝트
+			list= model.appyPjList(login_id);
+			req.setAttribute("applyProjectList", list);
+			
+			
 			url="/myProjList.jsp";
-		}
-		
-		
-		
-		
-		
-		
-		/*
-		//포트폴리오수정.
-		else if (cmd.equals("modify")){
-			//파라미터 : PF_ID
+/*			
+			등록한 PJ 테스트완료
 			
-			System.out.println("수정페이지로  pf_id값 전달" + param);
-			req.setAttribute("param", param);
-			url="/수정페이지....jsp";
-		}
-		
-		
-		//포트폴리오 상세페이지
-		else if (cmd.equals("detail")){
-			//파라미터 : PF_ID
+			//테스트해보기...
+			//첫번째 프로젝트.
+			ArrayList pj =(ArrayList)list.get(0);
 			
-			System.out.println("상페이지로  pf_id값 전달" + param);
-			req.setAttribute("param", param);
-			url="/상세페이지....jsp";
-		}
-		
-		
-		//프로필상세페이지..
-		else if (cmd.equals("profile")){
-			//파라미터: MEM_ID
+			//0: 프로젝트정보 
+			Project pjInfrom =(Project)pj.get(0);
 			
-			System.out.println("프로필상세  MEM_ID값 전달" + param);
-			req.setAttribute("param", param);
-			url="/프로필상세 페이지....jsp";
-		}
-		
-		
-		//포트폴리오등록하기.
-		else if (cmd.equals("add")){
+			//1: 지원자 정보.
+			ArrayList peoples = (ArrayList) pj.get(1);
 			
-			System.out.println("포트폴리오등록하기   페이지로이동.");
-			req.setAttribute("param", param);
-			url="/포트폴리오등록하기   페이지로이동.jsp";
-		}
-		
-		
-		//태그
-		else if (cmd.equals("tag")){
-			//파라미터:  tag이름
+			//1-1: 첫번째 지원자 정보.
+			ProjectApp_mem p1 =(ProjectApp_mem) peoples.get(0);
 			
-			System.out.println("테그검색에 전달" + param);
-			req.setAttribute("param", param);
-			url="/태그 페이지....jsp";
-		}
+			//정보확인 p1의 이름.
+			System.out.println("사람이름 "+ p1.getName());
+			//프로젝트의 이름.
+			System.out.println("pj명  "+pjInfrom.getProj_title());
 		*/
+			
+		
+		}
+		
+		else if("modify".equals(cmd)){
+			req.setAttribute("pj_id", param);
+			url="/수정페이지.jsp";
+		}
+		else if("pj_detail".equals(cmd)){
+			req.setAttribute("pj_id", param);
+			url="/프로필페이지.jsp";
+		}
+		
 		
 		
 		req.setAttribute("pageName", url);
