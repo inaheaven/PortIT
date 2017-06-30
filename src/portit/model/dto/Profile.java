@@ -20,7 +20,7 @@ public class Profile {
 	private String prof_facebook;
 	private Date prof_regdate;
 	private int prof_follower;
-
+	private int mem_id;
 	private String prof_language;
 	private String prof_tool;
 	private String prof_field;
@@ -28,7 +28,11 @@ public class Profile {
 	private String tag_name2;
 	private String tag_name3;
 	private String tag_name4;
+	private String tag_name5;
+	private String tag_name6;
 	private int prof_skill_level;
+	private int prof_skill_level2;
+	private int prof_skill_level3;
 
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
@@ -205,10 +209,40 @@ public class Profile {
 	public void setTag_name4(String tag_name) {
 		this.tag_name4 = tag_name;
 	}
+	public String getTag_name5() {
+		return tag_name5;
+	}
+	public void setTag_name5(String tag_name) {
+		this.tag_name5 = tag_name;
+	}
 	public String getProf_website() {
 		return prof_website;
 	}
 	public void setProf_website(String prof_website) {
 		this.prof_website = prof_website;
+	}
+	public int getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(int mem_id) {
+		this.mem_id = mem_id;
+	}
+	public void setProf_skill_level2(int prof_skill_level) {
+		this.prof_skill_level2 = prof_skill_level;
+	}
+	public int getProf_skill_level2() {
+		return prof_skill_level2;
+	}
+	public String getTag_name6() {
+		return tag_name6;
+	}
+	public void setTag_name6(String tag_name) {
+		this.tag_name6 = tag_name;
+	}
+	public int getProf_skill_level3() {
+		return prof_skill_level3;
+	}
+	public void setProf_skill_level3(int prof_skill_level) {
+		this.prof_skill_level3 = prof_skill_level;
 	}
 }

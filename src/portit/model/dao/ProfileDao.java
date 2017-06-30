@@ -63,8 +63,8 @@ public class ProfileDao {
 	public Profile addprofile(Profile dto, int mem_id) {
 		try {
 
-			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_regdate, prof_follower) "
-					+ "values(prof_id.nextVal, ? , ? , ? , ? , ? , ? , ? , sysdate, ?)";
+			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_facebook, prof_github, prof_regdate, prof_follower) "
+					+ "values(prof_id.nextVal, ? , ? , ? , ? , ? , ? , ?, ?, ? , sysdate, ?)";
 
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -75,7 +75,9 @@ public class ProfileDao {
 			stmt.setString(5, dto.getProf_nick());
 			stmt.setString(6, dto.getProf_intro());
 			stmt.setString(7, dto.getProf_website());
-			stmt.setInt(8, dto.getProf_follower());
+			stmt.setString(8, dto.getProf_facebook());
+			stmt.setString(9, dto.getProf_github());
+			stmt.setInt(10, dto.getProf_follower());
 
 			stmt.executeUpdate();
 
@@ -116,7 +118,7 @@ public class ProfileDao {
 			
 			
 			// 태그 테이블 입력(툴)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'툴(tool)',?)";
+			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'tool',?)";
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, dto.getTag_name2());
@@ -184,8 +186,8 @@ public class ProfileDao {
 
 			stmt.executeUpdate();
 			
-			// 태그 테이블 입력(기술)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'기술',?)";
+			// 태그 테이블 입력(skill)(첫번째)
+			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'skill',?)";
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, dto.getTag_name4());
@@ -208,7 +210,7 @@ public class ProfileDao {
 			rs.next();
 			req_tag_id = rs.getInt("tag_id");
 
-			// 태그 유즈 테이블 입력
+			// 태그 유즈 테이블 입력(태그 스킬  점수 입력)
 			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
 					+ "values(tag_use_id.nextVal, 'profile', ? , ? , ?)";
 
@@ -218,8 +220,78 @@ public class ProfileDao {
 			stmt.setInt(3, dto.getProf_skill_level());
 
 			stmt.executeUpdate();
-			System.out.println("ok");
+			
+			
+			// 태그 테이블 입력(skill)(두번째)
+			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'skill',?)";
 
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, dto.getTag_name5());
+
+			stmt.executeUpdate();
+
+			// 프로필 id를 가지고 오는 부분
+			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			rs.next();
+			req_prof_id = rs.getInt("prof_id");
+
+			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
+			sql = "select * from tag order by tag_id desc";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			rs.next();
+			req_tag_id = rs.getInt("tag_id");
+			
+			//두번째 스킬 점수 입력
+			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
+					+ "values(tag_use_id.nextVal, 'profile', ? , ? , ?)";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, req_prof_id);
+			stmt.setInt(2, req_tag_id);
+			stmt.setInt(3, dto.getProf_skill_level2());
+			
+			stmt.executeUpdate();
+			
+			
+			// 태그 테이블 입력(skill)(세번째)
+			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'skill',?)";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, dto.getTag_name6());
+			
+			stmt.executeUpdate();
+			
+			// 프로필 id를 가지고 오는 부분
+			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			rs.next();
+			req_prof_id = rs.getInt("prof_id");
+			
+			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
+			sql = "select * from tag order by tag_id desc";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			rs.next();
+			req_tag_id = rs.getInt("tag_id");
+			
+			//세번째 스킬 점수 입력
+			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
+					+ "values(tag_use_id.nextVal, 'profile', ? , ? , ?)";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, req_prof_id);
+			stmt.setInt(2, req_tag_id);
+			stmt.setInt(3, dto.getProf_skill_level3());
+			
+			stmt.executeUpdate();
 		}
 
 		catch (Exception err) {
@@ -235,11 +307,12 @@ public class ProfileDao {
 	 */
 	public void updateProfile(Profile dto, int mem_id) {
 
-		sql = "update profile set prof_img='?', prof_background='?', "
-				+ "prof_name='?', prof_nick='?', prof_intro='?', prof_website='?'"
+		sql = "update profile set prof_img=?, prof_background=?, "
+				+ "prof_name=?, prof_nick=?, prof_intro=?, prof_website=?, prof_skill_level=?"
 				+ " where mem_id = " + mem_id;
 
 		try {
+			
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, dto.getProf_img());
@@ -247,16 +320,17 @@ public class ProfileDao {
 			stmt.setString(3, dto.getProf_name());
 			stmt.setString(4, dto.getProf_nick());
 			stmt.setString(5, dto.getProf_intro());
-			stmt.setString(6, dto.getProf_language());
-			stmt.setString(7, dto.getProf_tool());
-			stmt.setString(8, dto.getProf_field());
-			stmt.setString(9, dto.getProf_website());
-			stmt.setString(10, dto.getProf_github());
-			stmt.setString(11, dto.getProf_facebook());
-			stmt.setInt(12, dto.getProf_follower());
+			stmt.setString(6, dto.getProf_website());
+			stmt.setInt(7, dto.getProf_skill_level());
+			/*
+			stmt.setString(8, dto.getProf_language());
+			stmt.setString(9, dto.getProf_tool());
+			stmt.setString(10, dto.getProf_field());
+			stmt.setString(11, dto.getProf_github());
+			stmt.setString(12, dto.getProf_facebook());
+			stmt.setInt(13, dto.getProf_follower());
 			stmt.setString(14, dto.getTag_name());
-			stmt.setInt(15, dto.getProf_skill_level());
-			
+			*/
 			stmt.executeUpdate();
 			
 		} catch (Exception err) {
@@ -272,38 +346,43 @@ public class ProfileDao {
 	 */
 	public Profile getProfile(int mem_id) {
 		Profile dto = new Profile();
-		sql = "select * from profile where mem_id= 102";
+		sql = "select * from tag join tag_use on tag.tag_id = tag_use.tag_id "
+				+ "join profile on tag_use_type_id = profile.prof_id "
+				+ "where mem_id="+mem_id+ " order by tag.tag_id desc";
 
 		try {
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			while (rs.next()) {
+			
+			rs.next();
 				
-				dto.setProf_id(rs.getInt("prof_id"));
-				dto.setProf_nick(rs.getString("prof_nick"));
-				/*
-				dto.setTag_name(rs.getString("tag_name"));
-				dto.setTag_name2(rs.getString("tag_name2"));
-				dto.setTag_name3(rs.getString("tag_name3"));
-				dto.setTag_name4(rs.getString("tag_name4"));
-				*/
-				dto.setProf_intro(rs.getString("prof_intro"));
-				dto.setProf_img(rs.getString("prof_img"));
-				dto.setProf_background(rs.getString("prof_background"));
-				dto.setProf_name(rs.getString("prof_name"));
-				dto.setProf_follower(rs.getInt("prof_follower"));
-				dto.setProf_website(rs.getString("prof_website"));
-				dto.setProf_github(rs.getString("prof_github"));
-				dto.setProf_facebook(rs.getString("prof_facebook"));
-				dto.setProf_regdate(rs.getDate("prof_regdate"));
-				dto.setProf_follower(rs.getInt("prof_follower"));
-				dto.setProf_language(rs.getString("prof_language"));
-				dto.setProf_tool(rs.getString("prof_tool"));
-				dto.setProf_field(rs.getString("prof_field"));
-				dto.setProf_skill_level(rs.getInt("prof_skill_level"));
-				
-				System.out.println("dao" + dto.getProf_nick());
-			}
+			dto.setMem_id(rs.getInt("mem_id"));
+			dto.setProf_id(rs.getInt("prof_id"));
+			dto.setProf_nick(rs.getString("prof_nick"));
+			dto.setProf_name(rs.getString("prof_name"));
+			dto.setProf_intro(rs.getString("prof_intro"));
+			dto.setProf_img(rs.getString("prof_img"));
+			dto.setProf_background(rs.getString("prof_background"));
+			dto.setProf_website(rs.getString("prof_website"));
+			dto.setProf_github(rs.getString("prof_github"));
+			dto.setProf_facebook(rs.getString("prof_facebook"));
+			
+			
+			dto.setProf_skill_level3(rs.getInt("prof_skill_level"));		
+			dto.setTag_name6(rs.getString("tag_name"));
+			rs.next();
+			dto.setProf_skill_level2(rs.getInt("prof_skill_level"));		
+			dto.setTag_name5(rs.getString("tag_name"));
+			rs.next();
+			dto.setProf_skill_level(rs.getInt("prof_skill_level"));
+			dto.setTag_name4(rs.getString("tag_name"));
+			rs.next();
+			dto.setTag_name3(rs.getString("tag_name"));
+			rs.next();
+			dto.setTag_name2(rs.getString("Tag_name"));
+			rs.next();
+			dto.setTag_name(rs.getString("Tag_name"));
+ 
 			
 		} 
 		catch (Exception err) {
