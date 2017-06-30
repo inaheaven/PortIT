@@ -5,7 +5,9 @@
 	<%--sidenavbar start--%>
 	<jsp:include page="my.jsp"></jsp:include>
 	<%--sidenavbar end--%>
-
+<%
+	String loginEmail = (String)session.getAttribute("loginEmail");
+%>
       <section id="main-content">
           <section class="wrapper site-min-height">
           	<div class="col-md-12 mt myAccount">
@@ -16,7 +18,7 @@
 	                    <div class="form-group">
 	                        <label class="col-md-4 control-label">E-Mail</label>
 	                        <div class="col-md-8">
-	                            <input type="text" class="form-control" id="userid" name="userid" value="email@email.com">
+	                            <input type="text" class="form-control" id="userid" name="userid" value="<%= loginEmail%>">
 	                        </div>
 	                    </div>
                     	<div align="center">

@@ -40,7 +40,7 @@ public class AccountController extends HttpServlet {
 			String pageName ="memberSearch.jsp";	//test page
 			
 			//Login된 Id session에서 추출.
-			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
+			int login_id=(int) session.getAttribute("loginId");
 			
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
 			

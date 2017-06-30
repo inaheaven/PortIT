@@ -1,13 +1,13 @@
 package portit.model.action;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import portit.model.dao.AccountDao;
-import portit.model.dao.MassageDao;
-import portit.model.dto.AccountDto;
-import portit.model.dto.MessageDto;
 
 public class AccountModel {
 	
@@ -26,7 +26,7 @@ public class AccountModel {
 	
 	private String deletePw;
 	boolean IdentityVerification;
-	
+		
 	
 	public AccountModel(HttpServletRequest _req, int _login_id){
 		this.req=_req;
