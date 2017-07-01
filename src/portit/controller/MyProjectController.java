@@ -50,6 +50,7 @@ public class MyProjectController extends HttpServlet {
 	String action=req.getParameter("cmdAction");
 	String param=req.getParameter("param");
 	String param2=req.getParameter("param2");
+	String save=req.getParameter("save");
 	String url = null;
 	String mem_id="";
 	String pf_id=null;
@@ -64,6 +65,18 @@ public class MyProjectController extends HttpServlet {
 	System.out.println("CTRL파라미터2  "+param2);
 	System.out.println("CTRLcmd액션  "+action);
 	//포트폴리오 리스트
+	
+	//수정과 저장dao
+	if("save".equals(save)){
+		ProjectDao saveDao = new ProjectDao();
+		saveDao.reg_pro(req, resp);
+	}else if("update".equals(save)){
+		String proj_id = req.getParameter("proj_id");
+		System.out.println("수정하기 위해 controller에서 proj_id값 받아왔다"+proj_id);
+		ProjectDao updateDao = new ProjectDao();
+		req.setAttribute("proj_id", proj_id);
+		updateDao.update_proj(req, resp);
+	}
 	if("list".equals(cmd)){
 	
 		
@@ -132,7 +145,9 @@ public class MyProjectController extends HttpServlet {
 	
 	else if("modify".equals(cmd)){
 		req.setAttribute("pj_id", param);
-		url="/수정페이지.jsp";
+		ProjectDao updateDao = new ProjectDao();
+		updateDao.read_proj(req, resp);
+		url="/myProjRegisterEdit.jsp";
 	}
 	else if("pj_detail".equals(cmd)){
 		req.setAttribute("pj_id", param);

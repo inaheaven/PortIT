@@ -23,14 +23,7 @@ public class PageController extends HttpServlet {
 		System.out.println("Pagectrl");
 		
 		String page = req.getParameter("page");
-		String mem_id = req.getParameter("mem_id");
-		System.out.println(mem_id+">!?@?!#!");
-		
-		
 		String pageName = page + ".jsp";
-		
-		
-		
 		
 		
 		

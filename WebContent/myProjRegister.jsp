@@ -114,6 +114,7 @@
 	var httpRequest = null;
 
 	function coworker_Search() {
+		alert("!");
 		httpRequest = new XMLHttpRequest();
 		var name = document.getElementById("coworker_search").value;
 		var url = "coworker_search";
@@ -136,11 +137,13 @@
 			}
 		}
 	}
-	String login_id=req.getParameter("mem_id");	//세션에서 값을 받는다.
-	System.out.println(login_id"+"!@>#!@>#!@");
+	
 </script>
 </head>
 <body>
+<%
+String login_id=request.getParameter("mem_id");	//세션에서 값을 받는다.
+%>
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
@@ -165,7 +168,10 @@
 					<div class="projregForm">
 						<h3 class="formTitle text-center">프로젝트 등록</h3>
 						<form class="form-horizontal style-form" method="post"
-							action="mypage_proj_reg">
+							action="myproj?cmd=list&save=save&mem_id=2">
+
+							<!-- mem_id값 알맞게 수정해야된다!! -->
+							
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 제목</label>
 								<div class="col-md-9">

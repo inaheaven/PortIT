@@ -72,7 +72,7 @@ public class ProjectDao {
 	 */
 	public void read_proj(HttpServletRequest req, HttpServletResponse resp) {
 
-		String req_proj_id = req.getParameter("proj_id"); // 프로젝트 아이디 번호
+		String req_proj_id = req.getParameter("param"); // 프로젝트 아이디 번호
 		String proj_title = ""; // 프로젝트 테이블에서 사용할 변수
 		String proj_intro = "";
 		String proj_regdate = "";
@@ -135,7 +135,6 @@ public class ProjectDao {
 				proj_startdate = rs.getString("proj_startdate");
 				proj_period = rs.getInt("proj_period");
 				proj_regenddate = rs.getString("proj_regenddate");
-
 			}
 		} catch (Exception e) {
 			System.out.println("project 테이블 쿼리 오류" + e);
@@ -154,7 +153,7 @@ public class ProjectDao {
 				mem_id_list.add(rs.getInt("mem_id"));
 			}
 		} catch (Exception e) {
-			System.out.println("멤버 테이블에서 멤버 아이디 검색" + e);
+			System.out.println("멤버 테이블에서 멤버 아이디 검색2" + e);
 		}
 
 		try {
@@ -258,13 +257,14 @@ public class ProjectDao {
 		req.setAttribute("field_list", field_list);
 		req.setAttribute("prof_list", prof_list);
 
-		RequestDispatcher view = req.getRequestDispatcher("myProjRegisterEdit.jsp");
-		try {
+		
+/*		try {
+			RequestDispatcher view = req.getRequestDispatcher("myProjRegisterEdit.jsp");
 			view.forward(req, resp);
 		} catch (ServletException | IOException e) {
 			System.out.println("read함수 에러");
 		}
-
+*/
 	}
 
 	/**
@@ -312,7 +312,7 @@ public class ProjectDao {
 
 		try {
 			for (int i = 0; i < proj_coworkers.length; i++) {
-				String sql_coworker = "SELECT MEM_ID FROM MEMBER WHERE PROF_ID = ?";
+				String sql_coworker = "SELECT MEM_ID FROM PROFILE WHERE PROF_ID = ?";
 				stmt = conn.prepareStatement(sql_coworker);
 				stmt.setString(1, proj_coworkers[i]);
 				rs = stmt.executeQuery();
@@ -321,7 +321,7 @@ public class ProjectDao {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("멤버 테이블에서 멤버 아이디 검색" + e);
+			System.out.println("멤버 테이블에서 멤버 아이디 검색3" + e);
 		}
 		try {
 			String sql_proj_id = "SELECT PROJ_ID FROM PROJECT WHERE PROJ_INTRO=? AND PROJ_TITLE=?";
@@ -504,7 +504,7 @@ public class ProjectDao {
 					System.out.println("내가 등록한 프로젝트 테이블에 등록 오류 " + e);
 				}
 			}
-
+			System.out.println("모든게 등록되었다.");
 		}
 	}
 
@@ -543,7 +543,7 @@ public class ProjectDao {
 			rd.forward(req, resp);
 
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("최종"+e);
 		} finally {
 			freeConnection();
 		}
@@ -618,7 +618,7 @@ public class ProjectDao {
 	 * @param resp
 	 */
 	public void update_proj(HttpServletRequest req, HttpServletResponse resp) {
-		String req_proj_id = req.getParameter("final_result_id");
+		String req_proj_id = req.getParameter("proj_id");
 		String proj_title = req.getParameter("proj_title"); // 프로젝트 제목
 		String proj_intro = req.getParameter("proj_intro"); // 프로젝트 내용
 		String proj_startdate = req.getParameter("proj_startdate"); // 프로젝트 시작일
@@ -652,7 +652,7 @@ public class ProjectDao {
 		String[] proj_coworkers = req_proj_id.split(",");
 		try {
 			for (int i = 0; i < proj_coworkers.length; i++) {
-				String sql_coworker = "SELECT MEM_ID FROM MEMBER WHERE PROF_ID = ?";
+				String sql_coworker = "SELECT MEM_ID FROM PROFILE WHERE PROF_ID = ?";
 				stmt = conn.prepareStatement(sql_coworker);
 				stmt.setString(1, proj_coworkers[i]);
 				rs = stmt.executeQuery();
@@ -661,7 +661,7 @@ public class ProjectDao {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("멤버 테이블에서 멤버 아이디 검색" + e);
+			System.out.println("멤버 테이블에서 멤버 아이디 검색1" + e);
 		}
 		try {
 			String sql_proj_id = "SELECT PROJ_ID FROM PROJECT WHERE PROJ_INTRO=? AND PROJ_TITLE=?";
@@ -680,7 +680,6 @@ public class ProjectDao {
 			Iterator<Integer> mem_id_iter = mem_id_list.iterator();
 			while (mem_id_iter.hasNext()) {
 				mem_id = mem_id_iter.next();
-				System.out.println(mem_id);
 				stmt.setInt(1, mem_id);
 				stmt.setInt(2, proj_id);
 				rs = stmt.executeQuery();
@@ -834,6 +833,8 @@ public class ProjectDao {
 				} catch (Exception e) {
 					System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
 				}
+				
+				System.out.println("모든걸 수정했따 dao");
 			}
 		}
 	}
@@ -870,8 +871,7 @@ public class ProjectDao {
 				rsList.add(rs.getString("proj_id"));
 			}
 		} catch (Exception e) {
-			System.out.println("DAO.applyProjectList()에서 에러!!");
-			System.out.println(e);
+			System.out.println("DAO.applyProjectList()에서 에러!!"+e);
 		} finally {
 			freeConnection();
 		}
