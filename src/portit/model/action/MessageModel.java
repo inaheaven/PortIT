@@ -138,6 +138,7 @@ public class MessageModel {
 	public String toEmail(String mem_id) {
 		return dao.toEamil(mem_id);
 	}
+>>>>>>> refs/remotes/origin/dev
 	
 	
 

@@ -95,5 +95,4 @@ public class Timeline {
 	public void setPf_repository(String pf_repository) {
 		this.pf_repository = pf_repository;
 	}
-	
 }

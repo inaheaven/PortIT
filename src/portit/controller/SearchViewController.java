@@ -46,17 +46,20 @@ public class SearchViewController extends HttpServlet {
 		boolean lineup = true;		
 		
 		//통합검색 검색, 멤버 페이지내의 검색어, 프로젝트 내의 검색어가 없는 경우(포트폴리오 페이지 내에서 검색어를 입력하고 검색한 경우)
-		if(list2 == null && memSearch==null && projSearch==null){	
+		if(list2 == null && memSearch==null && projSearch==null){
+			pfSearch = pfSearch.toUpperCase();
 			list = searchDao.searchAll_port(pfSearch,lineup);		
 			req.setAttribute("port_list", list);
 		}
 		//멤버 페이지에서 검색한 경우
 		else if(list2 == null &&pfSearch==null && projSearch==null){
+			//memSearch = memSearch.toUpperCase();
 			list = searchDao.searchAll_member(memSearch,lineup);
 			req.setAttribute("mem_list", list);
 		}
 		//프로젝트 페이지에서 검색한 경우
 		else if(list2 == null && pfSearch==null && memSearch==null){
+			projSearch = projSearch.toUpperCase();
 			list = searchDao.searchAll_proj(projSearch,lineup);
 			req.setAttribute("proj_list", list);
 		}	

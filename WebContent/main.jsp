@@ -114,8 +114,8 @@
 																<span class="pjTo">${proj_list[i].proj_to} 명</span>
 															</div>
 															<div class="pjRegiEndDate">
-																<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>//
-																		시간 함수로 (마감일 - 현재일) 구해서 리턴</span></span>
+																<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>
+																		(${proj_list[i].regdate}-${toDay})</span></span>
 															</div>
 														</div>
 													</div>

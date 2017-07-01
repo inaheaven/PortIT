@@ -60,22 +60,24 @@ public class SearchDao {
 		
 		if(lineup == true){
 			sql = "select distinct Pf_regdate, MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
-					+ "where tag.tag_name like '%"+keyword+"%'"
-					+ " and prof_pf.PROF_ID = Profile.PROF_ID  "
-					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
-					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID "
+					+ "from prof_pf join profile on prof_pf.PROF_ID = Profile.PROF_ID "
+					+ "join portfolio on prof_pf.PF_ID = portfolio.PF_ID  "
+					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
+					+ "join TAG_USE on TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
+					+ "join tag on TAG_USE.TAG_ID = TAG.TAG_ID "
+					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%' "
+					+ "or tag.tag_name like '%"+keyword+"%' or portfolio.pf_title like '%"+keyword+"%' "
 					+ "order by Pf_regdate desc";
 		}
 		else{
-			sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
-					+ "where tag.tag_name like '%"+keyword+"%'"
-					+ " and prof_pf.PROF_ID = Profile.PROF_ID  "
-					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
-					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID "
+			sql = "select distinct Pf_regdate, MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+					+ "from prof_pf join profile on prof_pf.PROF_ID = Profile.PROF_ID "
+					+ "join portfolio on prof_pf.PF_ID = portfolio.PF_ID  "
+					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
+					+ "join TAG_USE on TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
+					+ "join tag on TAG_USE.TAG_ID = TAG.TAG_ID "
+					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%' "
+					+ "or tag.tag_name like '%"+keyword+"%' or portfolio.pf_title like '%"+keyword+"%' "
 					+ "order by portfolio.PF_LIKE desc";
 		}
 		
@@ -209,7 +211,8 @@ public class SearchDao {
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag "
 					+ "on tag.tag_id = tag_use.tag_id "
-					+ "where tag.tag_name like '%"+keyword+"%' "
+					+ "where tag.tag_name like '%"+keyword+"%' or profile.prof_name like '%"+keyword+"%' "
+					+ "or UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%' "
 					+ "order by prof_regdate desc";
 		}	
 		else{
@@ -218,7 +221,8 @@ public class SearchDao {
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag "
 					+ "on tag.tag_id = tag_use.tag_id "
-					+ "where tag.tag_name like '%"+keyword+"%' "
+					+ "where tag.tag_name like '%"+keyword+"%' or profile.prof_name like '%"+keyword+"%' "
+					+ "or UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%' "
 					+ "order by profile.prof_follower desc";
 		}
 		ArrayList list = new ArrayList();
@@ -255,20 +259,22 @@ public class SearchDao {
 		String sql = "";
 		if(lineup == true){
 			sql = "select * "
-				+ "from tag join tag_use "
-				+ "on tag.tag_id = tag_use.tag_id "
-				+ "join project "
-				+ "on tag_use.tag_use_type_id = project.proj_id "
-				+ "where tag.tag_name like '%"+keyword+"%' "
-				+ "order by proj_regdate desc";
+					+ "from member join mem_proj on member.mem_id = mem_proj.mem_id "
+					+ "join project on project.proj_id = mem_proj.proj_id "
+					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id "
+					+ "join profile on profile.mem_id = member.mem_id "
+					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%' "
+					+ "order by proj_regdate desc";
 		}
 		else{
 			sql = "select * "
-					+ "from tag join tag_use "
-					+ "on tag.tag_id = tag_use.tag_id "
-					+ "join project "
-					+ "on tag_use.tag_use_type_id = project.proj_id "
-					+ "where tag.tag_name like '%"+keyword+"%' "
+					+ "from member join mem_proj on member.mem_id = mem_proj.mem_id "
+					+ "join project on project.proj_id = mem_proj.proj_id "
+					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id "
+					+ "join profile on profile.mem_id = member.mem_id "
+					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%' "
 					+ "order by (proj_regenddate - sysdate) desc";
 		}
 		ArrayList list = new ArrayList();
@@ -300,4 +306,5 @@ public class SearchDao {
 		}
 		return list;
 	}
+>>>>>>> refs/remotes/origin/dev
 }

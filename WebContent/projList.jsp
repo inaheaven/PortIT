@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="portit.model.dto.Project"%>
 <%@page import="portit.model.dto.Portfolio"%>
 <%@page import="java.util.List"%>
@@ -74,14 +75,15 @@
 				<!-- END - 조건 검색 box -->
 <%	
  	List list = proj_viewDao.project_info();
- 
+ 	Date today = new Date();
+ 	
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
- 		int numPerPage = 20;				//한 페이지당 보여질 글의 갯수
+ 		int numPerPage = 10;			//한 페이지당 보여질 글의 갯수
  		int totalPage = 0;				//전체 페이지 수
  		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
- 		int beginPerPage = 401;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
- 		int pagePerBlock = 3;			//한 블록당 묶을 페이지 수 (값이 3이므로 1,2,3 / 4,5,6 / ..페이지로 묶임)
+ 		int beginPerPage = 1;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
+ 		int pagePerBlock = 10;			//한 블록당 묶을 페이지 수 (값이 3이므로 1,2,3 / 4,5,6 / ..페이지로 묶임)
  		int totalBlock = 0;				//전체 블럭 갯수
  		int nowBlock = 0;				//현재 블럭
  		
@@ -123,7 +125,7 @@
           						<table class="table text-center">
           							<tr><td>백엔드개발자</td></tr>
           							<tr><td><%=proj.getProj_to() %> 명</td></tr>
-          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
+          							<tr><td><%=proj.getProj_regdate()%> D-&nbsp;-&nbsp;5</td></tr>
           							<tr><td></td></tr>
           						</table>
           					</span>

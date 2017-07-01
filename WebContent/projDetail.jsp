@@ -1,13 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.*"%>
+<%@ page import="portit.model.dao.*"%>
+<%@ page import="portit.model.dto.*"%>
 <!DOCTYPE html>
 <html lang="ko">
+<%
+request.setCharacterEncoding("UTF-8");
+Project project = (Project) request.getAttribute("project");
+%>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DASHGUM - Bootstrap Admin Template</title>
+<title><%= project.getProj_title() %></title>
 
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -120,14 +127,16 @@
 		<section id="projHeader">
 			<div class="container">
 				<h4 class="tags">
-					<span>#<a href="">태그</a>&nbsp;</span>
-					<span>#<a href="">태그</a>&nbsp;</span>
-					<span>#<a href="">태그</a>&nbsp;</span>
+					<% for (Tag tag : project.getProj_tags_language()) { %>
+					<span><a href=""><%=tag.getTag_name()%></a>&nbsp;</span>
+					<% } %>
 				</h4>
-				<h1>프로젝트_이름</h1>
-				<h3 class="username"><a href="">USERNAME</a></h3>
-				<h4 class="field">모집 분야 / ?명</h4>
-				<h3 class="dday">D-12</h3>
+				<h1><%= project.getProj_title() %></h1>
+				<h3 class="username"><a href=""><%= project.getProj_authorName() %></a></h3>
+				<h4 class="field">
+					모집 분야 / <%= project.getProj_numofperson() %>명
+				</h4>
+				<h3 class="dday">D-<%= %></h3>
 			</div>
 		</section><!-- /Profile header -->
 		
@@ -155,39 +164,51 @@
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="intro">
-							<p>생의 무엇을 창공에 이 광야에서 무엇을 그리하였는가? 얼음 그들의 발휘하기 얼마나 이상 있으랴? 살
-								평화스러운 넣는 부패뿐이다. 방지하는 동력은 그들의 긴지라 옷을 있을 끓는 지혜는 아름다우냐? 사랑의 없는 이는
-								때문이다. 곳으로 만천하의 돋고, 보라. 인간의 우리 끓는 사막이다.</p>
-		
-							<p>꽃 역사를 눈이 이상의 뭇 속에 있다. 붙잡아 풀이 군영과 피고, 듣는다. 넣는 아니한 얼음 오직
-								황금시대다. 있으며, 힘차게 뼈 위하여 것은 주는 이상을 것이다. 이상을 인생을 목숨이 너의 웅대한 가치를 맺어,
-								부패뿐이다. 우리의 위하여, 사는가 튼튼하며, 예수는 못하다 위하여 설산에서 듣는다.</p>
-		
-							<p>이상 곳으로 힘차게 따뜻한 열락의 바로 이것을 이성은 것이다. 물방아 지혜는 끓는 트고, 봄바람을 충분히
-								수 것이다. 창공에 이것을 없으면, 바이며, 방황하였으며, 사막이다. 있으며, 할지니, 청춘의 약동하다. 예수는
-								풀밭에 주는 것은 행복스럽고 그들은 약동하다. 두손을 새가 풍부하게 하였으며, 가치를 어디 그러므로 가슴에 것이다.
-								날카로우나 심장의 꽃 피부가 길을 목숨이 칼이다.</p>
+							<%= project.getProj_intro() %>
 						</div>
 					</div>
 					<div class="col-md-offset-2 col-md-8 projMedia">
 						<div id="Screenshots" class="carousel slide" data-ride="carousel">
-							<!-- Indicators 
+							<%
+							List<Media> mediae = project.getProj_mediae();
+							for (int idx = 0; idx < mediae.size(); idx++) {
+								Media media = mediae.get(idx);
+
+								if (idx == 0) {
+							%>
+							<!-- Indicators -->
 							<ol class="carousel-indicators">
-								<li data-target="#Screenshots" data-slide-to="0"
-									class="active"></li>
-								<li data-target="#Screenshots" data-slide-to="1"></li>
-							</ol>-->
-		
+								<%
+									}
+								%>
+								<li data-target="#Screenshots" data-slide-to="<%=idx%>"
+									<%if (idx == 0) {%> class="active" <%}%>></li>
+								<%
+									if (idx == 0) {
+								%>
+							</ol>
+							<%
+								}
+									if (idx == 0) {
+							%>
 							<!-- Wrapper for slides -->
 							<div class="carousel-inner">
-								<div class="item active">
-									<img src="http://loremflickr.com/1280/1024/cat" alt="...">
-									<!-- <div class="carousel-caption">...</div> -->
+								<%
+									}
+								%>
+								<div class="item<%if (idx == 0) {%> active<%}%>">
+									<img src="<%=media.getMl_path()%>" />
 								</div>
-								<div class="item">
-									<img src="http://loremflickr.com/1280/1024/pug" alt="...">
-								</div>
+								<%
+									if (idx == 0) {
+								%>
 							</div>
+							<%
+								}
+							%>
+							<%
+								}
+							%>
 		
 							<!-- Controls -->
 							<a class="left carousel-control" href="#Screenshots"
@@ -216,37 +237,41 @@
 						<table class="table">
 							<tr>
 								<th>개설자</th>
-								<td>사용자_이름</td>
+								<td><%= project.getProj_authorName() %></td>
 							</tr>
 							<tr>
 								<th>등록일</th>
 								<td>
-									2017-06-07 오후 9:13<br />
-									마감일까지 D-12
+									<%= project.getProj_regdate() %><br />
+									마감일까지 D-<%= %>
 								</td>
 							</tr>
 							<tr>
 								<th>모집분야</th>
 								<td>
-									<span><a href="">백엔드 개발자</a>,&nbsp;</span>
+									<% for (Tag tag : project.getProj_tags_field()) { %>
+									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
+									<% } %>
 								</td>
 							</tr>
 							<tr>
 								<th>모집인원</th>
-								<td>6명</td>
+								<td><%= project.getProj_numofperson() %>명</td>
 							</tr>
 							<tr>
 								<th>요구기술</th>
 								<td>
-									<span><a href="">Java</a>,&nbsp;</span>
-									<span><a href="">Oracle</a>,&nbsp;</span>
-									<span><a href="">Git</a>,&nbsp;</span>
-									<span><a href="">Eclipse</a>,&nbsp;</span>
+									<% for (Tag tag : project.getProj_tags_language()) { %>
+									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
+									<% } %>
+									<% for (Tag tag : project.getProj_tags_tool()) { %>
+									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
+									<% } %>
 								</td>
 							</tr>							
 							<tr>
 								<th>예상작업기간</th>
-								<td>14일</td>
+								<td><%= project.getProj_period() %>일</td>
 							</tr>
 						</table>
 					</div>
@@ -266,53 +291,59 @@
 				<div class="row">					
 					<h2 class="text-center">Collaborators</h2>
 				</div>
+				<%
+					List<Profile> coworkers = project.getProj_coworkers();
+					if (coworkers != null && coworkers.size() > 0) {
+						for (int idx = 0; idx < coworkers.size(); idx++) {
+							Profile profile = coworkers.get(idx);
+							if (idx == 0 || idx % 4 == 0) {
+				%>
 				<div class="row collaboList">
+					<%
+							}
+					%>
 					<div class="col-md-3 mb">
-          				<div class="member-simple">
-	          				<div class="simple-content text-center">	      
-		          				<img class="memImg img-circle" alt="avatar" src="assets/img/friends/fr-06.jpg"/>   
-		         				<div>
-		         					<div class="memName"><a href="">멤버 이름</a></div>
-		         					<div class="memTag"><a href="">#태그&nbsp;</a></div>
-		         					<div class="memFollow">
-		         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-		         						<span class="memFollowCount">135</span>
-		         					</div>
-		         				</div>
-	          				</div>          				
-          				</div>
-          			</div> <!-- member-simple end -->
-          			<div class="col-md-3 mb">
-          				<div class="member-simple">
-	          				<div class="simple-content text-center">	      
-		          				<img class="memImg img-circle" alt="avatar" src="assets/img/friends/fr-06.jpg"/>   
-		         				<div>
-		         					<div class="memName"><a href="">멤버 이름</a></div>
-		         					<div class="memTag"><a href="">#태그&nbsp;</a></div>
-		         					<div class="memFollow">
-		         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-		         						<span class="memFollowCount">135</span>
-		         					</div>
-		         				</div>
-	          				</div>          				
-          				</div>
-          			</div> <!-- member-simple end -->
-          			<div class="col-md-3 mb">
-          				<div class="member-simple">
-	          				<div class="simple-content text-center">	      
-		          				<img class="memImg img-circle" alt="avatar" src="assets/img/friends/fr-06.jpg"/>   
-		         				<div>
-		         					<div class="memName"><a href="">멤버 이름</a></div>
-		         					<div class="memTag"><a href="">#태그&nbsp;</a></div>
-		         					<div class="memFollow">
-		         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-		         						<span class="memFollowCount">135</span>
-		         					</div>
-		         				</div>
-	          				</div>          				
-          				</div>
-          			</div> <!-- member-simple end -->          			
+						<div class="member-simple">
+							<div class="simple-content text-center">
+								<img class="memImg img-circle" alt="avatar"
+									src="<%=profile.getProf_img()%>" />
+								<div>
+									<div class="memName">
+										<a href=""><%=profile.getProf_name()%></a>
+									</div>
+									<div class="memTag">
+										<%
+											for (Tag tag : profile.getProf_tags_language()) {
+										%>
+										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
+										<%
+											}
+										%>
+									</div>
+									<div class="memFollow">
+										<span class="fa fa-user"></span>&nbsp;&nbsp; <span
+											class="memFollowCount"><%=profile.getProf_follower()%></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- member-simple end -->
+					<%
+							if (idx == 0 || idx % 4 == 0) {
+					%>
 				</div>
+				<%
+							}
+						}
+					} else {
+				%>
+				<div class="row collaboList">
+					<p class="text-center">아직 이 프로젝트에 지원한 사람이 없습니다.</p>
+				</div>
+				<%
+					}
+				%>
 			</div>
 		</section><!-- /Collaborators -->		
 		

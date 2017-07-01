@@ -58,7 +58,6 @@ public class AccountController extends HttpServlet {
 					 
 				//기본값.
 				url="myDeleteAccount.jsp";
-					 
 				
 				 deletePw=req.getParameter("userdeletepw");
 				 
@@ -93,7 +92,7 @@ public class AccountController extends HttpServlet {
 					String newpwcf=req.getParameter("newpwcf");
 					
 					url="myAccount.jsp";
-				
+					
 					// 버튼을 눌렀을때만 동작해야한다.
 					if (newpwcf != null) {
 						model.alterAccount(userid, userpw, newpw, newpwcf);
