@@ -96,7 +96,7 @@
 						</div>		
 					</c:forEach>
 			</c:if>	
-	<!-- 검색 결과가 4개 이상일때 -->
+	<!-- 검색 결과가 4개 이하일때 -->
 		<c:if test="${port_list.size() != 0 && port_list.size()>0 && port_list.size()<=3}">
 				<c:forEach begin="0" end="${port_list.size()-1 }" var="i" >	
 						<!-- 포트폴리오 -->
