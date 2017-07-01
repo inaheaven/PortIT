@@ -285,8 +285,7 @@ function fnSelectSnsInfo(snsName){
 		<div class="col-md-12 mt profreg">
 			<div class="profregForm">
 				<h3 class="formTitle text-center">프로필 등록</h3>
-				<form action="/register?cmd=REGISTER" method="post" name="frof_reg"
-					class="form-horizontal style-form">
+				<form action="/register?cmd=REGISTER" method="post" name="frof_reg"	class="form-horizontal style-form" enctype="multipart/form-data"> 
 
 					<!-- 프로필id hidden -->
 					<div class="form-group">
@@ -426,7 +425,7 @@ function fnSelectSnsInfo(snsName){
 						</div>
 					</div>
 					<div class="form-group text-center buttonDiv">
-						<button type="button" class="btn common" onclick="profRegister()">등록하기</button>
+						<button type="submit" class="btn common" >등록하기</button>
 						&nbsp;&nbsp;&nbsp;
 						<button type="reset" class="btn cancel">다시 쓰기</button>
 
