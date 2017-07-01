@@ -95,7 +95,7 @@ public class PortfolioDao {
 				// 작성자명을 조회해서 DTO에 저장
 				sql = "SELECT prof.prof_name, prof.prof_img FROM profile prof"
 						+ " INNER JOIN prof_pf pp "
-						+ " ON prof.prof_id=pp.prof_id WHERE prof.pf_id=?";
+						+ " ON prof.prof_id=pp.prof_id WHERE pp.pf_id=?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();

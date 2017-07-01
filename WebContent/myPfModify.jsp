@@ -1,14 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="portit.model.dto.*" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 	<%--sidenavbar start--%>
 	<jsp:include page="my.jsp"></jsp:include>
 	<%--sidenavbar end--%>
 
 		<section id="main-content">
-		<%@ page import="portit.model.dto.*" %>
-		<%@ page import="java.util.*" %>
 		<%
 			request.setCharacterEncoding("UTF-8");
 			Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
@@ -34,6 +35,10 @@
 					str += list.get(i).getProf_nick() + ", ";
 				}
 				return str;
+			}
+			
+			public String trimFilename(String filename) {
+				return filename.substring(filename.lastIndexOf(File.separator));
 			}
 		%>
 			<section class="wrapper site-min-height">
@@ -122,9 +127,16 @@
 										<span class="help-block">최대 9개의 파일을 선택할 수 있습니다.</span>
 									</div>
 									<ul id="fileList">
-										<c:forEach var="i" items="${portfolio.Pf_mediae}">
-											<li>${i.ml_path} <a id="mediaRemove" style="cursor:pointer"><i class="fa fa-times"></i></a></li>
-										</c:forEach>
+										<%
+											List<Media> mediae = portfolio.getPf_mediae();
+											if (mediae != null) {
+												for (int i=0; i < mediae.size(); i++) {
+										%>
+										<li><%= trimFilename(mediae.get(i).getMl_path()) %> <a id="mediaRemove" style="cursor:pointer"><i class="fa fa-times"></i></a></li>
+										<%
+												}
+											}
+										%>
 									</ul>
 								</div>
 							</div>
@@ -133,7 +145,7 @@
 							<input type="hidden" name="mem_id" value="<%= session.getAttribute("loginId") %>" />
 							<input type="hidden" name="type" value="portfolio" />
 							<input type="hidden" name="id" value="<%=request.getParameter("id")%>" />
-							<button type="submit" class="btn common">등록하기</button>&nbsp;&nbsp;&nbsp;
+							<button type="submit" class="btn common">수정하기</button>&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn cancel" onclick="javascript:history.back()">취소하기</button>
 						</div>
 					</form>
