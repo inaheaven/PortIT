@@ -300,4 +300,5 @@ public class SearchDao {
 		}
 		return list;
 	}
+>>>>>>> refs/remotes/origin/dev
 }
