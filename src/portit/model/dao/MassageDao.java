@@ -214,6 +214,14 @@ public class MassageDao{
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
+			//조회결과가없다면.....
+			rs.last(); // 총 레코드 수구하기
+			int totalRecord = rs.getRow();
+			rs.beforeFirst(); // 커서를 다시 원상태로 복귀해서 자료를 읽을 준비를 해줌
+			
+			if(totalRecord==0){
+				return null;
+			}
 			
 			
 			//메세지 삽입.
