@@ -87,14 +87,11 @@ public class PortfolioAddController implements Controller {
 					.setPf_tags_field(fieldTagList)
 					.setPf_mediae(mediae)
 					.setPf_coworkers(coworkerList);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		// DAO의 추가 메서드 호출
-		try {
+			// DAO의 추가 메서드 호출
 			portfolioDao.insert(portfolio);
-		} catch (Exception e) {
+		} catch (ParseException e) {
 			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
+			e.printStackTrace();
 		}
 		
 		// 뷰 URL 반환

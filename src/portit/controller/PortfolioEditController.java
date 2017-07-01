@@ -87,11 +87,11 @@ public class PortfolioEditController implements Controller {
 					.setPf_tags_field(fieldTagList)
 					.setPf_mediae(mediae)
 					.setPf_coworkers(coworkerList);
+			// DAO의 추가 메서드 호출
+			portfolioDao.update(pf_id, portfolio);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		// DAO의 추가 메서드 호출
-		portfolioDao.update(pf_id, portfolio);
 		
 		// 뷰 URL 반환
 		String viewUrl = "rdr:/page?page=myPfList";
