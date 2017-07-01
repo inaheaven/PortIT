@@ -107,7 +107,7 @@ public class PortfolioDao {
 				// 좋아요 수를 조회해서 DTO에 저장
 				sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
 				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, portfolio.getPf_id());
+				stmt.setInt(1, pf_id);
 				rs = stmt.executeQuery();
 				rs.next();
 				portfolio.setPf_like(rs.getInt(1));
