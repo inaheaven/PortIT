@@ -161,9 +161,7 @@ var Script = function () {
     				break;
     			}
     			$("#fileList").append(
-    					"<li>"+filelist[i].name
-    					+" ("+filelist[i].type+", "+(filelist[i].size/(1024*1024)).toFixed(2)+"MB) "
-    					+"<a id=\"mediaRemove\" style=\"cursor:pointer\"><i class=\"fa fa-times\"></i></a></li>"
+    					"<li>" + filelist[i].name + " <a id=\"mediaRemove\" style=\"cursor:pointer\"><i class=\"fa fa-times\"></i></a></li>"
     					);
     			rows++;
     		}

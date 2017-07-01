@@ -22,7 +22,7 @@ import portit.model.dto.Tag;
  * 포트폴리오 수정 컨트롤러
  *
  */
-public class PortfolioModifyController implements Controller {
+public class PortfolioEditController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
