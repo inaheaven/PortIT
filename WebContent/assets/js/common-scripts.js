@@ -119,41 +119,34 @@ var Script = function () {
     
  // datepicker
     $(function() {
-		var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+		var container = $(".bootstrap-iso form").length > 0 ? $(".bootstrap-iso form").parent() : "body";
 		$.datepicker.setDefaults({
-			dateFormat : 'yy-mm-dd',
+			dateFormat : "yy-mm-dd",
 			setDate : new Date(),
 			changeMonth: true, 
 	        changeYear: true,
 	        container : container,
 			todayHighlight : true,
 			autoclose : true,
-	        prevText: '이전 달',
-	        nextText: '다음 달',
-	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        prevText: "이전 달",
+	        nextText: "다음 달",
+	        monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	        dayNames: ["일", "월", "화", "수", "목", "금", "토"],
+	        dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+	        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
 	        showMonthAfterYear: true
 	    });
-		$('input[name=pf_startdate]').datepicker({
+		$("input[name=pf_startdate]").datepicker({
 			onSelect: function(selected) {
-				$('input[name=pf_enddate]').datepicker('option','minDate', selected)
+				$("input[name=pf_enddate]").datepicker("option","minDate", selected)
 				}
 		});
-		$('input[name=pf_enddate]').datepicker({
+		$("input[name=pf_enddate]").datepicker({
 			onSelect: function(selected) {
-				$('input[name=pf_startdate]').datepicker('option','maxDate', selected)
+				$("input[name=pf_startdate]").datepicker("option","maxDate", selected)
 				}
 		});
-    });
-    
- // Tokenize2
-    $(function() {
-    	$('select[name^=pf_tags_]').tokenize2(function() {
-    		$(this).append('<option value="value">value</option>');
-    	});
     });
     
 
@@ -161,33 +154,63 @@ var Script = function () {
     $(function() {
     	var rows = 0;
     	var filelist = null;
-    	$('input#fileUpload').on('change', function() {
-    		filelist = document.getElementById($(this).attr('id')).files;
+    	$("input#fileUpload").on("change", function() {
+    		filelist = document.getElementById($(this).attr("id")).files;
     		for (var i=0; i<filelist.length; i++) {
     			if (rows == 9) {
     				break;
     			}
-    			$('#fileList').append(
-    					'<li>'+filelist[i].name
-    					+' ('+filelist[i].type+', '+(filelist[i].size/(1024*1024)).toFixed(2)+'MB) '
-    					+'<a id="mediaRemove" style="cursor:pointer"><i class="fa fa-times"></i></a></li>'
+    			$("#fileList").append(
+    					"<li>"+filelist[i].name
+    					+" ("+filelist[i].type+", "+(filelist[i].size/(1024*1024)).toFixed(2)+"MB) "
+    					+"<a id=\"mediaRemove\" style=\"cursor:pointer\"><i class=\"fa fa-times\"></i></a></li>"
     					);
     			rows++;
     		}
     	});
-    	$('#fileList').on('click', '#mediaRemove', function() {
+    	$("#fileList").on("click", "#mediaRemove", function() {
     		for (var i=0; i<filelist.length; i++) {
-    			var finfo = $(this).parent('li').first().text();
-    			var fname= finfo.substr(0, finfo.lastIndexOf(' ('));
+    			var finfo = $(this).parent("li").first().text();
+    			var fname= finfo.substr(0, finfo.lastIndexOf(" ("));
     			if (fname == filelist[i].name) {
     				delete filelist.item(i);
-    				$(this).parent('li').empty().remove();
+    				$(this).parent("li").empty().remove();
     	    		rows--;
     			}
     		}
     	});
     });
     
-    
+ // 함께 한 사람 검색해서 폼에 입력
+    $("#searchUser button").on("click", function() {
+    	$.ajax({
+    		url : "/form/memSearch",
+    		data : $("#searchUser").serialize(),
+    		type : "POST",
+    		dataType : "json",
+    		success : function(result) {
+    			$("#userList").empty();
+    			var html = "";
+    			if(result.errorCode != null && result.errorCode != "") {
+    				$("$userList").append("<li>"+result.errorMessage+"</li>");
+    			} else {
+    				var list = result.list;
+    				for (var i=0; i < list.length; i++) {
+    					var username = list[i].prof_nick;
+    					var name = list[i].prof_name;
+    					$("$userList").append("<li>"+name+"("+username+")"+"</li>");
+    				}
+    			}
+    		}
+    	});
+    });
+    function put(username, name){
+        var username = username;
+        var name = name;
+        $("#selectedUser").append(username+", ");
+    }
+    $("#confirmUser").on("click", function() {
+    	$("input[name=pf_coworker]").append($("#selectedUser").text());
+    });
 
 }();

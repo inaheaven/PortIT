@@ -9,7 +9,7 @@
 <jsp:useBean id="portfolio" class="portit.model.dto.Portfolio" />
 <%
 request.setCharacterEncoding("UTF-8");
-portfolio = (Portfolio) request.getAttribute("portfolio");
+portfolio = (Portfolio) application.getAttribute("portfolio");
 %>
 <head>
 <meta charset="utf-8">

@@ -1,10 +1,14 @@
 package portit.model.dao;
 
 import java.awt.List;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
@@ -248,6 +252,37 @@ public class ProfileDao {
 			freeConnection();
 		}
 		
+	}
+	
+	/**
+	 * 이름과 닉네임을 JSON으로 전달
+	 * @param param
+	 */
+	public JSONArray selectJson(String param) {
+		JSONArray arr = new JSONArray();
+		getConnection();
+		try{
+			String sql = "SELECT prof_nick, prof_name FROM profile WHERE prof_nick=? OR prof_name=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, param);
+			stmt.setString(2, param);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				JSONObject obj = new JSONObject();
+				obj.put("prof_name", URLEncoder.encode(rs.getString("prof_name"), "UTF-8"));
+				obj.put("prof_nick", URLEncoder.encode(rs.getString("prof_nick"), "UTF-8"));
+				if (obj != null) {
+					arr.add(obj);
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			freeConnection();
+		}
+		return arr;
 	}
 	
 }

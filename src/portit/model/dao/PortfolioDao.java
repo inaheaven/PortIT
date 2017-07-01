@@ -350,68 +350,94 @@ public class PortfolioDao {
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
 			sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)"
 					+ " WHERE NOT EXISTS(SELECT * FROM tag)";
-			stmt = conn.prepareStatement(sql);
-			for (int i = 0; i < pf_tags_env.size(); i++) {
-				stmt.setString(1, "env");
-				stmt.setString(2, pf_tags_env.get(i).getTag_name());
-				rows += stmt.executeUpdate();
+			if (pf_tags_env != null) {
+				for (int i = 0; i < pf_tags_env.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "env");
+					stmt.setString(2, pf_tags_env.get(i).getTag_name());
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_language.size(); i++) {
-				stmt.setString(1, "language");
-				stmt.setString(2, pf_tags_language.get(i).getTag_name());
-				rows += stmt.executeUpdate();
+			if (pf_tags_language != null) {
+				for (int i = 0; i < pf_tags_language.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "language");
+					stmt.setString(2, pf_tags_language.get(i).getTag_name());
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_tool.size(); i++) {
-				stmt.setString(1, "tool");
-				stmt.setString(2, pf_tags_tool.get(i).getTag_name());
-				rows += stmt.executeUpdate();
+			if (pf_tags_tool != null) {
+				for (int i = 0; i < pf_tags_tool.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "tool");
+					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_field.size(); i++) {
-				stmt.setString(1, "field");
-				stmt.setString(2, pf_tags_field.get(i).getTag_name());
-				rows += stmt.executeUpdate();
+			if (pf_tags_field != null) {
+				for (int i = 0; i < pf_tags_field.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "field");
+					stmt.setString(2, pf_tags_field.get(i).getTag_name());
+					rows += stmt.executeUpdate();
+				}
 			}
 			// 태그 사용 추가
 			sql = "INSERT INTO tag_use("
 					+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
 					+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
-			stmt = conn.prepareStatement(sql);
-			for (int i = 0; i < pf_tags_env.size(); i++) {
-				stmt.setString(1, "portfolio");
-				stmt.setInt(2, tagNameToId(pf_tags_env.get(i).getTag_name()));
-				rows += stmt.executeUpdate();
+			if (pf_tags_env != null) {
+				for (int i = 0; i < pf_tags_env.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "portfolio");
+					stmt.setInt(2, tagNameToId(pf_tags_env.get(i).getTag_name()));
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_language.size(); i++) {
-				stmt.setString(1, "portfolio");
-				stmt.setInt(2, tagNameToId(pf_tags_env.get(i).getTag_name()));
-				rows += stmt.executeUpdate();
+			if (pf_tags_language != null) {
+				for (int i = 0; i < pf_tags_language.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "portfolio");
+					stmt.setInt(2, tagNameToId(pf_tags_language.get(i).getTag_name()));
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_tool.size(); i++) {
-				stmt.setString(1, "portfolio");
-				stmt.setInt(2, tagNameToId(pf_tags_env.get(i).getTag_name()));
-				rows += stmt.executeUpdate();
+			if (pf_tags_tool != null) {
+				for (int i = 0; i < pf_tags_tool.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "portfolio");
+					stmt.setInt(2, tagNameToId(pf_tags_tool.get(i).getTag_name()));
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_field.size(); i++) {
-				stmt.setString(1, "portfolio");
-				stmt.setInt(2, tagNameToId(pf_tags_env.get(i).getTag_name()));
-				rows += stmt.executeUpdate();
+			if (pf_tags_field != null) {
+				for (int i = 0; i < pf_tags_field.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "portfolio");
+					stmt.setInt(2, tagNameToId(pf_tags_field.get(i).getTag_name()));
+					rows += stmt.executeUpdate();
+				}
 			}
 			
 			// 공동 작업자 추가
 			List<Profile> coworkers = portfolio.getPf_coworkers();
 			sql = "INSERT INTO pf_coworker(pf_co_id, pf_id, mem_id)"
 					+ " VALUES(seq_pf_co_id.nextVal,seq_pf_id.currVal,?)";
-			stmt = conn.prepareStatement(sql);
-			for (int i = 0; i < coworkers.size(); i++) {
-				stmt.setInt(1, usernameToId(coworkers.get(i).getProf_nick()));
-				rows += stmt.executeUpdate();
+			if (coworkers != null) {
+				for (int i = 0; i < coworkers.size(); i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setInt(1, usernameToId(coworkers.get(i).getProf_nick()));
+					rows += stmt.executeUpdate();
+				}
 			}
 			
 			// 미디어 라이브러리 추가
 			List<Media> mediae = portfolio.getPf_mediae();
-			for (int i = 0; i < mediae.size(); i++) {
-				mediaDao.insert(conn, mediae.get(i));
-				rows++;
+			if (mediae != null) {
+				for (int i = 0; i < mediae.size(); i++) {
+					mediaDao.insert(conn, mediae.get(i));
+					rows++;
+				}
 			}
 			
 			// 프로필과 포트폴리오 연결

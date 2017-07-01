@@ -81,7 +81,7 @@
 								<div class="input-group">
 									<input type="text" class="form-control" name="pf_coworker">
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-default">검색</button>
+										<button type="button" class="btn btn-default" data-toggle="modal" data-target="#coworkers">검색</button>
 									</span>
 								</div>
 							</div>
@@ -108,6 +108,38 @@
 					</form>
 				</div>
 				<!-- /row -->
+				
+				<!-- modal #coworkers -->
+				<div class="modal fade" id="coworkers" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">함께한 사람 찾기</h4>
+						</div>
+						<div class="modal-body">
+							<form id="searchUser">
+								<div class="input-group">
+									<input type="text" class="form-control" name="username">
+									<span class="input-group-btn">
+										<button type="button" class="btn common">검색</button>
+									</span>
+								</div>
+							</form>
+							<hr />
+							<ul id="userList"></ul>
+							<hr />
+							<div id="selectedUser"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn cancel" data-dismiss="modal">취소</button>
+							<button type="button" class="btn common" id="confirmUser">확인</button>
+						</div>
+					</div>
+				</div>
+			</div><!-- /modal -->
 
 				</div>
 			</section>
