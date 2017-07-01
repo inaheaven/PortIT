@@ -40,7 +40,7 @@ public class AccountController extends HttpServlet {
 			String pageName ="memberSearch.jsp";	//test page
 			
 			//Login된 Id session에서 추출.
-			int login_id=Integer.parseInt((String)session.getAttribute("longin_id"));
+			int login_id=(int) session.getAttribute("loginId");
 			
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
 			
@@ -58,8 +58,7 @@ public class AccountController extends HttpServlet {
 					 
 				//기본값.
 				url="myDeleteAccount.jsp";
-					 
-					 
+				
 				 deletePw=req.getParameter("userdeletepw");
 				 
 					if(deletePw!=null){
@@ -93,7 +92,7 @@ public class AccountController extends HttpServlet {
 					String newpwcf=req.getParameter("newpwcf");
 					
 					url="myAccount.jsp";
-				
+					
 					// 버튼을 눌렀을때만 동작해야한다.
 					if (newpwcf != null) {
 						model.alterAccount(userid, userpw, newpw, newpwcf);

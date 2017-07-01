@@ -45,23 +45,23 @@
 				</a>
 			</li>                  
 			<li class="">
-				<a href="/page?page=myNotification"  id="myNotification">
+				<a href="/page?page=myNotification&sort=all"  id="myNotification">
 				    <span>Notification</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/empty/msg?cmd=list" id="myMsgList">
+				<a href="/msg?cmd=list" id="myMsgList">
 				    <span>Message</span>
 				</a>
 			</li>
 			<hr class="line"/>
 			<li class="">
-				<a href="/empty/account?cmd=alter" id="myAccount">
+				<a href="/account?cmd=alter" id="myAccount">
 				    <span>My Account</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/empty/account?cmd=delete" id="myDeleteAccount">
+				<a href="/account?cmd=delete" id="myDeleteAccount">
 				    <span>Delete Account</span>
 				</a>
 			</li>

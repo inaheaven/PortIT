@@ -1,14 +1,10 @@
 package portit.model.dao;
 
 import java.awt.List;
-import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
@@ -44,7 +40,7 @@ public class ProfileDao {
 	private void getConnection() {
 		try {
 			conn = pool.getConnection();
-			if (conn != null) System.out.println("DB 접속");
+			if (conn != null){ }//System.out.println("DB 접속");
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 - getConnection()");
 			e.printStackTrace();
@@ -57,7 +53,7 @@ public class ProfileDao {
 	private void freeConnection() {
 		try {
 			pool.freeConnection(conn, stmt, rs);
-			if (conn != null) System.out.println("DB 접속 해제");
+			if (conn != null){} //System.out.println("DB 접속 해제");
 		} catch (Exception e) {
 			System.out.println("DB 접속해제 오류 - freeConnection()");
 			e.printStackTrace();
@@ -284,5 +280,4 @@ public class ProfileDao {
 		}
 		return arr;
 	}
-	
 }

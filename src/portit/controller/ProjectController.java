@@ -25,7 +25,6 @@ public class ProjectController extends HttpServlet {
 		
 		dao.reg_pro(req, resp);
 		
-		
 	}
 
 }

@@ -44,10 +44,5 @@ public class MemberJoinController extends HttpServlet {
 			out.println("<script>alert('이메일 아이디가 이미 존재합니다.'); location.href='/index.jsp';</script>");			
 			
 		}
-		
-//		resp.sendRedirect("/index.jsp");
-		
-//		RequestDispatcher view = req.getRequestDispatcher("/index.jsp");		
-//		view.forward(req, resp);
 	}
 }

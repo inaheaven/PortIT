@@ -2,7 +2,6 @@ package portit.model.dto;
 
 /**
  * 태그 DTO
- * @author gnsngck
  *
  */
 public class Tag {

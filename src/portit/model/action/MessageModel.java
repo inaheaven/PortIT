@@ -31,7 +31,7 @@ public class MessageModel {
 	
 	
 	//메세지를 보낸다.
-	public void insertMessage() {
+	public boolean insertMessage() {
 		/*
 		 * 1.보내기 페이지에서 'MessageSend'page에서 request가 들어온다. 
 		 * 2.request에서 데이터를 뽑아낸다getParameter 
@@ -41,7 +41,21 @@ public class MessageModel {
 		 * 6.또 view에 출력된다.
 		 */
 
+		boolean Inputconfirmation=true;
+		
+		String msgText=req.getParameter("msgText");
+		String msgReceiverEmail=req.getParameter("msgReceiver");
+		int mem_id_reciver=Integer.parseInt(dao.emailToMemId(msgReceiverEmail));
+		
+		if(mem_id_reciver==0||msgText.trim().equals("")){
+			//사용자 미입력.
+			return false;
+		}
+		
+		
 		dto = new MessageDto();
+		dto.setMem_id_sender(this.login_id);
+		
 		
 		//1.login할때 ID를 session에 저장한다.
 		//2.session에 저장된 ID를  mem_id_sender로 dto에 저장한다.
@@ -50,13 +64,31 @@ public class MessageModel {
 		//6.controller에서 ID를 전달하자.
 		
 		
-		dto.setMem_id_sender(this.login_id);
-		dto.setMem_id_receiver(Integer.parseInt(dao.getMemId(req.getParameter("msgReceiver"))));
-		dto.setMsg_content(req.getParameter("msgText"));
+		
+		//보내는이 미입력. 0으로 저장.
+		if(msgReceiverEmail==null){
+			dto.setMem_id_receiver(0);
+		}else{
+			dto.setMem_id_receiver(mem_id_reciver);	
+		}
+		
+		dto.setMsg_content(msgText);
 		dto.setMsg_isread("n");
 
-		//DB에 Input.
-		dao.insertMsg(dto);
+		
+		//값이 입정상적으로 입력되었다면.
+		if((msgText!=null)&&(mem_id_reciver!=0)){
+			Inputconfirmation=true;
+			
+			
+			//DB에 Input.
+			dao.insertMsg(dto);
+		}else{
+			Inputconfirmation=false;
+		}
+		
+		
+		return Inputconfirmation;
 	}
 	
 	
@@ -65,10 +97,9 @@ public class MessageModel {
 	public ArrayList roomList(String keyField, String keyWord){
 		//Login_id에 생성된 모든 대화방List를 리턴한다.
 		
-		this.list = new ArrayList();
 		//dao 변수1: Type(이름,nick), 변수2: 검색어.
 		
-		//여기선 getmsgALL 이아니라 msgAllPack()가 선언되어야한다
+		
 		this.list=dao.roomList(keyField,keyWord);
 		
 		return this.list;
@@ -82,13 +113,26 @@ public class MessageModel {
 		//해당 User와 대화한 대화방을 return한다.
 		// (타입, 검색어, MSG_SENDER, 수신만:fail 수신+발신:true)
 		
-		this.list = new ArrayList();	//인스턴스 생성을 안해도된다.
-		this.list=dao.getChatRoom(null,null, Msg_Sender,true);
+		//[청소중]인스턴스 생성을 안해도된다.
+		//this.list = new ArrayList();	
 		
+		this.list=dao.getChatRoom(null,null, Msg_Sender,true);
 		return list;
 	}
 	
 	
+	public void deleteMsg(String msg_id){
+		
+		//해당 msg삭제...
+		dao.deleteMsg(msg_id);
+	}
+
+
+	
+	public String toEmail(String mem_id) {
+		return dao.toEamil(mem_id);
+	}
+>>>>>>> refs/remotes/origin/dev
 	
 	
 

@@ -202,5 +202,4 @@ public class Profile {
 		this.prof_myProj = prof_myProj;
 		return this;
 	}
-		
 }

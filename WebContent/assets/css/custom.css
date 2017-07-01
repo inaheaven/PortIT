@@ -30,6 +30,18 @@
 	font-size: 20px;
 }
 
+.hasAlarm {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    z-index: 100;
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+}
+
+
 .mypage > a {
 	margin-top: -10px !important;
 }
@@ -43,6 +55,7 @@
 .mypage:active img {
 	border: 2px solid #E69138;
 }
+
 
 /**************************** Sign In Page *****************************/
 

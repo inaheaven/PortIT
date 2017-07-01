@@ -14,7 +14,6 @@
 <!--external css-->
 <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link href="assets/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
-<link href="assets/css/tokenize2.min.css" rel="stylesheet" />
 <link href="jquery/jquery.autocomplete.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="assets/css/style.css" rel="stylesheet">
@@ -57,7 +56,6 @@
 	<script src="assets/js/jquery.nicescroll.js"></script>
 	<script src="jquery/lib/jquery.ajaxQueue.js"></script>
 	<script src="jquery/lib/jquery.bgiframe.min.js"></script>
-	<script src="assets/js/tokenize2.min.js"></script>
 	<script src="jquery/jquery.autocomplete.js"></script>
 	
 	<!--common script for all pages-->

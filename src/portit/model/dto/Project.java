@@ -7,11 +7,11 @@ import java.util.List;
  * 프로젝트 DTO
  *
  */
-
 public class Project {
 	private int proj_id;
 	private String proj_title;
 	private String proj_intro;
+	private int proj_to;
 	private Date proj_regdate;
 	private Date proj_startdate;
 	private int proj_period;
@@ -97,8 +97,14 @@ public class Project {
 	public void setProj_id(int proj_id) {
 		this.proj_id = proj_id;
 	}
+	public void setProj_id(int proj_id) {
+		this.proj_id = proj_id;
+	}
 	public String getProj_title() {
 		return proj_title;
+	}
+	public void setProj_title(String proj_title) {
+		this.proj_title = proj_title;
 	}
 	public void setProj_title(String proj_title) {
 		this.proj_title = proj_title;
@@ -108,6 +114,12 @@ public class Project {
 	}
 	public void setProj_intro(String proj_intro) {
 		this.proj_intro = proj_intro;
+	}
+	public int getProj_to() {
+		return proj_to;
+	}
+	public void setProj_to(int proj_to) {
+		this.proj_to = proj_to;
 	}
 	public Date getProj_regdate() {
 		return proj_regdate;
@@ -133,5 +145,4 @@ public class Project {
 	public void setProj_regenddate(Date proj_regenddate) {
 		this.proj_regenddate = proj_regenddate;
 	}
-
 }

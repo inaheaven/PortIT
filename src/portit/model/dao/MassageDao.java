@@ -42,6 +42,8 @@ public class MassageDao{
 	
 	
 	
+	
+	
 	//싱글톤 실험.
 	private static MassageDao instance = new MassageDao();
 	
@@ -82,7 +84,7 @@ public class MassageDao{
 			
 			
 			//해당 발신자의 대화방을 Roomlist에 담는다..
-			Roomlist.add(getChatRoom(null,null,mem_id_sender,false));
+			Roomlist.add(getChatRoom(keyField,keyWord,mem_id_sender,false));
 		}
 		return Roomlist;
 	}
@@ -99,7 +101,7 @@ public class MassageDao{
 	public void insertMsg(MessageDto dto){
 		String sql = "insert into Message"
 			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
+			+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
 	
 		try{
 			con = pool.getConnection();
@@ -109,6 +111,24 @@ public class MassageDao{
 			pstmt.setInt(2, dto.getMem_id_receiver());
 			pstmt.setString(3, dto.getMsg_content());
 			pstmt.setString(4, dto.getMsg_isread());
+			pstmt.executeUpdate();
+			
+			sql = "SELECT msg_id FROM message WHERE mem_id_sender = ? and mem_id_receiver = ? ORDER BY mem_id DESC" ;
+			pstmt = con.prepareStatement(sql);
+	 		pstmt.setInt(1, dto.getMem_id_sender());
+			pstmt.setInt(2, dto.getMem_id_receiver());
+			rs = pstmt.executeQuery();
+			int msg_id = 0;
+			if(rs.next()){
+				msg_id = rs.getInt("msg_id");
+			}
+					
+			// 메세지 보내면 Notification 테이블에도 insert 하기
+			sql = "INSERT INTO notification(nt_id, mem_id_sender, mem_id_receiver, nt_date, nt_type, nt_type_id, nt_isread) "
+					+ "VALUES(seq_nt_id.nextVal, ? ,?, sysdate, 'message', ?, 'f')";
+			pstmt.setInt(1, dto.getMem_id_sender());
+			pstmt.setInt(2, dto.getMem_id_receiver());
+			pstmt.setInt(3, msg_id);
 			pstmt.executeUpdate();
 		}
 		
@@ -127,16 +147,15 @@ public class MassageDao{
 	
 	
 	// '특정발신자'와의 대화방.
-	public ArrayList getChatRoom(String Type, String Name, String Msg_Sender, Boolean All){
+	public ArrayList getChatRoom(String keyField, String keyWord, String Msg_Sender, Boolean All){
 		
 		ArrayList list = new ArrayList();
 		String sql = null;
 		
 		try{
 			//sql->connection->pstmt-rs
-			if(Type == null){
+			if(keyWord == null){
 				//쿼리문이 닉네임을 검색할때와 이름을 검색할때로 나뉘어야한다.
-				
 				//이 쿼리문은 profile이 생성되어있어야 등록이 가능하다. 따라서 profile 개설여부를 묻는 조건문이 필요하다
 				//혹은 쿼리문을 수정하여 name과 nick을 아예 빼버린다.
 				//그리고 dto에 담는 시점에서 converting을 한다.
@@ -163,12 +182,31 @@ public class MassageDao{
 				sql=sql.concat(" and MEM_ID_RECEIVER="+Msg_Sender+")");
 				}
 				sql=sql.concat(" order by msg_date desc");
+				
+				
+				
 			}
 			
 			else{//검색조건  유
 				
-				//field값에 따른 조건 mail or 이름.
-				//조인해야함.
+				
+				//내용검색.
+				if(keyField.equals("search_content")){
+					sql="select * from(select * FROM Message WHERE (mem_id_sender ="
+						+ Msg_Sender+" and MEM_ID_RECEIVER="+login_id+")) "+
+						"where MSG_Content like '%"+keyWord+"%' "+
+						"order by msg_date desc ";
+					
+				}
+				//사람검색
+				else{
+					sql="select * from(select * FROM Message WHERE (mem_id_sender ="
+							+ Msg_Sender+" and MEM_ID_RECEIVER="+login_id+")) "+
+							"order by msg_date desc ";
+					
+				}
+				
+				
 			}
 			
 			
@@ -180,7 +218,6 @@ public class MassageDao{
 			
 			//메세지 삽입.
 			while(rs.next()){
-				
 				MessageDto Dto = new MessageDto();
 				Dto.setMsg_id(rs.getInt("MSG_ID"));
 				Dto.setMem_id_sender(rs.getInt("MEM_ID_SENDER"));
@@ -217,8 +254,6 @@ public class MassageDao{
 
 			// 검색조건이 없다면...
 			if (keyWord == null) {
-
-				System.out.println("검색무");
 
 				sql = "Select mem_ID_sender, max(MSG_DATE)" + "From (select * from message where MEM_ID_RECEIVER= ";
 				sql = sql.concat(String.valueOf(mem_id));
@@ -264,7 +299,6 @@ public class MassageDao{
 						rs = pstmt.executeQuery();
 					}
 
-					System.out.println("검색DAO " + sql);
 					while (rs.next()) {
 						list.add(rs.getString("MEM_ID"));
 					}
@@ -363,26 +397,25 @@ public class MassageDao{
 
 	
 	
-	
-	public String getMemId(String mem_eamil){
-			/*
-			 1.이름이 등록됐다면 이름으로 반환한다.
-			 2.없다면 메일ID를 반환한다.  
-			 */
+	//MsgSend에서 보낼때...
+	public String emailToMemId(String mem_eamil){
 			
 			String sql = null;
-			String memId = null;
+			String memId="0";
 			
 			try{
-					sql="select mem_id FROM member WHERE Mem_email like '%";
-					sql = sql.concat(mem_eamil)+"%' ";	
-	
-					con = pool.getConnection();
-					pstmt = con.prepareStatement(sql);
-					rs = pstmt.executeQuery();
+				System.out.println(mem_eamil.trim());
+				//null이 들어가면 조건문이 죽게된다... 모든값조회.
+				if(!mem_eamil.equals("")){
+						sql="select mem_id FROM member WHERE Mem_email like '%"+mem_eamil.trim()+"%'" ;
 				
-				while(rs.next()){
-					memId= rs.getString("mem_id");
+						con = pool.getConnection();
+						pstmt = con.prepareStatement(sql);
+						rs = pstmt.executeQuery();
+					
+					while(rs.next()){
+						memId= rs.getString("mem_id");
+					}
 				}
 			}
 			catch(Exception err){
@@ -398,27 +431,61 @@ public class MassageDao{
 	
 		
 		
-		
+	public String toEamil(String mem_id) {
+		/*
+		 * mem_id to Email
+		 */
+		String sql = null;
+		String e_mail=null;
+
+		try {
+			sql = "select Mem_email FROM member WHERE mem_id="+ mem_id;
+
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				e_mail = rs.getString("Mem_email");
+			}
+		} catch (Exception err) {
+			System.out.println("toEamil()에서 오류");
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+
+		return e_mail;
+	}
+	
+	
 		
 	
 	// Delete.jsp
-	public void deleteAccount(int login_id){
-		String sql = "delete from MEMBER where MEM_ID=?";
+	public void deleteMsg(String msg_id){
+		
+		String sql = "delete from Message where msg_id=? ";
+		
 		
 		try{
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, login_id);
+			pstmt.setInt(1, Integer.parseInt(msg_id));
 			pstmt.executeUpdate();
 		}
 		catch(Exception err){
-			System.out.println("deleteAccount()에서 오류");
+			System.out.println("deleteMsg()에서 오류");
 			err.printStackTrace();
 		}
 		finally{
 			pool.freeConnection(con, pstmt);
 		}
 	}
+	
+	
+	
+	
+	
+	
 		
 		
 		
@@ -469,6 +536,7 @@ public class MassageDao{
 		}
 		return result;
 	}
+	
 	
 	
 }

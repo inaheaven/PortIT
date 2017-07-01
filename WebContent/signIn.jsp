@@ -18,9 +18,7 @@
 				<div class="login-wrap">
 					<input type="text" name="userid" class="form-control" placeholder="Email ID" autofocus="autofocus"> <br> 
 					<input type="password" name="userpw" class="form-control" placeholder="Password"> <br>
-					<div class="find">
-						<a href="">아이디 / 비밀번호 찾기</a>
-					</div>
+					<br>
 					<br> 
 					<span><input type="submit" class="btn signin" value="Sign In">&nbsp;&nbsp;&nbsp;</span> 
 					<span><input type="button" class="btn signup" value="Sign Up" data-toggle="modal" data-target="#signUpModal"></span>
