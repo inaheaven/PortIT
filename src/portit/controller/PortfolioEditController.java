@@ -29,6 +29,7 @@ public class PortfolioEditController implements Controller {
 		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, String> formData = (Map<String, String>) req.getAttribute("formData");
 		List<String> fileNames = (List<String>) req.getAttribute("fileNames");
+		int pf_id = (int) req.getAttribute("id");
 		
 		// 태그, 공동 작업자 관련 처리
 		List<Tag> envTagList = new ArrayList<Tag>();
@@ -90,7 +91,7 @@ public class PortfolioEditController implements Controller {
 			e.printStackTrace();
 		}
 		// DAO의 추가 메서드 호출
-		portfolioDao.update(portfolio);
+		portfolioDao.update(pf_id, portfolio);
 		
 		// 뷰 URL 반환
 		String viewUrl = "rdr:/page?page=myPfList";

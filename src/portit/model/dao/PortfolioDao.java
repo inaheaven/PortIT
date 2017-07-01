@@ -329,37 +329,42 @@ public class PortfolioDao {
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
 			List<Tag> pf_tags_tool = portfolio.getPf_tags_tool();
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
-			sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "language");
 					stmt.setString(2, pf_tags_language.get(i).getTag_name());
+					stmt.setString(3, pf_tags_language.get(i).getTag_name());
 					rows += stmt.executeUpdate();
 				}
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "tool");
 					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
+					stmt.setString(3, pf_tags_tool.get(i).getTag_name());
 					rows += stmt.executeUpdate();
 				}
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "field");
 					stmt.setString(2, pf_tags_field.get(i).getTag_name());
+					stmt.setString(3, pf_tags_field.get(i).getTag_name());
 					rows += stmt.executeUpdate();
 				}
 			}
 			// 태그 사용 추가
-			sql = "INSERT INTO tag_use("
-					+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-					+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
+					sql = "INSERT INTO tag_use("
+							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "portfolio");
 					stmt.setInt(2, tagNameToId(pf_tags_language.get(i).getTag_name()));
@@ -368,6 +373,9 @@ public class PortfolioDao {
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
+					sql = "INSERT INTO tag_use("
+							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "portfolio");
 					stmt.setInt(2, tagNameToId(pf_tags_tool.get(i).getTag_name()));
@@ -376,6 +384,9 @@ public class PortfolioDao {
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
+					sql = "INSERT INTO tag_use("
+							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "portfolio");
 					stmt.setInt(2, tagNameToId(pf_tags_field.get(i).getTag_name()));
@@ -421,7 +432,7 @@ public class PortfolioDao {
 	 * @param pf_id
 	 * @return 수정된 데이터 개수
 	 */
-	public int update(Portfolio portfolio) {
+	public int update(int pf_id, Portfolio portfolio) {
 		int rows = 0;
 		try {
 			// UPDATE문 지정
@@ -443,51 +454,75 @@ public class PortfolioDao {
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
 			List<Tag> pf_tags_tool = portfolio.getPf_tags_tool();
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
-			sql = "INSERT INTO tag(tag_id, tag_type, tag_name)"
-					+ " VALUES(seq_tag_id.nextVal,?,?)"
-					+ " WHERE NOT EXISTS(SELECT * FROM tag)";
-			stmt = conn.prepareStatement(sql);
-			for (int i = 0; i < pf_tags_language.size(); i++) {
-				stmt.setString(1, "language");
-				stmt.setString(2, pf_tags_language.get(i).getTag_name());
-				stmt.setString(3, pf_tags_language.get(i).getTag_name());
-				rows += stmt.executeUpdate();
+			if (pf_tags_language != null) {
+				for (int i = 0; i < pf_tags_language.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "language");
+					stmt.setString(2, pf_tags_language.get(i).getTag_name());
+					stmt.setString(3, pf_tags_language.get(i).getTag_name());
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_tool.size(); i++) {
-				stmt.setString(1, "tool");
-				stmt.setString(2, pf_tags_tool.get(i).getTag_name());
-				stmt.setString(3, pf_tags_tool.get(i).getTag_name());
-				rows += stmt.executeUpdate();
+			if (pf_tags_tool != null) {
+				for (int i = 0; i < pf_tags_tool.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "tool");
+					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
+					stmt.setString(3, pf_tags_tool.get(i).getTag_name());
+					rows += stmt.executeUpdate();
+				}
 			}
-			for (int i = 0; i < pf_tags_field.size(); i++) {
-				stmt.setString(1, "field");
-				stmt.setString(2, pf_tags_field.get(i).getTag_name());
-				stmt.setString(3, pf_tags_field.get(i).getTag_name());
-				rows += stmt.executeUpdate();
+			if (pf_tags_field != null) {
+				for (int i = 0; i < pf_tags_field.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "field");
+					stmt.setString(2, pf_tags_field.get(i).getTag_name());
+					stmt.setString(3, pf_tags_field.get(i).getTag_name());
+					rows += stmt.executeUpdate();
+				}
 			}
 			// 태그 사용 수정
-			sql = "MERGE INTO tag_use tu"
-					+ " USING tag t"
-					+ " ON tu.tag_id=t.tag_id"
-					+ " WHEN MATCHED THEN"
-					+ " UPDATE SET tu.tag_id=t.tag_id"
-					+ " WHEN NOT MATCHED THEN INSERT ("
-					+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-					+ ") VALUES (?,?,?,t.tag_id)";
 			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < pf_tags_language.size(); i++) {
+				sql = "MERGE INTO tag_use tu"
+						+ " USING tag t"
+						+ " ON tu.tag_id=t.tag_id"
+						+ " WHEN MATCHED THEN"
+						+ " UPDATE SET tu.tag_id=t.tag_id"
+						+ " WHEN NOT MATCHED THEN INSERT ("
+						+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+						+ ") VALUES (?,?,?,t.tag_id)";
 				stmt.setString(1, "'%"+ pf_tags_language.get(i).getTag_name() + "%'");
 				stmt.setString(2, "seq_tag_use_id.nextVal");
 				stmt.setString(3, "portfolio");
 				rows += stmt.executeUpdate();
 			}
 			for (int i = 0; i < pf_tags_tool.size(); i++) {
+				sql = "MERGE INTO tag_use tu"
+						+ " USING tag t"
+						+ " ON tu.tag_id=t.tag_id"
+						+ " WHEN MATCHED THEN"
+						+ " UPDATE SET tu.tag_id=t.tag_id"
+						+ " WHEN NOT MATCHED THEN INSERT ("
+						+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+						+ ") VALUES (?,?,?,t.tag_id)";
 				stmt.setString(1, "'%"+ pf_tags_tool.get(i).getTag_name() + "%'");
 				stmt.setString(2, "seq_tag_use_id.nextVal");
 				stmt.setString(3, "portfolio");
 				rows += stmt.executeUpdate();
 			}
 			for (int i = 0; i < pf_tags_field.size(); i++) {
+				sql = "MERGE INTO tag_use tu"
+						+ " USING tag t"
+						+ " ON tu.tag_id=t.tag_id"
+						+ " WHEN MATCHED THEN"
+						+ " UPDATE SET tu.tag_id=t.tag_id"
+						+ " WHEN NOT MATCHED THEN INSERT ("
+						+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+						+ ") VALUES (?,?,?,t.tag_id)";
 				stmt.setString(1, "'%"+ pf_tags_field.get(i).getTag_name() + "%'");
 				stmt.setString(2, "seq_tag_use_id.nextVal");
 				stmt.setString(3, "portfolio");
@@ -499,18 +534,18 @@ public class PortfolioDao {
 			for (int i = 0; i < coworkers.size(); i++) {
 				coworkers.get(i).setMem_id(usernameToId(coworkers.get(i).getProf_nick()));
 			}
-			sql = "MERGE INTO pf_coworker pfc"
-					+ " USING portfolio pf"
-					+ " ON pfc.pf_id=pf.pf_id"
-					+ " WHEN MATCHED THEN"
-					+ " UPDATE SET mem_id=?"
-					+ " WHEN NOT MATCHED THEN INSERT ("
-					+ "pfc.pf_co_id, pf_id, mem_id"
-					+ ") VALUES (seq_pf_co_id.nextVal,?,?)";
 			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < coworkers.size(); i++) {
+				sql = "MERGE INTO pf_coworker pfc"
+						+ " USING portfolio pf"
+						+ " ON pfc.pf_id=pf.pf_id"
+						+ " WHEN MATCHED THEN"
+						+ " UPDATE SET mem_id=?"
+						+ " WHEN NOT MATCHED THEN INSERT ("
+						+ "pfc.pf_co_id, pf_id, mem_id"
+						+ ") VALUES (seq_pf_co_id.nextVal,?,?)";
 				stmt.setInt(1, coworkers.get(i).getMem_id());
-				stmt.setInt(2, portfolio.getPf_id());
+				stmt.setInt(2, pf_id);
 				stmt.setInt(3, coworkers.get(i).getMem_id());
 				rows += stmt.executeUpdate();
 			}

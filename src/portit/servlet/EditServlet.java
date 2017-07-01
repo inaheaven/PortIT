@@ -47,6 +47,7 @@ public class EditServlet extends HttpServlet {
 		uploadController.fileUpload(req, resp);
 		req.setAttribute("formData", req.getAttribute("formData"));
 		req.setAttribute("fileNames", req.getAttribute("fileNames"));
+		req.setAttribute("id", Integer.parseInt(req.getParameter("id")));
 		
 		String viewUrl = "";
 		String articleType = req.getParameter("type");
