@@ -41,7 +41,6 @@
 							<div class="col-md-11">
 								<a href="javascript:detailSearch(5)">최신순</a> 
 								<a href="javascript:detailSearch(6)">D-day</a> 
-								<a href="#">랜덤</a>
 							</div>
 						</div>
 						<br> <br>
