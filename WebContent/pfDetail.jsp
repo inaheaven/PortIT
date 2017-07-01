@@ -5,17 +5,15 @@
 <%@ page import="portit.model.dto.*"%>
 <!DOCTYPE html>
 <html lang="ko">
-<jsp:useBean id="portfolioDao" class="portit.model.dao.PortfolioDao" />
-<jsp:useBean id="portfolio" class="portit.model.dto.Portfolio" />
 <%
 request.setCharacterEncoding("UTF-8");
-portfolio = (Portfolio) application.getAttribute("portfolio");
+Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 %>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><%=portfolio.getPf_title()%></title>
+<title>${portfolio.pf_title}</title>
 
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -51,14 +49,15 @@ portfolio = (Portfolio) application.getAttribute("portfolio");
 		<!-- Profile header -->
 		<section id="pfHeader">
 			<div class="container">
-				<h1><%=portfolio.getPf_title()%></h1>
+				<h1>${portfolio.pf_title}</h1>
 				<h4 class="tags">
 					<%
-						for (Tag tag : portfolio.getPf_tags_language()) {
+						if (portfolio.getPf_tags_language() != null) {
+							for (Tag tag : portfolio.getPf_tags_language()) {
 					%>
-					<span>#<a href=""><%=tag.getTag_name()%></a>&nbsp;
-					</span>
+					<span> <a href="">${tag.tag_name}</a> </span>
 					<%
+							}
 						}
 					%>
 				</h4>
@@ -109,28 +108,24 @@ portfolio = (Portfolio) application.getAttribute("portfolio");
 					</div>
 					<div class="col-md-offset-2 col-md-8 pfMem">
 						<div class="col-xs-2">
-							<a href=""><img src="<%=portfolio.getPf_authorIcon()%>"
-								alt="<%=portfolio.getPf_authorName()%>"
-								class="img-circle uploaderImage" /></a>
+							<img src="${portfolio.pf_authorIcon}"
+								alt="${portfolio.pf_authorName}"
+								class="img-circle uploaderImage" />
 						</div>
 						<div class="col-xs-6">
 							<h3 class="uploaderName">
-								<a href=""><%=portfolio.getPf_authorName()%></a>
+								<a href="">${portfolio.pf_authorName}</a>
 							</h3>
 							<div class="tags">
 								<%
-									for (Tag tag : portfolio.getPf_tags_language()) {
+									if (portfolio.getPf_tags_language() != null) {
+										for (Tag tag : portfolio.getPf_tags_language()) {
 								%>
-								<span>#<a href=""><%=tag.getTag_name()%></a>&nbsp;
-								</span>
+								<span> <a href="">${tag.tag_name}</a> </span>
 								<%
+										}
 									}
 								%>
-								<span>#<a href="">태그</a>&nbsp;
-								</span> <span>#<a href="">태그</a>&nbsp;
-								</span> <span>#<a href="">태그</a>&nbsp;
-								</span> <span>#<a href="">태그</a>&nbsp;
-								</span>
 							</div>
 						</div>
 						<div class="col-xs-4 text-right">
@@ -149,7 +144,7 @@ portfolio = (Portfolio) application.getAttribute("portfolio");
 				</div>
 				<div class="col-md-offset-2 col-md-4">
 					<div class="intro">
-						<%=portfolio.getPf_intro()%>
+						${portfolio.pf_intro}
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -162,25 +157,43 @@ portfolio = (Portfolio) application.getAttribute("portfolio");
 							<tr>
 								<th>개발환경</th>
 								<td>
-									<% for (Tag tag : portfolio.getPf_tags_env()) { %>
+									<% 
+										if (portfolio.getPf_tags_env() != null) {
+											for (Tag tag : portfolio.getPf_tags_env()) {
+									%>
 									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
+									<%
+											}
+										}
+									%>
 								</td>
 							</tr>
 							<tr>
 								<th>사용언어</th>
 								<td>
-									<% for (Tag tag : portfolio.getPf_tags_language()) { %>
+									<% 
+										if (portfolio.getPf_tags_language() != null) {
+											for (Tag tag : portfolio.getPf_tags_language()) {
+									%>
 									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
+									<%
+											}
+										}
+									%>
 								</td>
 							</tr>
 							<tr>
 								<th>사용도구</th>
 								<td>
-									<% for (Tag tag : portfolio.getPf_tags_tool()) { %>
+									<% 
+										if (portfolio.getPf_tags_tool() != null) {
+											for (Tag tag : portfolio.getPf_tags_tool()) {
+									%>
 									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
+									<%
+											}
+										}
+									%>
 								</td>
 							</tr>
 							<tr>
@@ -190,9 +203,15 @@ portfolio = (Portfolio) application.getAttribute("portfolio");
 							<tr>
 								<th>담당분야</th>
 								<td>
-									<% for (Tag tag : portfolio.getPf_tags_field()) { %>
-									<%= tag.getTag_name() %>
-									<% } %>
+									<% 
+										if (portfolio.getPf_tags_field() != null) {
+											for (Tag tag : portfolio.getPf_tags_field()) {
+									%>
+									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
+									<%
+											}
+										}
+									%>
 								</td>
 							</tr>
 							<tr>
@@ -202,10 +221,13 @@ portfolio = (Portfolio) application.getAttribute("portfolio");
 						</table>
 					</div>
 				</div>
+				<%
+				List<Media> mediae = portfolio.getPf_mediae();
+				if (mediae != null && mediae.size() > 0) {
+				%>
 				<div class="col-md-offset-2 col-md-8 pfMedia">
 					<div id="Screenshots" class="carousel slide" data-ride="carousel">
 						<%
-							List<Media> mediae = portfolio.getPf_mediae();
 							for (int idx = 0; idx < mediae.size(); idx++) {
 								Media media = mediae.get(idx);
 
@@ -256,7 +278,7 @@ portfolio = (Portfolio) application.getAttribute("portfolio");
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
-				</div>
+				</div><% } %>
 			</div>
 		</section>
 		<!-- /About -->

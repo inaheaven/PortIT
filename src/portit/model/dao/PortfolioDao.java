@@ -71,7 +71,7 @@ public class PortfolioDao {
 	 * @return DTO
 	 */
 	public Portfolio selectOne(int pf_id) {
-		Portfolio portfolio = null;
+		Portfolio portfolio = new Portfolio();
 		
 		// SELECT문 지정
 		String sql = "SELECT * FROM portfolio WHERE pf_id=?";
@@ -84,8 +84,7 @@ public class PortfolioDao {
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				// DB 조회 결과를 DTO에 저장
-				portfolio = new Portfolio()
-						.setPf_id(rs.getInt("pf_id"))
+				portfolio.setPf_id(rs.getInt("pf_id"))
 						.setPf_title(rs.getString("pf_title"))
 						.setPf_intro(rs.getString("pf_intro"))
 						.setPf_regdate(rs.getDate("pf_regdate"))

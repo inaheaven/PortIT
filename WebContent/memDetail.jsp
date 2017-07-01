@@ -5,11 +5,9 @@
 <%@ page import="portit.model.dto.*"%>
 <!DOCTYPE html>
 <html lang="ko">
-<jsp:useBean id="profileDao" class="portit.model.dao.ProfileDao" />
-<jsp:useBean id="profile" class="portit.model.dto.Profile" />
 <%
 request.setCharacterEncoding("UTF-8");
-profile = (Profile) request.getAttribute("profile");
+Profile profile = (Profile) request.getAttribute("profile");
 %>
 <head>
 <meta charset="utf-8">
