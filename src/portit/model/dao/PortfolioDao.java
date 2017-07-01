@@ -89,19 +89,20 @@ public class PortfolioDao {
 						.setPf_intro(rs.getString("pf_intro"))
 						.setPf_regdate(rs.getDate("pf_regdate"))
 						.setPf_startdate(rs.getDate("pf_startdate"))
-						.setPf_enddate(rs.getDate("rs_enddate"))
+						.setPf_enddate(rs.getDate("pf_enddate"))
 						.setPf_url(rs.getString("pf_repository"));
 				
 				// 작성자명을 조회해서 DTO에 저장
-				sql = "SELECT prof.prof_name prof.prof_img FROM profile prof "
-						+ "INNER JOIN prof_pf pp "
-						+ "ON prof.prof_id=pp.prof_id WHERE prof.pf_id=?";
+				sql = "SELECT prof.prof_name, prof.prof_img FROM profile prof"
+						+ " INNER JOIN prof_pf pp "
+						+ " ON prof.prof_id=pp.prof_id WHERE prof.pf_id=?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
-				rs.next();
-				portfolio.setPf_authorName(rs.getString("prof.prof_name"))
-				.setPf_authorIcon(rs.getString("prof.prof_img"));
+				while (rs.next()) {
+					portfolio.setPf_authorName(rs.getString("prof.prof_name"))
+					.setPf_authorIcon(rs.getString("prof.prof_img"));
+				}
 				
 				// 좋아요 수를 조회해서 DTO에 저장
 				sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
@@ -112,7 +113,6 @@ public class PortfolioDao {
 				portfolio.setPf_like(rs.getInt(1));
 				
 				// 태그 사용 데이터를 조회해서 DTO에 저장
-				List<Tag> tags_env = new ArrayList<Tag>();
 				List<Tag> tags_language = new ArrayList<Tag>();
 				List<Tag> tags_tool= new ArrayList<Tag>();
 				List<Tag> tags_field= new ArrayList<Tag>();
@@ -124,28 +124,21 @@ public class PortfolioDao {
 				stmt.setInt(2, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					if ("env".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_env = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_env.add(tag_env);
-					}
-					else if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
 						Tag tag_language = new Tag()
 								.setTag_id(rs.getInt("t.tag_id"))
 								.setTag_type(rs.getString("t.tag_type"))
 								.setTag_name("t.tag_name");
 						tags_language.add(tag_language);
 					}
-					else if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
 						Tag tag_tool = new Tag()
 								.setTag_id(rs.getInt("t.tag_id"))
 								.setTag_type(rs.getString("t.tag_type"))
 								.setTag_name("t.tag_name");
 						tags_tool.add(tag_tool);
 					}
-					else if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
 						Tag tag_field = new Tag()
 								.setTag_id(rs.getInt("t.tag_id"))
 								.setTag_type(rs.getString("t.tag_type"))
@@ -153,8 +146,7 @@ public class PortfolioDao {
 						tags_field.add(tag_field);
 					}
 				}
-				portfolio.setPf_tags_env(tags_env)
-				.setPf_tags_language(tags_language)
+				portfolio.setPf_tags_language(tags_language)
 				.setPf_tags_tool(tags_tool)
 				.setPf_tags_field(tags_field);
 				
@@ -244,7 +236,6 @@ public class PortfolioDao {
 				portfolio.setPf_like(rs.getInt(1));
 				
 				// 태그 사용 데이터를 조회해서 DTO에 저장
-				List<Tag> tags_env = new ArrayList<Tag>();
 				List<Tag> tags_language = new ArrayList<Tag>();
 				List<Tag> tags_tool= new ArrayList<Tag>();
 				List<Tag> tags_field= new ArrayList<Tag>();
@@ -256,28 +247,21 @@ public class PortfolioDao {
 				stmt.setInt(2, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					if ("env".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_env = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_env.add(tag_env);
-					}
-					else if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
 						Tag tag_language = new Tag()
 								.setTag_id(rs.getInt("t.tag_id"))
 								.setTag_type(rs.getString("t.tag_type"))
 								.setTag_name("t.tag_name");
 						tags_language.add(tag_language);
 					}
-					else if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
 						Tag tag_tool = new Tag()
 								.setTag_id(rs.getInt("t.tag_id"))
 								.setTag_type(rs.getString("t.tag_type"))
 								.setTag_name("t.tag_name");
 						tags_tool.add(tag_tool);
 					}
-					else if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
 						Tag tag_field = new Tag()
 								.setTag_id(rs.getInt("t.tag_id"))
 								.setTag_type(rs.getString("t.tag_type"))
@@ -285,8 +269,7 @@ public class PortfolioDao {
 						tags_field.add(tag_field);
 					}
 				}
-				portfolio.setPf_tags_env(tags_env)
-				.setPf_tags_language(tags_language)
+				portfolio.setPf_tags_language(tags_language)
 				.setPf_tags_tool(tags_tool)
 				.setPf_tags_field(tags_field);
 				
@@ -342,21 +325,11 @@ public class PortfolioDao {
 			stmt.setString(7, portfolio.getPf_url());
 			rows += stmt.executeUpdate();
 
-			// 등록되지 않은 태그 추가
-			List<Tag> pf_tags_env = portfolio.getPf_tags_env();
+			// 태그 추가
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
 			List<Tag> pf_tags_tool = portfolio.getPf_tags_tool();
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
-			sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)"
-					+ " WHERE NOT EXISTS(SELECT * FROM tag)";
-			if (pf_tags_env != null) {
-				for (int i = 0; i < pf_tags_env.size(); i++) {
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "env");
-					stmt.setString(2, pf_tags_env.get(i).getTag_name());
-					rows += stmt.executeUpdate();
-				}
-			}
+			sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
 					stmt = conn.prepareStatement(sql);
@@ -385,14 +358,6 @@ public class PortfolioDao {
 			sql = "INSERT INTO tag_use("
 					+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
 					+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
-			if (pf_tags_env != null) {
-				for (int i = 0; i < pf_tags_env.size(); i++) {
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "portfolio");
-					stmt.setInt(2, tagNameToId(pf_tags_env.get(i).getTag_name()));
-					rows += stmt.executeUpdate();
-				}
-			}
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
 					stmt = conn.prepareStatement(sql);
@@ -475,7 +440,6 @@ public class PortfolioDao {
 			rows += stmt.executeUpdate();
 
 			// 등록되지 않은 태그 추가
-			List<Tag> pf_tags_env = portfolio.getPf_tags_env();
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
 			List<Tag> pf_tags_tool = portfolio.getPf_tags_tool();
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
@@ -483,12 +447,6 @@ public class PortfolioDao {
 					+ " VALUES(seq_tag_id.nextVal,?,?)"
 					+ " WHERE NOT EXISTS(SELECT * FROM tag)";
 			stmt = conn.prepareStatement(sql);
-			for (int i = 0; i < pf_tags_env.size(); i++) {
-				stmt.setString(1, "env");
-				stmt.setString(2, pf_tags_env.get(i).getTag_name());
-				stmt.setString(3, pf_tags_env.get(i).getTag_name());
-				rows += stmt.executeUpdate();
-			}
 			for (int i = 0; i < pf_tags_language.size(); i++) {
 				stmt.setString(1, "language");
 				stmt.setString(2, pf_tags_language.get(i).getTag_name());
@@ -517,13 +475,6 @@ public class PortfolioDao {
 					+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
 					+ ") VALUES (?,?,?,t.tag_id)";
 			stmt = conn.prepareStatement(sql);
-			for (int i = 0; i < pf_tags_env.size(); i++) {
-				stmt.setInt(1, tagNameToId(pf_tags_env.get(i).getTag_name()));
-				stmt.setString(2, "seq_tag_use_id.nextVal");
-				stmt.setString(3, "portfolio");
-				stmt.setInt(4, portfolio.getPf_id());
-				rows += stmt.executeUpdate();
-			}
 			for (int i = 0; i < pf_tags_language.size(); i++) {
 				stmt.setString(1, "'%"+ pf_tags_language.get(i).getTag_name() + "%'");
 				stmt.setString(2, "seq_tag_use_id.nextVal");
@@ -755,7 +706,7 @@ public class PortfolioDao {
 			stmt.setString(1, tag_name);
 			rs = stmt.executeQuery();
 			rs.next();
-			tag_id = rs.getInt("mem_id");
+			tag_id = rs.getInt("tag_id");
 		} catch (Exception e) {
 			System.out.println("");
 			e.printStackTrace();

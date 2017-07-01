@@ -155,20 +155,6 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 								<td><%=portfolio.getPf_startdate()%> ~ <%=portfolio.getPf_enddate()%></td>
 							</tr>
 							<tr>
-								<th>개발환경</th>
-								<td>
-									<% 
-										if (portfolio.getPf_tags_env() != null) {
-											for (Tag tag : portfolio.getPf_tags_env()) {
-									%>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<%
-											}
-										}
-									%>
-								</td>
-							</tr>
-							<tr>
 								<th>사용언어</th>
 								<td>
 									<% 

@@ -36,25 +36,21 @@
 							<label class="col-md-3 control-label">내용</label>
 							<div class="col-md-9">
 								<textarea class="form-control" name="pf_intro" placeholder="프로젝트 주제, 목적 등 자세한 내용을 작성하세요.(2000byte 이내)" rows="10"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">개발 환경</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control" name="pf_tags_env" placeholder="ex) C, JAVA, Python 등">
+								<span class="help-block">1000자 이내로 입력해 주세요.</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 언어</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="pf_tags_language" placeholder="ex) C, JAVA, Python 등">
+								<input type="text" class="form-control" name="pf_tags_language" placeholder="ex) C, Java, Python 등">
+								<span class="help-block">콤마(,)로 구분됩니다.</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 도구</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="pf_tags_tool" placeholder="ex) Eclipse, Visual Studio2013 등">
-								<span class="help-block">작업에 사용된 개발 환경들과 도구들을 적어주세요.</span>
+								<input type="text" class="form-control" name="pf_tags_tool" placeholder="ex) Eclipse, Git, Github 등">
+								<span class="help-block">콤마(,)로 구분됩니다.</span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -67,6 +63,7 @@
 							<label class="col-md-3 control-label">담당 업무</label>
 							<div class="col-md-9">
 								<input type="text" class="form-control" name="pf_tags_field" placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
+								<span class="help-block">콤마(,)로 구분됩니다.</span>
 							</div>
 						</div>
 						<div class="form-group">

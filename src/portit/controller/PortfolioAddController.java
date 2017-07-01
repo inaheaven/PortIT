@@ -38,18 +38,12 @@ public class PortfolioAddController implements Controller {
 		}
 		
 		// 태그, 공동 작업자 관련 처리
-		List<Tag> envTagList = new ArrayList<Tag>();
 		List<Tag> langTagList = new ArrayList<Tag>();
 		List<Tag> toolTagList = new ArrayList<Tag>();
 		List<Tag> fieldTagList = new ArrayList<Tag>();
 		List<Profile> coworkerList = new ArrayList<Profile>();
 		for (String key : formData.keySet()) {
-			if (key.equals("pf_tags_env")) {
-				String[] pf_tags_env = toArray(formData.get(key));
-				for (int i = 0; i < pf_tags_env.length; i++) {
-					envTagList.add(new Tag().setTag_type("env").setTag_name(pf_tags_env[i]));
-				}
-			} else if (key.equals("pf_tags_language")) {
+			if (key.equals("pf_tags_language")) {
 				String[] pf_tags_language = toArray(formData.get(key));
 				for (int i = 0; i < pf_tags_language.length; i++) {
 					langTagList.add(new Tag().setTag_type("language").setTag_name(pf_tags_language[i]));
@@ -88,7 +82,6 @@ public class PortfolioAddController implements Controller {
 					.setPf_enddate(new SimpleDateFormat("yyyy-MM-dd").parse(formData.get("pf_enddate")))
 					.setPf_numofperson(Integer.parseInt(formData.get("pf_numofperson")))
 					.setPf_url(formData.get("pf_url"))
-					.setPf_tags_env(envTagList)
 					.setPf_tags_language(langTagList)
 					.setPf_tags_tool(toolTagList)
 					.setPf_tags_field(fieldTagList)
@@ -123,10 +116,10 @@ public class PortfolioAddController implements Controller {
 	 * @return 문자열 배열
 	 */
 	private String[] toArray(String str) {
-		StringTokenizer tkn = new StringTokenizer(str, ", ");
+		StringTokenizer tkn = new StringTokenizer(str, ",");
 		String[] arr = new String[tkn.countTokens()];
 		for (int i = 0; tkn.hasMoreElements(); i++) {
-			arr[i] = tkn.nextToken();
+			arr[i] = tkn.nextToken().trim();
 		}
 		return arr;
 	}
