@@ -635,8 +635,7 @@ public class ProjectDao {
 		int mem_id = 0;
 		ArrayList<Integer> mem_id_list = new ArrayList<>();
 		int proj_id = 0;
-		String proj_coworker = req.getParameter("final_result_id");
-		String[] proj_coworkers = proj_coworker.split(",");
+		String[] proj_coworkers = req_proj_id.split(",");
 		try {
 			for (int i = 0; i < proj_coworkers.length; i++) {
 				String sql_coworker = "SELECT MEM_ID FROM MEMBER WHERE PROF_ID = ?";
