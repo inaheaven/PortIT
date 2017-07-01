@@ -331,13 +331,6 @@ String login_id=request.getParameter("mem_id");	//세션에서 값을 받는다.
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="col-md-3 control-label">이미지 및 동영상</label>
-								<div class="col-md-9">
-									<span class="col-sm-12 btn btn-default btn-file"><input
-										type="file"></span>
-								</div>
-							</div>
 							<div class="form-group text-center buttonDiv">
 								<button type="submit" class="btn common">등록하기</button>
 								&nbsp;&nbsp;&nbsp;
