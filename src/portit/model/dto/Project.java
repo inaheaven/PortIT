@@ -10,6 +10,41 @@ import java.util.Date;
  */
 public class Project {
 
+	
+	private int mem_id;
+	private int pf_id;
+	private String proj_app_confirm;
+	
+	
+	public String getProj_app_confirm() {
+		return proj_app_confirm;
+	}
+	public void setProj_app_confirm(String proj_app_confirm) {
+		this.proj_app_confirm = proj_app_confirm;
+	}
+	//해당 프로젝트의 지원자 리시트가 담긴다.
+	//dao에 PRO_ID를 입력하면  LIST를 반환하는 메서드를 만들자.
+	private ArrayList apply_mem;	
+	
+	private int d_day;
+	
+	
+	public int getD_day() {
+		return d_day;
+	}
+	
+	public void setD_day(int d_day) {
+		this.d_day = d_day;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private int proj_id;
 	private String proj_title;
 	private String proj_intro;

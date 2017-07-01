@@ -24,6 +24,8 @@ public class ProjectController extends HttpServlet {
 		ProjectDao dao = new ProjectDao();
 		dao.reg_pro(req, resp);
 		
+		String mem = req.getParameter("mem_id");
+		System.out.println(mem);
 		resp.sendRedirect("myProjList.jsp");
 	}
 

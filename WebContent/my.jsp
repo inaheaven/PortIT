@@ -7,6 +7,8 @@
  *********************************************************************************************************************************************************** -->
 <!--sidebar start-->
 <aside>
+
+
 <%		
 			//String pageName = (String)session.getAttribute("pageName");
 			String pageName = (String)request.getAttribute("pageName");			
@@ -30,7 +32,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myProjList" id="myProjList">
+				<a href="/myproj?cmd=list&mem_id=2" id="myProjList"> <!-- 로그인 아이디 값을 매개 변수로 줘야함 -->
 				    <span>My Project</span>
 				</a>
 			</li>

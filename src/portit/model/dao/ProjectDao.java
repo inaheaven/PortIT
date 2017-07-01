@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.servlet.RequestDispatcher;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
 import portit.model.dto.Project;
+import portit.model.dto.ProjectApp_mem;
 import portit.model.dto.Tag;
 
 public class ProjectDao {
@@ -80,25 +82,25 @@ public class ProjectDao {
 
 		int proj_tag_id; // 테그 테이블에서 사용할 변수
 		String proj_tag_name; // 테그명
-		String env="";
+		String env = "";
 		ArrayList<String> proj_env_list = new ArrayList<>();
-		String lang="";
+		String lang = "";
 		ArrayList<String> proj_language_list = new ArrayList<>();
-		String tool="";
+		String tool = "";
 		ArrayList<String> proj_tool_list = new ArrayList<>();
-		String field="";
+		String field = "";
 		ArrayList<String> proj_field_list = new ArrayList<>();
 		int proj_numofperson = 0;
 		ArrayList<Integer> numofperson_list = new ArrayList<>();
-	
-		String prof_name="";
-		String prof_nick="";
+
+		String prof_name = "";
+		String prof_nick = "";
 		ArrayList<String> prof_name_list = new ArrayList<>();
 		ArrayList<String> prof_nick_list = new ArrayList<>();
 
-		int coworker=0;
+		int coworker = 0;
 		ArrayList<Integer> coworker_list = new ArrayList<>();
-		
+
 		int prof_id = 0;
 
 		// dto
@@ -143,13 +145,13 @@ public class ProjectDao {
 		ArrayList<Integer> mem_id_list = new ArrayList<>();
 		try {
 			// count를 이용하여 프로젝트에 참여하는 인원수를 구해서 이후 해당 값만큼 반복하여 멤버리스트에추가
-			
-				String sql_coworker = "SELECT MEM_ID FROM PROJ_APP WHERE PROJ_ID = ?";
-				stmt = conn.prepareStatement(sql_coworker);
-				stmt.setString(1, req_proj_id);
-				rs = stmt.executeQuery();
-				while (rs.next()) {
-					mem_id_list.add(rs.getInt("mem_id"));
+
+			String sql_coworker = "SELECT MEM_ID FROM PROJ_APP WHERE PROJ_ID = ?";
+			stmt = conn.prepareStatement(sql_coworker);
+			stmt.setString(1, req_proj_id);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				mem_id_list.add(rs.getInt("mem_id"));
 			}
 		} catch (Exception e) {
 			System.out.println("멤버 테이블에서 멤버 아이디 검색" + e);
@@ -167,15 +169,15 @@ public class ProjectDao {
 				prof_id = rs.getInt("prof_id");
 				prof_name = rs.getString("prof_name");
 				prof_nick = rs.getString("prof_nick");
-				
+
 				coworker_list.add(prof_id);
 				prof_name_list.add(prof_name);
 				prof_nick_list.add(prof_nick);
-				
+
 				profile.setProf_id_list(coworker_list);
 				profile.setProf_name_list(prof_name_list);
 				profile.setProf_nick_list(prof_nick_list);
-				
+
 			}
 			prof_list.add(profile);
 		} catch (Exception e) {
@@ -273,6 +275,8 @@ public class ProjectDao {
 	 */
 	public void reg_pro(HttpServletRequest req, HttpServletResponse resp) {
 
+		// 내 아이디
+		String login_id = req.getParameter("mem_id");
 		String proj_title = req.getParameter("proj_title"); // 프로젝트 제목
 		String proj_intro = req.getParameter("proj_intro"); // 프로젝트 내용
 		String proj_startdate = req.getParameter("proj_startdate"); // 프로젝트 시작일
@@ -489,9 +493,19 @@ public class ProjectDao {
 				} catch (Exception e) {
 					System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
 				}
-			}
-		}
 
+				try {
+					String insert_my_proj = "INSERT INTO MEM_PROJ(MEM_PROJ_ID, PROJ_ID, MEM_ID) VALUES(seq_mem_proj_id.nextVal, ?, ?)";
+					stmt = conn.prepareStatement(insert_my_proj);
+					stmt.setInt(1, proj_id);
+					stmt.setString(2, login_id);
+					rs = stmt.executeQuery();
+				} catch (Exception e) {
+					System.out.println("내가 등록한 프로젝트 테이블에 등록 오류 " + e);
+				}
+			}
+
+		}
 	}
 
 	// 함께할 사람등록을 위한 회원이름검색 - 회원이름 닉네임을 통해서 검사시 필요한 전역변수지정 리스트
@@ -822,6 +836,191 @@ public class ProjectDao {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 프로젝트 페이지 호출
+	 * 
+	 * @param req
+	 * @param resp
+	 */
+
+	// DAo 준비물....
+	List rsList;
+	String sql;
+	Project Prodto; // 프로젝트 DTO
+	ProjectApp_mem proj_app_mem;
+
+	// 프로젝트 작성자 인증
+
+	// 프로젝트 상세 조회
+
+	// 1.내가 등록한 PJ명단.
+	public List RegPJlistName(String login_id) {
+		// 인스턴스 생성.
+		rsList = new ArrayList();
+		sql = "select proj_id from mem_proj where mem_id='" + login_id + "'";
+		// 필요한 정보: proj_title, proj_id, PROJ_REGENDDATE, mem_id, prof_name,
+		// proj_app_confirm
+		try {
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				rsList.add(rs.getString("proj_id"));
+			}
+		} catch (Exception e) {
+			System.out.println("DAO.applyProjectList()에서 에러!!");
+			System.out.println(e);
+		} finally {
+			freeConnection();
+		}
+		return rsList;
+	}
+
+	// 2.프로젝트 정보를 반환...
+	public Project regProjectList(String pj_Id) {
+		// 프로젝트 id, 프로젝트 이름, 마감일
+		// 인스턴스 생성.
+		sql = "select proj_title, PROJ_REGENDDATE-sysdate,proj_id    " + "from project " + "where proj_id='" + pj_Id
+				+ "' ";
+
+		try {
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Prodto = new Project();
+				Prodto.setProj_title(rs.getString("proj_title")); // 제목
+				Prodto.setProj_id(rs.getInt("proj_id")); // id
+				Prodto.setD_day((rs.getInt("PROJ_REGENDDATE-sysdate"))); // 마감일
+
+				System.out.println("DAO.ck   " + Prodto.getD_day());
+			}
+		} catch (Exception e) {
+			System.out.println("DAO.regProjectList()에서 에러!!");
+			System.out.println(e);
+		} finally {
+			freeConnection();
+		}
+		return Prodto;
+	}
+
+	// 3.PJ지원자 리스트.
+	public List ApplyMemList(String proj_id) {
+
+		// 인출정보 : 이름,닉네임, mem_id, 참여여부
+		rsList = new ArrayList();
+		sql = "select proj_app.mem_id, profile.prof_name, profile.prof_nick, proj_app.proj_app_confirm "
+				+ "from proj_app inner join profile on proj_app.mem_id=profile.mem_id " + "where proj_id='" + proj_id
+				+ "' " + "order by PROJ_APP_REGDATE desc";
+
+		// System.out.println("dao "+sql);
+		// 쿼리 이상무.
+
+		try {
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				proj_app_mem = new ProjectApp_mem();
+				proj_app_mem.setMem_id(rs.getString("mem_id")); // mem_id
+				proj_app_mem.setName(rs.getString("prof_name")); // 이름
+				proj_app_mem.setNick(rs.getString("prof_nick")); // 닉네임
+				proj_app_mem.setApp_confirm(rs.getString("proj_app_confirm")); // 참여여부
+				rsList.add(proj_app_mem);
+			}
+
+		} catch (Exception e) {
+			System.out.println("DAO.ApplyMemList()에서 에러!!");
+			System.out.println(e);
+		} finally {
+			freeConnection();
+		}
+		return rsList;
+	}
+
+	// 업데이트문.
+	public void pjJoin(String mem_id) {
+		sql = "update proj_app set proj_app_confirm='Y' " + "where mem_id='" + mem_id + "'";
+
+		try {
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+		}
+
+		catch (Exception err) {
+			System.out.println("[DAO]: pjJoin()에서 오류");
+			err.printStackTrace();
+		}
+
+		finally {
+			pool.freeConnection(conn, stmt);
+		}
+	}
+
+	// 팀원 커트
+	public void mem_delete(String pj_id, String mem_id) {
+
+		String sql = "delete from PROJ_APP where MEM_ID='" + mem_id + "'" + "and PROJ_ID='" + pj_id + "'";
+
+		System.out.println("dao  " + sql);
+
+		try {
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+		} catch (Exception err) {
+			System.out.println("mem_delete()에서 오류");
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, stmt);
+		}
+
+	}
+
+	// 1.내가 PJ지원한 리스트.
+	public List applyProjectList(String login_id) {
+
+		// 인스턴스 생성.
+		rsList = new ArrayList();
+		sql = "select  DISTINCT project.proj_title, project.proj_id, project.proj_regdate,  project.proj_regenddate-sysdate, project.proj_startDate, proj_app.proj_app_confirm "
+				+ "from project inner join proj_app on project.proj_id=proj_app.proj_id  "
+				+ "where project.proj_id in (select proj_id from proj_app where mem_id='" + login_id + "')";
+
+		// 필요한 정보: proj_title, proj_id, PROJ_REGENDDATE, mem_id, prof_name,
+		// proj_app_confirm
+
+		System.out.println("dao  " + sql);
+
+		try {
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Prodto = new Project();
+				Prodto.setProj_id(rs.getInt("proj_id"));
+				Prodto.setProj_title(rs.getString("proj_title"));
+
+				// Prodto.setProj_regenddate(((rs.getString("proj_regenddate"))));
+				Prodto.setD_day((((rs.getInt("project.proj_regenddate-sysdate")))));
+				Prodto.setProj_regdate(rs.getString("proj_regdate"));
+				Prodto.setProj_startdate(rs.getString("proj_startDate"));
+				Prodto.setProj_app_confirm(rs.getString("proj_app_confirm"));
+
+				rsList.add(Prodto);
+			}
+
+		} catch (Exception e) {
+			System.out.println("DAO.applyProjectList()에서 에러!!");
+			System.out.println(e);
+		} finally {
+			freeConnection();
+		}
+		return rsList;
 	}
 
 }

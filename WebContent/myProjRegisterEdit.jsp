@@ -171,13 +171,17 @@
 
 
 
+<%
+	String login_id=request.getParameter("mem_id");
+%>
+
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 col-sm-12 col-xs-12 mt projreg">
 					<!-- BASIC FORM ELELEMNTS -->
 					<div class="projregForm">
 
-						<h3 class="formTitle text-center">프로젝트 등록</h3>
+						<h3 class="formTitle text-center">프로젝트 등록<%=login_id%></h3>
 						<form class="form-horizontal style-form" method="post"
 							action="project_update_save">
 							<div class="form-group">

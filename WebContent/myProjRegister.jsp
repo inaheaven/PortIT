@@ -136,7 +136,8 @@
 			}
 		}
 	}
-	
+	String login_id=req.getParameter("mem_id");	//세션에서 값을 받는다.
+	System.out.println(login_id"+"!@>#!@>#!@");
 </script>
 </head>
 <body>
