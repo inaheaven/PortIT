@@ -1,6 +1,7 @@
-package portit.servlet;
+package portit.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import portit.controller.FileUploadController;
-import portit.controller.PortfolioEditController;
+import portit.controller.ControllerFactory;
 
 
 /**
@@ -20,13 +20,13 @@ import portit.controller.PortfolioEditController;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/edit")
-public class EditServlet extends HttpServlet {
+@WebServlet("/modify")
+public class ModifyServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// GET 요청일 경우 이동
-		resp.sendRedirect("/page?page=main");
+		resp.sendRedirect("/page?page=myPfList");
 	}
 	
 	@Override
@@ -47,20 +47,21 @@ public class EditServlet extends HttpServlet {
 		uploadController.fileUpload(req, resp);
 		req.setAttribute("formData", req.getAttribute("formData"));
 		req.setAttribute("fileNames", req.getAttribute("fileNames"));
-		req.setAttribute("id", Integer.parseInt(req.getParameter("id")));
 		
-		String viewUrl = "";
+		String viewUrl = null;
+		
 		String articleType = req.getParameter("type");
 		if ("profile".equals(articleType)) {
 			/*Controller profileController = ControllerFactory.getInstance().createController("profile");
 			viewUrl = profileController.execute(req, resp);*/
 		} else if ("portfolio".equals(articleType)) {
-			PortfolioEditController portfolioEditController = new PortfolioEditController();
-			viewUrl = portfolioEditController.execute(req, resp);
+			Controller portfolioAddController = ControllerFactory.getInstance().createController("portfolioAdd");
+			viewUrl = portfolioAddController.execute(req, resp);
 		} else if ("project".equals(articleType)) {
 			/*Controller projectController = ControllerFactory.getInstance().createController("project");
 			viewUrl = projectController.execute(req, resp);*/
 		}
+		
 		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		RequestDispatcher rd = null;
 		if (viewUrl.substring(0, 3).equals("inc")) {

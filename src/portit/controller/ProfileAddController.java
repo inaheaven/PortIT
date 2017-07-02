@@ -1,9 +1,6 @@
 package portit.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +33,10 @@ public class ProfileAddController implements Controller {
 			System.out.println(filename);
 		}
 		
-		// 태그, 공동 작업자 관련 처리
+		// 태그 관련 처리
 		List<Tag> langTagList = new ArrayList<Tag>();
 		List<Tag> toolTagList = new ArrayList<Tag>();
 		List<Tag> fieldTagList = new ArrayList<Tag>();
-		List<Profile> coworkerList = new ArrayList<Profile>();
 		for (String key : formData.keySet()) {
 			if (key.equals("prof_tags_language")) {
 				String[] prof_tags_language = toArray(formData.get(key));
@@ -69,26 +65,25 @@ public class ProfileAddController implements Controller {
 		// DTO에 추가
 		ProfileDao profileDao = new ProfileDao();
 		Profile profile = new Profile();
-		try {
-			
-			// DAO의 추가 메서드 호출
-			profileDao.addprofile(profile);
-		} catch (ParseException e) {
-			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
-			e.printStackTrace();
-		}
+		profile.setMem_id((int) req.getSession().getAttribute("loginId"))
+		.setProf_nick(formData.get("prof_nick"))
+		.setProf_name(formData.get("prof_name"))
+		.setProf_intro(formData.get("prof_intro"))
+		.setProf_img(mediae.get(0).getMl_path())
+		.setProf_background(mediae.get(1).getMl_path())
+		.setProf_email((String) req.getSession().getAttribute("loginEmail"))
+		.setProf_website(formData.get("prof_website"))
+		.setProf_github(formData.get("prof_github"))
+		.setProf_facebook(formData.get("prof_facebook"))
+		.setProf_tags_language(langTagList)
+		.setProf_tags_tool(toolTagList)
+		.setProf_tags_field(fieldTagList);
+		// DAO의 추가 메서드 호출
+		profileDao.addprofile(profile);
 		
 		// 뷰 URL 반환
 		String viewUrl = "rdr:/page?page=main";
 		return viewUrl;
-	}
-	
-	/**
-	 * 무작위 글번호 생성
-	 * @return 무작위로 생성된 7자리 정수
-	 */
-	private int generateId() {
-		return (int) Math.random() * 10000000 + 1;
 	}
 	
 	/**

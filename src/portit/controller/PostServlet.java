@@ -1,7 +1,8 @@
-package portit.servlet;
+package portit.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,23 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import portit.controller.Controller;
-import portit.controller.ControllerFactory;
-import portit.controller.FileUploadController;
-
 
 /**
- * 게시물 수정 서블릿
+ * 게시물 작성 서블릿
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/modify")
-public class ModifyServlet extends HttpServlet {
+@WebServlet("/post")
+public class PostServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// GET 요청일 경우 이동
-		resp.sendRedirect("/page?page=myPfList");
+		resp.sendRedirect("/page?page=main");
 	}
 	
 	@Override
@@ -50,20 +47,18 @@ public class ModifyServlet extends HttpServlet {
 		req.setAttribute("formData", req.getAttribute("formData"));
 		req.setAttribute("fileNames", req.getAttribute("fileNames"));
 		
-		String viewUrl = null;
-		
+		String viewUrl = "";
 		String articleType = req.getParameter("type");
 		if ("profile".equals(articleType)) {
-			/*Controller profileController = ControllerFactory.getInstance().createController("profile");
-			viewUrl = profileController.execute(req, resp);*/
+			ProfileAddController profileAddController = new ProfileAddController();
+			viewUrl = profileAddController.execute(req, resp);
 		} else if ("portfolio".equals(articleType)) {
-			Controller portfolioAddController = ControllerFactory.getInstance().createController("portfolioAdd");
+			PortfolioAddController portfolioAddController = new PortfolioAddController();
 			viewUrl = portfolioAddController.execute(req, resp);
 		} else if ("project".equals(articleType)) {
-			/*Controller projectController = ControllerFactory.getInstance().createController("project");
-			viewUrl = projectController.execute(req, resp);*/
+			ProjectAddController projectAddController = new ProjectAddController();
+			viewUrl = projectAddController.execute(req, resp);
 		}
-		
 		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		RequestDispatcher rd = null;
 		if (viewUrl.substring(0, 3).equals("inc")) {

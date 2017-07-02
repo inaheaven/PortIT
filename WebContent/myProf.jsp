@@ -173,54 +173,47 @@ function fnSelectSnsInfo(snsName){
 							<div class="form-group">
 								<label class="col-md-3 control-label">소개</label>
 								<div class="col-md-9">
-									<textarea class="form-control" rows="5" name="Prof_intro" id="Prof_intro" 
+									<textarea class="form-control" rows="5" name="prof_intro" id="Prof_intro" 
 										placeholder="2000byte 이내로 입력하세요." value=""></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 언어</label>
 								<div class="col-md-9">
-									<input class="form-control" id="Prof_language" type="text"
+									<input class="form-control" id="Prof_language" name="prof_tags_language" type="text"
 										placeholder="ex) C, JAVA, Python 등" value="">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 툴</label>
 								<div class="col-md-9">
-									<input class="form-control" id="disabledInput" type="text"
-										placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등" value="">
+									<input class="form-control" id="disabledInput" name="prof_tags_tool" type="text"
+										placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 분야</label>
 								<div class="col-md-9">
-									<input class="form-control" id="disabledInput" type="text"
+									<input class="form-control" id="disabledInput" type="text" name="prof_tags_field"
 										placeholder="ex) 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-3 control-label">Link</label>
-								<div class="col-md-9">									
-									<div class="col-md-3">
-										<select class="form-control" name="SNS" id="SNS" onchange="fnSelectSnsInfo(this.value)">
-											<option value="">SNS선택</option>
-											<option value="www.facebook.com/">FaceBook</option>
-											<option value="WWW.github.com/">Github</option>
-											<option value="http://www.">Blog</option>
-										</select>
-									</div>
-									<div class="col-md-7">										
-										<input type="text" class="form-control" id ="snsText" name="snsText"/>
-									</div>
-									<div class="col-md-2">
-										<button type="button" class="btn common" id="snsAdd">추가</button>
-									</div>
-									<br><br>
-									<div id="snsList">
-										<table class="col-md-12">
-										
-										</table>
-									</div>
+								<label class="col-md-3 control-label">웹사이트</label>
+								<div class="col-md-9">
+									<input class="form-control" type="text" name="prof_website">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">GitHub</label>
+								<div class="col-md-9">
+									<input class="form-control" type="text" name="prof_github">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Facebook</label>
+								<div class="col-md-9">
+									<input class="form-control" type="text" name="prof_facebook">
 								</div>
 							</div>
 							<div class="form-group">

@@ -21,11 +21,6 @@ public class Profile {
 	private String prof_facebook;
 	private Date prof_regdate;
 	private int prof_follower;
-
-	private String prof_language;
-	private String prof_tool;
-	private String prof_field;
-	private String tag_name;
 	private int prof_skill_level;
 
 	private List<Tag> prof_tags_language;
@@ -89,22 +84,6 @@ public class Profile {
 
 	public int getProf_follower() {
 		return prof_follower;
-	}
-
-	public String getProf_language() {
-		return prof_language;
-	}
-
-	public String getProf_tool() {
-		return prof_tool;
-	}
-
-	public String getProf_field() {
-		return prof_field;
-	}
-
-	public String getTag_name() {
-		return tag_name;
 	}
 
 	public int getProf_skill_level() {
@@ -197,26 +176,6 @@ public class Profile {
 
 	public Profile setProf_follower(int prof_follower) {
 		this.prof_follower = prof_follower;
-		return this;
-	}
-
-	public Profile setProf_language(String prof_language) {
-		this.prof_language = prof_language;
-		return this;
-	}
-
-	public Profile setProf_tool(String prof_tool) {
-		this.prof_tool = prof_tool;
-		return this;
-	}
-
-	public Profile setProf_field(String prof_field) {
-		this.prof_field = prof_field;
-		return this;
-	}
-
-	public Profile setTag_name(String tag_name) {
-		this.tag_name = tag_name;
 		return this;
 	}
 

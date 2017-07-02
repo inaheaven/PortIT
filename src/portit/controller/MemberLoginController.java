@@ -17,6 +17,7 @@ import portit.model.dao.ViewDao;
 import portit.model.dto.Member;
 
 
+@SuppressWarnings("serial")
 @WebServlet("/login")
 public class MemberLoginController extends HttpServlet {
 
@@ -62,7 +63,8 @@ public class MemberLoginController extends HttpServlet {
 			req.setAttribute("time_list", time_list);	
 			
 			
-			out.println("<script>location.href='/page?page=main';</script>");
+			RequestDispatcher rd = req.getRequestDispatcher("/page?page=main");
+			rd.forward(req, resp);
 		}
 		else {
 			out.println("<script>alert('이메일 또는 비밀번호가 틀렸습니다.'); location.href='/index.jsp';</script>");			

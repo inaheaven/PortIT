@@ -31,7 +31,7 @@ public class PortfolioDeleteController implements Controller {
 		portfolioDao.delete(pf_id);
 		
 		// 뷰 URL 반환
-		String viewUrl = "rdr:/page/page?myPfList";
+		String viewUrl = "rdr:/page?page=myPfList";
 		return viewUrl;
 	}
 
