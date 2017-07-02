@@ -491,59 +491,10 @@ public class MassageDao{
 	
 	
 	
-	
-	
-	
 		
-		
-		
-		
-	//-----------------------------------[펌] 메서드------------------------------
-	private void updatePos(Connection con){
-		try{
-			String sql = "update tblBoard set b_pos=b_pos+1";
-			pstmt = con.prepareStatement(sql);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("updatePos()에서 오류");
-			err.printStackTrace();
-		}
-	}
 	
 	
 	
-	
-	
-	
-	// 답변글을 입력할 때 부모보다 큰 pos는 1씩 증가시킨다.
-	public void replyUpdatePos(MessageDto message){
-		try{
-			String sql = "update tblBoard set b_pos = b_pos+1 where b_pos > ?";
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			//pstmt.setInt(1, board.getB_pos());
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("replyUpdatePos()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
-		}
-	}
-	
-	
-	
-	
-	public String useDepth(int depth){
-		String result ="";
-		for(int i=0; i<depth*3; i++){
-			result += "&nbsp;";
-		}
-		return result;
-	}
 	
 	
 	
