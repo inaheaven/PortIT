@@ -6,11 +6,21 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<jsp:include page="header.jsp"></jsp:include>
 <link href="assets/css/search.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+
+<script src="assets/js/chart-master/Chart.js"></script>
 
 <jsp:useBean id="proj_viewDao" class="portit.model.dao.ViewDao" />
-
 
 	<section class="container">
 		<section class="wrapper site-min-height">
@@ -114,21 +124,25 @@
  			
 					<div class="col-md-12 mb">
           				<div class="project-list">
-	          				<span class="pjInfoText">
-	          					<div class="pjTitle"><a href=""><%=proj.getProj_title() %></a></div>
-	          					<div class="pjmemName"><span class="fa fa-user"><%=proj.getProf_name() %></span>
-	          						&nbsp;&nbsp;<a href=""></a></div>     		
-	          					<div class="pjIntro"><%=proj.getProj_intro() %></div>
-	          					<div class="pjTag"><a href=""># <%=proj.getTag_name() %>&nbsp;</a></div>         					
-          					</span>
-          					<span class="pjInfoTable">
-          						<table class="table text-center">
-          							<tr><td>백엔드개발자</td></tr>
-          							<tr><td><%=proj.getProj_to() %> 명</td></tr>
-          							<tr><td>D-&nbsp;-&nbsp;<%=proj.getD_day() %></td></tr>
-          							<tr><td></td></tr>
-          						</table>
-          					</span>
+          					<div class="col-md-9 mb" >
+		          				<span class="pjInfoText">
+		          					<div class="pjTitle"><a href=""><%=proj.getProj_title() %></a></div>
+		          					<div class="pjmemName"><span class="fa fa-user"><%=proj.getProf_name() %></span>
+		          						&nbsp;&nbsp;<a href=""></a></div>     		
+		          					<div class="pjIntro"><%=proj.getProj_intro() %></div><br><br><br>
+		          					<div class="pjTag"><a href=""># <%=proj.getTag_name() %>&nbsp;</a></div>         					
+	          					</span>
+	          				</div>
+	          				<div class = "col-md-3">	
+	          					<span class="pjInfoTable">
+	          						<table class="table text-center">
+	          							<tr><td>백엔드개발자</td></tr>
+	          							<tr><td><%=proj.getProj_to() %> 명</td></tr>
+	          							<tr><td>D-&nbsp;-&nbsp;<%=proj.getD_day() %></td></tr>
+	          							<tr><td></td></tr>
+	          						</table>
+	          					</span>
+	          				</div>	
           				</div>          			
 					</div>
  <%
@@ -140,7 +154,7 @@
  				<!-- 페이지네이션 -->
  	<div align="center">		
  		<% if(nowBlock > 0){%>
- 			<a href="/projList?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
+ 			<a href="/projList.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
  		<% }%> 
  		:::
  		<%
@@ -148,13 +162,13 @@
  				if((nowBlock*pagePerBlock)+i == totalPage)
  					break;
  		%>
- 				<a href="/projList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+ 				<a href="/projList.jsp?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
  		<%
  			}
  		%>
  		::: 
  		<% if(totalBlock > nowBlock+1){%>
- 			<a href="/projList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
+ 			<a href="/projList.jsp?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
  		<% }%>
  	</div>	
  		
@@ -165,7 +179,6 @@
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
-
 	<!--script for this page-->
 	<script>
 		$(document).ready(

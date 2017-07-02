@@ -59,25 +59,25 @@ public class SearchDao {
 		String sql = "";
 		
 		if(lineup == true){
-			sql = "select distinct MEDIA_LIBRARY.ML_PATH, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
-					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
-					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
-					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
-					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
-					+ "and tag_use_type = 'portfolio' and  "
-					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
-					+ "order by portfolio.PF_LIKE desc";
+			sql = "select distinct prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
+					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id , "
+					+ "media_library  "
+					+ "where tag_use_type ='portfolio' "
+					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+					+ "order by pf_regdate desc";
 		}
 		else{
-			sql = "select distinct MEDIA_LIBRARY.ML_PATH, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
-					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
-					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
-					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
-					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
-					+ "and tag_use_type = 'portfolio' and  "
-					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+			sql = "select distinct prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
+					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id , "
+					+ "media_library  "
+					+ "where tag_use_type ='portfolio' "
+					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by portfolio.PF_LIKE desc";
 		}
 		
@@ -95,6 +95,7 @@ public class SearchDao {
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));
+				portfolio.setPf_regdate(rs.getDate("pf_regdate"));
 				
 				list.add(portfolio);
 			}
@@ -118,25 +119,25 @@ public class SearchDao {
 		String sql = "";
 		
 		if(lineup == true){
-			sql = "select distinct ML_PATH, tag.tag_name, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
-					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
-					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
-					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
-					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
-					+ "and tag_use_type = 'portfolio' and  "
-					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+			sql =  "select distinct prof_name, pf_title, pf_like , tag.tag_name, ml_path, pf_regdate "
+					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id , "
+					+ "media_library  "
+					+ "where tag_use_type ='portfolio' "
+					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by Pf_regdate desc";
 		}
 		else{
-			sql = "select distinct ML_PATH, tag.tag_name, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
-					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
-					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
-					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
-					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
-					+ "and tag_use_type = 'portfolio' and  "
-					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+			sql =  "select distinct prof_name, pf_title, pf_like , tag.tag_name, ml_path, pf_regdate "
+					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id , "
+					+ "media_library  "
+					+ "where tag_use_type ='portfolio' "
+					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by portfolio.PF_LIKE desc";
 		}
 		
@@ -316,7 +317,7 @@ public class SearchDao {
 		
 		String sql ="";
 		if(lineup == true){
-			sql = "select prof_img, prof_name, tag.tag_name, prof_follower, prof_regdate  "
+			sql = "select prof_img, prof_name, tag.tag_name,  prof_follower, prof_regdate  "
 					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
@@ -342,9 +343,11 @@ public class SearchDao {
 			while (rs.next()) {
 				Member member = new Member(); 
 				member.setTag_name(rs.getString("tag_name"));
+				
 				member.setProf_img(rs.getString("prof_img"));
 				member.setProf_name(rs.getString("prof_name"));
 				member.setProf_follower(rs.getInt("prof_follower"));
+
 				
 				list.add(member);
 			}
@@ -374,7 +377,7 @@ public class SearchDao {
 					+ "join tag_use  on tag_use_type_id = project.proj_id  "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "where tag_use_type = 'project' and "
-					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or (UPPER(project.proj_title ) like '%"+keyword+"%') ";
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or (UPPER(project.proj_title ) like '%"+keyword+"%')) ";
 		}
 		else{
 			sql =  "select distinct proj_title, prof_name, proj_intro, proj_to , ml_path, proj_regenddate "
@@ -385,7 +388,7 @@ public class SearchDao {
 					+ "join tag_use  on tag_use_type_id = project.proj_id  "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "where tag_use_type = 'project' and "
-					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or (UPPER(project.proj_title ) like '%"+keyword+"%') ";
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or (UPPER(project.proj_title ) like '%"+keyword+"%')) ";
 
 		}
 		ArrayList list = new ArrayList();

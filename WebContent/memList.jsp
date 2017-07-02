@@ -5,7 +5,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="header.jsp"></jsp:include>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+
+<script src="assets/js/chart-master/Chart.js"></script>
 <link href="assets/css/search.css" rel="stylesheet">
 <jsp:useBean id="member_viewDao" class="portit.model.dao.ViewDao" />
 	<section class="container">
@@ -121,7 +132,7 @@
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('')"># &nbsp;</a></div>
+			         					<div class="memTag"><a href="javascript:tag_name('')"># <%=mem.getTag_name() %>&nbsp;</a></div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount"><%=mem.getProf_follower() %></span>
@@ -161,6 +172,8 @@
  		<!--/wrapper -->
  
 	</section>
+	
+	
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
 

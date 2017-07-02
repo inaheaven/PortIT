@@ -54,8 +54,9 @@ public class ViewDao {
 	 */
 	public List member_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select profile.prof_img, profile.prof_name,  profile.prof_follower "
-				+ "from profile "; 
+		String sql = "select distinct profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
+				+ " FROM  tag join tag_use on tag.tag_id = tag_use.tag_id , profile "
+				+ "where tag_use_type = 'developer' and tag_use_type_id = prof_id ";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -63,7 +64,7 @@ public class ViewDao {
 
 			while (rs.next()) {
 				Member member = new Member(); 
-				//member.setTag_name(rs.getString("tag_name"));
+				member.setTag_name(rs.getString("tag_name"));
 				member.setProf_img(rs.getString("prof_img"));
 				member.setProf_name(rs.getString("prof_name"));
 				member.setProf_follower(rs.getInt("prof_follower"));
@@ -88,10 +89,12 @@ public class ViewDao {
 	 */
 	public List portfolio_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct prof_name, pf_title, pf_like , ml_path "
-				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
-				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id , "
-				+ "media_library" ;
+		String sql = "select distinct prof_name, pf_title, pf_like ,  ml_path ,tag.tag_name "
+				+ "from media_library, prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id  "
+				+ "join tag_use on tag_use_id = portfolio.pf_id  "
+				+ "join tag on tag.tag_id = tag_use.tag_id  "
+				+ "where tag_use_type = 'portfolio'";
 		
 		try {
 

@@ -115,7 +115,7 @@
 															</div>
 															<div class="pjRegiEndDate">
 																<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>
-																		(${proj_list[i].regdate}-${toDay})</span></span>
+																		${ proj_list[i].d_day} %></span></span>
 															</div>
 														</div>
 													</div>

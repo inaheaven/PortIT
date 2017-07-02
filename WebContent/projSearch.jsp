@@ -5,7 +5,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="assets/css/search.css" rel="stylesheet">
 	<section class="container">
 		<section class="wrapper site-min-height">
@@ -74,28 +74,30 @@
 				<c:forEach begin="0" end="${proj_list.size()-1}" var="i" >	
 					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
-	          				<div class="project-list">
-		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
-		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
-		          		
-		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list_tag[0].tag_name}&nbsp; </a>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list_tag[1].tag_name}&nbsp; </a>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list_tag[2].tag_name}&nbsp; </a>
-		          					
-		          					</div>         					
-	          					</span>
+		          			<div class="project-list">
+								<div class="col-md-9 mb" >
+			          				<span class="pjInfoText">
+			          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
+			          					<div class="pjmemName"><span class="fa fa-user">${proj_list[i].prof_name }</span>&nbsp;&nbsp;<a href=""></a></div>
+			          							          		
+			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
+			          					<div class="pjTag">
+			          						<a href="javascript:tag_name('${proj_list_tag[i].tag_name}')"># ${proj_list_tag[i].tag_name}&nbsp;</a>
+			          					</div>         					
+	          						</span>
+	          					</div>
+	          				<div class = "col-md-3">
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
 	          							<tr><td>백엔드개발자</td></tr>
 	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
-	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
+	          							<tr><td>마감일까지 D&nbsp;-&nbsp;${proj_list[i].d_day}</td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
 	          					</span>
-	          				</div>          			
-						</div>
+	          				</div>	          				
+	          			</div>          			
+					</div>
 						<br><br>
 				</c:forEach>
 			</c:if>	
