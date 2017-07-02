@@ -83,7 +83,7 @@
  
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
- 		int numPerPage = 12;			//한 페이지당 보여질 글의 갯수
+ 		int numPerPage = 16;			//한 페이지당 보여질 글의 갯수
  		int totalPage = 0;				//전체 페이지 수
  		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
  		int beginPerPage = 1;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
@@ -143,7 +143,7 @@
  				<!-- 페이지네이션 -->
  	<div align="center">		
  		<% if(nowBlock > 0){%>
- 			<a href="/page?page=pfList?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
+ 			<a href="/pfList.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
  		<% }%> 
  		:::
  		<%
@@ -151,13 +151,13 @@
  				if((nowBlock*pagePerBlock)+i == totalPage)
  					break;
  		%>
- 				<a href="/page?page=pfList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+ 			<a href="/pfList.jsp?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
  		<%
  			}
  		%>
  		::: 
  		<% if(totalBlock > nowBlock+1){%>
- 			<a href="/page?page=pfList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
+ 			<a href="/pfList.jsp?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
  		<% }%>
  	</div>	
  		

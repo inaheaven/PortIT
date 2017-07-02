@@ -121,7 +121,7 @@
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># <%=mem.getTag_name()%>&nbsp;</a></div>
+			         					<div class="memTag"><a href="javascript:tag_name('')"># &nbsp;</a></div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount"><%=mem.getProf_follower() %></span>
@@ -139,7 +139,7 @@
  				<!-- 페이지네이션 -->
  	<div align="center">		
  		<% if(nowBlock > 0){%>
- 			<a href="/page?page=memList?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
+ 			<a href="/memList.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
  		<% }%> 
  		:::
  		<%
@@ -147,13 +147,13 @@
  				if((nowBlock*pagePerBlock)+i == totalPage)
  					break;
  		%>
- 				<a href="/page?page=memList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+ 				<a href="/memList.jsp?page=memList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
  		<%
  			}
  		%>
  		::: 
  		<% if(totalBlock > nowBlock+1){%>
- 			<a href="/page?page=memList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
+ 			<a href="/memList.jsp?page=memList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
  		<% }%>
  	</div>	
  		

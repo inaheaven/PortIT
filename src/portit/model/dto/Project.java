@@ -13,7 +13,21 @@ public class Project {
 	private Date proj_regenddate;
 	private String tag_name;
 	private String prof_name;
+	private String ml_path;
+	private int d_day;
 
+	public String getMl_path() {
+		return ml_path;
+	}
+	public void setMl_path(String ml_path) {
+		this.ml_path = ml_path;
+	}
+	public int getD_day() {
+		return d_day;
+	}
+	public void setD_day(int d_day) {
+		this.d_day = d_day;
+	}
 	public String getProf_name() {
 		return prof_name;
 	}

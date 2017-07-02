@@ -50,15 +50,12 @@ public class ViewDao {
 	}
 
 	/**
-	 * 사용된 태그명을 불러오는 메서드
+	 * 전체 멤버를 보여주는 메서드
 	 */
 	public List member_info() {
 		ArrayList list = new ArrayList();
 		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
-				+ "from profile join tag_use "
-				+ "on tag_use.tag_use_type_id = profile.prof_id "
-				+ "join tag "
-				+ "on tag.tag_id = tag_use.tag_id"; 
+				+ "from profile "; 
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -66,7 +63,7 @@ public class ViewDao {
 
 			while (rs.next()) {
 				Member member = new Member(); 
-				member.setTag_name(rs.getString("tag_name"));
+				//member.setTag_name(rs.getString("tag_name"));
 				member.setProf_img(rs.getString("prof_img"));
 				member.setProf_name(rs.getString("prof_name"));
 				member.setProf_follower(rs.getInt("prof_follower"));
