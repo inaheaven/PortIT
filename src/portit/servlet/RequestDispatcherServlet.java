@@ -1,4 +1,4 @@
-package portit.controller;
+package portit.servlet;
 
 import java.io.IOException;
 
@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import portit.controller.Controller;
+import portit.controller.ControllerFactory;
 
 /**
  * 클라이언트의 서블릿 요청을 받아 기능을 해당 컨트롤러에게 분배하고 해당 컨트롤러의 처리 결과를 뷰에게 전달

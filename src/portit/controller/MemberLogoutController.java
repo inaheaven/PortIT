@@ -10,22 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/logout")
-public class MemberLogoutController extends HttpServlet{
+import portit.model.dao.MemberDao;
+import portit.model.dto.Member;
+
+public class MemberLogoutController implements Controller {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession(false);
-		if (session != null) {
-		    session.invalidate();
-		}
-
-		resp.sendRedirect("/index.jsp");
+	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
+		
+		HttpSession session = req.getSession();
+		session.invalidate();
+		return "rdr:/index.jsp";
 	}
 
 }

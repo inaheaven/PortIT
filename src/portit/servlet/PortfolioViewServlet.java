@@ -1,4 +1,4 @@
-package portit.controller;
+package portit.servlet;
 
 import java.io.IOException;
 
