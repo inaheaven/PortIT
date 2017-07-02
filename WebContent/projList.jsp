@@ -179,7 +179,6 @@
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
-<jsp:include page="footer.jsp"></jsp:include>
 	<!--script for this page-->
 	<script>
 		$(document).ready(

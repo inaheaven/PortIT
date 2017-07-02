@@ -7,16 +7,17 @@
 
 <link href="assets/css/search.css" rel="stylesheet">
 
+
 	<section class="container">
 		<section class="wrapper site-min-height">
 			<div class="col-md-12 mt search" id="searchPf">
 				<!-- 검색어 검색 폼 -->
 
 				<div class="col-md-12 mt mb">
-					<form class="col-md-10 searchKeyword" method="post"
+					<form class="col-md-10 searchKeyword" method="post" 
 						action="/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-					<input type="text" class="form-control" name="pfSearch" value="" />
+					<input type="text" class="form-control" name="pfSearch" value="${search	 }" />
 				</div>
 						<button type="submit" class="col-md-1 btn common" id="pfsubmit">
 							<i class="fa fa-search"></i>
@@ -126,9 +127,9 @@
 							});
 				});
 	</script>
-	<script>
+		<script>
 		$(document).ready(function(){
-			event.stopPropagation();
+			$("#pfsubmit").trigger("click");
 		});		
 	</script>
 	

@@ -132,7 +132,7 @@
  										<div class="pfInfo">
  											<div class="simple-content">
  												<div class="pfTag">
- 													<a href="">$<%=port.getTag_name() %>&nbsp;</a></div>
+ 													<a href="">#<%=port.getTag_name() %>&nbsp;</a></div>
  						
  											<div class="pfTitle">
  													<a href=""><%=port.getPf_title()%></a>
@@ -178,7 +178,7 @@
  
 	</section>
 
-	<jsp:include page="footer.jsp"></jsp:include>
+
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
 

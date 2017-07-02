@@ -173,7 +173,7 @@
  
 	</section>
 	
-	<jsp:include page="footer.jsp"></jsp:include>
+	
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
 

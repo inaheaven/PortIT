@@ -61,17 +61,23 @@ public class SearchDao {
 		if(lineup == true){
 			sql = "select distinct prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
 					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
-					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id , "
-					+ "media_library " 
-					+ "where  UPPER(portfolio.pf_title) like '%"+keyword+"%' "
+					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id , "
+					+ "media_library  "
+					+ "where tag_use_type ='portfolio' "
+					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by pf_regdate desc";
 		}
 		else{
 			sql = "select distinct prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
 					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
-					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id , "
-					+ "media_library " 
-					+ "where  UPPER(portfolio.pf_title) like '%"+keyword+"%' "
+					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+					+ "join tag on tag.tag_id = tag_use.tag_id , "
+					+ "media_library  "
+					+ "where tag_use_type ='portfolio' "
+					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by portfolio.PF_LIKE desc";
 		}
 		
