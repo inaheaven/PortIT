@@ -116,7 +116,13 @@ public class MessageModel {
 		//[청소중]인스턴스 생성을 안해도된다.
 		//this.list = new ArrayList();	
 		
+		System.out.println("model_msg 접근확인"+Msg_Sender);
+		
+		
 		this.list=dao.getChatRoom(null,null, Msg_Sender,true);
+		
+		//list가 null값일떄 빈페이지 보여주기...
+		
 		return list;
 	}
 	
@@ -132,8 +138,6 @@ public class MessageModel {
 	public String toEmail(String mem_id) {
 		return dao.toEamil(mem_id);
 	}
->>>>>>> refs/remotes/origin/dev
-	
 	
 
 

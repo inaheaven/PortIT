@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import portit.model.dao.MemberDao;
+import portit.model.dao.ProjectDao;
 
 public class CoworkerSearchController extends HttpServlet {
 	
@@ -21,8 +22,8 @@ public class CoworkerSearchController extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		
-		MemberDao dao = new MemberDao();
+		ProjectDao dao = new ProjectDao();
 		dao.findMemberbyName(req, resp);
-
+		
 	}
 }

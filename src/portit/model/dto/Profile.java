@@ -1,7 +1,16 @@
 package portit.model.dto;
 
+<<<<<<< HEAD
+=======
+import java.lang.Math;
+import java.util.ArrayList;
+>>>>>>> refs/remotes/origin/dev-0630myproj
 import java.util.Date;
+<<<<<<< HEAD
 import java.util.List;
+=======
+import java.util.Iterator;
+>>>>>>> refs/remotes/origin/dev-0630myproj
 
 /**
  * 사용자 프로필 DTO
@@ -35,10 +44,39 @@ public class Profile {
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
 	
+<<<<<<< HEAD
 	public Profile() {
 		this.prof_img = "/assets/img/user-basic.png";
 	}
 
+=======
+	
+	private ArrayList<Integer> prof_id_list = new ArrayList<>();
+	
+	public ArrayList<Integer> getProf_id_list() {
+		return prof_id_list;
+	}
+	public void setProf_id_list(ArrayList<Integer> prof_id_list) {
+		this.prof_id_list = prof_id_list;
+	}
+	private ArrayList<String> prof_name_list = new ArrayList<>();
+	private ArrayList<String> prof_nick_list = new ArrayList<>();
+	
+	public ArrayList<String> getProf_nick_list() {
+		return prof_nick_list;
+	}
+	public void setProf_nick_list(ArrayList<String> prof_nick_list) {
+		this.prof_nick_list = prof_nick_list;
+	}
+	public ArrayList<String> getProf_name_list() {
+		return prof_name_list;
+	}
+	public void setProf_name_list(ArrayList<String> prof_name_list) {
+		this.prof_name_list = prof_name_list;
+	}
+	
+	
+>>>>>>> refs/remotes/origin/dev-0630myproj
 	public int getProf_id() {
 		return prof_id;
 	}
