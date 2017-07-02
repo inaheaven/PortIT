@@ -1,20 +1,20 @@
 package portit.model.dao;
 
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Media;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
-import portit.model.dto.TagUse;
 
 
 /**
  * 프로필 관련 DAO
- * @author hyang
  *
  */
 public class ProfileDao {
@@ -24,12 +24,21 @@ public class ProfileDao {
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 	private String sql = null;
+
+	private MediaDao mediaDao;
+	private PortfolioDao portfolioDao;
+	private ProjectDao projectDao;
+	private TagDao tagDao;
 	
 	public ProfileDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
+			MediaDao mediaDao = new MediaDao();
+			PortfolioDao portfolioDao = new PortfolioDao();
+			ProjectDao projectDao = new ProjectDao();
+			TagDao tagDao = new TagDao();
 		} catch (Exception e) {
-			System.out.println("커넥션 풀 오류 - MemberDao()");
+			System.out.println("커넥션 풀 오류 - ProfileDao()");
 			e.printStackTrace();
 		}
 	}
@@ -42,29 +51,311 @@ public class ProfileDao {
 			conn = pool.getConnection();
 			if (conn != null) System.out.println("DB 접속");
 		} catch (Exception e) {
-			System.out.println("DB 접속 오류 - getConnection()");
+			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * DB 연결 해제
+	 * DB 접속 해제
 	 */
 	private void freeConnection() {
 		try {
 			pool.freeConnection(conn, stmt, rs);
-			if (conn != null) System.out.println("DB 접속 해제");
+			if (conn != null) {
+				System.out.println("DB 접속 해제");
+			}
 		} catch (Exception e) {
-			System.out.println("DB 접속해제 오류 - freeConnection()");
+			System.out.println("DB 접속해제 오류 :");
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * 같은 프로필 번호를 쓰는 프로필이 있는지 검사
-	 * @param prof_id
-	 * @return 존재하는 프로필 번호
+	 * 회원번호로 프로필 조회
+	 * @param mem_id
+	 * @return
 	 */
+	public Profile selectOneByMemId(int mem_id) {
+		Profile profile = new Profile();
+		getConnection();
+		try {
+			sql = "SELECT * FROM profile WHERE mem_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				profile.setProf_id(rs.getInt("prof_id"))
+				.setMem_id(rs.getInt("mem_id"))
+				.setProf_nick(rs.getString("prof_nick"))
+				.setProf_name(rs.getString("prof_name"))
+				.setProf_intro(rs.getString("prof_intro"))
+				.setProf_website(rs.getString("prof_website"))
+				.setProf_github(rs.getString("prof_github"))
+				.setProf_facebook(rs.getString("prof_facebook"))
+				.setProf_follower(rs.getInt("prof_follower"));
+			}
+			
+			// 미디어 정보
+			List<Media> mediae = mediaDao.selectList(conn, "profile", profile.getProf_id());
+			profile.setProf_img(mediae.get(0).getMl_path())
+			.setProf_background(mediae.get(1).getMl_path());
+			
+			// 태그 정보
+			List<Tag> prof_tags_language = tagDao.selectList(conn, "language", "profile", profile.getProf_id());
+			List<Tag> prof_tags_tool = tagDao.selectList(conn, "tool", "profile", profile.getProf_id());
+			List<Tag> prof_tags_field = tagDao.selectList(conn, "field", "profile", profile.getProf_id());
+			profile.setProf_tags_language(prof_tags_language)
+			.setProf_tags_tool(prof_tags_tool)
+			.setProf_tags_field(prof_tags_field);
+			
+			// 스킬셋 정보
+			Map<String, Integer> prof_skillset = new HashMap<String, Integer>();
+			for (int i = 0; i < prof_tags_language.size(); i++) {
+				if (prof_tags_language.get(i).getProf_skill_level() > 0) {
+					prof_skillset.put(prof_tags_language.get(i).getTag_name(), prof_tags_language.get(i).getProf_skill_level());
+				}
+			}
+			for (int i = 0; i < prof_tags_tool.size(); i++) {
+				if (prof_tags_tool.get(i).getProf_skill_level() > 0) {
+					prof_skillset.put(prof_tags_tool.get(i).getTag_name(), prof_tags_tool.get(i).getProf_skill_level());
+				}
+			}
+			profile.setProf_skillset(prof_skillset);
+			
+			// 포트폴리오 정보
+			profile.setProf_myPf(portfolioDao.selectListByMemId(mem_id));
+			
+			// 프로젝트 정보
+			profile.setProf_myProj(projectDao.selectListByMemId(mem_id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return profile;
+	}
+	
+	/**
+	 * 회원 닉네임으로 프로필 조회
+	 * @param prof_nick
+	 * @return
+	 */
+	public Profile selectOneByUsername(String prof_nick) {
+		Profile profile = new Profile();
+		getConnection();
+		try {
+			sql = "SELECT * FROM profile WHERE prof_nick=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, prof_nick);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				profile.setProf_id(rs.getInt("prof_id"))
+				.setMem_id(rs.getInt("mem_id"))
+				.setProf_nick(rs.getString("prof_nick"))
+				.setProf_name(rs.getString("prof_name"))
+				.setProf_intro(rs.getString("prof_intro"))
+				.setProf_website(rs.getString("prof_website"))
+				.setProf_github(rs.getString("prof_github"))
+				.setProf_facebook(rs.getString("prof_facebook"))
+				.setProf_follower(rs.getInt("prof_follower"));
+			}
+			
+			// 미디어 정보
+			List<Media> mediaList = mediaDao.selectList(conn, "profile", profile.getProf_id());
+			profile.setProf_img(mediaList.get(0).getMl_path())
+			.setProf_background(mediaList.get(1).getMl_path());
+			
+			// 태그 정보
+			List<Tag> prof_tags_language = tagDao.selectList(conn, "language", "profile", profile.getProf_id());
+			List<Tag> prof_tags_tool = tagDao.selectList(conn, "tool", "profile", profile.getProf_id());
+			List<Tag> prof_tags_field = tagDao.selectList(conn, "field", "profile", profile.getProf_id());
+			profile.setProf_tags_language(prof_tags_language)
+			.setProf_tags_tool(prof_tags_tool)
+			.setProf_tags_field(prof_tags_field);
+			
+			// 스킬셋 정보
+			Map<String, Integer> prof_skillset = new HashMap<String, Integer>();
+			for (int i = 0; i < prof_tags_language.size(); i++) {
+				if (prof_tags_language.get(i).getProf_skill_level() > 0) {
+					prof_skillset.put(prof_tags_language.get(i).getTag_name(), prof_tags_language.get(i).getProf_skill_level());
+				}
+			}
+			for (int i = 0; i < prof_tags_tool.size(); i++) {
+				if (prof_tags_tool.get(i).getProf_skill_level() > 0) {
+					prof_skillset.put(prof_tags_tool.get(i).getTag_name(), prof_tags_tool.get(i).getProf_skill_level());
+				}
+			}
+			profile.setProf_skillset(prof_skillset);
+			
+			// 포트폴리오 정보
+			profile.setProf_myPf(portfolioDao.selectListByMemId(profile.getMem_id()));
+			
+			// 프로젝트 정보
+			profile.setProf_myProj(projectDao.selectListByMemId(profile.getMem_id()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return profile;
+	}
+	
+	/**
+	 * 프로필 추가
+	 * @param mem_id
+	 * @param profile
+	 * @return
+	 */
+	public int insert(int mem_id, Profile profile) {
+		int rows = 0;
+		getConnection();
+		try {
+			// 프로필
+			sql = "INSERT INTO profile("
+					+ "prof_id, mem_id, prof_nick, prof_name, prof_intro, prof_img, "
+					+ "prof_background, prof_website, prof_github, prof_facebook, "
+					+ "prof_regdate, prof_follower) "
+					+ "VALUES(LPAD(seq_prof_id.nextval, 4, '0'),?,?,?,?,?,?,?,?,?,SYSDATE,?)";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			stmt.setString(2, profile.getProf_nick());
+			stmt.setString(3, profile.getProf_name());
+			stmt.setString(4, profile.getProf_intro());
+			stmt.setString(5, profile.getProf_img());
+			stmt.setString(6, profile.getProf_background());
+			stmt.setString(7, profile.getProf_website());
+			stmt.setString(8, profile.getProf_github());
+			stmt.setString(9, profile.getProf_facebook());
+			stmt.setInt(10, 0);
+			rows += stmt.executeUpdate();
+			
+			sql = "SELECT seq_prof_id.currval FROM DUAL";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			rs.next();
+			int articleId = rs.getInt(1);
+			
+			// 태그
+			List<Tag> prof_tags_language = profile.getProf_tags_language();
+			List<Tag> prof_tags_tool = profile.getProf_tags_tool();
+			List<Tag> prof_tags_field = profile.getProf_tags_field();
+			for (int i = 0; i < prof_tags_language.size(); i++) {
+				Tag tag = prof_tags_language.get(i);
+				tagDao.insertTag(conn, tag);
+				tagDao.insertTagUse(conn, "profile", articleId, tag);
+			}
+			for (int i = 0; i < prof_tags_tool.size(); i++) {
+				Tag tag = prof_tags_tool.get(i);
+				tagDao.insertTag(conn, tag);
+				tagDao.insertTagUse(conn, "profile", articleId, tag);
+			}
+			for (int i = 0; i < prof_tags_field.size(); i++) {
+				Tag tag = prof_tags_field.get(i);
+				tagDao.insertTag(conn, tag);
+				tagDao.insertTagUse(conn, "profile", articleId, tag);
+			}
+			
+			// 스킬셋
+			Map<String, Integer> prof_skillset = profile.getProf_skillset();
+			for (String key : prof_skillset.keySet()) {
+				Tag tag = new Tag().setTag_name(key).setProf_skill_level(prof_skillset.get(key));
+				tagDao.updateTagUse(conn, "profile", articleId, tag);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return rows;
+	}
+	
+	/**
+	 * 회원번호로 프로필 수정
+	 * @param mem_id
+	 * @param profile
+	 * @return
+	 */
+	public int updateByMemId(int prof_id, Profile profile) {
+		int rows = 0;
+		getConnection();
+		try {
+			sql = "UPDATE profile SET prof_nick=?, prof_name=?, prof_intro=?, prof_img=?, "
+					+ "prof_background=?, prof_website=?, prof_github=?, prof_facebook=? "
+					+ "WHERE prof_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, profile.getProf_nick());
+			stmt.setString(2, profile.getProf_name());
+			stmt.setString(3, profile.getProf_intro());
+			stmt.setString(4, profile.getProf_img());
+			stmt.setString(5, profile.getProf_background());
+			stmt.setString(6, profile.getProf_website());
+			stmt.setString(7, profile.getProf_github());
+			stmt.setString(8, profile.getProf_facebook());
+			stmt.setInt(9, prof_id);
+			rows += stmt.executeUpdate();
+			
+			// 태그
+			List<Tag> prof_tags_language = profile.getProf_tags_language();
+			List<Tag> prof_tags_tool = profile.getProf_tags_tool();
+			List<Tag> prof_tags_field = profile.getProf_tags_field();
+			for (int i = 0; i < prof_tags_language.size(); i++) {
+				Tag tag = prof_tags_language.get(i);
+				tagDao.insertTag(conn, tag);
+				tagDao.insertTagUse(conn, "profile", prof_id, tag);
+			}
+			for (int i = 0; i < prof_tags_tool.size(); i++) {
+				Tag tag = prof_tags_tool.get(i);
+				tagDao.insertTag(conn, tag);
+				tagDao.insertTagUse(conn, "profile", prof_id, tag);
+			}
+			for (int i = 0; i < prof_tags_field.size(); i++) {
+				Tag tag = prof_tags_field.get(i);
+				tagDao.insertTag(conn, tag);
+				tagDao.insertTagUse(conn, "profile", prof_id, tag);
+			}
+			
+			// 스킬셋
+			Map<String, Integer> prof_skillset = profile.getProf_skillset();
+			for (String key : prof_skillset.keySet()) {
+				Tag tag = new Tag().setTag_name(key).setProf_skill_level(prof_skillset.get(key));
+				tagDao.updateTagUse(conn, "profile", prof_id, tag);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return rows;
+	}
+	
+	/**
+	 * 프로필 삭제
+	 * @param prof_id
+	 * @return
+	 */
+	public int deleteByMemId(int prof_id) {
+		int rows = 0;
+		getConnection();
+		try {
+			tagDao.deleteTagUse(conn, "profile", prof_id);
+			
+			sql = "DELETE profile WHERE mem_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rows += stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return rows;
+	}
+	
+	
+	/*
+	// 같은 프로필 번호를 쓰는 프로필이 있는지 검사
 	public int findExistingProfile(int prof_id) {
 		int result = 0;
 		try {
@@ -84,12 +375,7 @@ public class ProfileDao {
 		return result;
 	}
 	
-	/**
-	 * (수정·삭제시) 작성자가 맞는지 검사
-	 * @param mem_id
-	 * @param prof_id
-	 * @return true/false
-	 */
+	// (수정·삭제시) 작성자가 맞는지 검사
 	public boolean checkAccessRight(int mem_id, int prof_id) {
 		boolean flag = false;
 		try {
@@ -109,12 +395,7 @@ public class ProfileDao {
 		return flag;
 	}
 	
-	/**
-	 * 프로필 입력 
-	 * @param _profile
-	 * @return 
-	 * @return
-	 */
+	// 프로필 입력
 	public Profile addprofile(Profile dto) {
 		String sql = "INSERT into profile"
 				+	"values(seq_prof_id.nextVal,mem_id,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -147,11 +428,8 @@ public class ProfileDao {
 		}
 			return dto;
 	}
-	/**
-	 * 프로필 수정  
-	 * 입력했던 것을 불러온다.
-	 * @param profile
-	 */
+	// 프로필 수정  
+	// 입력했던 것을 불러온다.
 	public Profile getProfile(int prof_id){
 		String sql="select * from profile where prof_id =?";
 		
@@ -189,11 +467,7 @@ public class ProfileDao {
 		return dto;
 		
 	}
-	/**
-	 * 프로필 수정 란(내용값 수정)
-	 * @param dto
-	 */
-	
+	// 프로필 수정 란(내용값 수정)
 	public void updateProfile(Profile dto){
 		
 		String sql = "update profile set prof_img=?, prof_background=?, prof_name=?, prof_nick=?, prof_intro=?"
@@ -227,11 +501,7 @@ public class ProfileDao {
 		
 	}
 	
-/**
- * 프로필 삭제 
- * @param eno
- */
-	
+// 프로필 삭제
 	// deleteEmp_proc.jsp
 	public void deleteProfile(int prof_id){
 		String sql = "delete from profile where prof_id ="+prof_id+"";
@@ -250,9 +520,7 @@ public class ProfileDao {
 		
 	}
 	
-	/**
-	 * 상세페이지를 위한 전체 select + dto에 저장
-	 */
+	// 상세페이지를 위한 전체 select + dto에 저장
 	public Profile selectForDetail(int mem_id) {
 		Profile pf = new Profile();
 		try {
@@ -294,9 +562,7 @@ public class ProfileDao {
 		return pf;
 	}
 	
-	/**
-	 *  profile에서 쓴 태그 
-	 */
+	//  profile에서 쓴 태그
 	public void getTag(Profile pf, int mem_id) {
 		try{
 			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
@@ -314,7 +580,7 @@ public class ProfileDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-	}
+	}*/
 	
 	/**
 	 * profile 의 portfolio

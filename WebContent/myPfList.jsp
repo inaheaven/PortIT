@@ -22,200 +22,58 @@
 							<button type="button" class="btn common" onclick="location.href='/page?page=myPfRegister'">포트폴리오 등록하기</button>
 						</span>
 					</div>
-					<div class="pflist_box clearfix">
-						<div class="col-md-4 mb"> <!-- 반복 -->
-							<div class="image-hover">
-								<div class="portfolio-simple">
-									<div class="pfImg"></div>
-									<div class="pfInfo">
-										<div class="simple-content">
-											<div class="pfTag">
-												<a href="">#태그&nbsp;</a>
-											</div>
-											<div class="pfTitle">
-												<a href="">포트폴리오 제목</a>
-											</div>
-											<div class="pfBottom">
-												<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-													class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-											</div>
-										</div>
+					<%
+					List<Portfolio> myPf = profile.getProf_myPf();
+					if (myPf != null && myPf.size() > 0) {
+						for (int idx = 0; idx < myPf.size(); idx++) {
+							Portfolio pf = myPf.get(idx);
+							if (idx == 0 || idx % 4 == 0) {
+				%>
+				<div class="row recoList">
+					<%
+							}
+					%>
+					<div class="col-md-3 mb">
+						<div class="portfolio-simple">
+							<div class="pfImg"></div>
+							<div class="pfInfo">
+								<div class="simple-content">
+									<div class="pfTag">
+										<%
+											for (Tag tag : pf.getPf_tags_language()) {
+										%>
+										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
+										<%
+											}
+										%>
 									</div>
-									<div class="top-hover-right">
-										<div class="after-hover" >
-											<button type="button" class="btn btn-hover">		
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-											<button type="button" class="btn btn-hover">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</div>
+									<div class="pfTitle">
+										<a href=""><%=pf.getPf_title()%></a>
 									</div>
-								</div>
-							</div>
-						</div>
-						<!-- portfolio-simple end -->
-						<div class="col-md-4 mb"> <!-- 반복 -->
-							<div class="image-hover">
-								<div class="portfolio-simple">
-									<div class="pfImg"></div>
-									<div class="pfInfo">
-										<div class="simple-content">
-											<div class="pfTag">
-												<a href="">#태그&nbsp;</a>
-											</div>
-											<div class="pfTitle">
-												<a href="">포트폴리오 제목</a>
-											</div>
-											<div class="pfBottom">
-												<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-													class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-											</div>
-										</div>
-									</div>
-									<div class="top-hover-right">
-										<div class="after-hover" >
-											<button type="button" class="btn btn-hover">		
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-											<button type="button" class="btn btn-hover">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</div>
+									<div class="pfBottom">
+										<span class="pfmemName"><a href=""><%=pf.getPf_authorName()%></a></span>
+										<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=pf.getPf_like()%></span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- portfolio-simple end -->
-						<div class="col-md-4 mb"> <!-- 반복 -->
-							<div class="image-hover">
-								<div class="portfolio-simple">
-									<div class="pfImg"></div>
-									<div class="pfInfo">
-										<div class="simple-content">
-											<div class="pfTag">
-												<a href="">#태그&nbsp;</a>
-											</div>
-											<div class="pfTitle">
-												<a href="">포트폴리오 제목</a>
-											</div>
-											<div class="pfBottom">
-												<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-													class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-											</div>
-										</div>
-									</div>
-									<div class="top-hover-right">
-										<div class="after-hover" >
-											<button type="button" class="btn btn-hover">		
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-											<button type="button" class="btn btn-hover">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- portfolio-simple end -->
-						<div class="col-md-4 mb"> <!-- 반복 -->
-							<div class="image-hover">
-								<div class="portfolio-simple">
-									<div class="pfImg"></div>
-									<div class="pfInfo">
-										<div class="simple-content">
-											<div class="pfTag">
-												<a href="">#태그&nbsp;</a>
-											</div>
-											<div class="pfTitle">
-												<a href="">포트폴리오 제목</a>
-											</div>
-											<div class="pfBottom">
-												<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-													class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-											</div>
-										</div>
-									</div>
-									<div class="top-hover-right">
-										<div class="after-hover" >
-											<button type="button" class="btn btn-hover">		
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-											<button type="button" class="btn btn-hover">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- portfolio-simple end -->
-						<div class="col-md-4 mb"> <!-- 반복 -->
-							<div class="image-hover">
-								<div class="portfolio-simple">
-									<div class="pfImg"></div>
-									<div class="pfInfo">
-										<div class="simple-content">
-											<div class="pfTag">
-												<a href="">#태그&nbsp;</a>
-											</div>
-											<div class="pfTitle">
-												<a href="">포트폴리오 제목</a>
-											</div>
-											<div class="pfBottom">
-												<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-													class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-											</div>
-										</div>
-									</div>
-									<div class="top-hover-right">
-										<div class="after-hover" >
-											<button type="button" class="btn btn-hover">		
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-											<button type="button" class="btn btn-hover">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- portfolio-simple end -->
-						<div class="col-md-4 mb"> <!-- 반복 -->
-							<div class="image-hover">
-								<div class="portfolio-simple">
-									<div class="pfImg"></div>
-									<div class="pfInfo">
-										<div class="simple-content">
-											<div class="pfTag">
-												<a href="">#태그&nbsp;</a>
-											</div>
-											<div class="pfTitle">
-												<a href="">포트폴리오 제목</a>
-											</div>
-											<div class="pfBottom">
-												<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-													class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-											</div>
-										</div>
-									</div>
-									<div class="top-hover-right">
-										<div class="after-hover" >
-											<button type="button" class="btn btn-hover">		
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-											<button type="button" class="btn btn-hover">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- portfolio-simple end -->
 					</div>
+					<!-- portfolio-simple end -->
+					<%
+							if (idx == 0 || idx % 4 == 0) {
+					%>
+				</div>
+				<%
+							}
+						}
+					} else {
+				%>
+				<div class="row recoList">
+					<p class="text-center">아직 등록한 포트폴리오가 없습니다.</p>
+				</div>
+				<%
+					}
+				%>
 				</div>
 				<!-- /row -->
 

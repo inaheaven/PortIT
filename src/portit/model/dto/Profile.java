@@ -1,16 +1,8 @@
 package portit.model.dto;
 
-<<<<<<< HEAD
-=======
-import java.lang.Math;
-import java.util.ArrayList;
->>>>>>> refs/remotes/origin/dev-0630myproj
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.List;
-=======
-import java.util.Iterator;
->>>>>>> refs/remotes/origin/dev-0630myproj
+import java.util.Map;
 
 /**
  * 사용자 프로필 DTO
@@ -30,53 +22,20 @@ public class Profile {
 	private String prof_facebook;
 	private Date prof_regdate;
 	private int prof_follower;
-
-	private String prof_language;
-	private String prof_tool;
-	private String prof_field;
-	private String tag_name;
 	private int prof_skill_level;
 
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
 	private List<Tag> prof_tags_field;
-	private List<TagUse> prof_skillset;
+	private Map<String, Integer> prof_skillset;
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
 	
-<<<<<<< HEAD
 	public Profile() {
 		this.prof_img = "/assets/img/user-basic.png";
+		this.prof_background = "";
 	}
 
-=======
-	
-	private ArrayList<Integer> prof_id_list = new ArrayList<>();
-	
-	public ArrayList<Integer> getProf_id_list() {
-		return prof_id_list;
-	}
-	public void setProf_id_list(ArrayList<Integer> prof_id_list) {
-		this.prof_id_list = prof_id_list;
-	}
-	private ArrayList<String> prof_name_list = new ArrayList<>();
-	private ArrayList<String> prof_nick_list = new ArrayList<>();
-	
-	public ArrayList<String> getProf_nick_list() {
-		return prof_nick_list;
-	}
-	public void setProf_nick_list(ArrayList<String> prof_nick_list) {
-		this.prof_nick_list = prof_nick_list;
-	}
-	public ArrayList<String> getProf_name_list() {
-		return prof_name_list;
-	}
-	public void setProf_name_list(ArrayList<String> prof_name_list) {
-		this.prof_name_list = prof_name_list;
-	}
-	
-	
->>>>>>> refs/remotes/origin/dev-0630myproj
 	public int getProf_id() {
 		return prof_id;
 	}
@@ -129,22 +88,6 @@ public class Profile {
 		return prof_follower;
 	}
 
-	public String getProf_language() {
-		return prof_language;
-	}
-
-	public String getProf_tool() {
-		return prof_tool;
-	}
-
-	public String getProf_field() {
-		return prof_field;
-	}
-
-	public String getTag_name() {
-		return tag_name;
-	}
-
 	public int getProf_skill_level() {
 		return prof_skill_level;
 	}
@@ -161,7 +104,7 @@ public class Profile {
 		return prof_tags_field;
 	}
 
-	public List<TagUse> getProf_skillset() {
+	public Map<String, Integer> getProf_skillset() {
 		return prof_skillset;
 	}
 
@@ -173,100 +116,104 @@ public class Profile {
 		return prof_myProj;
 	}
 
-	public void setProf_id(int prof_id) {
+	public Profile setProf_id(int prof_id) {
 		this.prof_id = prof_id;
+		return this;
 	}
 
-	public void setMem_id(int mem_id) {
+	public Profile setMem_id(int mem_id) {
 		this.mem_id = mem_id;
+		return this;
 	}
 
-	public void setProf_nick(String prof_nick) {
+	public Profile setProf_nick(String prof_nick) {
 		this.prof_nick = prof_nick;
+		return this;
 	}
 
-	public void setProf_name(String prof_name) {
+	public Profile setProf_name(String prof_name) {
 		this.prof_name = prof_name;
+		return this;
 	}
 
-	public void setProf_intro(String prof_intro) {
+	public Profile setProf_intro(String prof_intro) {
 		this.prof_intro = prof_intro;
+		return this;
 	}
 
-	public void setProf_img(String prof_img) {
+	public Profile setProf_img(String prof_img) {
 		this.prof_img = prof_img;
+		return this;
 	}
 
-	public void setProf_background(String prof_background) {
+	public Profile setProf_background(String prof_background) {
 		this.prof_background = prof_background;
+		return this;
 	}
 
-	public void setProf_email(String prof_email) {
+	public Profile setProf_email(String prof_email) {
 		this.prof_email = prof_email;
+		return this;
 	}
 
-	public void setProf_website(String prof_website) {
+	public Profile setProf_website(String prof_website) {
 		this.prof_website = prof_website;
+		return this;
 	}
 
-	public void setProf_github(String prof_github) {
+	public Profile setProf_github(String prof_github) {
 		this.prof_github = prof_github;
+		return this;
 	}
 
-	public void setProf_facebook(String prof_facebook) {
+	public Profile setProf_facebook(String prof_facebook) {
 		this.prof_facebook = prof_facebook;
+		return this;
 	}
 
-	public void setProf_regdate(Date prof_regdate) {
+	public Profile setProf_regdate(Date prof_regdate) {
 		this.prof_regdate = prof_regdate;
+		return this;
 	}
 
-	public void setProf_follower(int prof_follower) {
+	public Profile setProf_follower(int prof_follower) {
 		this.prof_follower = prof_follower;
+		return this;
 	}
 
-	public void setProf_language(String prof_language) {
-		this.prof_language = prof_language;
-	}
-
-	public void setProf_tool(String prof_tool) {
-		this.prof_tool = prof_tool;
-	}
-
-	public void setProf_field(String prof_field) {
-		this.prof_field = prof_field;
-	}
-
-	public void setTag_name(String tag_name) {
-		this.tag_name = tag_name;
-	}
-
-	public void setProf_skill_level(int prof_skill_level) {
+	public Profile setProf_skill_level(int prof_skill_level) {
 		this.prof_skill_level = prof_skill_level;
+		return this;
 	}
 
-	public void setProf_tags_language(List<Tag> prof_tags_language) {
+	public Profile setProf_tags_language(List<Tag> prof_tags_language) {
 		this.prof_tags_language = prof_tags_language;
+		return this;
 	}
 
-	public void setProf_tags_tool(List<Tag> prof_tags_tool) {
+	public Profile setProf_tags_tool(List<Tag> prof_tags_tool) {
 		this.prof_tags_tool = prof_tags_tool;
+		return this;
 	}
 
-	public void setProf_tags_field(List<Tag> prof_tags_field) {
+	public Profile setProf_tags_field(List<Tag> prof_tags_field) {
 		this.prof_tags_field = prof_tags_field;
+		return this;
 	}
 
-	public void setProf_skillset(List<TagUse> prof_skillset) {
+	public Profile setProf_skillset(Map<String, Integer> prof_skillset) {
 		this.prof_skillset = prof_skillset;
+		return this;
 	}
 
-	public void setProf_myPf(List<Portfolio> prof_myPf) {
+	public Profile setProf_myPf(List<Portfolio> prof_myPf) {
 		this.prof_myPf = prof_myPf;
+		return this;
 	}
 
-	public void setProf_myProj(List<Project> prof_myProj) {
+	public Profile setProf_myProj(List<Project> prof_myProj) {
 		this.prof_myProj = prof_myProj;
+		return this;
 	}
 	
 	

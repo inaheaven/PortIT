@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import portit.model.dao.BookmarkDao;
 import portit.model.dto.Portfolio;
 
-@WebServlet("/serial")
+@WebServlet("/bookmark")
 public class BookmarkController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

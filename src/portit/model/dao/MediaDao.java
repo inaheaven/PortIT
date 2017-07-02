@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import portit.controller.FileDeleteController;
+import portit.util.FileDeleteController;
 import portit.model.dto.Media;
 
 /**
@@ -60,7 +60,7 @@ public class MediaDao {
 		try {
 			sql = "INSERT INTO media_library"
 					+ "(ml_id, ml_type, ml_type_id, ml_path) "
-					+ "VALUES(seq_ml_id.nextVal,?,?,?)";
+					+ "VALUES(LPAD(seq_ml_id.nextval, 4, '0'),?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, media.getMl_id());
 			stmt.setString(2, media.getMl_type());

@@ -16,6 +16,7 @@ import portit.model.dto.Media;
 
 /**
  * 포트폴리오 DAO
+ * 
  */
 public class PortfolioDao {
 
@@ -158,7 +159,7 @@ public class PortfolioDao {
 				rs = stmt.executeQuery();
 				ProfileDao profileDao = new ProfileDao();
 				while (rs.next()) {
-					Profile profile = profileDao.getProfile(memToProf(rs.getInt("mem_id")));
+					Profile profile = profileDao.selectOneByMemId(rs.getInt("mem_id"));
 					coworkers.add(profile);
 				}
 				portfolio.setPf_coworkers(coworkers);
@@ -281,7 +282,7 @@ public class PortfolioDao {
 				rs = stmt.executeQuery();
 				ProfileDao profileDao = new ProfileDao();
 				while (rs.next()) {
-					Profile profile = profileDao.getProfile(memToProf(rs.getInt("mem_id")));
+					Profile profile = profileDao.selectOneByMemId(rs.getInt("mem_id"));
 					coworkers.add(profile);
 				}
 				portfolio.setPf_coworkers(coworkers);
@@ -300,6 +301,12 @@ public class PortfolioDao {
 			freeConnection();
 		}
 		return portfolios;
+	}
+	
+	public List<Portfolio> selectListByMemId(int mem_id) {
+		List<Portfolio> portfolioList = new ArrayList<Portfolio>();
+		
+		return portfolioList;
 	}
 	
 	/**
