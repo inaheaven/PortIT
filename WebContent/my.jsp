@@ -17,8 +17,8 @@
 		<!-- sidebar menu start-->
 		<ul class="sidebar-menu">       
 			<div class="myImg">
-				<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-				<h5 class="centered">김수연 님</h5>              	  
+				<p class="centered"><a href="profile.html"><img src="assets/img/user-basic.jpg" class="img-circle" width="60"></a></p>
+				<h5 class="centered"></h5>              	  
 			</div>       
 			<hr class="line" />
 			<li class="">
