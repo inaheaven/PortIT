@@ -63,21 +63,13 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 				</h4>
 				<h4>
 					<i class="fa fa-heart"></i>
-					<%=portfolio.getPf_like()%>
+					
 				</h4>
 				<div class="actions">
-					<button type="button" class="btn common"
-						onclick="location.href='#'">
-						<i class="fa fa-heart"></i>
-					</button>
-					<button type="button" class="btn common"
-						onclick="location.href='#'">
-						<i class="fa fa-bookmark"></i>
-					</button>
-					<button type="button" class="btn common"
-						onclick="location.href='#'">
-						<i class="fa fa-share-alt"></i>
-					</button>
+					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-heart"></i></button>
+		<!--  요버튼 클릭시 북마크 한번더 클릭 비활성화 북마크크 취소 -->			
+					<button type="button" class="btn common" onclick="location.href='/serial?cmd=BOOKMARK'"><i class="fa fa-bookmark"></i></button>
+					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-share-alt"></i></button>				
 				</div>
 			</div>
 		</section>
@@ -152,7 +144,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 						<table class="table">
 							<tr>
 								<th>기간</th>
-								<td><%=portfolio.getPf_startdate()%> ~ <%=portfolio.getPf_enddate()%></td>
+								<td></td>
 							</tr>
 							<tr>
 								<th>사용언어</th>
@@ -184,7 +176,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 							</tr>
 							<tr>
 								<th>인원</th>
-								<td><%=portfolio.getPf_numofperson()%>명</td>
+								<td>명</td>
 							</tr>
 							<tr>
 								<th>담당분야</th>
@@ -202,7 +194,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 							</tr>
 							<tr>
 								<th>저장소</th>
-								<td><a href="<%=portfolio.getPf_url()%>"><%=portfolio.getPf_url()%></a></td>
+								<td><a href=""></a></td>
 							</tr>
 						</table>
 					</div>
@@ -221,38 +213,20 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 						%>
 						<!-- Indicators -->
 						<ol class="carousel-indicators">
-							<%
-								}
-							%>
-							<li data-target="#Screenshots" data-slide-to="<%=idx%>"
-								<%if (idx == 0) {%> class="active" <%}%>></li>
-							<%
-								if (idx == 0) {
-							%>
+							
+							<li data-target="#Screenshots" data-slide-to="">
+								
 						</ol>
-						<%
-							}
-								if (idx == 0) {
-						%>
+					
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner">
-							<%
-								}
-							%>
-							<div class="item<%if (idx == 0) {%> active<%}%>">
-								<img src="<%=media.getMl_path()%>" />
+							
+							<div class="item">
+								<img src="" />
 							</div>
-							<%
-								if (idx == 0) {
-							%>
+							
 						</div>
-						<%
-							}
-						%>
-						<%
-							}
-						%>
-
+						
 						<!-- Controls -->
 						<a class="left carousel-control" href="#Screenshots"
 							data-slide="prev"> <span
@@ -290,23 +264,19 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 						<div class="member-simple">
 							<div class="simple-content text-center">
 								<img class="memImg img-circle" alt="avatar"
-									src="<%=profile.getProf_img()%>" />
+									src="" />
 								<div>
 									<div class="memName">
-										<a href=""><%=profile.getProf_name()%></a>
+										<a href=""></a>
 									</div>
 									<div class="memTag">
-										<%
-											for (Tag tag : profile.getProf_tags_language()) {
-										%>
-										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
-										<%
-											}
-										%>
+										
+										#<a href="">&nbsp;</a>
+									
 									</div>
 									<div class="memFollow">
 										<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-											class="memFollowCount"><%=profile.getProf_follower()%></span>
+											class="memFollowCount"></span>
 									</div>
 								</div>
 							</div>
@@ -355,20 +325,16 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 							<div class="pfInfo">
 								<div class="simple-content">
 									<div class="pfTag">
-										<%
-											for (Tag tag : r.getPf_tags_language()) {
-										%>
-										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
-										<%
-											}
-										%>
+									
+										#<a href="">&nbsp;</a>
+									
 									</div>
 									<div class="pfTitle">
-										<a href=""><%=r.getPf_title()%></a>
+										<a href=""></a>
 									</div>
 									<div class="pfBottom">
-										<span class="pfmemName"><a href=""><%=r.getPf_authorName()%></a></span>
-										<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=r.getPf_like()%></span>
+										<span class="pfmemName"><a href=""></a></span>
+										<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;</span>
 									</div>
 								</div>
 							</div>

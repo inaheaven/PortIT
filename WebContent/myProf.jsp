@@ -10,11 +10,18 @@
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <script src="assets/js/search.js"></script>
 <script language="javascript">
+
+// debugger;
+
+// window.onload = function() { location.href="/register"; };
+
 function profRegister(){
+	location.href="/myProf.jsp";
 	alert("프로필이 정상적으로 등록 되었습니다.");
 }
 
 function profalter(){
+	location.href="/myProf.jsp";
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
 //skill 추가
@@ -134,7 +141,7 @@ function fnSelectSnsInfo(snsName){
 				<div class="col-md-12 mt profreg">					
 					<div class="profregForm">
 						<h3 class="formTitle text-center">프로필 등록</h3>	
-						<form action="PortIT/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
+						<form action="/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
 							
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로필 사진</label>
@@ -152,36 +159,36 @@ function fnSelectSnsInfo(snsName){
 							<div class="form-group">
 								<label class="col-md-3 control-label">이름</label>
 								<div class="col-md-9">
-									<input class="form-control" id="name" type="text"
-										placeholder="한글로 입력하세요." >				
+									<input class="form-control" id="Prof_name" name ="Prof_name" type="text"
+										placeholder="한글로 입력하세요." value=" ">			
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">닉네임</label>
 								<div class="col-md-9">
-									<input class="form-control" id="nickname" type="text"
-										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)">									
+									<input class="form-control" id="Prof_nick" name ="Prof_nick" type="text"
+										placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="">									
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">소개</label>
 								<div class="col-md-9">
-									<textarea class="form-control" rows="5" name="contents"
-										placeholder="2000byte 이내로 입력하세요."></textarea>
+									<textarea class="form-control" rows="5" name="Prof_intro" id="Prof_intro" 
+										placeholder="2000byte 이내로 입력하세요." value=""></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 언어</label>
 								<div class="col-md-9">
-									<input class="form-control" id="disabledInput" type="text"
-										placeholder="ex) C, JAVA, Python 등">
+									<input class="form-control" id="Prof_language" type="text"
+										placeholder="ex) C, JAVA, Python 등" value="">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">관심 툴</label>
 								<div class="col-md-9">
 									<input class="form-control" id="disabledInput" type="text"
-										placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등">
+										placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등" value="">
 								</div>
 							</div>
 							<div class="form-group">
@@ -219,8 +226,8 @@ function fnSelectSnsInfo(snsName){
 							<div class="form-group">
 								<label class="col-md-3 control-label">Skill</label>
 								<div class="col-md-9">
-									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명"></div>
-									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요"></div>
+									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명" value=">"></div>
+									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요" value=""></div>
 									<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">추가</button></div>
 									<br><br>
 									<div id="skillList">
