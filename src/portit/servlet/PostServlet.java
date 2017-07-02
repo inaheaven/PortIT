@@ -1,8 +1,6 @@
 package portit.servlet;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import portit.controller.PortfolioAddController;
-import portit.controller.ProfileAddController;
+import portit.controller.Controller;
+import portit.controller.ControllerFactory;
+import portit.util.FileUploadController;
 
 
 /**
@@ -44,7 +43,7 @@ public class PostServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
+
 		FileUploadController uploadController = new FileUploadController();
 		uploadController.fileUpload(req, resp);
 		req.setAttribute("formData", req.getAttribute("formData"));
@@ -53,13 +52,13 @@ public class PostServlet extends HttpServlet {
 		String viewUrl = "";
 		String articleType = req.getParameter("type");
 		if ("profile".equals(articleType)) {
-			ProfileAddController profileAddController = new ProfileAddController();
+			Controller profileAddController = ControllerFactory.getInstance().newController("ProfileAdd");
 			viewUrl = profileAddController.execute(req, resp);
 		} else if ("portfolio".equals(articleType)) {
-			PortfolioAddController portfolioAddController = new PortfolioAddController();
+			Controller portfolioAddController = ControllerFactory.getInstance().newController("PortfolioAdd");
 			viewUrl = portfolioAddController.execute(req, resp);
 		} else if ("project".equals(articleType)) {
-			ProjectAddController projectAddController = new ProjectAddController();
+			Controller projectAddController = ControllerFactory.getInstance().newController("ProjectAdd");
 			viewUrl = projectAddController.execute(req, resp);
 		}
 		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));

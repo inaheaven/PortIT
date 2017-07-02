@@ -24,7 +24,7 @@ public class MemberLoginController implements Controller {
 			HttpSession session = req.getSession();
 			session.setAttribute("loginId", member.getMem_id());
 			session.setAttribute("loginEmail", member.getMem_email());
-			return "rdr:/my?page=main";
+			return "rdr:/page?page=main";
 		} else {
 			return null;
 		}

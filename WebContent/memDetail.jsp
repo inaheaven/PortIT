@@ -101,15 +101,15 @@ Profile profile = (Profile) request.getAttribute("profile");
 					<div class="col-md-offset-2 col-md-8">
 						<div class="skillset">
 							<%
-								for (TagUse tagUse : profile.getProf_skillset()) {
+								for (String key : profile.getProf_skillset().keyset()) {
 							%>
 							<div class="skill clearfix">
 								<div class="col-xs-3 text-center">
-									<span class=""><%= tagUse.getTag_id() %></span>
+									<span class=""><%= key %></span>
 								</div>
 								<div class="col-xs-9">
 									<div class="progress">
-										<div class="progress-bar" style="width: <%= 100 * (tagUse.getProf_skill_level()/10) %>%;"></div>
+										<div class="progress-bar" style="width: <%= 100 * (profile.getProf_skillset().get(key)/10) %>%;"></div>
 									</div>
 								</div>
 							</div>

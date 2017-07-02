@@ -74,7 +74,7 @@ public class MemberDao {
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				member.setMem_id(rs.getInt("mem_id"))
-				.setMem_password(rs.getString("mem_password"))
+				.setMem_password(rs.getString("mem_pw"))
 				.setMem_email(rs.getString("mem_email"))
 				.setMem_regdate(rs.getDate("mem_regdate"));
 			}
@@ -101,7 +101,7 @@ public class MemberDao {
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				member.setMem_id(rs.getInt("mem_id"))
-				.setMem_password(rs.getString("mem_password"))
+				.setMem_password(rs.getString("mem_pw"))
 				.setMem_email(rs.getString("mem_email"))
 				.setMem_regdate(rs.getDate("mem_regdate"));
 			}
@@ -117,14 +117,14 @@ public class MemberDao {
 		Member member = new Member();
 		getConnection();
 		try {
-			sql = "SELECT * FROM member WHERE mem_email=? AND mem_password=?";
+			sql = "SELECT * FROM member WHERE mem_email=? AND mem_pw=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, mem_email);
 			stmt.setString(2, mem_password);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				member.setMem_id(rs.getInt("mem_id"))
-				.setMem_password(rs.getString("mem_password"))
+				.setMem_password(rs.getString("mem_pw"))
 				.setMem_email(rs.getString("mem_email"))
 				.setMem_regdate(rs.getDate("mem_regdate"));
 			}
@@ -175,7 +175,7 @@ public class MemberDao {
 		Member checkMem = new Member();
 		try {
 			conn = pool.getConnection();
-			sql = "SELECT * FROM MEMBER WHERE mem_email = ?";
+			sql = "SELECT * FROM MEMBER WHERE mem_email=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, member.getMem_email());
 			rs = stmt.executeQuery();
@@ -210,7 +210,7 @@ public class MemberDao {
 		int rows = 0;
 		getConnection();
 		try {
-			sql = "UPDATE member SET mem_email=?, mem_password=? WHERE mem_id=?";
+			sql = "UPDATE member SET mem_email=?, mem_pw=? WHERE mem_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, member.getMem_email());
 			stmt.setString(1, member.getMem_password());

@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import portit.controller.Controller;
+import portit.controller.ControllerFactory;
 import portit.controller.PortfolioEditController;
+import portit.util.FileUploadController;
 
 
 /**
@@ -51,14 +54,14 @@ public class EditServlet extends HttpServlet {
 		String viewUrl = "";
 		String articleType = req.getParameter("type");
 		if ("profile".equals(articleType)) {
-			/*Controller profileController = ControllerFactory.getInstance().createController("profile");
-			viewUrl = profileController.execute(req, resp);*/
+			Controller profileEditController = ControllerFactory.getInstance().newController("ProfileEdit");
+			viewUrl = profileEditController.execute(req, resp);
 		} else if ("portfolio".equals(articleType)) {
-			PortfolioEditController portfolioEditController = new PortfolioEditController();
+			Controller portfolioEditController = ControllerFactory.getInstance().newController("PortfolioEdit");
 			viewUrl = portfolioEditController.execute(req, resp);
 		} else if ("project".equals(articleType)) {
-			/*Controller projectController = ControllerFactory.getInstance().createController("project");
-			viewUrl = projectController.execute(req, resp);*/
+			Controller projectEditController = ControllerFactory.getInstance().newController("ProjectEdit");
+			viewUrl = projectEditController.execute(req, resp);
 		}
 		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		RequestDispatcher rd = null;

@@ -141,18 +141,18 @@ function fnSelectSnsInfo(snsName){
 				<div class="col-md-12 mt profreg">					
 					<div class="profregForm">
 						<h3 class="formTitle text-center">프로필 등록</h3>	
-						<form action="/post?type=profile" method="post" enctype="application/x-www-form-urlencoded" class="form-horizontal style-form">
+						<form action="/post?type=profile" method="post" enctype="multipart/form-data" class="form-horizontal style-form">
 							
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로필 사진</label>
 								<div class="col-md-9">
-									<input type="file" name="image[]" id="fileUpload" class="form-control">
+									<input type="file" name="image[]" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">배경 사진</label>
 								<div class="col-md-9">
-									<input type="file" name="image[]" id="fileUpload" class="form-control">
+									<input type="file" name="image[]" class="form-control">
 								</div>
 					
 							</div>
@@ -219,8 +219,8 @@ function fnSelectSnsInfo(snsName){
 							<div class="form-group">
 								<label class="col-md-3 control-label">Skill</label>
 								<div class="col-md-9">
-									<div class="col-md-3"><input class="form-control" id="skill" type="text" placeholder="기술명" value=">"></div>
-									<div class="col-md-7"><input class="form-control" id="score" type="text" placeholder="숫자 1~5까지 입력하세요" value=""></div>
+									<div class="col-md-3"><input class="form-control" name="skill_name" id="skill" type="text" placeholder="기술명" value=""></div>
+									<div class="col-md-7"><input class="form-control" name="skill_level" id="score" type="text" placeholder="숫자 1~5까지 입력하세요" value=""></div>
 									<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">추가</button></div>
 									<br><br>
 									<div id="skillList">

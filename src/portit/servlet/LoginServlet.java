@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 			}
 		} else {
 			out.println("script type=\"text/javascript\">window.alert(\"이메일 주소나 비밀번호가 틀립니다.\");</script>");
-			resp.sendRedirect("/login");
+			resp.sendRedirect("/page?page=main");
 		}		
 	}
 	

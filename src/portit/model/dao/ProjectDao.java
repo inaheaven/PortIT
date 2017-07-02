@@ -63,6 +63,11 @@ public class ProjectDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Project> selectListByMemId(int mem_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * 프로젝트 수정을 위한 해당 값 불러오기
@@ -1022,5 +1027,7 @@ public class ProjectDao {
 		}
 		return rsList;
 	}
+
+	
 
 }

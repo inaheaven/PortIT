@@ -5,12 +5,9 @@
 	<div class="container">
 		<div class="col-md-6">
 			<div class="intro">
-				<h3>안녕하세요! Port IT 입니다.</h3>
+				<h3>PortIT</h3>
 				<br>
-				<p>
-					사이트 소개 소개소개소개소개소개.<br /> 사이트 소개 소개소개소개소개소개.<br /> 사이트 소개
-					소개소개소개소개소개.<br /> 사이트 소개 소개소개소개소개소개.<br /> 사이트 소개 소개소개소개소개소개.<br />
-				</p>
+				<p>여러분의 포트폴리오를 만들어 공유해 보세요.</p>
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -49,9 +46,9 @@
 							<div class="form-group">
 								<label class="control-label">Password Confirm</label><br> 
 								<input type="password" name="userpwcf" id="userpwcf"
-									class="form-control" onchange="fnPasswordConfirm()">
+									class="form-control" onkeyup="fnPasswordConfirm()">
 							</div>
-							<div id="pwconfirm" class=""></div>						
+							<div id="pwconfirm"></div>						
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn signup"  data-toggle="modal" data-target="#signUpModal" onclick="fnSubmit()">Sign Up</button>

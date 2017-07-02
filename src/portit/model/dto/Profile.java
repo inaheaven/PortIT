@@ -2,6 +2,7 @@ package portit.model.dto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 사용자 프로필 DTO
@@ -26,12 +27,13 @@ public class Profile {
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
 	private List<Tag> prof_tags_field;
-	private List<TagUse> prof_skillset;
+	private Map<String, Integer> prof_skillset;
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
 	
 	public Profile() {
 		this.prof_img = "/assets/img/user-basic.png";
+		this.prof_background = "";
 	}
 
 	public int getProf_id() {
@@ -102,7 +104,7 @@ public class Profile {
 		return prof_tags_field;
 	}
 
-	public List<TagUse> getProf_skillset() {
+	public Map<String, Integer> getProf_skillset() {
 		return prof_skillset;
 	}
 
@@ -199,7 +201,7 @@ public class Profile {
 		return this;
 	}
 
-	public Profile setProf_skillset(List<TagUse> prof_skillset) {
+	public Profile setProf_skillset(Map<String, Integer> prof_skillset) {
 		this.prof_skillset = prof_skillset;
 		return this;
 	}

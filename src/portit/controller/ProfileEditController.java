@@ -16,11 +16,7 @@ import portit.model.dto.Media;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
 
-/**
- * 포트폴리오 작성 컨트롤러
- *
- */
-public class ProfileAddController implements Controller {
+public class ProfileEditController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -99,7 +95,7 @@ public class ProfileAddController implements Controller {
 		.setProf_tags_field(fieldTagList)
 		.setProf_skillset(prof_skillset);
 		// DAO의 추가 메서드 호출
-		profileDao.insert((int) req.getSession().getAttribute("loginId"), profile);
+		profileDao.updateByMemId((int) req.getSession().getAttribute("loginId"), profile);
 		
 		// 뷰 URL 반환
 		String viewUrl = "rdr:/profile?username="+formData.get("prof_nick");
@@ -119,4 +115,5 @@ public class ProfileAddController implements Controller {
 		}
 		return arr;
 	}
+
 }
