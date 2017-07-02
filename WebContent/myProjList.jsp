@@ -109,6 +109,7 @@ $(document).ready(
 						<button type="button" class="btn common"
 							onclick="location.href='/page?page=myProjRegister&mem_id=2'">프로젝트
 							등록하기</button>
+							<!-- mem_id 고치기 -->
 					</div>
 
 					<h3 class="formTitle text-center">내 프로젝트</h3>
@@ -289,11 +290,6 @@ $(document).ready(
 			<!-- /wrapper -->
 		</section>
 	</form>
-
-	<!--footer start-->
-	<jsp:include page="footer.jsp"></jsp:include>
-	<!--footer end-->
-
 	<!-- js placed at the end of the document so the pages load faster -->
 	<script src="assets/js/jquery.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>

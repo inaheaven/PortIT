@@ -173,6 +173,7 @@
 
 <%
 	String login_id=request.getParameter("mem_id");
+	String proj_id = request.getParameter("param");
 %>
 
 		<section id="main-content">
@@ -181,9 +182,12 @@
 					<!-- BASIC FORM ELELEMNTS -->
 					<div class="projregForm">
 
-						<h3 class="formTitle text-center">프로젝트 등록<%=login_id%></h3>
+						<h3 class="formTitle text-center">프로젝트 등록</h3>
 						<form class="form-horizontal style-form" method="post"
-							action="project_update_save">
+							action="myproj?cmd=list&save=update&mem_id=2&proj_id=<%=proj_id%>">
+							
+							<!-- mem_id값 알맞게 수정해야된다!! -->
+							
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 제목</label>
 								<div class="col-md-9">
@@ -317,7 +321,7 @@
 											required="true" id="final_result">
 									</c:forEach>
 									<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
-										<input type="text" class="form-control" name="final_result_id"
+										<input type="hidden" class="form-control" name="final_result_id"
 											value="${prof_list[0].prof_id_list[i]}" id="final_result_id">
 									</c:forEach>
 								</div>
@@ -385,15 +389,6 @@
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="col-md-3 control-label">이미지 및 동영상</label>
-								<div class="col-md-9">
-									<span class="col-sm-12 btn btn-default btn-file"><input
-										type="file"></span>
-								</div>
-
-							</div>
-							<div></div>
 							<div class="form-group text-center buttonDiv">
 								<button type="submit" class="btn common">수정하기</button>
 								&nbsp;&nbsp;&nbsp;
@@ -408,9 +403,6 @@
 			</section>
 			<!-- /wrapper -->
 		</section>
-		<!--footer start-->
-		<jsp:include page="footer.jsp"></jsp:include>
-		<!--footer end-->
 	</section>
 	<!-- js placed at the end of the document so the pages load faster -->
 	<script src="assets/js/jquery.js"></script>

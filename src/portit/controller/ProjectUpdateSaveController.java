@@ -22,7 +22,7 @@ public class ProjectUpdateSaveController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		
 				
-		System.out.println("Servlet Loaded");
+		System.out.println("업데이트저장Servlet Loaded");
 		resp.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		ProjectDao dao = new ProjectDao();
