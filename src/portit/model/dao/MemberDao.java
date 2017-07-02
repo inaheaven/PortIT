@@ -12,7 +12,6 @@ import portit.model.dto.Member;
 
 /**
  * 회원 관련 DAO
- * @author 
  *
  */
 public class MemberDao {

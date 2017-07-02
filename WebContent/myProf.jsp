@@ -141,18 +141,18 @@ function fnSelectSnsInfo(snsName){
 				<div class="col-md-12 mt profreg">					
 					<div class="profregForm">
 						<h3 class="formTitle text-center">프로필 등록</h3>	
-						<form action="/register?cmd=REGISTER" method="post" class="form-horizontal style-form">
+						<form action="/post?type=profile" method="post" enctype="application/x-www-form-urlencoded" class="form-horizontal style-form">
 							
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로필 사진</label>
 								<div class="col-md-9">
-									<input type="file" class="form-control">
+									<input type="file" name="image[]" id="fileUpload" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">배경 사진</label>
 								<div class="col-md-9">
-									<input type="file" class="form-control">
+									<input type="file" name="image[]" id="fileUpload" class="form-control">
 								</div>
 					
 							</div>
@@ -236,6 +236,8 @@ function fnSelectSnsInfo(snsName){
 							</div>
 							
 							<div class="form-group text-center buttonDiv">
+								<input type="hidden" name="mem_id" value="<%= session.getAttribute("loginId") %>" />
+								<input type="hidden" name="type" value="profile" />
 								<button type="submit" class="btn common" onclick="profRegister()" >등록하기</button>&nbsp;&nbsp;&nbsp;
 								<button type="button" class="btn cancel" onclick="profalter()">수정하기</button>
 

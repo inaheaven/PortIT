@@ -6,11 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import portit.controller.Controller;
-import portit.controller.ControllerFactory;
 import portit.controller.FileDeleteController;
 import portit.model.dto.Media;
-import portit.servlet.PostServlet;
 
 /**
  * 미디어 라이브러리 DAO
