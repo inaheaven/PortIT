@@ -53,14 +53,14 @@ public class PostServlet extends HttpServlet {
 		String viewUrl = "";
 		String articleType = req.getParameter("type");
 		if ("profile".equals(articleType)) {
-			/*Controller profileController = ControllerFactory.getInstance().createController("profile");
-			viewUrl = profileController.execute(req, resp);*/
+			ProfileAddController profileAddController = new ProfileAddController();
+			viewUrl = profileAddController.execute(req, resp);
 		} else if ("portfolio".equals(articleType)) {
 			PortfolioAddController portfolioAddController = new PortfolioAddController();
 			viewUrl = portfolioAddController.execute(req, resp);
 		} else if ("project".equals(articleType)) {
-			/*Controller projectController = ControllerFactory.getInstance().createController("project");
-			viewUrl = projectController.execute(req, resp);*/
+			ProjectAddController projectAddController = new ProjectAddController();
+			viewUrl = projectAddController.execute(req, resp);
 		}
 		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		RequestDispatcher rd = null;
