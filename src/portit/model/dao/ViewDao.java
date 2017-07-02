@@ -50,15 +50,12 @@ public class ViewDao {
 	}
 
 	/**
-	 * 사용된 태그명을 불러오는 메서드
+	 * 전체 멤버를 보여주는 메서드
 	 */
 	public List member_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
-				+ "from profile join tag_use "
-				+ "on tag_use.tag_use_type_id = profile.prof_id "
-				+ "join tag "
-				+ "on tag.tag_id = tag_use.tag_id"; 
+		String sql = "select profile.prof_img, profile.prof_name,  profile.prof_follower "
+				+ "from profile "; 
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -66,7 +63,7 @@ public class ViewDao {
 
 			while (rs.next()) {
 				Member member = new Member(); 
-				member.setTag_name(rs.getString("tag_name"));
+				//member.setTag_name(rs.getString("tag_name"));
 				member.setProf_img(rs.getString("prof_img"));
 				member.setProf_name(rs.getString("prof_name"));
 				member.setProf_follower(rs.getInt("prof_follower"));
@@ -91,12 +88,10 @@ public class ViewDao {
 	 */
 	public List portfolio_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-				+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
-				+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
-				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
-				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID";
+		String sql = "select distinct prof_name, pf_title, pf_like , ml_path "
+				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id , "
+				+ "media_library" ;
 		
 		try {
 
@@ -132,12 +127,15 @@ public class ViewDao {
 	 */
 	public List project_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title, project.proj_intro,"
-						+ " tag.tag_name, project.proj_to, trunc(project.proj_regenddate - sysdate) "
-						+ "from tag join tag_use "
-						+ "on tag.tag_id = tag_use.tag_id "
-						+ "join project "
-						+ "on tag_use.tag_use_type_id = project.proj_id";
+		String sql = "select distinct proj_title, tag.tag_name, prof_name, proj_intro, proj_to , ml_path, proj_regenddate, proj_regdate, "
+				+ "trunc(proj_regenddate -sysdate) as d_day "
+				+ "from member join proj_app on member.mem_id = proj_app.mem_id	"
+				+ "join project on project.proj_id = proj_app.proj_id "
+				+ "join profile on member.mem_id = profile.mem_id "
+				+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = project.proj_ID  "
+				+ "join tag_use  on tag_use_type_id = project.proj_id "
+				+ "join tag on tag.tag_id = tag_use.tag_id "
+				+ "where tag_use_type = 'project' ";
 				
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -147,10 +145,12 @@ public class ViewDao {
 				Project project = new Project(); 
 				project.setTag_name(rs.getString("tag_name"));
 				project.setProj_title(rs.getString("proj_title"));
+				project.setMl_path(rs.getString("ml_path"));
 				project.setProj_to(rs.getInt("proj_to"));
-				project.setProj_intro(rs.getString("proj_intro"));
-				
-				//project.setProj_regenddate(rs.getDate("proj_regenddate")); date형식 받는데 오류
+				project.setProj_intro(rs.getString("proj_intro"));				
+				project.setProf_name(rs.getString("prof_name"));				
+				project.setProj_regenddate(rs.getDate("proj_regenddate"));
+				project.setD_day(rs.getInt("d_day"));
 				
 				list.add(project);
 			}

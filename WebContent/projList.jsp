@@ -125,7 +125,7 @@
           						<table class="table text-center">
           							<tr><td>백엔드개발자</td></tr>
           							<tr><td><%=proj.getProj_to() %> 명</td></tr>
-          							<tr><td><%=proj.getProj_regdate()%> D-&nbsp;-&nbsp;5</td></tr>
+          							<tr><td>D-&nbsp;-&nbsp;<%=proj.getD_day() %></td></tr>
           							<tr><td></td></tr>
           						</table>
           					</span>
@@ -140,7 +140,7 @@
  				<!-- 페이지네이션 -->
  	<div align="center">		
  		<% if(nowBlock > 0){%>
- 			<a href="/page?page=projList?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
+ 			<a href="/projList?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
  		<% }%> 
  		:::
  		<%
@@ -148,13 +148,13 @@
  				if((nowBlock*pagePerBlock)+i == totalPage)
  					break;
  		%>
- 				<a href="/page?page=projList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+ 				<a href="/projList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
  		<%
  			}
  		%>
  		::: 
  		<% if(totalBlock > nowBlock+1){%>
- 			<a href="/page?page=projList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
+ 			<a href="/projList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
  		<% }%>
  	</div>	
  		

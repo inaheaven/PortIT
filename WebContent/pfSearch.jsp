@@ -81,7 +81,9 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="">#${port_list[i].tag_name}&nbsp;</a>
+											<a href="">#${port_list_tag[0].tag_name}&nbsp; </a>
+											<a href="">#${port_list_tag[1].tag_name}&nbsp; </a>
+											<a href="">#${port_list_tag[2].tag_name}&nbsp; </a>
 										</div>
 										<div class="pfTitle">
 											<a href="">${port_list[i].pf_title} </a>

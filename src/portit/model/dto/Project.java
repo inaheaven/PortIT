@@ -66,6 +66,7 @@ public class Project {
 >>>>>>> refs/remotes/origin/dev-0630myproj
 	private int proj_period;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private Date proj_regenddate;
 	/** 모집인원수 */
 	private int proj_numofperson;
@@ -92,10 +93,34 @@ public class Project {
 	private ArrayList<String> proj_tool;
 	private ArrayList<String> proj_field;
 	private ArrayList<Integer> proj_numofperson;
+=======
+	private Date proj_regenddate;
+	private String tag_name;
+	private String prof_name;
+	private String ml_path;
+	private int d_day;
+>>>>>>> refs/remotes/origin/dev-Insoo
 
+<<<<<<< HEAD
 
 	public ArrayList<String> getProj_env() {
 		return proj_env;
+=======
+	public String getMl_path() {
+		return ml_path;
+	}
+	public void setMl_path(String ml_path) {
+		this.ml_path = ml_path;
+	}
+	public int getD_day() {
+		return d_day;
+	}
+	public void setD_day(int d_day) {
+		this.d_day = d_day;
+	}
+	public String getProf_name() {
+		return prof_name;
+>>>>>>> refs/remotes/origin/dev-Insoo
 	}
 	public void setProj_env(ArrayList<String> proj_env2) {
 		this.proj_env = proj_env2;

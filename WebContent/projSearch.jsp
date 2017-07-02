@@ -80,7 +80,11 @@
 		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
 		          		
 		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
+		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list_tag[0].tag_name}&nbsp; </a>
+		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list_tag[1].tag_name}&nbsp; </a>
+		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list_tag[2].tag_name}&nbsp; </a>
+		          					
+		          					</div>         					
 	          					</span>
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">

@@ -76,7 +76,9 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list[i].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[2].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
 											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
@@ -106,7 +108,9 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list[i].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[2].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
 											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
@@ -156,7 +160,9 @@
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[0].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[1].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[2].tag_name}&nbsp;</a>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -177,7 +183,11 @@
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memTag">
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[0].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[1].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[2].tag_name}&nbsp;</a>
+			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -219,7 +229,9 @@
 		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
 		          		
 		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
+		          					<div class="pjTag">
+		          						#${proj_list[0].tag_name}&nbsp;#${proj_list[1].tag_name}&nbsp;#${proj_list[2].tag_name}&nbsp;</a>
+		          					</div>         					
 	          					</span>
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
@@ -245,7 +257,9 @@
 		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
 		          		
 		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
+		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">
+		          						#${proj_list[0].tag_name}&nbsp;#${proj_list[1].tag_name}&nbsp;#${proj_list[2].tag_name}&nbsp;</a>
+		          					</div>         					
 	          					</span>
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">

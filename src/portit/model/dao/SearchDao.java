@@ -52,32 +52,32 @@ public class SearchDao {
 	}
 
 	/**
-	 * 포트폴리오 검색결과  
+	 * 포트폴리오 검색결과  (태그 제외)
 	 */
 	public List searchAll_port(String keyword,boolean lineup) {
 		
 		String sql = "";
 		
 		if(lineup == true){
-			sql = "select distinct Pf_regdate, MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "from prof_pf join profile on prof_pf.PROF_ID = Profile.PROF_ID "
-					+ "join portfolio on prof_pf.PF_ID = portfolio.PF_ID  "
-					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
-					+ "join TAG_USE on TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-					+ "join tag on TAG_USE.TAG_ID = TAG.TAG_ID "
-					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%' "
-					+ "or tag.tag_name like '%"+keyword+"%' or portfolio.pf_title like '%"+keyword+"%' "
-					+ "order by Pf_regdate desc";
+			sql = "select distinct MEDIA_LIBRARY.ML_PATH, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
+					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
+					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
+					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
+					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
+					+ "and tag_use_type = 'portfolio' and  "
+					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+					+ "order by portfolio.PF_LIKE desc";
 		}
 		else{
-			sql = "select distinct Pf_regdate, MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-					+ "from prof_pf join profile on prof_pf.PROF_ID = Profile.PROF_ID "
-					+ "join portfolio on prof_pf.PF_ID = portfolio.PF_ID  "
-					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
-					+ "join TAG_USE on TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-					+ "join tag on TAG_USE.TAG_ID = TAG.TAG_ID "
-					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%' "
-					+ "or tag.tag_name like '%"+keyword+"%' or portfolio.pf_title like '%"+keyword+"%' "
+			sql = "select distinct MEDIA_LIBRARY.ML_PATH, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
+					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
+					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
+					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
+					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
+					+ "and tag_use_type = 'portfolio' and  "
+					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by portfolio.PF_LIKE desc";
 		}
 		
@@ -91,7 +91,7 @@ public class SearchDao {
 				Portfolio portfolio = new Portfolio(); 
 				
 				portfolio.setMl_path(rs.getString("ml_path"));
-				portfolio.setTag_name(rs.getString("tag_name"));
+				//portfolio.setTag_name(rs.getString("tag_name"));
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));
@@ -105,6 +105,65 @@ public class SearchDao {
 			err.printStackTrace();
 		}
 
+		finally {
+			freeConnection();
+		}
+		return list;
+	}
+	/**
+	 *  포트폴리오 태그 조회
+	 */
+	public List searchAll_port_tag(String keyword,boolean lineup) {
+		
+		String sql = "";
+		
+		if(lineup == true){
+			sql = "select distinct ML_PATH, tag.tag_name, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
+					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
+					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
+					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
+					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
+					+ "and tag_use_type = 'portfolio' and  "
+					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+					+ "order by Pf_regdate desc";
+		}
+		else{
+			sql = "select distinct ML_PATH, tag.tag_name, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+					+ "FROM media_library, tag, Profile, portfolio, prof_pf, tag_use "
+					+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
+					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID  "
+					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID  "
+					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID  "
+					+ "and tag_use_type = 'portfolio' and  "
+					+ " (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+					+ "order by portfolio.PF_LIKE desc";
+		}
+		
+		ArrayList list = new ArrayList();
+		try {
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Portfolio portfolio = new Portfolio(); 
+				
+				portfolio.setMl_path(rs.getString("ml_path"));
+				portfolio.setTag_name(rs.getString("tag_name"));
+				portfolio.setPf_title(rs.getString("pf_title"));
+				portfolio.setPf_like(rs.getInt("pf_like"));
+				portfolio.setProf_name(rs.getString("prof_name"));
+				
+				list.add(portfolio);
+			}
+		}
+		
+		catch (Exception err) {
+			System.out.println("searchAll_port_tag() 에서 오류");
+			err.printStackTrace();
+		}
+		
 		finally {
 			freeConnection();
 		}
@@ -200,29 +259,27 @@ public class SearchDao {
 	}
 	
 	/**
-	 * 멤버 검색 결과
+	 * 멤버 검색 결과(태그 제외)
 	 */
 	public List searchAll_member(String keyword,boolean lineup) {
 		
 		String sql ="";
 		if(lineup == true){
-			sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower, prof_regdate "
-					+ "from profile join tag_use "
+			sql = "select distinct prof_img, prof_name,  prof_follower, prof_regdate  "
+					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
-					+ "join tag "
-					+ "on tag.tag_id = tag_use.tag_id "
-					+ "where tag.tag_name like '%"+keyword+"%' or profile.prof_name like '%"+keyword+"%' "
-					+ "or UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%' "
+					+ "join tag  on tag.tag_id = tag_use.tag_id  "
+					+ "where (tag_use_type = 'developer') and "
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
 					+ "order by prof_regdate desc";
 		}	
 		else{
-			sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
-					+ "from profile join tag_use "
+			sql = "select distinct prof_img, prof_name,  prof_follower, prof_regdate  "
+					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
-					+ "join tag "
-					+ "on tag.tag_id = tag_use.tag_id "
-					+ "where tag.tag_name like '%"+keyword+"%' or profile.prof_name like '%"+keyword+"%' "
-					+ "or UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%' "
+					+ "join tag  on tag.tag_id = tag_use.tag_id  "
+					+ "where (tag_use_type = 'developer') and "
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
 					+ "order by profile.prof_follower desc";
 		}
 		ArrayList list = new ArrayList();
@@ -233,7 +290,7 @@ public class SearchDao {
 
 			while (rs.next()) {
 				Member member = new Member(); 
-				member.setTag_name(rs.getString("tag_name"));
+				//member.setTag_name(rs.getString("tag_name"));
 				member.setProf_img(rs.getString("prof_img"));
 				member.setProf_name(rs.getString("prof_name"));
 				member.setProf_follower(rs.getInt("prof_follower"));
@@ -253,32 +310,144 @@ public class SearchDao {
 		return list;
 	}
 	/**
-	 * 프로젝트 검색 결과
+	 * 멤버 태그 검색 결과
+	 */
+	public List searchAll_member_tag(String keyword,boolean lineup) {
+		
+		String sql ="";
+		if(lineup == true){
+			sql = "select prof_img, prof_name, tag.tag_name, prof_follower, prof_regdate  "
+					+ "from profile join tag_use  "
+					+ "on tag_use.tag_use_type_id = profile.prof_id "
+					+ "join tag  on tag.tag_id = tag_use.tag_id  "
+					+ "where (tag_use_type = 'developer') and "
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
+					+ "order by prof_regdate desc";
+		}	
+		else{
+			sql = "select prof_img, prof_name, tag.tag_name, prof_follower, prof_regdate  "
+					+ "from profile join tag_use  "
+					+ "on tag_use.tag_use_type_id = profile.prof_id "
+					+ "join tag  on tag.tag_id = tag_use.tag_id  "
+					+ "where (tag_use_type = 'developer') and "
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
+					+ "order by profile.prof_follower desc";
+		}
+		ArrayList list = new ArrayList();
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Member member = new Member(); 
+				member.setTag_name(rs.getString("tag_name"));
+				member.setProf_img(rs.getString("prof_img"));
+				member.setProf_name(rs.getString("prof_name"));
+				member.setProf_follower(rs.getInt("prof_follower"));
+				
+				list.add(member);
+			}
+		}
+		
+		catch (Exception err) {
+			System.out.println("member_info() 에서 오류");
+			err.printStackTrace();
+		}
+		
+		finally {
+			freeConnection();
+		}
+		return list;
+	}
+	/**
+	 * 프로젝트 검색 결과(태그 제외)
 	 */
 	public List searchAll_proj(String keyword,boolean lineup) {
 		String sql = "";
 		if(lineup == true){
-			sql = "select * "
-					+ "from member join mem_proj on member.mem_id = mem_proj.mem_id "
-					+ "join project on project.proj_id = mem_proj.proj_id "
-					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
+			sql = "select distinct proj_title, prof_name, proj_intro, proj_to , ml_path, proj_regenddate "
+					+ " FROM member join proj_app on member.mem_id = proj_app.mem_id	"
+					+ "join project on project.proj_id = proj_app.proj_id "
+					+ "join profile on member.mem_id = profile.mem_id "
+					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = project.proj_ID  "
+					+ "join tag_use  on tag_use_type_id = project.proj_id  "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
-					+ "join profile on profile.mem_id = member.mem_id "
-					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%' "
-					+ "order by proj_regdate desc";
+					+ "where tag_use_type = 'project' and "
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or (UPPER(project.proj_title ) like '%"+keyword+"%') ";
 		}
 		else{
-			sql = "select * "
-					+ "from member join mem_proj on member.mem_id = mem_proj.mem_id "
-					+ "join project on project.proj_id = mem_proj.proj_id "
-					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
+			sql =  "select distinct proj_title, prof_name, proj_intro, proj_to , ml_path, proj_regenddate "
+					+ " FROM member join proj_app on member.mem_id = proj_app.mem_id	"
+					+ "join project on project.proj_id = proj_app.proj_id "
+					+ "join profile on member.mem_id = profile.mem_id "
+					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = project.proj_ID  "
+					+ "join tag_use  on tag_use_type_id = project.proj_id  "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
-					+ "join profile on profile.mem_id = member.mem_id "
-					+ "where UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%' "
-					+ "order by (proj_regenddate - sysdate) desc";
+					+ "where tag_use_type = 'project' and "
+					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or (UPPER(project.proj_title ) like '%"+keyword+"%') ";
+
 		}
 		ArrayList list = new ArrayList();
 				
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Project project = new Project(); 
+				//project.setTag_name(rs.getString("tag_name"));
+				project.setProj_title(rs.getString("proj_title"));
+				project.setProj_intro(rs.getString("proj_intro"));
+				project.setProj_to(rs.getInt("proj_to"));
+				project.setProf_name(rs.getString("prof_name"));
+				//project.setProj_regdate(rs.getDate("proj_regdate"));
+				//project.setProj_regenddate(rs.getDate("proj_regenddate")); 
+				project.setMl_path(rs.getString("ml_path"));
+				
+				list.add(project);
+			}
+		}
+		
+		catch (Exception err) {
+			System.out.println("proj_load() 에서 오류");
+			err.printStackTrace();
+		}
+		
+		finally {
+			freeConnection();
+		}
+		
+		return list;
+		}
+	
+	/**
+	 * 프로젝트 검색 결과(태그 포함)
+	 */
+	public List searchAll_proj_tag(String keyword,boolean lineup) {
+		String sql = "";
+		if(lineup == true){
+			sql = "select distinct proj_title, prof_name, proj_intro, proj_to , ml_path , tag.tag_name, proj_regenddate "
+					+ "from member join proj_app on member.mem_id = proj_app.mem_id	"
+					+ "join project on project.proj_id = proj_app.proj_id "
+					+ "join profile on member.mem_id = profile.mem_id "
+					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = project.proj_ID  "
+					+ "join tag_use  on tag_use_type_id = project.proj_id  "
+					+ "join tag on tag.tag_id = tag_use.tag_id "
+					+ "where tag_use_type = 'project' and (tag.tag_name like '%"+keyword+"%' or project.proj_title like '%"+keyword+"%') ";
+		}
+		else{
+			sql = "select distinct proj_title, prof_name, proj_intro, proj_to , ml_path , tag.tag_name, proj_regenddate "
+					+ "from member join proj_app on member.mem_id = proj_app.mem_id	"
+					+ "join project on project.proj_id = proj_app.proj_id "
+					+ "join profile on member.mem_id = profile.mem_id "
+					+ "join MEDIA_LIBRARY on MEDIA_LIBRARY.ML_TYPE_ID = project.proj_ID  "
+					+ "join tag_use  on tag_use_type_id = project.proj_id  "
+					+ "join tag on tag.tag_id = tag_use.tag_id "
+					+ "where tag_use_type = 'project' and (tag.tag_name like '%"+keyword+"%' or project.proj_title like '%"+keyword+"%') ";
+		}
+		ArrayList list = new ArrayList();
+		
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -289,8 +458,10 @@ public class SearchDao {
 				project.setProj_title(rs.getString("proj_title"));
 				project.setProj_intro(rs.getString("proj_intro"));
 				project.setProj_to(rs.getInt("proj_to"));
-				project.setProj_regdate(rs.getDate("proj_regdate"));
-				project.setProj_regenddate(rs.getDate("proj_regenddate")); 
+				//project.setProj_regdate(rs.getDate("proj_regdate"));
+				//project.setProj_regenddate(rs.getDate("proj_regenddate")); 
+				project.setProf_name(rs.getString("prof_name"));
+				project.setMl_path(rs.getString("ml_path"));
 				
 				list.add(project);
 			}
