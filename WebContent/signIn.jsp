@@ -5,10 +5,14 @@
 	<div class="container">
 		<div class="col-md-6">
 			<div class="intro">
-				<h3>PortIT</h3>
-				<br>
-				<p>여러분의 포트폴리오를 만들어 공유해 보세요.</p>
-			</div>
+					<h1 align=center>CREATE AND SHARE <br>YOUR IT PORTFOLIO</h1>
+					<br><br>
+					<p align=center>
+						PORTIT는 크리에이티브 콘텐츠 공유 플랫폼입니다. </br>
+						여러분이 직접 제작한 IT 콘텐츠를 PORTIT를 통해 공유하고, </br>
+						새로운 프로젝트를 시작하세요 ! 
+					</p>
+				</div>
 		</div>
 		<div class="col-md-6">
 			<form class="login" method="post" action="/login">
