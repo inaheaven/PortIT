@@ -55,7 +55,7 @@ public class ViewDao {
 	public List member_info() {
 		ArrayList list = new ArrayList();
 		String sql = "select profile.prof_img, profile.prof_name,  profile.prof_follower "
-				+ "from profile "; 
+				+ " FROM profile "; 
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class ViewDao {
 	 */
 	public List portfolio_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct prof_name, pf_title, pf_like , ml_path "
+		String sql = "select distinct prof_name, pf_title, pf_like ,  ml_path "
 				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
 				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id , "
 				+ "media_library" ;
@@ -101,7 +101,7 @@ public class ViewDao {
 			while (rs.next()) {
 				Portfolio portfolio = new Portfolio();
 				portfolio.setMl_path(rs.getString("ml_path"));
-				portfolio.setTag_name(rs.getString("tag_name"));
+				//portfolio.setTag_name(rs.getString("tag_name"));
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));

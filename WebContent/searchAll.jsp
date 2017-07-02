@@ -76,9 +76,7 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[0].tag_name}&nbsp;</a>
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[1].tag_name}&nbsp;</a>
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[2].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[i].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
 											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
@@ -108,9 +106,7 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[0].tag_name}&nbsp;</a>
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[1].tag_name}&nbsp;</a>
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[2].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[i].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
 											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
@@ -160,9 +156,7 @@
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[0].tag_name}&nbsp;</a>
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[1].tag_name}&nbsp;</a>
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[2].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[i].tag_name}&nbsp;</a>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -184,9 +178,7 @@
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
 			         					<div class="memTag">
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[0].tag_name}&nbsp;</a>
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[1].tag_name}&nbsp;</a>
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[2].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[i].tag_name}&nbsp;</a>
 			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
@@ -222,27 +214,31 @@
 			<c:if test="${proj_list.size() != 0 && proj_list.size()>0 && proj_list.size()>3}">
 				<c:forEach begin="0" end="3" var="i" >	
 					<!-- 프로젝트 -->
-						<div class="col-md-12 mb">
-	          				<div class="project-list">
-		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
-		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
-		          		
-		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag">
-		          						#${proj_list[0].tag_name}&nbsp;#${proj_list[1].tag_name}&nbsp;#${proj_list[2].tag_name}&nbsp;</a>
-		          					</div>         					
-	          					</span>
+					<div class="col-md-12 mb">
+		          			<div class="project-list">
+								<div class="col-md-9 mb" >
+			          				<span class="pjInfoText">
+			          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
+			          					<div class="pjmemName"><span class="fa fa-user">${proj_list[i].prof_name }</span>&nbsp;&nbsp;<a href=""></a></div>
+			          							          		
+			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
+			          					<div class="pjTag">
+			          						<a href="javascript:tag_name('${proj_list_tag[i].tag_name}')"># ${proj_list_tag[i].tag_name}&nbsp;</a>
+			          					</div>         					
+	          						</span>
+	          					</div>
+	          				<div class = "col-md-3">
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
 	          							<tr><td>백엔드개발자</td></tr>
 	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
-	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
+	          							<tr><td>마감일까지 D&nbsp;-&nbsp;${proj_list[i].d_day}</td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
 	          					</span>
-	          				</div>          			
-						</div>
+	          				</div>	          				
+	          			</div>          			
+					</div>
 						<br><br>
 				</c:forEach>
 			</c:if>	
@@ -251,26 +247,30 @@
 				<c:forEach begin="0" end="${proj_list.size()-1 }" var="i" >	
 					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
-	          				<div class="project-list">
-		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
-		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
-		          		
-		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">
-		          						#${proj_list[0].tag_name}&nbsp;#${proj_list[1].tag_name}&nbsp;#${proj_list[2].tag_name}&nbsp;</a>
-		          					</div>         					
-	          					</span>
+		          			<div class="project-list">
+								<div class="col-md-9 mb" >
+			          				<span class="pjInfoText">
+			          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
+			          					<div class="pjmemName"><span class="fa fa-user">${proj_list[i].prof_name }</span>&nbsp;&nbsp;<a href=""></a></div>
+			          							          		
+			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
+			          					<div class="pjTag">
+			          						<a href="javascript:tag_name('${proj_list_tag[i].tag_name}')"># ${proj_list_tag[i].tag_name}&nbsp;</a>
+			          					</div>         					
+	          						</span>
+	          					</div>
+	          				<div class = "col-md-3">
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
 	          							<tr><td>백엔드개발자</td></tr>
 	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
-	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
+	          							<tr><td>마감일까지 D&nbsp;-&nbsp;${proj_list[i].d_day}</td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
 	          					</span>
-	          				</div>          			
-						</div>
+	          				</div>	          				
+	          			</div>          			
+					</div>
 						<br><br>
 				</c:forEach>
 			</c:if>	

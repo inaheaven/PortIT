@@ -4,7 +4,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="header.jsp"></jsp:include>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+
+<script src="assets/js/chart-master/Chart.js"></script>
 <link href="assets/css/search.css" rel="stylesheet">
 <jsp:useBean id="portfolio_viewDao"	class="portit.model.dao.ViewDao"></jsp:useBean>
 
@@ -121,12 +132,13 @@
  										<div class="pfInfo">
  											<div class="simple-content">
  												<div class="pfTag">
- 													<a href=""># <%=port.getTag_name()%>&nbsp;</a></div>
+ 													<a href="">$<%=port.getTag_name() %>&nbsp;</a></div>
  						
  											<div class="pfTitle">
  													<a href=""><%=port.getPf_title()%></a>
  												</div>
  												<div class="pfBottom">
+ 													
  													<span class="pfmemName"><a href=""><%=port.getProf_name()%></a></span> 
  													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like()%></span>
  												</div>
@@ -166,7 +178,7 @@
  
 	</section>
 
-
+	<jsp:include page="footer.jsp"></jsp:include>
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
 
