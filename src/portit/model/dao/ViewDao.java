@@ -54,7 +54,7 @@ public class ViewDao {
 	 */
 	public List member_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
+		String sql = "select profile.prof_img, profile.prof_name,  profile.prof_follower "
 				+ "from profile "; 
 		
 		try {
