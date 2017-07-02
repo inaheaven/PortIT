@@ -125,7 +125,7 @@
           						<table class="table text-center">
           							<tr><td>백엔드개발자</td></tr>
           							<tr><td><%=proj.getProj_to() %> 명</td></tr>
-          							<tr><td><%=proj.getProj_regdate()%> D-&nbsp;-&nbsp;5</td></tr>
+          							<tr><td>D-&nbsp;-&nbsp;<%=proj.getD_day() %></td></tr>
           							<tr><td></td></tr>
           						</table>
           					</span>

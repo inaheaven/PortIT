@@ -80,7 +80,7 @@
 				<!-- END - 조건 검색 box -->
 <%	
  	List list = portfolio_viewDao.portfolio_info();
- 
+ 	
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
  		int numPerPage = 16;			//한 페이지당 보여질 글의 갯수
