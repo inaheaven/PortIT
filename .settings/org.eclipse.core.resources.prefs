@@ -1,4 +1,9 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
+=======
 encoding//WebContent/myPfRegister.jsp=UTF-8
 encoding//WebContent/myProf.jsp=UTF-8
+encoding//src/portit/model/dao/BookmarkDao.java=UTF-8
+>>>>>>> refs/remotes/origin/dev-hyang2
 encoding/<project>=UTF-8
+encoding/WebContent=UTF-8

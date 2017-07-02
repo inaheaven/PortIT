@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
-	<display-name>JSTLApp</display-name>
+	<display-name>PortIt</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -12,7 +12,52 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	<!--<servlet> <servlet-name>test</servlet-name> <servlet-class>portit.controller.TestServlet</servlet-class> 
-		</servlet> <servlet-mapping> <servlet-name>test</servlet-name> <url-pattern>/test</url-pattern> 
-		</servlet-mapping> -->
+	
+	<servlet>
+		<servlet-name>mypage_proj_reg</servlet-name>
+		<servlet-class>portit.controller.ProjectController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mypage_proj_reg</servlet-name>
+		<url-pattern>/mypage_proj_reg</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>coworker_search</servlet-name>
+		<servlet-class>portit.controller.CoworkerSearchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>coworker_search</servlet-name>
+		<url-pattern>/coworker_search</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>project_update</servlet-name>
+		<servlet-class>portit.controller.ProjectUpdateController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>project_update</servlet-name>
+		<url-pattern>/project_update</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>project_delete</servlet-name>
+		<servlet-class>portit.controller.ProjectDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>project_delete</servlet-name>
+		<url-pattern>/project_delete</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>project_update_save</servlet-name>
+		<servlet-class>portit.controller.ProjectUpdateSaveController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>project_update_save</servlet-name>
+		<url-pattern>/project_update_save</url-pattern>
+	</servlet-mapping>
+
 </web-app>

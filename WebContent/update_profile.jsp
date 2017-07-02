@@ -1,6 +1,6 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%
-request.setCharacterEncoding("euc-kr");
+request.setCharacterEncoding("utf-8");
 %>
 <jsp:useBean id="dao" class=portit.model.dao.ProfileDao"></jsp:useBean>
 <jsp:useBean id="dto" class="portit.model.dto.Profile"></jsp:useBean>

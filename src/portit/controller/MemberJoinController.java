@@ -1,8 +1,10 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,34 +19,30 @@ import portit.model.dto.Member;
 public class MemberJoinController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		// GET 요청일 경우 Front Controller에 가입 페이지 제공
-		// (주소로 접속, 링크 클릭)
-		req.setAttribute("viewUrl", "");
+		doPost(req, resp);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		// POST 요청일 경우 가입 처리
-		// (폼 데이터 전송)
-		try {
-			// ServletContext에서 요청 정보 꺼내오기
-			ServletContext sc = this.getServletContext();
-			MemberDao memberDao = (MemberDao) sc.getAttribute("member");
-			Member member = (Member) req.getAttribute("member");
-			// DAO의 메서드 호출
-			// 같은 회원 번호를 가진 회원이 있는지 검사
-			Member existingMember = memberDao.findExistingMember(member.getMem_id(), member.getMem_email());
-			if (member.getMem_id() != existingMember.getMem_id()) {
-				// 같은 회원 번호를 가진 회원이 있다면 회원 번호를 재설정
-				member.resetMem_id();
-			}
-			// 가입 메서드 호출
+		String userpw = req.getParameter("userpw");
+		String userpwcf = req.getParameter("userpwcf");
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
+		Member member = new Member();
+		member.setMem_email((String)req.getParameter("userid"));
+		member.setMem_password((String)req.getParameter("userpw"));
+		
+		MemberDao memberDao = new MemberDao();
+		Member checkMem = memberDao.search(member);
+		
+		if(checkMem.getMem_id() == 0) { // 등록된 아이디가 없을 때 - 회원가입 가능
 			memberDao.insert(member);
+			out.println("<script>alert('가입되었습니다! 로그인을 해주세요.'); location.href='/index.jsp';</script>");	
+		}
+		else { 
+			out.println("<script>alert('이메일 아이디가 이미 존재합니다.'); location.href='/index.jsp';</script>");			
 			
-			// 가입처리 후 이동할 페이지 지정
-			req.setAttribute("viewURL", "");
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
-
 }

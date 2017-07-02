@@ -15,7 +15,14 @@ public class Timeline {
 	private String prof_name;
 	private String tag_name;
 	private String ml_path;
+	private int mem_id;
 	
+	public int getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(int mem_id) {
+		this.mem_id = mem_id;
+	}
 	public String getProf_name() {
 		return prof_name;
 	}
@@ -88,5 +95,4 @@ public class Timeline {
 	public void setPf_repository(String pf_repository) {
 		this.pf_repository = pf_repository;
 	}
-	
 }

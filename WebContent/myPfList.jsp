@@ -3,9 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 	<%--sidenavbar start--%>
-	<jsp:include page="my.jsp"></jsp:include>
+	<jsp:include page="my.jsp">
+		<jsp:param name="active" value="myPfList" />
+	</jsp:include>
 	<%--sidenavbar end--%>
-
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 col-sm-12 col-xs-12 mt pflist">

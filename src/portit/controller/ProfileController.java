@@ -1,8 +1,8 @@
 package portit.controller;
 
+import java.io.DataOutput;
 import java.io.IOException;
 
-import javax.jws.WebService;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,30 +10,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import portit.model.dao.ProfileDao;
 import portit.model.dto.Profile;
-
-@WebServlet(urlPatterns="/register")
+@WebServlet("/register")
 public class ProfileController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		System.out.println("test");
 		doPost(req, resp);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		System.out.println("test");
 		resp.setContentType("text/html; charset=UTF-8");
 		      
 		String cmd = req.getParameter("cmd");
 		String url ="";
-		//String mem_id = req.getSession().getAttribute("mem_id").toString();
+		
+		int mem_id = (int) req.getSession().getAttribute("mem_id");
+		if(cmd!=null && cmd.equals("REGISTER")){
+			
+		Profile dto = new Profile();
+		String prof_name = req.getParameter("prof_name");
+		String prof_nick = req.getParameter("prof_nick");
+		String prof_intro = req.getParameter("prof_intro");
+		dto.setProf_name(prof_name);
+		dto.setProf_nick(prof_nick);
+		dto.setProf_intro(prof_intro);
+	
+		ProfileDao dao = new ProfileDao();
+		Profile resultDto = dao.addprofile(dto, mem_id);
+		req.setAttribute("profile", resultDto);
+		
 		/*
-		 * dto 에 변수 넣기
-		 * dao로 insert 처리 Dto dto = dao.addprofile(dto);
-		 * dto를 request 에 속성으로 지정 request.setAttribute("dto", dto)
+		 * dto �뿉 蹂��닔 �꽔湲�
+		 * dao濡� insert 泥섎━ Dto dto = dao.addprofile(dto);
+		 * dto瑜� request �뿉 �냽�꽦�쑝濡� 吏��젙 request.setAttribute("dto", dto)
 		 * 
 		 * */
 		
-		//화면에서
-		/* 제일 위에
+		//�솕硫댁뿉�꽌
+		/* �젣�씪 �쐞�뿉
 		 * <% 
 		 *   Dto dto = request.getAttribute("dto");
 		 * %>
@@ -47,9 +64,21 @@ public class ProfileController extends HttpServlet {
 		RequestDispatcher view = req.getRequestDispatcher(url);
 		view.forward(req, resp);
 		
+	}else if(cmd!=null && cmd.equals("UPDATE")){
+		Profile dto = new Profile();
+		String prof_name = req.getParameter("Prof_name");
+		String prof_nick = req.getParameter("Prof_nick");
+		String prof_intro = req.getParameter("Prof_intro");
+		dto.setProf_name(prof_name);
+		dto.setProf_nick(prof_nick);
+		dto.setProf_intro(prof_intro);
+	
+		ProfileDao dao = new ProfileDao();
+		dao.updateProfile(dto);
+		System.out.println("updatetest");
 	}
 
 	/*public Profile profile(HttpServletRequest req){
 		String prof_nick = req.getParameter("prof_nick");*/
 	}
-
+}

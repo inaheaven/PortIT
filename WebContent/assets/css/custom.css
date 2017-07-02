@@ -30,6 +30,18 @@
 	font-size: 20px;
 }
 
+.hasAlarm {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    z-index: 100;
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+}
+
+
 .mypage > a {
 	margin-top: -10px !important;
 }
@@ -43,6 +55,7 @@
 .mypage:active img {
 	border: 2px solid #E69138;
 }
+
 
 /**************************** Sign In Page *****************************/
 
@@ -473,3 +486,30 @@ button.common:focus {
 	background-color: #E69138;
 	color: #fff;
 }
+
+
+
+/******************icon addon ********************/
+
+
+
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 0px;
+  pointer-events: none;
+  top: 10px;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  25px;     
+}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  50px; }
+.right-addon input { padding-right: 30px; }

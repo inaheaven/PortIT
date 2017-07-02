@@ -7,6 +7,8 @@
  *********************************************************************************************************************************************************** -->
 <!--sidebar start-->
 <aside>
+
+
 <%		
 			//String pageName = (String)session.getAttribute("pageName");
 			String pageName = (String)request.getAttribute("pageName");			
@@ -30,12 +32,17 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myProjList" id="myProjList">
+				<a href="/myproj?cmd=list&mem_id=2" id="myProjList"> 
+				
+				
+				<!-- 로그인 아이디 값을 매개 변수로 줘야함 -->
+				
+				
 				    <span>My Project</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myBookmark" id="myBookmark">
+				<a href="/serial?cmd=MYBOOKMARK" id="myBookmark">
 				    <span>Bookmarks</span>
 				</a>
 			</li>                  
@@ -45,23 +52,23 @@
 				</a>
 			</li>                  
 			<li class="">
-				<a href="/page?page=myNotification"  id="myNotification">
+				<a href="/page?page=myNotification&sort=all"  id="myNotification">
 				    <span>Notification</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myMsgList" id="myMsgList">
+				<a href="/msg?cmd=list" id="myMsgList">
 				    <span>Message</span>
 				</a>
 			</li>
 			<hr class="line"/>
 			<li class="">
-				<a href="/page?page=myAccount" id="myAccount">
+				<a href="/account?cmd=alter" id="myAccount">
 				    <span>My Account</span>
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myDeleteAccount" id="myDeleteAccount">
+				<a href="/account?cmd=delete" id="myDeleteAccount">
 				    <span>Delete Account</span>
 				</a>
 			</li>

@@ -37,3 +37,19 @@ td.sort, td.date, td.delete {
 td.content {
 	padding-left: 50px !important;
 }
+
+/** 안읽음 표시 (기본) **/
+td.sort {
+	color: #E69138;
+}
+td.content a{
+	font-weight: bold;
+	color: #797979;
+}
+td.content:hover a,
+td.content:focus a{
+	color: #E69138;
+}
+
+
+

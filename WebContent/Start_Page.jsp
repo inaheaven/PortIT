@@ -1,4 +1,4 @@
-<%@ page  contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -37,24 +37,19 @@
 
 
 
-<!-- JSP:useBean -->
-<jsp:useBean id="dao" class="portit.model.dao.MassageDao"/>
-
-
 <%
-//·Î±×ÀÎ : ¸ŞÀÏ
-//Session¿¡ ÀúÀåµÇ´Â°Í : mem_ID (DB¿¡¼­ Á¶È¸ÇØ¾ßÇÔ.)
-session.setAttribute("longin_id","2");
+//ë¡œê·¸ì¸ : ë©”ì¼
+//Sessionì— ì €ì¥ë˜ëŠ”ê²ƒ : mem_ID (DBì—ì„œ ì¡°íšŒí•´ì•¼í•¨.)
+session.setAttribute("longin_id","3");
 %>
 
 <script>
 $(document).ready(function(){
-	
+	s
 			 $("#push").click(function(){
-					alert("¹öÆ°´­¸²");
+					alert("ë²„íŠ¼ëˆŒë¦¼");
 				});
 		});
-
 </script>
 
 
@@ -85,7 +80,7 @@ $(document).ready(function(){
 						<form class="form-inline top-menu-search" method="post" action="">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
-									size="20" placeholder="ÅëÇÕ °Ë»ö" /> <span class="input-group-btn">
+									size="20" placeholder="í†µí•© ê²€ìƒ‰" /> <span class="input-group-btn">
 									<button type="submit" class="btn btn-default round-form">
 										<span class="glyphicon glyphicon-search"></span>
 									</button>
@@ -102,11 +97,11 @@ $(document).ready(function(){
 							<li>
 								<p class="yellow">Notification</p>
 							</li>
-							<li><a href=""> <span>±¸ºĞ</span>&nbsp;/&nbsp; <span
-									class="time">Just now</span> <span class="message">[´©±¸´©±¸]´ÔÀÌ
-										³» Æ÷Æ®Æ÷¸®¿À¸¦ ÁÁ¾ÆÇÕ´Ï´Ù.</span>
+							<li><a href=""> <span>êµ¬ë¶„</span>&nbsp;/&nbsp; <span
+									class="time">Just now</span> <span class="message">[ëˆ„êµ¬ëˆ„êµ¬]ë‹˜ì´
+										ë‚´ í¬íŠ¸í¬ë¦¬ì˜¤ë¥¼ ì¢‹ì•„í•©ë‹ˆë‹¤.</span>
 							</a></li>
-							<li><a href="">´õº¸±â</a></li>
+							<li><a href="">ë”ë³´ê¸°</a></li>
 						</ul></li>
 					<li id="header_inbox_bar" class="dropdown mypage"><a
 						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
@@ -116,12 +111,12 @@ $(document).ready(function(){
 						<ul class="dropdown-menu extended inbox">
 							<div class="notify-arrow notify-arrow-yellow"></div>
 							<li>
-								<p class="yellow">Á¶º´±Ô ´Ô</p>
+								<p class="yellow">ì¡°ë³‘ê·œ ë‹˜</p>
 							</li>
-							<li><a href="">³» ÇÁ·ÎÇÊ</a></li>
-							<li><a href="">ÆÈ·ÎÀ×ÇÑ ¸â¹ö</a> <a href="">ºÏ¸¶Å©ÇÑ Æ÷Æ®Æú¸®¿À</a></li>
-							<li><a href="">°³ÀÎÁ¤º¸ ¼³Á¤</a></li>
-							<li><a class="logout" href="login.html">·Î±×¾Æ¿ô</a></li>
+							<li><a href="">ë‚´ í”„ë¡œí•„</a></li>
+							<li><a href="">íŒ”ë¡œì‰í•œ ë©¤ë²„</a> <a href="">ë¶ë§ˆí¬í•œ í¬íŠ¸í´ë¦¬ì˜¤</a></li>
+							<li><a href="">ê°œì¸ì •ë³´ ì„¤ì •</a></li>
+							<li><a class="logout" href="login.html">ë¡œê·¸ì•„ì›ƒ</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -141,7 +136,7 @@ $(document).ready(function(){
 							<a href="profile.html"><img src="assets/img/ui-sam.jpg"
 								class="img-circle" width="60"></a>
 						</p>
-						<h5 class="centered">Á¶º´±Ô ´Ô</h5>
+						<h5 class="centered">ì¡°ë³‘ê·œ ë‹˜</h5>
 					</div>
 					<hr class="line" />
 					<li class="sub-menu"><a href="index.html"> <span>My
@@ -157,12 +152,12 @@ $(document).ready(function(){
 					</a></li>
 					<li class="sub-menu"><a href=""> <span>Notification</span>
 					</a></li>
-					<li class="sub-menu"><a href="/Project2/msg?cmd=list"> <span>Message</span>
+					<li class="sub-menu"><a href="/empty/msg?cmd=list"> <span>Message</span>
 					</a></li>
 					<hr class="line" />
-					<li class="sub-menu"><a href=""> <span>My Account</span>
+					<li class="sub-menu"><a href="/empty/account?cmd=alter"> <span>My Account</span>
 					</a></li>
-					<li class="sub-menu"><a href=""> <span>Delete
+					<li class="sub-menu"><a href="/empty/account?cmd=delete"> <span>Delete
 								Account</span>
 					</a></li>
 				</ul>
@@ -186,7 +181,7 @@ $(document).ready(function(){
 			<div class="col-md-3 footer-logo">(c) Port IT 2017 / All right
 				reserved.</div>
 			<div class="col-md-3 footer-menu">
-				<a href="">»çÀÌÆ® ¼Ò°³</a> <a href="">µµ¿ò¸»</a> <a href="">¹®ÀÇÇÏ±â</a> <a
+				<a href="">ì‚¬ì´íŠ¸ ì†Œê°œ</a> <a href="">ë„ì›€ë§</a> <a href="">ë¬¸ì˜í•˜ê¸°</a> <a
 					href="main.html#" class="go-top"> <i class="fa fa-angle-up"></i>
 				</a>
 			</div>
@@ -223,7 +218,6 @@ $(document).ready(function(){
 		    });
 		});
 		
-
 	    
 	</script>
 </body>

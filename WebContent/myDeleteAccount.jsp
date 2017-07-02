@@ -13,7 +13,7 @@
           		<div class="col-md-8 center">
           			<h3 class="accountTitle text-center">계정 탈퇴</h3>
           			<br><br>
-          			<form class="form-horizontal" method="post" action="#">
+          			<form class="form-horizontal" method="post" action="/account?cmd=delete">
           				<div class="deleteInfo center text-center">
           					계정을 삭제하시면, 모든 정보들이 삭제됩니다.<br>
           					정말 삭제하시겠습니까?
@@ -21,7 +21,7 @@
 	                    <div class="form-group">
 	                        <label class="col-md-4 control-label">Password</label>
 	                        <div class="col-md-6">
-	                            <input type="password" class="form-control" id="userpw" onchange="fnPasswordConfirm()">
+	                            <input type="password" class="form-control" id="userdeletepw" name="userdeletepw" onchange="fnPasswordConfirm()">
 	                        </div>
 	                    </div>
 	                    <div id="pwconfirm"></div> 

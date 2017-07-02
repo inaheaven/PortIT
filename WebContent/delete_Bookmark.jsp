@@ -4,7 +4,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="javax.naming.*" %>
 <%@page import="javax.sql.DataSource"%>
-<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <jsp:useBean id="dao" class="portit.model.dao.BookmarkDao"></jsp:useBean>
 <% 
 

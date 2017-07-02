@@ -7,11 +7,11 @@
 <%@page import="java.sql.*" %>
 <%@page import="javax.naming.*" %>
 <%@page import="javax.sql.DataSource"%>
-<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -32,8 +32,8 @@
 				<td><%=dto.getE_age()%></td>
 				<td><%=dto.getE_addr()%></td>
 				<td><%=dto.getE_dept()%></td>
-				<td><a href="updateEmp.jsp?e_no=<%=dto.getE_no()%>">¼öÁ¤</a></td>
-				<td><a href="javascript:isDelete(<%=dto.getE_no()%>)">»èÁ¦</a></td>
+				<td><a href="updateEmp.jsp?e_no=<%=dto.getE_no()%>">ìˆ˜ì •</a></td>
+				<td><a href="javascript:isDelete(<%=dto.getE_no()%>)">ì‚­ì œ</a></td>
 		</tr>
 	<%	
 		
