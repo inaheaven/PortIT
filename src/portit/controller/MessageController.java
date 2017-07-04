@@ -53,7 +53,6 @@ public class MessageController extends HttpServlet {
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
 			
 			
-			
 		
 			
 			
@@ -61,6 +60,9 @@ public class MessageController extends HttpServlet {
 			//발신자목록  request!
 			 if(cmd.equals("list")){
 				//From msgDetail,msgSender
+				 
+				 
+				 
 				 
 				url="myMsgList.jsp";
 				
@@ -81,9 +83,11 @@ public class MessageController extends HttpServlet {
 					//목록을 갱신할 필요가 있을때.
 					if(renewal==null){
 						
-						
+						System.out.println("check");
 						list=model.roomList(keyField,keyWord);
 						session.setAttribute("RoomList", list);
+						
+						System.out.println("CTRL 리스트전달");
 					}
 				}
 				
@@ -224,9 +228,14 @@ public class MessageController extends HttpServlet {
 			 
 			 
 			req.setAttribute("pageName", url);
-			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+//			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+			RequestDispatcher view = req.getRequestDispatcher(url);
+			
 			view.forward(req,resp);
+			
+			
 		} catch (Exception e) {
+			System.out.println("MSG_CTRL 에러");
 			e.printStackTrace();
 		}
 	}

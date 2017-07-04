@@ -65,6 +65,8 @@ public class MassageDao{
 	
 	//roomList : 대화방목록
 	public ArrayList roomList(String keyField, String keyWord){
+		//이걸 모델로 뺴야한다.
+		
 		
 		//대화방 list 준비.
 		ArrayList Roomlist = new ArrayList();
@@ -73,18 +75,20 @@ public class MassageDao{
 		ArrayList senderList;
 		
 		
+		
+		
 		//로그인한 계정의  발신자목록 (검색조건 추가가능)
 		//필터링 : 발신자 목록에서 한다.
 		senderList = (ArrayList) getSenderList(this.login_id,keyField, keyWord);
 	
 		
-		
 		for(int i=0; i<senderList.size();i++){
 			String mem_id_sender= (String)senderList.get(i);
 			
-			
 			//해당 발신자의 대화방을 Roomlist에 담는다..
 			Roomlist.add(getChatRoom(keyField,keyWord,mem_id_sender,false));
+			
+			
 		}
 		return Roomlist;
 	}
@@ -155,8 +159,10 @@ public class MassageDao{
 				
 				sql="select * "
 					+"FROM Message "
-					+"WHERE (mem_id_sender ="+Msg_Sender;
-				sql=sql.concat(" and MEM_ID_RECEIVER="+String.valueOf(login_id)+")");
+					+"WHERE (mem_id_sender ="+Msg_Sender
+					+" and MEM_ID_RECEIVER="+String.valueOf(login_id)+")";
+				
+				System.out.println("dao"+ sql);
 				
 				//true일때 송신메세지가 출력된다.
 				if(All == true){

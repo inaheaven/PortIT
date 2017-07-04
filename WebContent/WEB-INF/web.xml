@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="WebApp_ID" version="3.1">
-	<display-name>JSTLApp</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
-	<!--<servlet> <servlet-name>test</servlet-name> <servlet-class>portit.controller.TestServlet</servlet-class> 
-		</servlet> <servlet-mapping> <servlet-name>test</servlet-name> <url-pattern>/test</url-pattern> 
-		</servlet-mapping> -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>JstlApp</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+
+   <error-page>
+   	<exception-type>java.lang.ArithmeticException</exception-type>
+   	<location>/errPage/ArithmeticException.jsp</location>
+   </error-page>
+   
+   <error-page>
+	<error-code>404</error-code>
+	<location>/errPage/notFound.jsp</location>   
+   </error-page>
+   
+   
+   
+   
+   
+   <servlet>
+	<servlet-name>memUpdate</servlet-name>
+	<servlet-class>/myServlet.Memupdate</servlet-class>
+</servlet>
+
+
+<servlet-mapping>
+	<servlet-name>memUpdate</servlet-name>
+	<url-pattern>/memUpdate</url-pattern>
+</servlet-mapping>
+   
+   
+   
+   
 </web-app>
