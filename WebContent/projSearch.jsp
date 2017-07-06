@@ -82,7 +82,9 @@
 			          							          		
 			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
 			          					<div class="pjTag">
-			          						<a href="javascript:tag_name('${proj_list_tag[i].tag_name}')"># ${proj_list_tag[i].tag_name}&nbsp;</a>
+			          						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 			          					</div>         					
 	          						</span>
 	          					</div>

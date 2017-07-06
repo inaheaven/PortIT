@@ -82,7 +82,9 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="">#${port_list_tag[i].tag_name}&nbsp; </a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
 											<a href="">${port_list[i].pf_title} </a>
@@ -129,7 +131,7 @@
 	</script>
 		<script>
 		$(document).ready(function(){
-			$("#pfsubmit").trigger("click");
+			//$("#pfsubmit").trigger("click");
 		});		
 	</script>
 	

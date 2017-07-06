@@ -91,6 +91,7 @@
 				<!-- END - 조건 검색 box -->
 <%	
  	List list = member_viewDao.member_info();
+	List tag_list = member_viewDao.member_info_tag();
  
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
@@ -132,7 +133,14 @@
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('')"># <%=mem.getTag_name() %>&nbsp;</a></div>
+			         					<div class="memTag">
+			         					<%
+										for(int j = (3*i)+0 ; j<=(3*i)+2; j++){
+											Member mem_tag = (Member) tag_list.get(j);	
+										%>
+			         						<a href="javascript:tag_name('')"># <%=mem_tag.getTag_name() %>&nbsp;</a>
+			         					<%} %>
+			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount"><%=mem.getProf_follower() %></span>

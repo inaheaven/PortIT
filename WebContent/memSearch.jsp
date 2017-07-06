@@ -80,7 +80,9 @@
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
 			         					<div class="memTag">
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[i].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;

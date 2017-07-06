@@ -76,7 +76,9 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[i].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
 											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
@@ -106,7 +108,9 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[i].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
 											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
@@ -131,7 +135,7 @@
 			</c:if>	
 						</div>
 						<form post="method" name="move" action="/SearchView">
-							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="totalsearch" value="${search}"/>
 							<input type ="hidden" name="cmd" value="PFSEARCH"/>
 						
 							<div class="text-right">
@@ -156,7 +160,9 @@
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[i].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -178,7 +184,9 @@
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
 			         					<div class="memTag">
-			         						<a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list_tag[i].tag_name}&nbsp;</a>
+			         						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
@@ -195,7 +203,7 @@
 			</c:if>	
 						</div>					
 						<form post="method" name="move" action="/SearchView">
-							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="totalsearch" value="${search}"/>
 							<input type ="hidden" name="cmd" value="MEMSEARCH"/>
 						
 							<div class="text-right">
@@ -223,7 +231,9 @@
 			          							          		
 			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
 			          					<div class="pjTag">
-			          						<a href="javascript:tag_name('${proj_list_tag[i].tag_name}')"># ${proj_list_tag[i].tag_name}&nbsp;</a>
+			          						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 			          					</div>         					
 	          						</span>
 	          					</div>
@@ -255,7 +265,9 @@
 			          							          		
 			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
 			          					<div class="pjTag">
-			          						<a href="javascript:tag_name('${proj_list_tag[i].tag_name}')"># ${proj_list_tag[i].tag_name}&nbsp;</a>
+			          						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 			          					</div>         					
 	          						</span>
 	          					</div>
@@ -278,7 +290,7 @@
 				검색된 결과가 없습니다.
 			</c:if>			
 						<form post="method" name="move" action="/SearchView">
-							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="totalsearch" value="${search}"/>
 							<input type ="hidden" name="cmd" value="PROJSEARCH"/>
 						
 							<div class="text-right">

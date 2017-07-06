@@ -45,22 +45,22 @@ public class SearchDetailController extends HttpServlet {
 	
 		SearchDao dao = new SearchDao();
 		if(list_value == 1){
-			req.setAttribute("port_list",dao.searchAll_port("", lineup));
+			req.setAttribute("port_list",dao.searchAll_port(pfSearch, lineup));
 		}		
 		else if(list_value == 2){
-			req.setAttribute("port_list",dao.searchAll_port("", !lineup));		
+			req.setAttribute("port_list",dao.searchAll_port(pfSearch, !lineup));		
 		}
 		else if(list_value == 3){
-			req.setAttribute("mem_list", dao.searchAll_member("", lineup));
+			req.setAttribute("mem_list", dao.searchAll_member(memSearch, lineup));
 		}
 		else if(list_value == 4){
-			req.setAttribute("mem_list", dao.searchAll_member("", !lineup));
+			req.setAttribute("mem_list", dao.searchAll_member(memSearch, !lineup));
 		}
 		else if(list_value == 5){
-			req.setAttribute("proj_list", dao.searchAll_proj("", lineup));
+			req.setAttribute("proj_list", dao.searchAll_proj(projSearch, lineup));
 		}
 		else if(list_value == 6){
-			req.setAttribute("proj_list", dao.searchAll_proj("", !lineup));
+			req.setAttribute("proj_list", dao.searchAll_proj(projSearch, !lineup));
 		}
 		
 		

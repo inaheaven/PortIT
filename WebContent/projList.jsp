@@ -85,7 +85,7 @@
 				<!-- END - 조건 검색 box -->
 <%	
  	List list = proj_viewDao.project_info();
- 	Date today = new Date();
+ 	List tag_list = proj_viewDao.project_info_tag();
  	
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
@@ -130,7 +130,14 @@
 		          					<div class="pjmemName"><span class="fa fa-user"><%=proj.getProf_name() %></span>
 		          						&nbsp;&nbsp;<a href=""></a></div>     		
 		          					<div class="pjIntro"><%=proj.getProj_intro() %></div><br><br><br>
-		          					<div class="pjTag"><a href=""># <%=proj.getTag_name() %>&nbsp;</a></div>         					
+		          					<div class="pjTag">
+		          					<%
+										for(int j = (3*i)+0 ; j<=(3*i)+2; j++){
+											Project proj_tag = (Project) tag_list.get(j);	
+									%>
+		          						<a href=""># <%=proj_tag.getTag_name() %>&nbsp;</a>
+		          					<%} %>
+		          					</div>         					
 	          					</span>
 	          				</div>
 	          				<div class = "col-md-3">	
