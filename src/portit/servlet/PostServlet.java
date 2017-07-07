@@ -1,6 +1,7 @@
 package portit.servlet;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,11 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import portit.controller.Controller;
 import portit.controller.ControllerFactory;
-import portit.util.FileUploadController;
+import portit.util.FileUpload;
 
 
 /**
@@ -35,19 +34,10 @@ public class PostServlet extends HttpServlet {
 		// POST 요청일 때 등록 처리
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
-		
-		if (!ServletFileUpload.isMultipartContent(req)) {
-			try {
-				throw new Exception("요청이 multipart/form-data로 인코딩되지 않았습니다.");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 
-		FileUploadController uploadController = new FileUploadController();
-		uploadController.fileUpload(req, resp);
-		req.setAttribute("formData", req.getAttribute("formData"));
-		req.setAttribute("fileNames", req.getAttribute("fileNames"));
+		FileUpload fileUpload = new FileUpload();
+		Map<String, Object> formData = fileUpload.fileUpload(req, resp);
+		req.setAttribute("formData", formData);
 		
 		String viewUrl = "";
 		String articleType = req.getParameter("type");

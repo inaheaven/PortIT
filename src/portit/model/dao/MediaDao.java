@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import portit.util.FileDeleteController;
+import portit.util.FileDelete;
 import portit.model.dto.Media;
 
 /**
@@ -116,7 +116,7 @@ public class MediaDao {
 		for (int i = 0; i < mediaList.size(); i++) {
 			pathList.add(mediaList.get(i).getMl_path());
 		}
-		FileDeleteController deleteController = new FileDeleteController();
-		deleteController.fileDelete(pathList);
+		FileDelete fileDelete = new FileDelete();
+		fileDelete.fileDelete(pathList);
 	}
 }

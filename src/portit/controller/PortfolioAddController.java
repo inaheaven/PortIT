@@ -18,7 +18,7 @@ import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
-import portit.util.FileUploadController;
+import portit.util.FileUpload;
 
 /**
  * 포트폴리오 작성 컨트롤러
@@ -29,7 +29,7 @@ public class PortfolioAddController implements Controller {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// UploadServlet이 전달해준 데이터 받아오기
-		Map<String, Object> formData = new FileUploadController().fileUpload(req, resp);
+		Map<String, Object> formData = new FileUpload().fileUpload(req, resp);
 		List<String> fileNames = (List<String>) req.getAttribute("fileNames");
 		for (String key : formData.keySet()) {
 			System.out.printf("%s : %s\n", key, formData.get(key));
