@@ -1,7 +1,7 @@
 package portit.model.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.List;
 
 /**
@@ -11,12 +11,15 @@ import java.util.List;
 
 
 public class Project {
+	private int pf_id;
+	private String proj_app_confirm;
+	
+	private ArrayList apply_mem;
+	
 	private int proj_id;
 	private String proj_title;
 	private String proj_intro;
-
 	private int proj_to;
-
 	private Date proj_regdate;
 	private Date proj_startdate;
 	private int proj_period;
@@ -28,26 +31,29 @@ public class Project {
 	private String ml_path;
 	private int d_day;
 
-	
-	
-	/** 모집인원수 */
-	private int proj_numofperson;
-	/** 작성자명 */
-	private String proj_authorName;
-	/** 작성자 사진 */
-	private String proj_authorIcon;
-	/** 태그 목록 - 개발환경 */
-	private List<Tag> proj_tags_env;
-	/** 태그 목록 - 언어 */
-	private List<Tag> proj_tags_language;
-	/** 태그 목록 - 툴 */
-	private List<Tag> proj_tags_tool;
-	/** 태그 목록 - 분야 */
-	private List<Tag> proj_tags_field;
-	/** 미디어 파일 목록 */
-	private List<Media> proj_mediae;
-	/** 공동 작업자 목록 */
-	private List<Profile> proj_coworkers;
+	private ArrayList<String> proj_env;
+	private ArrayList<String> proj_language;
+	private ArrayList<String> proj_tool;
+	private ArrayList<String> proj_field;
+	private ArrayList<Integer> proj_numofperson;
+	public int getPf_id() {
+		return pf_id;
+	}
+	public void setPf_id(int pf_id) {
+		this.pf_id = pf_id;
+	}
+	public String getProj_app_confirm() {
+		return proj_app_confirm;
+	}
+	public void setProj_app_confirm(String proj_app_confirm) {
+		this.proj_app_confirm = proj_app_confirm;
+	}
+	public ArrayList getApply_mem() {
+		return apply_mem;
+	}
+	public void setApply_mem(ArrayList apply_mem) {
+		this.apply_mem = apply_mem;
+	}
 	public int getProj_id() {
 		return proj_id;
 	}
@@ -120,64 +126,38 @@ public class Project {
 	public void setD_day(int d_day) {
 		this.d_day = d_day;
 	}
-	public int getProj_numofperson() {
+	public ArrayList<String> getProj_env() {
+		return proj_env;
+	}
+	public void setProj_env(ArrayList<String> proj_env) {
+		this.proj_env = proj_env;
+	}
+	public ArrayList<String> getProj_language() {
+		return proj_language;
+	}
+	public void setProj_language(ArrayList<String> proj_language) {
+		this.proj_language = proj_language;
+	}
+	public ArrayList<String> getProj_tool() {
+		return proj_tool;
+	}
+	public void setProj_tool(ArrayList<String> proj_tool) {
+		this.proj_tool = proj_tool;
+	}
+	public ArrayList<String> getProj_field() {
+		return proj_field;
+	}
+	public void setProj_field(ArrayList<String> proj_field) {
+		this.proj_field = proj_field;
+	}
+	public ArrayList<Integer> getProj_numofperson() {
 		return proj_numofperson;
 	}
-	public void setProj_numofperson(int proj_numofperson) {
+	public void setProj_numofperson(ArrayList<Integer> proj_numofperson) {
 		this.proj_numofperson = proj_numofperson;
 	}
-	public String getProj_authorName() {
-		return proj_authorName;
-	}
-	public void setProj_authorName(String proj_authorName) {
-		this.proj_authorName = proj_authorName;
-	}
-	public String getProj_authorIcon() {
-		return proj_authorIcon;
-	}
-	public void setProj_authorIcon(String proj_authorIcon) {
-		this.proj_authorIcon = proj_authorIcon;
-	}
-	public List<Tag> getProj_tags_env() {
-		return proj_tags_env;
-	}
-	public void setProj_tags_env(List<Tag> proj_tags_env) {
-		this.proj_tags_env = proj_tags_env;
-	}
-	public List<Tag> getProj_tags_language() {
-		return proj_tags_language;
-	}
-	public void setProj_tags_language(List<Tag> proj_tags_language) {
-		this.proj_tags_language = proj_tags_language;
-	}
-	public List<Tag> getProj_tags_tool() {
-		return proj_tags_tool;
-	}
-	public void setProj_tags_tool(List<Tag> proj_tags_tool) {
-		this.proj_tags_tool = proj_tags_tool;
-	}
-	public List<Tag> getProj_tags_field() {
-		return proj_tags_field;
-	}
-	public void setProj_tags_field(List<Tag> proj_tags_field) {
-		this.proj_tags_field = proj_tags_field;
-	}
-	public List<Media> getProj_mediae() {
-		return proj_mediae;
-	}
-	public void setProj_mediae(List<Media> proj_mediae) {
-		this.proj_mediae = proj_mediae;
-	}
-	public List<Profile> getProj_coworkers() {
-		return proj_coworkers;
-	}
-	public void setProj_coworkers(List<Profile> proj_coworkers) {
-		this.proj_coworkers = proj_coworkers;
-	}
 	
 	
 	
 	
-	
-
 }

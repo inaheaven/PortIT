@@ -119,7 +119,7 @@ public class AccountDao{
 
 	
 	
-	// Delete.jsp
+	// 2. 계정삭제
 	public void deleteAccount(){
 		String sql = "delete from MEMBER where Mem_ID=?";
 		

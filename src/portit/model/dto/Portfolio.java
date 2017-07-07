@@ -52,9 +52,12 @@ public class Portfolio {
     private String prof_name;
     private String tag_name;
     
+    private String ml_path;
     
     
-    
+	public String getMl_path() {
+		return ml_path;
+	}
 	public String getTag_name() {
 		return tag_name;
 	}

@@ -394,8 +394,83 @@ public class ProfileDao {
 		return dto;
 	}
 
-	private void add(Profile dto) {
-		// TODO Auto-generated method stub
+	
+	/**
+	 * 같은 프로필 번호를 쓰는 프로필이 있는지 검사
+	 * @param prof_id
+	 * @return 존재하는 프로필 번호
+	 */
+	public int findExistingProfile(int prof_id) {
+		int result = 0;
+		try {
+			sql = "SELECT prof_id FROM PROFILE WHERE prof_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs = stmt.executeQuery();
+			rs.next();
+			if (prof_id == rs.getInt(1)) {
+				result = rs.getInt(1);
+			} else {
+				result = 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * (수정·삭제시) 작성자가 맞는지 검사
+	 * @param mem_id
+	 * @param prof_id
+	 * @return true/false
+	 */
+	public boolean checkAccessRight(int mem_id, int prof_id) {
+		boolean flag = false;
+		try {
+			sql = "SELECT mem_id FROM PROFILE WHERE prof_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs = stmt.executeQuery();
+			rs.next();
+			if(mem_id == rs.getInt(1)) {
+				flag = true;
+			} else {
+				flag = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	
+	/**
+	 * 프로필 삭제 
+	 * @param eno
+	 */
+		
+	// deleteEmp_proc.jsp
+	public void deleteProfile(int prof_id){
+		String sql = "delete from profile where prof_id ="+prof_id+"";
+		
+		try{
+			conn = pool.getConnection();			
+			stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("DBCP 연결 실패 : " + err);
+		}
+		finally{
+			freeConnection();
+		}
 		
 	}
+	
+	
+	
+	
+	
 }
