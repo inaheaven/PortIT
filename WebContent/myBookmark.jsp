@@ -60,7 +60,7 @@
 										</div>
 										<div class="top-hover-right">
 											<div class="after-hover" >
-												<button type="button" id ="hover"<%=i %> class="btn btn-hover" onclick="location.href='/serial?cmd=MYBOOKMARKDELETE&bm_id=<%=port.getBm_id() %>'">
+												<button type="button" id ="hover"<%=i %> class="btn btn-hover" onclick="location.href='/bmk?cmd=MYBOOKMARKDELETE&bm_id=<%=port.getBm_id() %>'">
 													<span class="glyphicon glyphicon-remove"></span>
 												</button>
 											</div>
