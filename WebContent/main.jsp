@@ -2,7 +2,6 @@
 <%@page import="portit.model.dto.Timeline"%>
 <%@page import="portit.model.dto.Project"%>
 <%@page import="portit.model.dto.Portfolio"%>
-<%@page import="portit.model.dto.Developer"%>
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
