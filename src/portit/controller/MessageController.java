@@ -240,5 +240,4 @@ public class MessageController extends HttpServlet {
 	 -URL을 깔끔하게 만들필요가 있음.
 	 */
 	
-	
 }

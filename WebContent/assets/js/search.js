@@ -34,7 +34,7 @@ function fnAppendItem2(){
 	var choice = document.getElementById("language").value;
 	
 	newSpan.innerHTML = window.event.target.value +"<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("+ count +")'/>"
-	
+
 	var itemList = document.getElementById("itemList");
 	itemList.appendChild(newSpan);
 }

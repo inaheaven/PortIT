@@ -22,6 +22,7 @@ public class PageController extends HttpServlet {
 		String page = req.getParameter("page");
 		
 		String pageName = page + ".jsp";
+
 		
 		req.setAttribute("pageName", pageName);
 		RequestDispatcher view = req.getRequestDispatcher("/template.jsp");

@@ -40,10 +40,6 @@ public class MassageDao{
 		}
 	}
 	
-	
-	
-	
-	
 	//싱글톤 실험.
 	private static MassageDao instance = new MassageDao();
 	
@@ -56,10 +52,6 @@ public class MassageDao{
 	public void setLogin_id(int login_id) {
 		this.login_id = login_id;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -88,12 +80,6 @@ public class MassageDao{
 		}
 		return Roomlist;
 	}
-	
-	
-	
-	
-	
-	
 	
 
 
@@ -538,7 +524,6 @@ public class MassageDao{
 	}
 	
 	
-
 	
 }
 

@@ -27,6 +27,10 @@ button.cancel {
 	color: #fff;
 }
 
+#fileUpload {
+	visibility: hidden;
+}
+
 
 /********* portfolio list ***********/
 .pflist {

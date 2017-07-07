@@ -46,11 +46,3 @@ public class MemberJoinController extends HttpServlet {
 		}
 	}
 }
-
-
-
-
-
-
-
-

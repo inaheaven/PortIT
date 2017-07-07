@@ -70,7 +70,4 @@ public class Notification {
 	public void setNt_isread(char nt_isread) {
 		this.nt_isread = nt_isread;
 	}
-	
-	
-	
 }
