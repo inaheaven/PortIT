@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import portit.model.dao.BookmarkDao;
 import portit.model.dto.Portfolio;
@@ -23,7 +24,10 @@ public class BookmarkController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
-	
+		
+		HttpSession session = req.getSession();
+		int loginId = (int)session.getAttribute("loginId");
+		
 		String cmd = req.getParameter("cmd");
 		String url = null;
 		if (cmd.equals("BOOKMARK")) {
@@ -31,17 +35,15 @@ public class BookmarkController extends HttpServlet {
 			//pf_id를 가져온다고 하고 진행
 
 			//존재하면 DELETE 없으면 INSERT
-			int pfId = 0, memId = 0;
+			int pf_id = 0, mem_id = 0;
 			if (req.getParameter("pf_id") != null) {
-				pfId = Integer.parseInt(req.getParameter("pf_id"));
+				pf_id = Integer.parseInt(req.getParameter("pf_id"));
 			}
 			if (req.getParameter("mem_id") != null) {
-				memId = Integer.parseInt(req.getParameter("mem_id"));
+				mem_id = Integer.parseInt(req.getParameter("mem_id"));
 			}
-
 			BookmarkDao bmDao = new BookmarkDao();
-			bmDao.addBookmark(pfId, memId);
-			System.out.println("존재하면 DELETE 없으면 INSERT");
+			bmDao.addBookmark(pf_id, mem_id);
 
 			//엑스버튼 누를때 dto에서 deletebookmark 실행page?page=myBookmark
 
@@ -51,34 +53,8 @@ public class BookmarkController extends HttpServlet {
 			
 		} else if (cmd.equals("MYBOOKMARK")) {
 			BookmarkDao bmDao = new BookmarkDao();
-			List<Portfolio> resultPortfolio = bmDao.getMyBookmark();
+			List<Portfolio> resultPortfolio = bmDao.myBookmark(loginId);
 			
-			////////////////////////임시/////////////////////////////
-			List<Portfolio> temp = new ArrayList<>();
-			Portfolio portfolio= new Portfolio();
-
-			portfolio.setPf_title("집엔DB없다1");
-			portfolio.setPf_like(1);
-			portfolio.setPf_numofperson(2);
-			portfolio.setBm_id(1);
-			temp.add(portfolio);
-			
-			portfolio= new Portfolio();
-			portfolio.setPf_title("집엔DB없다2");
-			portfolio.setPf_like(3);
-			portfolio.setPf_numofperson(4);
-			portfolio.setBm_id(2);
-			temp.add(portfolio);
-			
-			portfolio= new Portfolio();
-			portfolio.setPf_title("집엔DB없다3");
-			portfolio.setPf_like(5);
-			portfolio.setPf_numofperson(6);
-			portfolio.setBm_id(3);
-			temp.add(portfolio);
-
-			
-			////////////////////////임시/////////////////////////////			
 			req.setAttribute("portfolio", resultPortfolio);
 			url="myBookmark.jsp";
 			
@@ -88,12 +64,11 @@ public class BookmarkController extends HttpServlet {
 			
 		}else if (cmd.equals("MYBOOKMARKDELETE")) {
 			BookmarkDao bmDao = new BookmarkDao();
-			int bmId=0;
+			int bm_id=0;
 			if(req.getParameter("bm_id")!=null){
-				bmId = Integer.parseInt(req.getParameter("bm_id"));
-				bmDao.deleteBookmark(bmId);
-				
-				List<Portfolio> resultPortfolio = bmDao.getMyBookmark();
+				bm_id = Integer.parseInt(req.getParameter("bm_id"));
+				bmDao.deleteBookmark(bm_id);
+				List<Portfolio> resultPortfolio = bmDao.myBookmark(bm_id);
 				if(resultPortfolio.isEmpty()){
 					resultPortfolio = new ArrayList<>();
 				}

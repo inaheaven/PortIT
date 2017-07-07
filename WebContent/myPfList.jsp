@@ -7,7 +7,6 @@
 		<jsp:param name="active" value="myPfList" />
 	</jsp:include>
 	<%--sidenavbar end--%>
-
 		<section id="main-content">
 			<section class="wrapper site-min-height">
 				<div class="col-md-12 col-sm-12 col-xs-12 mt pflist">

@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Profile {
 	private int prof_id;
+	private int mem_id;
 	private String prof_nick;
 	private String prof_name;
 	private String prof_intro;
@@ -20,11 +21,12 @@ public class Profile {
 	private String prof_facebook;
 	private Date prof_regdate;
 	private int prof_follower;
-	private int mem_id;
+
 	private String prof_language;
 	private String prof_tool;
 	private String prof_field;
 	private String tag_name;
+
 	private String tag_name2;
 	private String tag_name3;
 	private String tag_name4;
@@ -33,6 +35,7 @@ public class Profile {
 	private int prof_skill_level;
 	private int prof_skill_level2;
 	private int prof_skill_level3;
+
 
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
@@ -79,6 +82,13 @@ public class Profile {
 	public void setProf_id(int prof_id) {
 		this.prof_id = prof_id;
 	}
+	
+	public int getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(int mem_id) {
+		this.mem_id = mem_id;
+	}
 	public String getProf_nick() {
 		return prof_nick;
 	}
@@ -111,9 +121,13 @@ public class Profile {
 	}
 
 
-//	public String getProf_email() {
-//		return prof_email;
-//	}
+	public String getProf_website() {
+		return prof_website;
+	}
+	public String getProf_email() {
+		return prof_email;
+	}
+
 		
 	public void setProf_email(String prof_email) {
 		this.prof_email = prof_email;
@@ -144,8 +158,7 @@ public class Profile {
 	public void setProf_follower(int prof_follower) {
 		this.prof_follower = prof_follower;
 	}
-	
-	
+  
 	public List<Tag> getProf_tags_language() {
 		return prof_tags_language;
 	}

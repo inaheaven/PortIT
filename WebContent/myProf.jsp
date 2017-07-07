@@ -10,7 +10,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-
 <script src="assets/js/search.js"></script>
 <script language="javascript">
 
@@ -35,7 +34,7 @@ function profRegister(){
 }
 
 function profalter(){
-	location.href="/register?cmd=UPDATE"
+	location.href="/myProf.jsp";
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
 //skill 추가
