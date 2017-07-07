@@ -34,7 +34,7 @@ public class FileUploadController {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public Map<String, Object> fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<String> fileNames = new ArrayList<String>();
 		
 		String saveDir = req.getServletContext().getRealPath("") + UPLOAD_DIR;
@@ -52,7 +52,8 @@ public class FileUploadController {
 		upload.setSizeMax(1024*1024*20);
 		upload.setHeaderEncoding("UTF-8");
 
-		Map<String, String> map = new HashMap<String, String>();
+		List<String> fileList = new ArrayList<String>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			List<FileItem> items = upload.parseRequest(req);			
 			for(FileItem item : items) {
@@ -75,14 +76,14 @@ public class FileUploadController {
 					}
 				}
 			}
-			req.setAttribute("formData", map);
-			req.setAttribute("fileNames", fileNames);
+			map.put("fileList",  fileList);
+			return map;
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return map;
 	}
 	
 	/**

@@ -60,7 +60,8 @@ public class TagDao {
 		try {
 			sql = "INSERT INTO tag"
 					+ "(tag_id, tag_type, tag_name) "
-					+ "VALUES(LPAD(seq_tag_id.nextval, 4, '0'),?,?)";
+					+ "VALUES(LPAD(seq_tag_id.nextval, 4, '0'),?,?) "
+					+ "WHERE tag_name NOT IN (SELECT tag_name FROM tag)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag.getTag_type());
 			stmt.setString(2, tag.getTag_name());

@@ -18,6 +18,7 @@ import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
+import portit.util.FileUploadController;
 
 /**
  * 포트폴리오 작성 컨트롤러
@@ -28,7 +29,7 @@ public class PortfolioAddController implements Controller {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// UploadServlet이 전달해준 데이터 받아오기
-		Map<String, String> formData = (Map<String, String>) req.getAttribute("formData");
+		Map<String, Object> formData = new FileUploadController().fileUpload(req, resp);
 		List<String> fileNames = (List<String>) req.getAttribute("fileNames");
 		for (String key : formData.keySet()) {
 			System.out.printf("%s : %s\n", key, formData.get(key));
@@ -67,25 +68,25 @@ public class PortfolioAddController implements Controller {
 		}
 		
 		// 파일 관련 처리
-		List<Media> mediae = new ArrayList<Media>();
+		List<Media> mediaList = new ArrayList<Media>();
 		for (int i = 0; i < fileNames.size(); i++) {
-			mediae.add(new Media().setMl_type("portfolio").setMl_path(fileNames.get(i)));
+			mediaList.add(new Media().setMl_type("portfolio").setMl_path(fileNames.get(i)));
 		}
 		
 		// DTO에 추가
 		PortfolioDao portfolioDao = new PortfolioDao();
 		Portfolio portfolio = new Portfolio();
 		try {
-			portfolio.setPf_title(formData.get("pf_title"))
-					.setPf_intro(formData.get("pf_intro").replaceAll("\\r\\n", "<br />"))
-					.setPf_startdate(new SimpleDateFormat("yyyy-MM-dd").parse(formData.get("pf_startdate")))
-					.setPf_enddate(new SimpleDateFormat("yyyy-MM-dd").parse(formData.get("pf_enddate")))
-					.setPf_numofperson(Integer.parseInt(formData.get("pf_numofperson")))
-					.setPf_url(formData.get("pf_url"))
+			portfolio.setPf_title((String) formData.get("pf_title"))
+					.setPf_intro(((String) formData.get("pf_intro")).replaceAll("\\r\\n", "<br />"))
+					.setPf_startdate(new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_startdate")))
+					.setPf_enddate(new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_enddate")))
+					.setPf_numofperson(Integer.parseInt((String) formData.get("pf_numofperson")))
+					.setPf_url((String) formData.get("pf_url"))
 					.setPf_tags_language(langTagList)
 					.setPf_tags_tool(toolTagList)
 					.setPf_tags_field(fieldTagList)
-					.setPf_mediae(mediae)
+					.setPf_mediaList(mediaList)
 					.setPf_coworkers(coworkerList);
 			// DAO의 추가 메서드 호출
 			portfolioDao.insert(portfolio);
@@ -112,8 +113,8 @@ public class PortfolioAddController implements Controller {
 	 * @param str 구분자가 있는 문자열
 	 * @return 문자열 배열
 	 */
-	private String[] toArray(String str) {
-		StringTokenizer tkn = new StringTokenizer(str, ",");
+	private String[] toArray(Object data) {
+		StringTokenizer tkn = new StringTokenizer((String) data, ",");
 		String[] arr = new String[tkn.countTokens()];
 		for (int i = 0; tkn.hasMoreElements(); i++) {
 			arr[i] = tkn.nextToken().trim();

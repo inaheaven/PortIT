@@ -41,7 +41,7 @@ public class Portfolio {
 	/** 포트폴리오 태그 목록 - 분야 */
 	private List<Tag> pf_tags_field;
 	/** 미디어 파일 목록 */
-	private List<Media> pf_mediae;
+	private List<Media> pf_mediaList;
 	/** 공동 작업자 목록 */
 	private List<Profile> pf_coworkers;
 	/** 추천 포트폴리오 목록 */
@@ -118,8 +118,8 @@ public class Portfolio {
 	public List<Tag> getPf_tags_field() {
 		return pf_tags_field;
 	}
-	public List<Media> getPf_mediae() {
-		return pf_mediae;
+	public List<Media> getPf_mediaList() {
+		return pf_mediaList;
 	}
 	public List<Profile> getPf_coworkers() {
 		return pf_coworkers;
@@ -188,8 +188,8 @@ public class Portfolio {
 		this.pf_tags_field = pf_tags_field;
 		return this;
 	}
-	public Portfolio setPf_mediae(List<Media> pf_mediae) {
-		this.pf_mediae = pf_mediae;
+	public Portfolio setPf_mediaList(List<Media> pf_mediaList) {
+		this.pf_mediaList = pf_mediaList;
 		return this;
 	}
 	public Portfolio setPf_coworkers(List<Profile> pf_coworkers) {

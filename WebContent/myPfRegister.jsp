@@ -89,8 +89,8 @@
 								<div id="mediaRow">
 									<div class="form-inline">
 										<label for="fileUpload" class="btn btn-default">파일 선택</label>
-										<input type="file" id="fileUpload" name="media[]" multiple="multiple" />
-										<span class="help-block">최대 9개의 파일을 선택할 수 있습니다.</span>
+										<input type="file" accept="image/jpeg,image/gif,image/png" id="fileUpload" name="image[]" multiple="multiple" />
+										<span class="help-block">최대 9개의 GIF, JPG/JPEG, PNG 파일을 선택할 수 있습니다.</span>
 									</div>
 									<ul id="fileList"></ul>
 								</div>

@@ -97,9 +97,9 @@ public class ProfileDao {
 			}
 			
 			// 미디어 정보
-			List<Media> mediae = mediaDao.selectList(conn, "profile", profile.getProf_id());
-			profile.setProf_img(mediae.get(0).getMl_path())
-			.setProf_background(mediae.get(1).getMl_path());
+			List<Media> mediaList = mediaDao.selectList(conn, "profile", profile.getProf_id());
+			profile.setProf_img(mediaList.get(0).getMl_path())
+			.setProf_background(mediaList.get(1).getMl_path());
 			
 			// 태그 정보
 			List<Tag> prof_tags_language = tagDao.selectList(conn, "language", "profile", profile.getProf_id());

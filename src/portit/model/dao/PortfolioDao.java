@@ -24,14 +24,19 @@ public class PortfolioDao {
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
+	private String sql;
 	
 	private MediaDao mediaDao;
+	private TagDao tagDao;
 	
 	public PortfolioDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			conn = pool.getConnection();
 			mediaDao = new MediaDao();
+			tagDao = new TagDao();
+			
+			sql = null;
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -75,7 +80,7 @@ public class PortfolioDao {
 		Portfolio portfolio = new Portfolio();
 		
 		// SELECT문 지정
-		String sql = "SELECT * FROM portfolio WHERE pf_id=?";
+		sql = "SELECT * FROM portfolio WHERE pf_id=?";
 		
 		// DB에 접속해서 작업 실행
 		getConnection();
@@ -165,8 +170,8 @@ public class PortfolioDao {
 				portfolio.setPf_coworkers(coworkers);
 				
 				// 미디어 데이터를 조회해서 DTO에 저장
-				List<Media> mediae = mediaDao.selectList(conn, "portfolio", portfolio.getPf_id());
-				portfolio.setPf_mediae(mediae);
+				List<Media> mediaList = mediaDao.selectList(conn, "portfolio", portfolio.getPf_id());
+				portfolio.setPf_mediaList(mediaList);
 			}
 		} catch (Exception e) {
 			System.out.println("DB 조회 오류 :");
@@ -188,7 +193,7 @@ public class PortfolioDao {
 		List<Portfolio> portfolios = new ArrayList<Portfolio>();
 		
 		// SELECT문 지정
-		String sql = "SELECT * FROM portfolio";
+		sql = "SELECT * FROM portfolio";
 		// 검색 조건 추가
 		if (!keyword.isEmpty() || tagList != null) {
 			sql += " WHERE";
@@ -229,7 +234,7 @@ public class PortfolioDao {
 				portfolio.setPf_authorName(rs.getString(1));
 				
 				// 좋아요 수를 조회해서 DTO에 저장
-				sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
+				sql = "SELECT COUNT(1) FROM pf_like WHERE pf_id=?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
@@ -288,8 +293,8 @@ public class PortfolioDao {
 				portfolio.setPf_coworkers(coworkers);
 				
 				// 미디어 데이터를 조회해서 DTO에 저장
-				List<Media> mediae = mediaDao.selectList(conn, "portfolio", portfolio.getPf_id());
-				portfolio.setPf_mediae(mediae);
+				List<Media> mediaList = mediaDao.selectList(conn, "portfolio", portfolio.getPf_id());
+				portfolio.setPf_mediaList(mediaList);
 				
 				// 데이터 객체를 목록에 저장
 				portfolios.add(portfolio);
@@ -317,8 +322,8 @@ public class PortfolioDao {
 	public int insert(Portfolio portfolio) {
 		int rows = 0;
 		try {
-			// INSERT문 지정
-			String sql = "INSERT INTO portfolio("
+			// 포트폴리오 추가
+			sql = "INSERT INTO portfolio("
 					+ "pf_id, pf_title, pf_intro, pf_regdate, pf_like, "
 					+ "pf_startdate, pf_enddate, pf_numofperson, pf_repository"
 					+ ") VALUES(seq_pf_id.nextVal,?,?,SYSDATE,?,?,?,?,?)";
@@ -331,39 +336,24 @@ public class PortfolioDao {
 			stmt.setInt(6, portfolio.getPf_numofperson());
 			stmt.setString(7, portfolio.getPf_url());
 			rows += stmt.executeUpdate();
-
+			
 			// 태그 추가
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
 			List<Tag> pf_tags_tool = portfolio.getPf_tags_tool();
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "language");
-					stmt.setString(2, pf_tags_language.get(i).getTag_name());
-					stmt.setString(3, pf_tags_language.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_language.get(i));
 				}
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "tool");
-					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
-					stmt.setString(3, pf_tags_tool.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_tool.get(i));
 				}
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "field");
-					stmt.setString(2, pf_tags_field.get(i).getTag_name());
-					stmt.setString(3, pf_tags_field.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_field.get(i));
 				}
 			}
 			// 태그 사용 추가
@@ -414,10 +404,10 @@ public class PortfolioDao {
 			}
 			
 			// 미디어 라이브러리 추가
-			List<Media> mediae = portfolio.getPf_mediae();
-			if (mediae != null) {
-				for (int i = 0; i < mediae.size(); i++) {
-					mediaDao.insert(conn, mediae.get(i));
+			List<Media> mediaList = portfolio.getPf_mediaList();
+			if (mediaList != null) {
+				for (int i = 0; i < mediaList.size(); i++) {
+					mediaDao.insert(conn, mediaList.get(i));
 					rows++;
 				}
 			}
@@ -443,7 +433,7 @@ public class PortfolioDao {
 		int rows = 0;
 		try {
 			// UPDATE문 지정
-			String sql = "UPDATE portfolio"
+			sql = "UPDATE portfolio"
 					+ " SET pf_title=?, pf_intro=?, pf_startdate=?,"
 					+ " pf_enddate=?, pf_numofperson=?, pf_repository=?"
 					+ " WHERE pf_id=?";
@@ -559,10 +549,10 @@ public class PortfolioDao {
 			
 			
 			// 미디어 라이브러리 수정
-			List<Media> mediae = portfolio.getPf_mediae();
+			List<Media> mediaList = portfolio.getPf_mediaList();
 			mediaDao.delete(conn, "portfolio", portfolio.getPf_id());
-			for (int i = 0; i < mediae.size(); i++) {
-				mediaDao.insert(conn, mediae.get(i));
+			for (int i = 0; i < mediaList.size(); i++) {
+				mediaDao.insert(conn, mediaList.get(i));
 				rows++;
 			}
 		} catch (SQLException e) {
@@ -584,7 +574,7 @@ public class PortfolioDao {
 			mediaDao.delete(conn, "portfolio", pf_id);
 			
 			// 포트폴리오의 좋아요 데이터 삭제
-			String sql = "DELETE FROM pf_like WHERE pf_id=?";
+			sql = "DELETE FROM pf_like WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, pf_id);
 			stmt.executeUpdate();
@@ -632,7 +622,7 @@ public class PortfolioDao {
 		List<Portfolio> portfolios = new ArrayList<Portfolio>();
 		getConnection();
 		try {
-			String sql = "SELECT prof_id FROM profile WHERE mem_id=?";
+			sql = "SELECT prof_id FROM profile WHERE mem_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
@@ -665,7 +655,7 @@ public class PortfolioDao {
 		int likes = 0;
 		getConnection();
 		try {
-			String sql = "INSERT INTO pf_like(pf_lk_id, mem_id, pf_id, pf_lk_regdate)"
+			sql = "INSERT INTO pf_like(pf_lk_id, mem_id, pf_id, pf_lk_regdate)"
 					+ " VALUES(seq_pf_lk_id.nextVal,?,?,SYSDATE)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
@@ -695,7 +685,7 @@ public class PortfolioDao {
 		int prof_id = 0;
 		getConnection();
 		try {
-			String sql = "SELECT prof_id FROM profile WHERE mem_id=?";
+			sql = "SELECT prof_id FROM profile WHERE mem_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
@@ -719,7 +709,7 @@ public class PortfolioDao {
 		int mem_id = 0;
 		getConnection();
 		try {
-			String sql = "SELECT mem_id FROM profile WHERE prof_nick=?";
+			sql = "SELECT mem_id FROM profile WHERE prof_nick=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			rs = stmt.executeQuery();
@@ -743,7 +733,7 @@ public class PortfolioDao {
 		int tag_id = 0;
 		getConnection();
 		try {
-			String sql = "SELECT tag_id FROM tag WHERE tag_name=?";
+			sql = "SELECT tag_id FROM tag WHERE tag_name=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag_name);
 			rs = stmt.executeQuery();
