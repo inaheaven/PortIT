@@ -1,7 +1,6 @@
 package portit.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import portit.model.action.ProjcetModel;
 import portit.model.dao.Portfolio_ViewDao;
 import portit.model.dao.ProjectDao;
-import portit.model.dto.Project;
-import portit.model.dto.ProjectApp_mem;
 
 @WebServlet(urlPatterns="/myproj")
 public class MyProjectController extends HttpServlet {
@@ -100,8 +97,6 @@ public class MyProjectController extends HttpServlet {
 			model.mem_delete(param,param2);
 		}
 		
-		
-		
 //(n)지원 취소
 		else if("cancle".equals(action)){
 			//param: 지원PJ의 PJ_ID
@@ -153,8 +148,6 @@ public class MyProjectController extends HttpServlet {
 		req.setAttribute("pj_id", param);
 		url="/프로필페이지.jsp";
 	}
-	
-	
 	
 	req.setAttribute("pageName", url);
 	RequestDispatcher view = req.getRequestDispatcher("/template.jsp");

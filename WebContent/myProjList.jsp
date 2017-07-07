@@ -68,15 +68,30 @@ $(document).ready(
     	}
      	
      	function fnParameter(_cmd,_action,_param,_param2){
+			if(_action=="delete"){
+				var r = confirm("정말로 삭제하시겠습니까?");
+				if(r==true){
+				//전달할 데이터 setting
+				document.frmPJ.cmd.value =_cmd;
+				document.frmPJ.cmdAction.value =_action;
+				document.frmPJ.param.value =_param;
+				document.frmPJ.param2.value =_param2;
+				//해당 폼 submit
+				document.frmPJ.submit();
+				alert("삭제되었습니다.")
+				}else{
+					alert("삭제가 취소되었습니다.")
+				}
+			}else{
+				document.frmPJ.cmd.value =_cmd;
+				document.frmPJ.cmdAction.value =_action;
+				document.frmPJ.param.value =_param;
+				document.frmPJ.param2.value =_param2;
+				//해당 폼 submit
+				document.frmPJ.submit();
+			}
 			
-			//전달할 데이터 setting
-			document.frmPJ.cmd.value =_cmd;
-			document.frmPJ.cmdAction.value =_action;
-			document.frmPJ.param.value =_param;
-			document.frmPJ.param2.value =_param2;
 			
-			//해당 폼 submit
-			document.frmPJ.submit();
 	}
 </script>
 </head>
@@ -109,7 +124,7 @@ $(document).ready(
 						<button type="button" class="btn common"
 							onclick="location.href='/page?page=myProjRegister&mem_id=2'">프로젝트
 							등록하기</button>
-							<!-- mem_id 고치기 -->
+						<!-- mem_id 고치기 -->
 					</div>
 
 					<h3 class="formTitle text-center">내 프로젝트</h3>
@@ -117,8 +132,6 @@ $(document).ready(
 					<div class="proj_my">
 						<p>내가 등록한 프로젝트</p>
 						<div class="panel panel-default">
-
-
 
 							<%
 						for(int i=0; i<pjList.size();i++){
@@ -137,8 +150,8 @@ $(document).ready(
 										href="javascript:fnParameter('pj_detail' , '' , '<%=pj_Inform.getProj_id()%>', '')">
 											<%=pj_Inform.getProj_title() %>
 									</a>
-									</span> <span class="col-sm-6"> D-<%=pj_Inform.getD_day() %></span> <span
-										class="col-md-3 text-right">
+									</span> <span class="col-sm-6"> 지원 마감일까지 D-<%=pj_Inform.getD_day() %></span>
+									<span class="col-md-3 text-right">
 										<button type="button" class="btn common"
 											onclick="fnParameter('modify','','<%=pj_Inform.getProj_id()%>', '')">수정</button>
 										<button type="button" class="btn common"
@@ -151,16 +164,10 @@ $(document).ready(
 									</span>
 								</h4>
 							</div>
-
-
 							<div id="pj_<%=i%>" class="panel-collapse collapse"
 								role="tabpanel" aria-labelledby="headingTwo">
-
-
 								<!-- pr_con -->
 								<div class="panel-body">
-
-
 									<!-- 지원자_S-->
 									<div class="col-lg-6">
 										APPLICANTS
@@ -188,14 +195,9 @@ $(document).ready(
 										<%
 											}//IF 문
 										}//for 문.
-							%>
-
+										%>
 									</div>
 									<!-- 지원자_E  -->
-
-
-
-
 									<!-- 팀원_S   -->
 									<div class="col-lg-6">
 										COWORKERS
@@ -225,11 +227,8 @@ $(document).ready(
 										}//IF 종료
 									}// 팀원for문  종료
 					%>
-
 									</div>
 									<!-- 팀원_E -->
-
-
 								</div>
 								<!-- pj_con_end -->
 							</div>
@@ -278,14 +277,8 @@ $(document).ready(
 
 						</div>
 					</div>
-
-
-
-
 				</div>
 				<!-- 전체 판낼 BG: 회색 -->
-
-
 			</section>
 			<!-- /wrapper -->
 		</section>

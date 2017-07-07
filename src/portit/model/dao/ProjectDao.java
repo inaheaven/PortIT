@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -123,7 +125,7 @@ public class ProjectDao {
 		ArrayList<Integer> tag_id_list = new ArrayList<>();
 		try {
 			// project 테이블에서 필요한 값 불러오기
-			String proj_sql = "SELECT PROJ_TITLE, PROJ_INTRO, PROJ_REGDATE, PROJ_STARTDATE, PROJ_PERIOD, PROJ_REGENDDATE FROM PROJECT WHERE PROJ_ID = ?";
+			String proj_sql = "SELECT PROJ_TITLE, PROJ_INTRO, TO_CHAR(TRUNC(PROJ_REGDATE)) AS PROJ_REGDATE, TO_CHAR(TRUNC(PROJ_STARTDATE)) AS PROJ_STARTDATE, PROJ_PERIOD, TO_CHAR(TRUNC(PROJ_REGENDDATE)) AS PROJ_REGENDDATE FROM PROJECT WHERE PROJ_ID = ?";
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(proj_sql);
 			stmt.setString(1, req_proj_id); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
@@ -135,6 +137,12 @@ public class ProjectDao {
 				proj_startdate = rs.getString("proj_startdate");
 				proj_period = rs.getInt("proj_period");
 				proj_regenddate = rs.getString("proj_regenddate");
+				Date proj_regdate_format = new SimpleDateFormat("yy/MM/dd").parse(proj_regdate);
+				proj_regenddate = new SimpleDateFormat("yyyy-MM-dd").format(proj_regdate_format);
+				Date proj_startdate_format = new SimpleDateFormat("yy/MM/dd").parse(proj_startdate);
+				proj_startdate = new SimpleDateFormat("yyyy-MM-dd").format(proj_startdate_format);
+				Date proj_regenddate_format = new SimpleDateFormat("yy/MM/dd").parse(proj_regenddate);
+				proj_regenddate = new SimpleDateFormat("yyyy-MM-dd").format(proj_regenddate_format);
 			}
 		} catch (Exception e) {
 			System.out.println("project 테이블 쿼리 오류" + e);
@@ -218,6 +226,7 @@ public class ProjectDao {
 					proj_env_list.add(env);
 					env_tag.setProj_env_list(proj_env_list);
 					env_list.add(env_tag);
+					System.out.println(env+"??????!!!!!!!!DAO");
 				} else if (tag_type.equals("field")) {
 					field = proj_tag_name;
 					proj_field_list.add(field);
