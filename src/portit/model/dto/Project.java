@@ -24,20 +24,12 @@ public class Project {
 
 	private String tag_name;
 	private String prof_name;
+	
+	private String ml_path;
+	private int d_day;
 
-	public String getProf_name() {
-		return prof_name;
-	}
-	public void setProf_name(String prof_name) {
-		this.prof_name = prof_name;
-	}
-	public String getTag_name() {
-		return tag_name;
-	}
-	public void setTag_name(String tag_name) {
-		this.tag_name = tag_name;
-	}
-
+	
+	
 	/** 모집인원수 */
 	private int proj_numofperson;
 	/** 작성자명 */
@@ -56,78 +48,14 @@ public class Project {
 	private List<Media> proj_mediae;
 	/** 공동 작업자 목록 */
 	private List<Profile> proj_coworkers;
-	
-	public int getProj_numofperson() {
-		return proj_numofperson;
-	}
-	public String getProj_authorName() {
-		return proj_authorName;
-	}
-	public String getProj_authorIcon() {
-		return proj_authorIcon;
-	}
-	public List<Tag> getProj_tags_env() {
-		return proj_tags_env;
-	}
-	public List<Tag> getProj_tags_language() {
-		return proj_tags_language;
-	}
-	public List<Tag> getProj_tags_tool() {
-		return proj_tags_tool;
-	}
-	public List<Tag> getProj_tags_field() {
-		return proj_tags_field;
-	}
-	public List<Media> getProj_mediae() {
-		return proj_mediae;
-	}
-	public List<Profile> getProj_coworkers() {
-		return proj_coworkers;
-	}
-	
-	public void setProj_numofperson(int proj_numofperson) {
-		this.proj_numofperson = proj_numofperson;
-	}
-	public void setProj_authorName(String proj_authorName) {
-		this.proj_authorName = proj_authorName;
-	}
-	public void setProj_authorIcon(String proj_authorIcon) {
-		this.proj_authorIcon = proj_authorIcon;
-	}
-	public void setProj_tags_env(List<Tag> proj_tags_env) {
-		this.proj_tags_env = proj_tags_env;
-	}
-	public void setProj_tags_language(List<Tag> proj_tags_language) {
-		this.proj_tags_language = proj_tags_language;
-	}
-	public void setProj_tags_tool(List<Tag> proj_tags_tool) {
-		this.proj_tags_tool = proj_tags_tool;
-	}
-	public void setProj_tags_field(List<Tag> proj_tags_field) {
-		this.proj_tags_field = proj_tags_field;
-	}
-	public void setProj_mediae(List<Media> proj_mediae) {
-		this.proj_mediae = proj_mediae;
-	}
-	public void setProj_coworkers(List<Profile> proj_coworkers) {
-		this.proj_coworkers = proj_coworkers;
-	}
-	
-
 	public int getProj_id() {
 		return proj_id;
 	}
 	public void setProj_id(int proj_id) {
 		this.proj_id = proj_id;
 	}
-	public void setProj_id(int proj_id) {
-		this.proj_id = proj_id;
-	}
 	public String getProj_title() {
 		return proj_title;
-	}
-	public void setProj_title(String proj_title) {
-		this.proj_title = proj_title;
 	}
 	public void setProj_title(String proj_title) {
 		this.proj_title = proj_title;
@@ -168,4 +96,88 @@ public class Project {
 	public void setProj_regenddate(Date proj_regenddate) {
 		this.proj_regenddate = proj_regenddate;
 	}
+	public String getTag_name() {
+		return tag_name;
+	}
+	public void setTag_name(String tag_name) {
+		this.tag_name = tag_name;
+	}
+	public String getProf_name() {
+		return prof_name;
+	}
+	public void setProf_name(String prof_name) {
+		this.prof_name = prof_name;
+	}
+	public String getMl_path() {
+		return ml_path;
+	}
+	public void setMl_path(String ml_path) {
+		this.ml_path = ml_path;
+	}
+	public int getD_day() {
+		return d_day;
+	}
+	public void setD_day(int d_day) {
+		this.d_day = d_day;
+	}
+	public int getProj_numofperson() {
+		return proj_numofperson;
+	}
+	public void setProj_numofperson(int proj_numofperson) {
+		this.proj_numofperson = proj_numofperson;
+	}
+	public String getProj_authorName() {
+		return proj_authorName;
+	}
+	public void setProj_authorName(String proj_authorName) {
+		this.proj_authorName = proj_authorName;
+	}
+	public String getProj_authorIcon() {
+		return proj_authorIcon;
+	}
+	public void setProj_authorIcon(String proj_authorIcon) {
+		this.proj_authorIcon = proj_authorIcon;
+	}
+	public List<Tag> getProj_tags_env() {
+		return proj_tags_env;
+	}
+	public void setProj_tags_env(List<Tag> proj_tags_env) {
+		this.proj_tags_env = proj_tags_env;
+	}
+	public List<Tag> getProj_tags_language() {
+		return proj_tags_language;
+	}
+	public void setProj_tags_language(List<Tag> proj_tags_language) {
+		this.proj_tags_language = proj_tags_language;
+	}
+	public List<Tag> getProj_tags_tool() {
+		return proj_tags_tool;
+	}
+	public void setProj_tags_tool(List<Tag> proj_tags_tool) {
+		this.proj_tags_tool = proj_tags_tool;
+	}
+	public List<Tag> getProj_tags_field() {
+		return proj_tags_field;
+	}
+	public void setProj_tags_field(List<Tag> proj_tags_field) {
+		this.proj_tags_field = proj_tags_field;
+	}
+	public List<Media> getProj_mediae() {
+		return proj_mediae;
+	}
+	public void setProj_mediae(List<Media> proj_mediae) {
+		this.proj_mediae = proj_mediae;
+	}
+	public List<Profile> getProj_coworkers() {
+		return proj_coworkers;
+	}
+	public void setProj_coworkers(List<Profile> proj_coworkers) {
+		this.proj_coworkers = proj_coworkers;
+	}
+	
+	
+	
+	
+	
+
 }

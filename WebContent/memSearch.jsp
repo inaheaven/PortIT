@@ -79,7 +79,11 @@
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memTag">
+			         						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+2].tag_name}&nbsp;</a>
+			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -113,7 +117,6 @@
 							'click',
 							function() {
 								var icon = $(this).find('i');
-
 								if (icon.hasClass("fa-chevron-down")) {
 									icon.addClass("fa-chevron-up").removeClass(
 											"fa-chevron-down");

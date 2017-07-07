@@ -5,7 +5,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="header.jsp"></jsp:include>
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/style-responsive.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
+
+<script src="assets/js/chart-master/Chart.js"></script>
 <link href="assets/css/search.css" rel="stylesheet">
 <jsp:useBean id="member_viewDao" class="portit.model.dao.ViewDao" />
 	<section class="container">
@@ -80,14 +91,15 @@
 				<!-- END - 조건 검색 box -->
 <%	
  	List list = member_viewDao.member_info();
+	List tag_list = member_viewDao.member_info_tag();
  
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
- 		int numPerPage = 4;				//한 페이지당 보여질 글의 갯수
+ 		int numPerPage = 16;			//한 페이지당 보여질 글의 갯수
  		int totalPage = 0;				//전체 페이지 수
  		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
- 		int beginPerPage = 401;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
- 		int pagePerBlock = 3;			//한 블록당 묶을 페이지 수 (값이 3이므로 1,2,3 / 4,5,6 / ..페이지로 묶임)
+ 		int beginPerPage = 1;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
+ 		int pagePerBlock = 10;			//한 블록당 묶을 페이지 수 (값이 3이므로 1,2,3 / 4,5,6 / ..페이지로 묶임)
  		int totalBlock = 0;				//전체 블럭 갯수
  		int nowBlock = 0;				//현재 블럭
  		
@@ -121,7 +133,14 @@
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># <%=mem.getTag_name()%>&nbsp;</a></div>
+			         					<div class="memTag">
+			         					<%
+										for(int j = (3*i)+0 ; j<=(3*i)+2; j++){
+											Member mem_tag = (Member) tag_list.get(j);	
+										%>
+			         						<a href="javascript:tag_name('')"># <%=mem_tag.getTag_name() %>&nbsp;</a>
+			         					<%} %>
+			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount"><%=mem.getProf_follower() %></span>
@@ -139,7 +158,7 @@
  				<!-- 페이지네이션 -->
  	<div align="center">		
  		<% if(nowBlock > 0){%>
- 			<a href="/page?page=memList?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
+ 			<a href="/memList.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개</a>
  		<% }%> 
  		:::
  		<%
@@ -147,13 +166,13 @@
  				if((nowBlock*pagePerBlock)+i == totalPage)
  					break;
  		%>
- 				<a href="/page?page=memList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+ 				<a href="/memList.jsp?page=memList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
  		<%
  			}
  		%>
  		::: 
  		<% if(totalBlock > nowBlock+1){%>
- 			<a href="/page?page=memList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
+ 			<a href="/memList.jsp?page=memList?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개</a>
  		<% }%>
  	</div>	
  		
@@ -161,6 +180,8 @@
  		<!--/wrapper -->
  
 	</section>
+	
+	
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
 
@@ -180,7 +201,6 @@
 											.removeClass("fa-chevron-up");
 								}
 							});
-
 					event.stopPropagation();
 					
 				});

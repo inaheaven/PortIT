@@ -76,14 +76,16 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list[i].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
-											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
+											<a href="javascript:pf(${port_list[i].pf_id})">${port_list[i].pf_title} </a>
 										</div>
 										<div class="pfBottom">
 											<span class="pfmemName">
-												<a href="javascript:prof_name('${port_list[i].prof_name}')">
+												<a href="javascript:prof('${port_list[i].prof_id}')">
 													${port_list[i].prof_name} </a>
 											</span> 
 											<span class="pfLikeCount">
@@ -96,7 +98,7 @@
 						</div>		
 					</c:forEach>
 			</c:if>	
-	<!-- 검색 결과가 4개 이상일때 -->
+	<!-- 검색 결과가 4개 이하일때 -->
 		<c:if test="${port_list.size() != 0 && port_list.size()>0 && port_list.size()<=3}">
 				<c:forEach begin="0" end="${port_list.size()-1 }" var="i" >	
 						<!-- 포트폴리오 -->
@@ -106,14 +108,16 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list[i].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${port_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
-											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
+											<a href="javascript:pf('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
 										</div>
 										<div class="pfBottom">
 											<span class="pfmemName">
-												<a href="javascript:prof_name('${port_list[i].prof_name}')">
+												<a href="javascript:prof('${port_list[i].prof_id}')">
 													${port_list[i].prof_name} </a>
 											</span> 
 											<span class="pfLikeCount">
@@ -131,7 +135,7 @@
 			</c:if>	
 						</div>
 						<form post="method" name="move" action="/SearchView">
-							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="totalsearch" value="${search}"/>
 							<input type ="hidden" name="cmd" value="PFSEARCH"/>
 						
 							<div class="text-right">
@@ -155,8 +159,11 @@
 		          				<div class="simple-content text-center">	      
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memName">
+			         						<a href="javascript:prof('${mem_list[i].prof_id}')"> ${mem_list[i].prof_name}</a></div>
+				         						<a href="javascript:tag('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+												<a href="javascript:tag('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+												<a href="javascript:tag('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+2].tag_name}&nbsp;</a>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -176,8 +183,13 @@
 		          				<div class="simple-content text-center">	      
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memName">
+			         					<a href="javascript:prof('${mem_list[i].prof_id}')"> ${mem_list[i].prof_name}</a></div>
+			         					<div class="memTag">
+			         						<a href="javascript:tag('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+2].tag_name}&nbsp;</a>
+			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -193,7 +205,7 @@
 			</c:if>	
 						</div>					
 						<form post="method" name="move" action="/SearchView">
-							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="totalsearch" value="${search}"/>
 							<input type ="hidden" name="cmd" value="MEMSEARCH"/>
 						
 							<div class="text-right">
@@ -212,25 +224,35 @@
 			<c:if test="${proj_list.size() != 0 && proj_list.size()>0 && proj_list.size()>3}">
 				<c:forEach begin="0" end="3" var="i" >	
 					<!-- 프로젝트 -->
-						<div class="col-md-12 mb">
-	          				<div class="project-list">
-		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
-		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
-		          		
-		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
-	          					</span>
+					<div class="col-md-12 mb">
+		          			<div class="project-list">
+								<div class="col-md-9 mb" >
+			          				<span class="pjInfoText">
+			          					<div class="pjTitle"><a href="javascript:proj('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
+			          					<div class="pjmemName">
+			          					<a href="">
+			          					<span class="fa fa-user">${proj_list[i].prof_name }</span>&nbsp;&nbsp;
+			          						</a></div>	          		
+			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
+			          					<div class="pjTag">
+			          						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+2].tag_name}&nbsp;</a>
+			          					</div>         					
+	          						</span>
+	          					</div>
+	          				<div class = "col-md-3">
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
 	          							<tr><td>백엔드개발자</td></tr>
 	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
-	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
+	          							<tr><td>마감일까지 D&nbsp;-&nbsp;${proj_list[i].d_day}</td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
 	          					</span>
-	          				</div>          			
-						</div>
+	          				</div>	          				
+	          			</div>          			
+					</div>
 						<br><br>
 				</c:forEach>
 			</c:if>	
@@ -239,24 +261,32 @@
 				<c:forEach begin="0" end="${proj_list.size()-1 }" var="i" >	
 					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
-	          				<div class="project-list">
-		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
-		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
-		          		
-		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
-	          					</span>
+		          			<div class="project-list">
+								<div class="col-md-9 mb" >
+			          				<span class="pjInfoText">
+			          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
+			          					<div class="pjmemName"><span class="fa fa-user">${proj_list[i].prof_name }</span>&nbsp;&nbsp;<a href=""></a></div>
+			          							          		
+			          					<div class="pjIntro">${proj_list[i].proj_intro}</div><br><br><br>
+			          					<div class="pjTag">
+			          						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+0].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+1].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${proj_list_tag[(3*i)+2].tag_name}&nbsp;</a>
+			          					</div>         					
+	          						</span>
+	          					</div>
+	          				<div class = "col-md-3">
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
 	          							<tr><td>백엔드개발자</td></tr>
 	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
-	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
+	          							<tr><td>마감일까지 D&nbsp;-&nbsp;${proj_list[i].d_day}</td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
 	          					</span>
-	          				</div>          			
-						</div>
+	          				</div>	          				
+	          			</div>          			
+					</div>
 						<br><br>
 				</c:forEach>
 			</c:if>	
@@ -264,7 +294,7 @@
 				검색된 결과가 없습니다.
 			</c:if>			
 						<form post="method" name="move" action="/SearchView">
-							<input type ="hidden" name="list2" value="${search}"/>
+							<input type ="hidden" name="totalsearch" value="${search}"/>
 							<input type ="hidden" name="cmd" value="PROJSEARCH"/>
 						
 							<div class="text-right">
@@ -279,19 +309,41 @@
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
+
+	<!-- 상세페이지로 이동하기 위한 폼 -->	
+	<form name="pf_info" method="post" action="/detailView">
+		<input type="hidden" name="pf_id" /> 
+		<input type ="hidden" name="cmd" value="PORTFOLIO"/>	
+	</form>
+	<form name="tag_info" method="post" action="/detailView">
+		<input type="hidden" name="tag_name" /> 
+		<input type ="hidden" name="cmd" value="MEMBER"/>	
+	</form>
+	<form name="prof_info" method="post" action="/detailView">
+		<input type="hidden" name="prof_id" /> 	
+		<input type ="hidden" name="cmd" value="PROJECT"/>
+	</form>
+	<form name="proj_info" method="post" action="/detailView">
+		<input type="hidden" name="proj_id" /> 
+		<input type ="hidden" name="cmd" value="TAG"/>	
+	</form>
 	
 	<!-- 포트폴리오 정보 -->
 	<script>	
-	function pf_title(pf_id){
-		document.pf_title.pf_id.value = pf_id;
-		document.pf_title.submit();
+	function pf(pf_id){
+		document.pf_info.pf_id.value = pf_id;
+		document.pf_info.submit();
 	}
-	function tag_name(tag_name){
-		document.tag_name.pf_id.value = tag_name;
-		document.tag_name.submit();	
+	function tag(tag_name){
+		document.tag_info.tag_name.value = tag_name;
+		document.tag_info.submit();	
 	}
-	function prof_name(prof_name){
-		document.prof_name.pf_id.value = prof_name;
-		document.prof_name.submit();
+	function prof(prof_id){
+		document.prof_info.prof_id.value = prof_id;
+		document.prof_info.submit();
+	}
+	function proj(proj_id){
+		document.proj_info.proj_id.value = proj_id;
+		document.proj_info.submit();
 	}
 	</script>

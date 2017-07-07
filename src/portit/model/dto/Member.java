@@ -13,12 +13,20 @@ public class Member {
 	private String mem_email;
 	private String mem_password;
 	private Date mem_regdate;
-
+	private int prof_id;
 	private String tag_name;
 	private String prof_img;
 	private String prof_name;
 	private int prof_follower;
 	private Date prof_regdate;
+	
+	
+	public int getProf_id(){
+		return prof_id;
+	}
+	public void setProf_if(int prof_id){
+		this.prof_id = prof_id;
+	}
 	
 	
 	public int getMem_id() {

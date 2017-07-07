@@ -50,11 +50,17 @@ public class SearchAllController extends HttpServlet{
 		List port_list = searchDao.searchAll_port(search,lineup);
 		List mem_list = searchDao.searchAll_member(search,lineup);
 		List proj_list = searchDao.searchAll_proj(search,lineup);
+		List port_list_tag = searchDao.searchAll_port_tag(search,lineup);
+		List mem_list_tag = searchDao.searchAll_member_tag(search,lineup);
+		List proj_list_tag = searchDao.searchAll_proj_tag(search,lineup);
 	
 		//Model에서 가지고 온 정보를 View에 넘겨주기 위해 변수 선언
 		req.setAttribute("port_list", port_list);
 		req.setAttribute("mem_list", mem_list);
 		req.setAttribute("proj_list", proj_list);			
+		req.setAttribute("port_list_tag", port_list_tag);			
+		req.setAttribute("mem_list_tag", mem_list_tag);			
+		req.setAttribute("proj_list_tag", proj_list_tag);			
 		
 		
 		if(cmd.equals("SEARCH")){
