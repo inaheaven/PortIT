@@ -11,6 +11,15 @@ import java.util.List;
 
 
 public class Project {
+	
+	private int mem_id;
+	
+	
+	
+	
+	
+	
+
 	private int pf_id;
 	private String proj_app_confirm;
 	
@@ -36,6 +45,20 @@ public class Project {
 	private ArrayList<String> proj_tool;
 	private ArrayList<String> proj_field;
 	private ArrayList<Integer> proj_numofperson;
+	
+	
+	
+	
+	public int getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(int mem_id) {
+		this.mem_id = mem_id;
+	}
+	
+	
+	
+	
 	public int getPf_id() {
 		return pf_id;
 	}

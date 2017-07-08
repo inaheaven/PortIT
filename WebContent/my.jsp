@@ -30,7 +30,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/myproj?cmd=list&mem_id=2" id="myProjList"> 
+				<a href="/myproj?cmd=list" id="myProjList"> 
 				<!-- 로그인 아이디 값을 매개 변수로 줘야함 -->
 				    <span>My Project</span>	
 				</a>
