@@ -422,6 +422,7 @@ function fnSelectSnsInfo(snsName){
 						&nbsp;&nbsp;&nbsp;
 						<button type="reset" class="btn cancel">다시 쓰기</button>
 
+
 					</div>
 				</form>
 			</div>
