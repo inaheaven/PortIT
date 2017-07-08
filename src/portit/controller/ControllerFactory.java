@@ -33,7 +33,7 @@ public class ControllerFactory {
 		else if (param.equals("projectAdd")) {
 			return new ProjectAddController();
 		}
-		if (param.equals("profileView")) {
+		else if (param.equals("profileView")) {
 			return new ProfileViewController();
 		}
 		else if (param.equals("portfolioView")) {

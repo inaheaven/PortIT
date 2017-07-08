@@ -30,6 +30,7 @@ public class Portfolio {
 	private String pf_url;
 	/** 포트폴리오 작성자명 */
 	private String pf_prof_name;
+	private String pf_prof_nick;
 	/** 포트폴리오 작성자 사진 */
 	private String pf_prof_img;
 	/** 포트폴리오 태그 목록 - 개발환경 */
@@ -79,6 +80,9 @@ public class Portfolio {
 	}
 	public String getPf_prof_name() {
 		return pf_prof_name;
+	}
+	public String getPf_prof_nick() {
+		return pf_prof_nick;
 	}
 	public String getPf_prof_img() {
 		return pf_prof_img;
@@ -147,6 +151,10 @@ public class Portfolio {
 	}
 	public Portfolio setPf_prof_name(String pf_prof_name) {
 		this.pf_prof_name = pf_prof_name;
+		return this;
+	}
+	public Portfolio setPf_prof_nick(String pf_prof_nick) {
+		this.pf_prof_nick = pf_prof_nick;
 		return this;
 	}
 	public Portfolio setPf_prof_img(String pf_prof_img) {
