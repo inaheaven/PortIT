@@ -1,13 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.*"%>
+<%@ page import="portit.model.dto.*"%>
 <!DOCTYPE html>
 <html lang="ko">
+<%
+request.setCharacterEncoding("UTF-8");
+Profile profile = (Profile) request.getAttribute("profile");
+%>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DASHGUM - Bootstrap Admin Template</title>
+<title><%= profile.getProf_name() %></title>
 
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -41,17 +47,22 @@
 		<!-- Profile header -->
 		<section id="memHeader">
 			<div class="headerContainer">
-				<img src="http://loremflickr.com/640/640/cat" alt="사용자_이름" class="img-circle" />
-				<h1>사용자_이름</h1>
-				<h3 class="username">USERNAME</h3>
+				<img src="<%= profile.getProf_img() %>" alt="<%= profile.getProf_name() %>" class="img-circle" />
+				<h1><%= profile.getProf_name() %></h1>
+				<h3 class="username"><%= profile.getProf_nick() %></h3>
 				<h4 class="tags">
-					<span>#<a href="">태그</a>&nbsp;</span>
-					<span>#<a href="">태그</a>&nbsp;</span>
-					<span>#<a href="">태그</a>&nbsp;</span>					
+					<%
+						for (Tag tag : profile.getProf_tags_language()) {
+					%>
+					<span>#<a href=""><%=tag.getTag_name()%></a>&nbsp;
+					</span>
+					<%
+						}
+					%>
 				</h4>
 				<h4>
 					<i class="fa fa-user"></i>
-					42
+					<%= profile.getProf_follower() %>
 				</h4>
 				<div class="actions">
 					<button type="button" class="btn common" onclick="location.href='#'">+ Follow</button>					
@@ -84,35 +95,25 @@
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="intro">
-							<p>생의 무엇을 창공에 이 광야에서 무엇을 그리하였는가? 얼음 그들의 발휘하기 얼마나 이상 있으랴? 살
-								평화스러운 넣는 부패뿐이다. 방지하는 동력은 그들의 긴지라 옷을 있을 끓는 지혜는 아름다우냐? 사랑의 없는 이는
-								때문이다. 곳으로 만천하의 돋고, 보라. 인간의 우리 끓는 사막이다.</p>
-	
-							<p>꽃 역사를 눈이 이상의 뭇 속에 있다. 붙잡아 풀이 군영과 피고, 듣는다. 넣는 아니한 얼음 오직
-								황금시대다. 있으며, 힘차게 뼈 위하여 것은 주는 이상을 것이다. 이상을 인생을 목숨이 너의 웅대한 가치를 맺어,
-								부패뿐이다. 우리의 위하여, 사는가 튼튼하며, 예수는 못하다 위하여 설산에서 듣는다.</p>
-	
-							<p>이상 곳으로 힘차게 따뜻한 열락의 바로 이것을 이성은 것이다. 물방아 지혜는 끓는 트고, 봄바람을 충분히
-								수 것이다. 창공에 이것을 없으면, 바이며, 방황하였으며, 사막이다. 있으며, 할지니, 청춘의 약동하다. 예수는
-								풀밭에 주는 것은 행복스럽고 그들은 약동하다. 두손을 새가 풍부하게 하였으며, 가치를 어디 그러므로 가슴에 것이다.
-								날카로우나 심장의 꽃 피부가 길을 목숨이 칼이다.</p>
+							<%= profile.getProf_intro() %>
 						</div>
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="skillset">
-							<c:forEach>
-							<c:if><c:set/></c:if>
+							<%
+								for (String key : profile.getProf_skillset().keyset()) {
+							%>
 							<div class="skill clearfix">
 								<div class="col-xs-3 text-center">
-									<span class="">태그</span>
+									<span class=""><%= key %></span>
 								</div>
 								<div class="col-xs-9">
 									<div class="progress">
-										<div class="progress-bar" style="width: 60%;"></div>
+										<div class="progress-bar" style="width: <%= 100 * (profile.getProf_skillset().get(key)/10) %>%;"></div>
 									</div>
 								</div>
 							</div>
-							</c:forEach>
+							<% } %>
 						</div>
 					</div>
 				</div>
@@ -132,9 +133,58 @@
 						<li><a href="#">인기순</a></li>
 					</ul>
 				</div>
-				<jsp:include page="pfGrid.jsp">
-					<jsp:param name="sort" value="" />
-				</jsp:include>
+				<%
+					List<Portfolio> myPf = profile.getProf_myPf();
+					if (myPf != null && myPf.size() > 0) {
+						for (int idx = 0; idx < myPf.size(); idx++) {
+							Portfolio pf = myPf.get(idx);
+							if (idx == 0 || idx % 4 == 0) {
+				%>
+				<div class="row recoList">
+					<%
+							}
+					%>
+					<div class="col-md-3 mb">
+						<div class="portfolio-simple">
+							<div class="pfImg"></div>
+							<div class="pfInfo">
+								<div class="simple-content">
+									<div class="pfTag">
+										<%
+											for (Tag tag : pf.getPf_tags_language()) {
+										%>
+										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
+										<%
+											}
+										%>
+									</div>
+									<div class="pfTitle">
+										<a href=""><%=pf.getPf_title()%></a>
+									</div>
+									<div class="pfBottom">
+										<span class="pfmemName"><a href=""><%=pf.getPf_authorName()%></a></span>
+										<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=pf.getPf_like()%></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- portfolio-simple end -->
+					<%
+							if (idx == 0 || idx % 4 == 0) {
+					%>
+				</div>
+				<%
+							}
+						}
+					} else {
+				%>
+				<div class="row recoList">
+					<p class="text-center">아직 등록한 포트폴리오가 없습니다.</p>
+				</div>
+				<%
+					}
+				%>
 			</div>
 		</section><!-- /Portfolios -->
 		<hr />
@@ -151,9 +201,59 @@
 						<li><a href="#">인기순</a></li>
 					</ul>
 				</div>
-				<jsp:include page="projGrid.jsp">
-					<jsp:param name="sort" value="" />
-				</jsp:include>
+				<%
+					List<Project> myProj = profile.getProf_myProj();
+					if (myProj != null && myProj.size() > 0) {
+						for (int idx = 0; idx < myProj.size(); idx++) {
+							Project proj = myProj.get(idx);
+				%>
+				<div class="row">
+					<div class="col-md-12 mb">
+						<div class="project-list">
+							<span class="pjInfoText">
+								<div class="pjTitle">
+									<a href=""><%= proj.getProj_title() %></a>
+								</div>
+								<div class="pjmemName">
+									<span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""><%= proj.getProj_authorName() %></a>
+								</div>
+								<div class="pjIntro"><%= proj.getProj_intro() %></div>
+								<div class="pjTag">
+									<% for (Tag tag : proj.getProj_tags_language()) { %>
+									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
+									<% } %>
+								</div>
+							</span> <span class="pjInfoTable">
+								<table class="table text-center">
+									<% for (Tag tag : proj.getProj_tags_field()) { %>
+									<tr>
+										<td><span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span> / <%= proj.getProj_numofperson() %> 명</td>
+									</tr>
+									<% } %>
+									<tr>
+										<td>마감일까지 D - <%= %></td>
+									</tr>
+									<tr>
+										<td></td>
+									</tr>
+								</table>
+							</span>
+						</div>
+					</div>
+				</div>
+				<%
+						}
+					} else {
+				%>
+				<div class="row">
+					<div class="col-md-12">
+						<p class="text-center">아직 등록한 프로젝트가 없습니다.</p>
+					</div>
+				</div>
+				<%
+					}
+				%>
+				<!-- project-list end -->
 			</div>
 		</section><!-- /Projects -->
 		<hr />
@@ -166,10 +266,10 @@
 				<div class="row">
 					<div class="col-md-8 center">
 						<div class="actions col-md-12 text-center">
-							<a href="#" title="Website"><span class="fa fa-globe"></span></a>
-							<a href="#" title="GitHub"><span class="fa fa-github"></span></a>
-							<a href="#" title="Facebook"><span class="fa fa-facebook-square"></span></a>
-							<a href="#" title="Email"><span class="fa fa-envelope"></span></a>
+							<a href="<%= profile.getProf_website() %>" title="Website"><span class="fa fa-globe"></span></a>
+							<a href="<%= profile.getProf_github() %>" title="GitHub"><span class="fa fa-github"></span></a>
+							<a href="<%= profile.getProf_facebook() %>" title="Facebook"><span class="fa fa-facebook-square"></span></a>
+							<a href="mailto:<%= profile.getProf_email() %>" title="Email"><span class="fa fa-envelope"></span></a>
 							<a href="#" title="Message"><span class="fa fa-comment"></span></a>
 							<a data-toggle="collapse" href="#Share" title="Share"><span class="fa fa-share-alt"></span></a>
 							<div class="collapse pull-right" id="Share">
