@@ -27,6 +27,7 @@ public class PortfolioDao {
 	
 	private MediaDao mediaDao;
 	private ProfileDao profileDao;
+	private TagDao tagDao;
 	
 	public PortfolioDao() {
 		try {
@@ -34,6 +35,7 @@ public class PortfolioDao {
 			conn = pool.getConnection();
 			mediaDao = new MediaDao();
 			profileDao = new ProfileDao();
+			tagDao = new TagDao();
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -339,32 +341,17 @@ public class PortfolioDao {
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "language");
-					stmt.setString(2, pf_tags_language.get(i).getTag_name());
-					stmt.setString(3, pf_tags_language.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_language.get(i));
 				}
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "tool");
-					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
-					stmt.setString(3, pf_tags_tool.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_tool.get(i));
 				}
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "field");
-					stmt.setString(2, pf_tags_field.get(i).getTag_name());
-					stmt.setString(3, pf_tags_field.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_field.get(i));
 				}
 			}
 			// 태그 사용 추가
@@ -458,40 +445,26 @@ public class PortfolioDao {
 			stmt.setInt(7, portfolio.getPf_id());
 			rows += stmt.executeUpdate();
 
-			// 등록되지 않은 태그 추가
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
 			List<Tag> pf_tags_tool = portfolio.getPf_tags_tool();
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
+			// 등록되지 않은 태그 추가			
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "language");
-					stmt.setString(2, pf_tags_language.get(i).getTag_name());
-					stmt.setString(3, pf_tags_language.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_language.get(i));
 				}
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "tool");
-					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
-					stmt.setString(3, pf_tags_tool.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_tool.get(i));
 				}
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "field");
-					stmt.setString(2, pf_tags_field.get(i).getTag_name());
-					stmt.setString(3, pf_tags_field.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_field.get(i));
 				}
 			}
+			
 			// 태그 사용 수정
 			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < pf_tags_language.size(); i++) {

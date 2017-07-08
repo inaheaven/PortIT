@@ -29,7 +29,10 @@ public class TagDao {
 		List<Tag> tagList = new ArrayList<Tag>();
 		Tag tag = null;
 		try {
-			sql = "SELECT * FROM tag_use tu INNER JOIN tag t ON tu.tag_id=t.tag_id WHERE t.tag_type=? AND tu.tag_use_type_id=?";
+			sql = "SELECT * FROM tag_use tu "
+					+ "INNER JOIN tag t "
+					+ "ON tu.tag_id=t.tag_id "
+					+ "WHERE t.tag_type=? AND tu.tag_use_type_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tagType);
 			stmt.setInt(2, articleId);
@@ -107,7 +110,7 @@ public class TagDao {
 		try {
 			sql = "INSERT INTO tag_use"
 					+ "(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level, proj_numofperson) "
-					+ "VALUES(seq_ml_id.nextVal,?,?,?)";
+					+ "VALUES(seq_tag_use_id.nextVal,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, articleType);
 			stmt.setInt(2, articleId);
@@ -126,7 +129,8 @@ public class TagDao {
 	public int updateTagUse(Connection conn, String articleType, int articleId, Tag tag) {
 		int rows = 0;
 		try {
-			sql = "UPDATE tag_use SET prof_skill_level=? WHERE tag_use_type=? AND tag_use_type_id=?";
+			sql = "UPDATE tag_use SET prof_skill_level=?, proj_numofperson=? "
+					+ "WHERE tag_use_type=? AND tag_use_type_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, tag.getProf_skill_level());
 			stmt.setString(2, articleType);

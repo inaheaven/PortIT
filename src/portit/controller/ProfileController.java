@@ -26,7 +26,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import portit.model.dao.ProfileDao;
 import portit.model.dto.Profile;
 
-@WebServlet("/register")
+//@WebServlet("/register")
 public class ProfileController extends HttpServlet {
 	/**
 	 * 업로드할 파일이 저장될 디렉토리 이름(/{UPLOAD_DIR})
