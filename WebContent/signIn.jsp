@@ -36,11 +36,15 @@
 							aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="signUpModalLabel">회원 가입</h4>
 					</div>
-					<form id="join" method="post" action="/join">
+					
+					
+					
+					<form id="join" method="post"  action="/join">
 						<div class="modal-body">						
 							<div class="form-group">
 								<label class="control-label">Email ID</label><br> 
-								<input type="text" name="userid" id="userid" class="form-control">
+								<input type="text" name="userid" id="userid" class="form-control"
+								>
 							</div>
 							<div class="form-group">
 								<label class="control-label">Password</label><br> 
@@ -62,3 +66,8 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
