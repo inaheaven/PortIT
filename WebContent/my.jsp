@@ -36,7 +36,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/serial?cmd=MYBOOKMARK" id="myBookmark">
+				<a href="/bmk?cmd=MYBOOKMARK" id="myBookmark">
 				    <span>Bookmarks</span>
 				</a>
 			</li>                  
