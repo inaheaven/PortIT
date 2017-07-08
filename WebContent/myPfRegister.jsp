@@ -38,33 +38,40 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">개발 환경</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 ">
-							</div>
-						</div>
-						<div class="form-group">
 							<label class="col-md-3 control-label">개발 언어</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) C, JAVA, Python 등">
+								<input class="form-control tagInput" id="pf_language1" type="text" name="tag_lang">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_language2" type="text" name="tag_lang">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_language3" type="text" name="tag_lang">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="pf_language4" type="text" name="tag_lang">&nbsp;,&nbsp;					
+								<input class="form-control tagInput" id="pf_language5" type="text" name="tag_lang">
+								<br><br>* 태그로 작성됩니다. ( 예시 : C, JAVA, Python 등 )
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 도구</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) Eclipse, Visual Studio2013 등">
+								<input class="form-control tagInput" id="pf_tool1" type="text" name="tag_tool">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_tool2" type="text" name="tag_tool">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_tool3" type="text" name="tag_tool">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="pf_tool4" type="text" name="tag_tool">&nbsp;,&nbsp;					
+								<input class="form-control tagInput" id="pf_tool5" type="text" name="tag_tool">
+								<br><br>* 태그로 작성됩니다. ( 예시 : Window7, OracleDB, Eclipse, Visual Studio2013  등 )
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">수행 인원</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" name="pf_numofperson">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">담당 업무</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) 기획, 설계, 프론트, 백엔드 등">
+								<input class="form-control tagInput" id="pf_field1" type="text" name="tag_field">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_field2" type="text" name="tag_field">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_field3" type="text" name="tag_field">
+								<br><br>* 태그로 작성됩니다. ( 예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )
 							</div>
 						</div>
 						<div class="form-group">

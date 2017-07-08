@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
+
 <script src="assets/js/search.js"></script>
 <script language="javascript">
 
@@ -34,7 +35,7 @@ function profRegister(){
 }
 
 function profalter(){
-	location.href="/myProf.jsp";
+	location.href="/register?cmd=UPDATE"
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
 //skill 추가
@@ -287,27 +288,15 @@ function fnSelectSnsInfo(snsName){
 				<form action="/register?cmd=REGISTER" method="post" name="frof_reg"	class="form-horizontal style-form" enctype="multipart/form-data"> 
 
 					<!-- 프로필id hidden -->
-					<div class="form-group">
-						<label class="col-md-3 control-label"></label>
-						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="prof_id">
-						</div>
-					</div>
+					<input type="hidden" class="form-control" name="prof_id">
+				
 					<!-- 등록일자  hidden -->
-					<div class="form-group">
-						<label class="col-md-3 control-label"></label>
-						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="prof_regdate">
-						</div>
-					</div>
+					<input type="hidden" class="form-control" name="prof_regdate">
+				
 					<!-- 팔로워 수 hidden (초기값 0) -->
-					<div class="form-group">
-						<label class="col-md-3 control-label"></label>
-						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="prof_follower"
-								value="0">
-						</div>
-					</div>
+					<input type="hidden" class="form-control" name="prof_follower" value="0">
+				
+				
 					<div class="form-group">
 						<label class="col-md-3 control-label">프로필 사진</label>
 						<div class="col-md-9">
@@ -345,24 +334,34 @@ function fnSelectSnsInfo(snsName){
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 언어</label>
 						<div class="col-md-9">
-							<input class="form-control" id="Prof_language" type="text"
-								name="tag_name" placeholder="ex) C, JAVA, Python 등">
+							<input class="form-control tagInput" id="Prof_language1" type="text" name="tag_lang">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_language2" type="text" name="tag_lang">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_language3" type="text" name="tag_lang">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_language4" type="text" name="tag_lang">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_language5" type="text" name="tag_lang">
+							<br><br>* 태그로 작성됩니다. ( 예시 : C, JAVA, Python 등 )
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 툴</label>
 						<div class="col-md-9">
-							<input class="form-control" id="disabledInput" type="text"
-								name="tag_name2"
-								placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등">
+							<input class="form-control tagInput" id="Prof_tool1" type="text" name="tag_tool">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_tool2" type="text" name="tag_tool">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_tool3" type="text" name="tag_tool">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_tool4" type="text" name="tag_tool">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_tool5" type="text" name="tag_tool">
+							<br><br>* 태그로 작성됩니다. ( 예시 : Window7, OracleDB, Eclipse, Visual Studio2013  등 )
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 분야</label>
 						<div class="col-md-9">
-							<input class="form-control" id="disabledInput" type="text"
-								name="tag_name3"
-								placeholder="ex) 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등">
+							<input class="form-control tagInput" id="Prof_field1" type="text" name="tag_field">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_field2" type="text" name="tag_field">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_field3" type="text" name="tag_field">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_field4" type="text" name="tag_field">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_field5" type="text" name="tag_field">
+							<br><br>* 태그로 작성됩니다. ( 예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )
 						</div>
 					</div>
 				
@@ -383,16 +382,13 @@ function fnSelectSnsInfo(snsName){
 								<input class="form-control" id="disabledInput" type="text"
 									name="prof_website" />
 							</div>
-						</div>
+						</div><br><br><br>
 						<div class="col-md-12" align="right">
-							<input type="button" value="더 보기" class="btn btn-info common"
-								data-toggle="collapse" data-target="#theRemote" />
+							<button type="button" class="btn common" data-toggle="collapse" data-target="#theRemote" >더보기</button>
 						</div>
 					</div>
 				
 					<div class="form-group">
-						
-							
 						<label class="col-md-3 control-label">Skill</label>
 						<div class="col-md-9">
 							<div class="col-md-3"><input class="form-control" id="skill" type="text" name = "tag_name4" placeholder="기술명" ></div>
@@ -418,9 +414,7 @@ function fnSelectSnsInfo(snsName){
 								<div class="col-md-9" id="skillList"></div>
 								
 						<div class="col-md-12" align="right">
-							<input type="button" value="목록 추가" class="btn btn-info common"
-								data-toggle="collapse" data-target="#Skill" />
-							
+							<button type="button" class="btn common" data-toggle="collapse" data-target="#Skill">목록 추가</button>
 						</div>
 					</div>
 					<div class="form-group text-center buttonDiv">
