@@ -8,6 +8,8 @@ import portit.model.dao.MassageDao;
 import portit.model.dto.MessageDto;
 
 public class MessageModel {
+	//0705
+	
 	
 	private HttpServletRequest req;
 	private int login_id;			//Dao로 전달할 mem_id (Who)
@@ -96,13 +98,40 @@ public class MessageModel {
 	//msgList.jsp
 	public ArrayList roomList(String keyField, String keyWord){
 		//Login_id에 생성된 모든 대화방List를 리턴한다.
-		
 		//dao 변수1: Type(이름,nick), 변수2: 검색어.
 		
+	
+		//1. 발신자 목록.
+		ArrayList senderList;
 		
-		this.list=dao.roomList(keyField,keyWord);
+		//2. 발신자
+		String mem_id_sender;
 		
-		return this.list;
+		//3. 발신자의 대화방
+		ArrayList chatroom;
+		
+		//대화방 list (by login_ID)
+		ArrayList Roomlist = new ArrayList();
+		
+		
+		//로그인한 계정의  발신자목록 (검색조건 추가가능)
+		//필터링 : 발신자 목록에서 한다.
+		senderList = (ArrayList) dao.getSenderList(this.login_id,keyField, keyWord);
+	
+		
+		for(int i=0; i<senderList.size();i++){
+			//첫번째 발신자
+			mem_id_sender= (String)senderList.get(i);	
+			
+			//대화방
+			chatroom= dao.getChatRoom(keyField,keyWord,mem_id_sender,false);
+			
+			//ADD 대화방 리스트
+			Roomlist.add(chatroom);
+		}
+		
+		
+		return Roomlist;
 	}
 	
 	
