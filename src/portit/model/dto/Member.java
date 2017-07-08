@@ -1,6 +1,7 @@
 package portit.model.dto;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 회원 DTO
@@ -19,7 +20,7 @@ public class Member {
 	private String prof_name;
 	private int prof_follower;
 	private Date prof_regdate;
-	
+	private List<String> tags;
 	
 	public int getProf_id(){
 		return prof_id;
@@ -83,6 +84,12 @@ public class Member {
 	}
 	public void setProf_regdate(Date prof_regdate) {
 		this.prof_regdate = prof_regdate;
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 }
 

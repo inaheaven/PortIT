@@ -91,7 +91,6 @@
 			<!-- END - 조건 검색 box -->
 			<%	
  	List list = portfolio_viewDao.portfolio_info();
-	List tag_list = portfolio_viewDao.portfolio_info_tag();
  	
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
@@ -135,11 +134,9 @@
 						<div class="simple-content">
 						
 							<div class="pfTag">
-							<%
-							for(int j = (3*i)+0 ; j<=(3*i)+2; j++){
-								Portfolio port_tag = (Portfolio) tag_list.get(j);	
-							%>
-								<a href="javascript:tag_name('${port_list[i].tag_name}')">#<%=port_tag.getTag_name() %>&nbsp;</a>
+							
+							<% for(int j=0; j<port.getTags().size(); j++) { %>
+							<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
 							<%} %>
 							</div>
 

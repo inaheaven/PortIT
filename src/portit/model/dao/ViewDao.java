@@ -18,7 +18,7 @@ public class ViewDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
-	private ResultSet rs;
+	private ResultSet rs, rs2, rs3;
 	private DBConnectionMgr pool;
 	
 			
@@ -77,7 +77,9 @@ public class ViewDao {
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));
+				int pf_id = rs.getInt("pf_id");
 				
+				portfolio.setTags(getTag(pf_id));
 				list.add(portfolio);
 			}
 		}
@@ -93,47 +95,30 @@ public class ViewDao {
 		return list;
 	}
 	/**
-	 * 포트폴리오 정보를 불러오는 메서드 (태그 포함)	  
+	 *  포트폴리오 태그 조회
 	 */
-	public List portfolio_info_tag() {
-		ArrayList list = new ArrayList();
-		
-		String sql = "select distinct portfolio.pf_id, prof_name, pf_title, pf_like , tag.tag_name, ml_path, pf_regdate "
-				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
-				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
-				+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
-				+ "join tag on tag.tag_id = tag_use.tag_id  "
-				+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
-				+ "where tag_use_type ='portfolio' and ml_type = 'portf' "
-				+ "order by Pf_regdate desc";
-		
+	public List getTag(int pf_id) {
+
 		try {
-			
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' " + " AND tu.tag_use_type_id = ? "
+					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 ";
+
+			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				Portfolio portfolio = new Portfolio();
-				portfolio.setPf_id(rs.getInt("pf_id"));
-				portfolio.setMl_path(rs.getString("ml_path"));
-				portfolio.setTag_name(rs.getString("tag_name"));
-				portfolio.setPf_title(rs.getString("pf_title"));
-				portfolio.setPf_like(rs.getInt("pf_like"));
-				portfolio.setProf_name(rs.getString("prof_name"));
-				
-				list.add(portfolio);
+			pstmt.setInt(1, pf_id);
+			rs3 = pstmt.executeQuery();
+
+			List<String> tags = new ArrayList<>();
+			while (rs3.next()) {
+				tags.add(rs3.getString("tag_name"));
 			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("TAG() : 여기 에러나지마라 " + e);
 		}
-		
-		catch (Exception err) {
-			System.out.println("portfolio_info_tag() 에서 오류");
-			err.printStackTrace();
-		}
-		
-		finally {
-			freeConnection();
-		}
-		return list;
+		return null;
 	}
 	/**
 	 * 포트폴리오 정보를 불러오는 메서드 (하나의 포폴 조회)	  
@@ -183,12 +168,11 @@ public class ViewDao {
 	 */
 	public List member_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct prof_id, prof_img, prof_name,  prof_follower, prof_regdate  "
+		String sql = "select distinct mem_id, prof_id, prof_img, prof_name,  prof_follower  "
 				+ "from profile join tag_use  "
 				+ "on tag_use.tag_use_type_id = profile.prof_id "
 				+ "join tag  on tag.tag_id = tag_use.tag_id  "
-				+ "where (tag_use_type = 'developer')  "
-				+ "order by prof_regdate desc";
+				+ "where (tag_use_type = 'developer')  ";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -201,8 +185,12 @@ public class ViewDao {
 				member.setProf_name(rs.getString("prof_name"));
 				member.setProf_follower(rs.getInt("prof_follower"));
 				member.setProf_id(rs.getInt("prof_id"));
+				member.setMem_id(rs.getInt("mem_id"));
 				
-				list.add(member);
+				int prof_id = rs.getInt("prof_id");
+				
+				member.setTags(getTag(prof_id));
+				list.add(prof_id);
 			}
 		}
 
@@ -220,40 +208,27 @@ public class ViewDao {
 	/**
 	 * 전체 멤버를 보여주는 메서드(태그o)
 	 */
-	public List member_info_tag() {
-		ArrayList list = new ArrayList();
-		String sql = "select prof_id, prof_img, prof_name, tag.tag_name,  prof_follower, prof_regdate  "
-				+ "from profile join tag_use  "
-				+ "on tag_use.tag_use_type_id = profile.prof_id "
-				+ "join tag  on tag.tag_id = tag_use.tag_id  "
-				+ "where (tag_use_type = 'developer') "
-				+ "order by prof_regdate desc";
-		
+	public List getTag2(int prof_id) {
 		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'developer' " + " AND tu.tag_use_type_id = ? "
+					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 ";
+
+			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				Member member = new Member(); 
-				member.setTag_name(rs.getString("tag_name"));
-				member.setProf_img(rs.getString("prof_img"));
-				member.setProf_name(rs.getString("prof_name"));
-				member.setProf_follower(rs.getInt("prof_follower"));
-				member.setProf_id(rs.getInt("prof_id"));
-				
-				list.add(member);
+			pstmt.setInt(1, prof_id);
+			rs3 = pstmt.executeQuery();
+
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
 			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("getTag2에러(멤버) " + e);
 		}
-		
-		catch (Exception err) {
-			System.out.println("mem_info_tag() 에서 오류");
-			err.printStackTrace();
-		}
-		
-		finally {
-			freeConnection();
-		}
-		return list;
+		return null;
 	}
 
 	/**

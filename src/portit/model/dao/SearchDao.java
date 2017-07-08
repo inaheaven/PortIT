@@ -20,7 +20,7 @@ public class SearchDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
-	private ResultSet rs;
+	private ResultSet rs, rs3;
 	private DBConnectionMgr pool;
 
 	
@@ -50,7 +50,6 @@ public class SearchDao {
 			e.printStackTrace();
 		}
 	}
-
 	/**
 	 * 포트폴리오 검색결과  (태그 제외)
 	 */
@@ -59,7 +58,7 @@ public class SearchDao {
 		String sql = "";
 		
 		if(lineup == true){
-			sql = "select distinct prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
+			sql = "select distinct portfolio.pf_id, prof_name, pf_title, pf_like , ml_path, pf_regdate "
 					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
 					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
 					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
@@ -70,7 +69,7 @@ public class SearchDao {
 					+ "order by pf_regdate desc";
 		}
 		else{
-			sql = "select distinct prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
+			sql = "select distinct  portfolio.pf_id, prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
 					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
 					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
 					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
@@ -90,13 +89,16 @@ public class SearchDao {
 			while (rs.next()) {
 				Portfolio portfolio = new Portfolio(); 
 				
+				portfolio.setPf_id(rs.getInt("pf_id"));
 				portfolio.setMl_path(rs.getString("ml_path"));
 				//portfolio.setTag_name(rs.getString("tag_name"));
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));
 				portfolio.setPf_regdate(rs.getDate("pf_regdate"));
+				int pf_id = rs.getInt("pf_id");
 				
+				portfolio.setTags(getTag(pf_id));
 				list.add(portfolio);
 			}
 		}
@@ -114,61 +116,28 @@ public class SearchDao {
 	/**
 	 *  포트폴리오 태그 조회
 	 */
-	public List searchAll_port_tag(String keyword,boolean lineup) {
-		
-		String sql = "";
-		
-		if(lineup == true){
-			sql =  "select distinct prof_name, pf_title, pf_like , tag.tag_name, ml_path, pf_regdate "
-					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
-					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
-					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
-					+ "join tag on tag.tag_id = tag_use.tag_id  "
-					+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
-					+ "where tag_use_type ='portfolio'  and ml_type = 'portf' "
-					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
-					+ "order by Pf_regdate desc";
-		}
-		else{
-			sql =  "select distinct  pf_title, tag.tag_name"
-					+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
-					+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
-					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
-					+ "join tag on tag.tag_id = tag_use.tag_id  "
-					+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
-					+ "where tag_use_type ='portfolio'   and ml_type = 'portf' "
-					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
-					+ "order by portfolio.PF_LIKE desc";
-		}
-		
-		ArrayList list = new ArrayList();
+	public List getTag(int pf_id) {
+
 		try {
-			
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' " + " AND tu.tag_use_type_id = ? "
+					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 ";
+
+			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				Portfolio portfolio = new Portfolio(); 
-				
-				portfolio.setMl_path(rs.getString("ml_path"));
-				portfolio.setTag_name(rs.getString("tag_name"));
-				portfolio.setPf_title(rs.getString("pf_title"));
-				portfolio.setPf_like(rs.getInt("pf_like"));
-				portfolio.setProf_name(rs.getString("prof_name"));
-				
-				list.add(portfolio);
+			pstmt.setInt(1, pf_id);
+			rs3 = pstmt.executeQuery();
+
+			List<String> tags = new ArrayList<>();
+			while (rs3.next()) {
+				tags.add(rs3.getString("tag_name"));
 			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("TAG() : 여기 에러나지마라 " + e);
 		}
-		
-		catch (Exception err) {
-			System.out.println("searchAll_port_tag() 에서 오류");
-			err.printStackTrace();
-		}
-		
-		finally {
-			freeConnection();
-		}
-		return list;
+		return null;
 	}
 	
 	/**

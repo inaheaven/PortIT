@@ -51,9 +51,9 @@ public class Portfolio {
 	private String prof_nick;
     private String prof_name;
     private String tag_name;
-    
+    private int prof_id;
     private String ml_path;
-    
+    private List<String> tags;
     
 	public String getMl_path() {
 		return ml_path;
@@ -220,6 +220,18 @@ public class Portfolio {
 	}
 	public void setProf_nick(String prof_nick) {
 		this.prof_nick = prof_nick;
+	}
+	public int getProf_id() {
+		return prof_id;
+	}
+	public void setProf_id(int prof_id) {
+		this.prof_id = prof_id;
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 	
 }
