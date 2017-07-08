@@ -4,7 +4,6 @@ import java.util.Date;
 
 /**
  * 회원 DTO
- * @author gnsngck
  *
  */
 public class Member {

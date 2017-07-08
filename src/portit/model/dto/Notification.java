@@ -4,7 +4,6 @@ import java.util.Date;
 
 /**
  * 알림 dto
- * @author Suyeon
  *	
  *	** 변수 nt_type **
  *	1. 내 포폴 좋아요 : like

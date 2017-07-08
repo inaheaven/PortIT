@@ -91,9 +91,3 @@ public class AccountModel {
 	return IdentityVerification;
 	}
 }
-
-
-
-
-
-

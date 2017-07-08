@@ -53,6 +53,7 @@ public class MyProjectController extends HttpServlet {
 	String pf_id=null;
 	
 	ProjectModel model=new ProjectModel(req, login_id);
+
 	//dao 선언
 	Portfolio_ViewDao dao = new Portfolio_ViewDao();
 	ProjectDao daoPRO = new ProjectDao();

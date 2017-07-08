@@ -1,44 +1,50 @@
 package portit.controller;
 
 /**
- * 컨트롤러 인스턴스를 생성하는 팩토리
- * @author gnsngck
+ * 컨트롤러 팩토리
  *
  */
 public class ControllerFactory {
+
+	private static ControllerFactory instance = new ControllerFactory();
 	
-	/**
-	 * ControllerFactory의 생성자를 private로 외부 접근 차단
-	 */
 	private ControllerFactory() {}
 	
 	/**
-	 * private static ControllerFactory 인스턴스 생성
+	 * ControllerFactory의 인스턴스 획득
+	 * @return ControllerFactory의 인스턴스
 	 */
-	private static ControllerFactory instance = new ControllerFactory();
+	public static ControllerFactory getInstance() {
+		return instance;
+	}
 	
 	/**
-	 * 인스턴스를 가져다 쓸 수 있는 getter 메서드
-	 * @return ControllerFactory 인스턴스
+	 * Controller 인스턴스 생성
+	 * @param param 생성할 컨트롤러
+	 * @return 기능별 컨트롤러 인스턴스
 	 */
-    public static ControllerFactory getInstance() {
-    	return instance;
-    }
-
-    /**
-     * 기능별 컨트롤러 인스턴스 생성
-     * @param servletPath 클라이언트가 요청한 서블릿 주소
-     * @return 기능별 컨트롤러 인스턴스
-     */
-    /*
-	public Controller createController(String servletPath) {
-		if (servletPath.equals("")) {
-			return new InputController();
+	public Controller newController(String param) {
+		if (param.equals("profileAdd")) {
+			return new ProfileAddController();
+		}
+		else if (param.equals("portfolioAdd")) {
+			return new PortfolioAddController();
+		}
+		else if (param.equals("projectAdd")) {
+			return new ProjectAddController();
+		}
+		if (param.equals("profileView")) {
+			return new ProfileViewController();
+		}
+		else if (param.equals("portfolioView")) {
+			return new PortfolioViewController();
+		}
+		else if (param.equals("projectView")) {
+			return new ProjectViewController();
 		}
 		else {
 			return null;
 		}
 	}
-	*/
-
+	
 }

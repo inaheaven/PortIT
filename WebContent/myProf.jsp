@@ -35,7 +35,11 @@ function profRegister(){
 }
 
 function profalter(){
+<<<<<<< HEAD
 	location.href="/register?cmd=UPDATE"
+=======
+	location.href="/myProf.jsp";
+>>>>>>> refs/remotes/origin/dev-portfolio
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
 //skill 추가
@@ -288,6 +292,7 @@ function fnSelectSnsInfo(snsName){
 				<form action="/register?cmd=REGISTER" method="post" name="frof_reg"	class="form-horizontal style-form" enctype="multipart/form-data"> 
 
 					<!-- 프로필id hidden -->
+<<<<<<< HEAD
 					<input type="hidden" class="form-control" name="prof_id">
 				
 					<!-- 등록일자  hidden -->
@@ -301,8 +306,15 @@ function fnSelectSnsInfo(snsName){
 						<label class="col-md-3 control-label">프로필 사진</label>
 						<div class="col-md-9">
 							<input type="file" class="form-control" name="prof_img">
+=======
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input type="hidden" class="form-control" name="prof_id">
+>>>>>>> refs/remotes/origin/dev-portfolio
 						</div>
 					</div>
+<<<<<<< HEAD
 					<div class="form-group">
 						<label class="col-md-3 control-label">배경 사진</label>
 						<div class="col-md-9">
@@ -422,6 +434,142 @@ function fnSelectSnsInfo(snsName){
 						&nbsp;&nbsp;&nbsp;
 						<button type="reset" class="btn cancel">다시 쓰기</button>
 
+=======
+					<!-- 등록일자  hidden -->
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input type="hidden" class="form-control" name="prof_regdate">
+						</div>
+					</div>
+					<!-- 팔로워 수 hidden (초기값 0) -->
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input type="hidden" class="form-control" name="prof_follower"
+								value="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">프로필 사진</label>
+						<div class="col-md-9">
+							<input type="file" class="form-control" name="prof_img">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">배경 사진</label>
+						<div class="col-md-9">
+							<input type="file" class="form-control" name="prof_background">
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">이름</label>
+						<div class="col-md-9">
+							<input class="form-control" name="prof_name" type="text"
+								placeholder="한글로 입력하세요." id="prof_name" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">닉네임</label>
+						<div class="col-md-9">
+							<input class="form-control" name="prof_nick" type="text" id="prof_nick"
+								placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" >
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">소개</label>
+						<div class="col-md-9">
+							<textarea class="form-control" rows="5" name="prof_intro"
+								placeholder="2000byte 이내로 입력하세요."></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">관심 언어</label>
+						<div class="col-md-9">
+							<input class="form-control" id="Prof_language" type="text"
+								name="tag_name" placeholder="ex) C, JAVA, Python 등">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">관심 툴</label>
+						<div class="col-md-9">
+							<input class="form-control" id="disabledInput" type="text"
+								name="tag_name2"
+								placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">관심 분야</label>
+						<div class="col-md-9">
+							<input class="form-control" id="disabledInput" type="text"
+								name="tag_name3"
+								placeholder="ex) 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등">
+						</div>
+					</div>
+				
+					<div class="form-group">
+						<label class="col-md-3 control-label">Facebook</label>
+						<div class="col-md-9">
+							<input class="form-control" id="disabledInput" type="text"
+								name="prof_facebook" />
+						</div>
+						<div id="theRemote" class="collapse">
+							<label class="col-md-3 control-label">Github</label>
+							<div class="col-md-9">
+								<input class="form-control" id="disabledInput" type="text"
+									name="prof_github" />
+							</div>
+							<label class="col-md-3 control-label">기타 내 홈페이지</label>
+							<div class="col-md-9">
+								<input class="form-control" id="disabledInput" type="text"
+									name="prof_website" />
+							</div>
+						</div>
+						<div class="col-md-12" align="right">
+							<input type="button" value="더 보기" class="btn btn-info common"
+								data-toggle="collapse" data-target="#theRemote" />
+						</div>
+					</div>
+				
+					<div class="form-group">
+						
+							
+						<label class="col-md-3 control-label">Skill</label>
+						<div class="col-md-9">
+							<div class="col-md-3"><input class="form-control" id="skill" type="text" name = "tag_name4" placeholder="기술명" ></div>
+							<div class="col-md-7"><input class="form-control" id="score" type="text" name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" ></div>
+							<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">등록</button></div>
+						</div>
+						<div id="Skill" class="collapse">
+							<label class="col-md-3 control-label"></label>
+							<div class="col-md-9">
+								<div class="col-md-3"><input class="form-control" id="skill2" type="text" name = "tag_name5" placeholder="기술명" ></div>
+								<div class="col-md-7"><input class="form-control" id="score2" type="text" name = "prof_skill_level2" placeholder="숫자 1~5까지 입력하세요" ></div>
+								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill2()">등록</button></div>
+							</div>
+							<label class="col-md-3 control-label"></label>
+							<div class="col-md-9">
+								<div class="col-md-3"><input class="form-control" id="skill3" type="text" name = "tag_name6" placeholder="기술명" ></div>
+								<div class="col-md-7"><input class="form-control" id="score3" type="text" name = "prof_skill_level3" placeholder="숫자 1~5까지 입력하세요" ></div>
+								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill3()">등록</button></div>
+							</div>
+						</div>
+							<br><br>
+							<label class="col-md-3 control-label"></label>
+								<div class="col-md-9" id="skillList"></div>
+								
+						<div class="col-md-12" align="right">
+							<input type="button" value="목록 추가" class="btn btn-info common"
+								data-toggle="collapse" data-target="#Skill" />
+							
+						</div>
+					</div>
+					<div class="form-group text-center buttonDiv">
+						<button type="submit" class="btn common" >등록하기</button>
+						&nbsp;&nbsp;&nbsp;
+						<button type="reset" class="btn cancel">다시 쓰기</button>
+>>>>>>> refs/remotes/origin/dev-portfolio
 
 					</div>
 				</form>

@@ -17,7 +17,6 @@ import portit.model.dto.Member;
 import portit.model.dto.Portfolio;
 /**
  * 
- * @author isyi
  * 검색어를 받아 검색화면에 전달 해주기 위한 컨트롤러
  *
  */

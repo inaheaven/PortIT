@@ -73,7 +73,7 @@ public class BookmarkController extends HttpServlet {
 					resultPortfolio = new ArrayList<>();
 				}
 				req.setAttribute("portfolio", resultPortfolio);
-				
+			
 				resp.sendRedirect("/bmk?cmd=MYBOOKMARK");
 			}
 /*			url="myBookmark.jsp";
@@ -82,6 +82,7 @@ public class BookmarkController extends HttpServlet {
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			view.forward(req, resp);
 */			
+
 		}
 	}
 

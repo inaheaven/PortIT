@@ -12,8 +12,7 @@ import portit.model.dto.Portfolio;
 import portit.model.dto.Tag;
 
 /**
- * 
- * @author hyang
+ * 북마크 DAO
  *
  */
 public class BookmarkDao {
