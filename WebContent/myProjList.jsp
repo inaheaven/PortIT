@@ -63,11 +63,11 @@ $(document).ready(
 			
 	}
 </script>
-	<%--sidenavbar start--%>
-	<jsp:include page="my.jsp"></jsp:include>
-	<%--sidenavbar end--%>
-	<form name="frmPJ" id="frmPJ" action="/myproj">
-		<%
+<%--sidenavbar start--%>
+<jsp:include page="my.jsp"></jsp:include>
+<%--sidenavbar end--%>
+<form name="frmPJ" id="frmPJ" action="/myproj">
+	<%
 		//1.내가 등록한 프로젝트 리스트
 		ArrayList pjList = (ArrayList)request.getAttribute("regPjInform");
 		
@@ -76,31 +76,31 @@ $(document).ready(
 		
 		%>
 
-		<!--fnParameter()에서 접근해서 value삽입  -->
-		<input type="hidden" id="cmd" name="cmd" value=""> <input
-			type="hidden" id="cmdAction" name="cmdAction" value=""> <input
-			type="hidden" id="param" name="param" value=""> <input
-			type="hidden" id="param2" name="param2" value="">
+	<!--fnParameter()에서 접근해서 value삽입  -->
+	<input type="hidden" id="cmd" name="cmd" value=""> <input
+		type="hidden" id="cmdAction" name="cmdAction" value=""> <input
+		type="hidden" id="param" name="param" value=""> <input
+		type="hidden" id="param2" name="param2" value="">
 
 
-		<section id="main-content">
-			<section class="wrapper site-min-height">
-				<div class="col-md-12 col-sm-12 col-xs-12 mt projlist" id="pjbox">
+	<section id="main-content">
+		<section class="wrapper site-min-height">
+			<div class="col-md-12 col-sm-12 col-xs-12 mt projlist" id="pjbox">
 
-					<div class="projlist_top clearfix">
-						<button type="button" class="btn common"
-							onclick="location.href='/page?page=myProjRegister&mem_id=2'">프로젝트
-							등록하기</button>
-						<!-- mem_id 고치기 -->
-					</div>
+				<div class="projlist_top clearfix">
+					<button type="button" class="btn common"
+						onclick="location.href='/page?page=myProjRegister&mem_id=<%= session.getAttribute("loginId") %>'">프로젝트
+						등록하기</button>
+					<!-- mem_id 고치기 -->
+				</div>
 
-					<h3 class="formTitle text-center">내 프로젝트</h3>
+				<h3 class="formTitle text-center">내 프로젝트</h3>
 
-					<div class="proj_my">
-						<p>내가 등록한 프로젝트</p>
-						<div class="panel panel-default">
+				<div class="proj_my">
+					<p>내가 등록한 프로젝트</p>
+					<div class="panel panel-default">
 
-							<%
+						<%
 						for(int i=0; i<pjList.size();i++){
 							//첫번째 pj
 							ArrayList pj =(ArrayList) pjList.get(i);
@@ -110,36 +110,36 @@ $(document).ready(
 							ArrayList peoples= (ArrayList)  pj.get(1);
 						%>
 
-							<!-- R프로젝트:반복시작 -->
-							<div class="panel-heading clearfix" role="tab">
-								<h4 class="panel-title">
-									<span class="col-sm-3"> <a
-										href="javascript:fnParameter('pj_detail' , '' , '<%=pj_Inform.getProj_id()%>', '')">
-											<%=pj_Inform.getProj_title() %>
-									</a>
-									</span> <span class="col-sm-6"> 지원 마감일까지 D-<%=pj_Inform.getD_day() %></span>
-									<span class="col-md-3 text-right">
-										<button type="button" class="btn common"
-											onclick="fnParameter('modify','','<%=pj_Inform.getProj_id()%>', '')">수정</button>
-										<button type="button" class="btn common"
-											onclick="fnParameter('list','delete','<%=pj_Inform.getProj_id()%>', '')">삭제</button>
-										<a class="updown collapsed" data-toggle="collapse"
-										data-parent="#accordion" href="#pj_<%=i%>"
-										aria-expanded="false" aria-controls="collapseOne"> <i
-											class="fa fa-chevron-down"></i>
-									</a>
-									</span>
-								</h4>
-							</div>
-							<div id="pj_<%=i%>" class="panel-collapse collapse"
-								role="tabpanel" aria-labelledby="headingTwo">
-								<!-- pr_con -->
-								<div class="panel-body">
-									<!-- 지원자_S-->
-									<div class="col-lg-6">
-										APPLICANTS
-										<hr>
-										<%
+						<!-- R프로젝트:반복시작 -->
+						<div class="panel-heading clearfix" role="tab">
+							<h4 class="panel-title">
+								<span class="col-sm-3"> <a
+									href="javascript:fnParameter('pj_detail' , '' , '<%=pj_Inform.getProj_id()%>', '')">
+										<%=pj_Inform.getProj_title() %>
+								</a>
+								</span> <span class="col-sm-6"> 지원 마감일까지 D-<%=pj_Inform.getD_day() %></span>
+								<span class="col-md-3 text-right">
+									<button type="button" class="btn common"
+										onclick="fnParameter('modify','','<%=pj_Inform.getProj_id()%>', '')">수정</button>
+									<button type="button" class="btn common"
+										onclick="fnParameter('list','delete','<%=pj_Inform.getProj_id()%>', '')">삭제</button>
+									<a class="updown collapsed" data-toggle="collapse"
+									data-parent="#accordion" href="#pj_<%=i%>"
+									aria-expanded="false" aria-controls="collapseOne"> <i
+										class="fa fa-chevron-down"></i>
+								</a>
+								</span>
+							</h4>
+						</div>
+						<div id="pj_<%=i%>" class="panel-collapse collapse"
+							role="tabpanel" aria-labelledby="headingTwo">
+							<!-- pr_con -->
+							<div class="panel-body">
+								<!-- 지원자_S-->
+								<div class="col-lg-6">
+									APPLICANTS
+									<hr>
+									<%
 										//해당프로젝트의 지원자 리스트.
 										for(int j=0; j<peoples.size();j++){
 											
@@ -149,27 +149,27 @@ $(document).ready(
 											// 지원자라면...
 											if("N".equals(p1.getApp_confirm())){
 											%>
-										<!-- 지원자 반복. -->
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7"><%=p1.getNick() %></div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default"
-												onclick="fnParameter('list','join','<%=p1.getMem_id()%>', '')">수락</button>
-										</div>
-										<!-- 지원자 반복끝 -->
-										<%
+									<!-- 지원자 반복. -->
+									<div class="col-lg-3">
+										<i class="fa fa-envelope-o"></i>
+									</div>
+									<div class="col-lg-7"><%=p1.getNick() %></div>
+									<div class="col-lg-2">
+										<button type="button" class="btn btn-default"
+											onclick="fnParameter('list','join','<%=p1.getMem_id()%>', '')">수락</button>
+									</div>
+									<!-- 지원자 반복끝 -->
+									<%
 											}//IF 문
 										}//for 문.
 										%>
-									</div>
-									<!-- 지원자_E  -->
-									<!-- 팀원_S   -->
-									<div class="col-lg-6">
-										COWORKERS
-										<hr>
-										<%
+								</div>
+								<!-- 지원자_E  -->
+								<!-- 팀원_S   -->
+								<div class="col-lg-6">
+									COWORKERS
+									<hr>
+									<%
 										//해당프로젝트의 지원자 리스트.
 										for(int j=0; j<peoples.size();j++){
 											
@@ -180,75 +180,72 @@ $(document).ready(
 										%>
 
 
-										<!-- 팀원반복 -->
-										<div class="col-lg-3">
-											<i class="fa fa-envelope-o"></i>
-										</div>
-										<div class="col-lg-7"><%=p1.getNick() %></div>
-										<div class="col-lg-2">
-											<button type="button" class="btn btn-default"
-												onclick="fnParameter('list','mem_delete','<%=pj_Inform.getProj_id()%>', '<%=p1.getMem_id()%>')">삭제</button>
-										</div>
-										<!-- 팀원반복 끝-->
-										<%
+									<!-- 팀원반복 -->
+									<div class="col-lg-3">
+										<i class="fa fa-envelope-o"></i>
+									</div>
+									<div class="col-lg-7"><%=p1.getNick() %></div>
+									<div class="col-lg-2">
+										<button type="button" class="btn btn-default"
+											onclick="fnParameter('list','mem_delete','<%=pj_Inform.getProj_id()%>', '<%=p1.getMem_id()%>')">삭제</button>
+									</div>
+									<!-- 팀원반복 끝-->
+									<%
 										}//IF 종료
 									}// 팀원for문  종료
 					%>
-									</div>
-									<!-- 팀원_E -->
 								</div>
-								<!-- pj_con_end -->
+								<!-- 팀원_E -->
 							</div>
-							<!-- acodianHead_end -->
+							<!-- pj_con_end -->
+						</div>
+						<!-- acodianHead_end -->
 
 
-							<%
+						<%
 						}//PF LIST
 				%>
-						</div>
-						<!-- RegPj_end -->
 					</div>
-					<!-- my -->
+					<!-- RegPj_end -->
+				</div>
+				<!-- my -->
 
-					<!-- 내가 지원한 PJ -->
-					<hr class="line" />
-					<div class="proj_apply">
-						<p>내가 지원한 프로젝트</p>
-						<div class="panel panel-default">
+				<!-- 내가 지원한 PJ -->
+				<hr class="line" />
+				<div class="proj_apply">
+					<p>내가 지원한 프로젝트</p>
+					<div class="panel panel-default">
 
-							<%  for(int i=0; i<applyPj.size();i++){
+						<%  for(int i=0; i<applyPj.size();i++){
 							Project app_PJ = (Project)applyPj.get(i);
 							
 							
 							System.out.println("JSP  "+app_PJ.getProj_id());
 						%>
 
-							<div class="panel-heading clearfix" role="tab" id="headingOne">
-								<h4 class="panel-title">
-									<span class="col-sm-3"> <a
-										href="javascript:fnParameter('pj_detail' , '' , '<%=app_PJ.getProj_id()%>', '')">
-											<%=app_PJ.getProj_title() %>
-									</a>
-									</span> <span class="col-sm-6"> D-<%=app_PJ.getD_day() %></span> <span
-										class="col-md-3 text-right">
-										<button type="button" class="btn common"
-											onclick="fnParameter('list','cancle','<%=app_PJ.getProj_id()%>','')">지원
-											취소</button>
-									</span>
-								</h4>
-							</div>
+						<div class="panel-heading clearfix" role="tab" id="headingOne">
+							<h4 class="panel-title">
+								<span class="col-sm-3"> <a
+									href="javascript:fnParameter('pj_detail' , '' , '<%=app_PJ.getProj_id()%>', '')">
+										<%=app_PJ.getProj_title() %>
+								</a>
+								</span> <span class="col-sm-6"> D-<%=app_PJ.getD_day() %></span> <span
+									class="col-md-3 text-right">
+									<button type="button" class="btn common"
+										onclick="fnParameter('list','cancle','<%=app_PJ.getProj_id()%>','')">지원
+										취소</button>
+								</span>
+							</h4>
+						</div>
 
-							<%
+						<%
 						}
 							%>
 
-						</div>
 					</div>
 				</div>
-				<!-- 전체 판낼 BG: 회색 -->
-			</section>
-			<!-- /wrapper -->
+			</div>
+			<!-- 전체 판낼 BG: 회색 -->
 		</section>
-
-
-
+		<!-- /wrapper -->
+	</section>

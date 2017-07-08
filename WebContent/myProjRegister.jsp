@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-
+<script src="assets/js/jquery-3.2.1.js"></script>
 <script>
 	var i = 1;
 	$(document).ready(function() {
@@ -29,11 +29,9 @@
 				alert("모집 분야수를 1개 이상으로 제한합니다.")
 			}
 		});
-
 		$('#btnSave').click(function(){
 			document.getElementById("final_result").value=prof_arr;
 			document.getElementById("final_result_id").value=prof_id_arr;
-			
 		})
 		
 });
@@ -147,7 +145,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 개발 언어</label>
 								<div class="col-md-9">
-									<input class="form-control tagInput" id="proj_language1" type="text" name="tag_lang">&nbsp;,&nbsp;							
+									<input class="form-control tagInput" id="proj_language1" type="text" name="tag_lang" required="true">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_language2" type="text" name="tag_lang">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_language3" type="text" name="tag_lang">&nbsp;,&nbsp;
 									<input class="form-control tagInput" id="proj_language4" type="text" name="tag_lang">&nbsp;,&nbsp;					
@@ -158,7 +156,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 개발 도구</label>
 								<div class="col-md-9">
-									<input class="form-control tagInput" id="proj_tool1" type="text" name="tag_tool">&nbsp;,&nbsp;							
+									<input class="form-control tagInput" id="proj_tool1" type="text" name="tag_tool" required="true">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_tool2" type="text" name="tag_tool">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_tool3" type="text" name="tag_tool">&nbsp;,&nbsp;
 									<input class="form-control tagInput" id="proj_tool4" type="text" name="tag_tool">&nbsp;,&nbsp;					

@@ -9,14 +9,16 @@
 <aside>
 <%		
 			//String pageName = (String)session.getAttribute("pageName");
-			String pageName = (String)request.getAttribute("pageName");			
+			String pageName = (String)request.getAttribute("pageName");	
 %>
+
+
 	<div id="sidebar" >
 		<!-- sidebar menu start-->
 		<ul class="sidebar-menu">       
 			<div class="myImg">
 				<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-				<h5 class="centered">김수연 님</h5>              	  
+				<h5 class="centered"><%= session.getAttribute("loginEmail")%> 님</h5>             
 			</div>       
 			<hr class="line" />
 			<li class="">
@@ -30,8 +32,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/myproj?cmd=list&mem_id=2" id="myProjList"> 
-				<!-- 로그인 아이디 값을 매개 변수로 줘야함 -->
+				<a href="/myproj?cmd=list&mem_id=<%= session.getAttribute("loginId") %>" id="myProjList"> 
 				    <span>My Project</span>	
 				</a>
 			</li>
