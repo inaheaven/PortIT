@@ -59,6 +59,9 @@
         }
         
         function fnSubmit() {
+        	
+        	
+        	
         	var pw = document.getElementById("userpw").value;
         	var pwcf = document.getElementById("userpwcf").value;
         	
