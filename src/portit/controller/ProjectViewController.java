@@ -26,7 +26,7 @@ public class ProjectViewController implements Controller {
 		req.setAttribute("project", project);
 		
 		// 뷰 URL 반환
-		String viewUrl = "fwd:/pfDetail.jsp";
+		String viewUrl = "fwd:/projDetail.jsp";
 		return viewUrl;
 	}
 
