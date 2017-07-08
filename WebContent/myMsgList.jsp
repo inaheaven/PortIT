@@ -11,7 +11,12 @@
 <jsp:useBean id="dto2" class="portit.model.dto.MessageDto"/>
 
 <%
+//0705
+
 //컨트롤러에서 돌아옴
+
+System.out.println("MSG.JSP 접근");
+
 String keyField = request.getParameter("keyField");
 String keyWord = request.getParameter("keyWord");
 %>
@@ -69,17 +74,28 @@ String keyWord = request.getParameter("keyWord");
 						<%
 						
 						ArrayList roomList; 
+						ArrayList chatRoom = new ArrayList(); 
+						MessageDto dto3;
+						//인스턴스 생성이 필요없다. 인스턴스주소를 받아줄 변수만 필요하다.
+						
+						
 						
 						//대화방 목록.(수신메세지만 담겨있다.)
 						roomList= (ArrayList)session.getAttribute("RoomList");
+						
+						System.out.println(roomList);
+
+						chatRoom= (ArrayList) roomList.get(0);	//대화방.
+						dto3= (MessageDto) chatRoom.get(0);	//첫번째 메세지.(모두 수신메세지)
+						String name2= dto3.getSender_Name();	//메세지 발신자.
+						
+						
 						
 						
 						int msgNum;
 						int mem_id_Sender;
 						
-						MessageDto dto3;
-						//인스턴스 생성이 필요없다. 인스턴스주소를 받아줄 변수만 필요하다.
-						
+				
 						
 						
 						
@@ -119,11 +135,16 @@ String keyWord = request.getParameter("keyWord");
 								break;
 							
 							
-							ArrayList chatRoom = new ArrayList(); 
+					
 						
+							
+							
 							chatRoom= (ArrayList) roomList.get(i);	//대화방.
 							dto3= (MessageDto) chatRoom.get(0);	//첫번째 메세지.(모두 수신메세지)
 							String name= dto3.getSender_Name();	//메세지 발신자.
+							
+							
+							
 							
 							mem_id_Sender = dto3.getMem_id_sender();
 							

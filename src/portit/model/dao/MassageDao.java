@@ -12,7 +12,9 @@ import portit.model.db.DBConnectionMgr;
 import portit.model.dto.MessageDto;
 
 public class MassageDao{
-			
+//0705
+	
+	
 			
 /*
  insertMsg()		: ~에게 메세지 보내기.
@@ -40,6 +42,10 @@ public class MassageDao{
 		}
 	}
 	
+	
+	
+	
+	
 	//싱글톤 실험.
 	private static MassageDao instance = new MassageDao();
 	
@@ -55,8 +61,14 @@ public class MassageDao{
 	
 	
 	
+	
+	
+	
+/*	
 	//roomList : 대화방목록
 	public ArrayList roomList(String keyField, String keyWord){
+		//이걸 모델로 뺴야한다.
+		
 		
 		//대화방 list 준비.
 		ArrayList Roomlist = new ArrayList();
@@ -65,21 +77,29 @@ public class MassageDao{
 		ArrayList senderList;
 		
 		
+		
+		
 		//로그인한 계정의  발신자목록 (검색조건 추가가능)
 		//필터링 : 발신자 목록에서 한다.
 		senderList = (ArrayList) getSenderList(this.login_id,keyField, keyWord);
 	
 		
-		
 		for(int i=0; i<senderList.size();i++){
 			String mem_id_sender= (String)senderList.get(i);
 			
-			
 			//해당 발신자의 대화방을 Roomlist에 담는다..
 			Roomlist.add(getChatRoom(keyField,keyWord,mem_id_sender,false));
+			
+			
 		}
 		return Roomlist;
 	}
+	*/
+	
+	
+	
+	
+	
 	
 
 
@@ -87,7 +107,7 @@ public class MassageDao{
 	public void insertMsg(MessageDto dto){
 		String sql = "insert into Message"
 			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-			+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
+			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
 	
 		try{
 			con = pool.getConnection();
@@ -97,24 +117,6 @@ public class MassageDao{
 			pstmt.setInt(2, dto.getMem_id_receiver());
 			pstmt.setString(3, dto.getMsg_content());
 			pstmt.setString(4, dto.getMsg_isread());
-			pstmt.executeUpdate();
-			
-			sql = "SELECT msg_id FROM message WHERE mem_id_sender = ? and mem_id_receiver = ? ORDER BY mem_id DESC" ;
-			pstmt = con.prepareStatement(sql);
-	 		pstmt.setInt(1, dto.getMem_id_sender());
-			pstmt.setInt(2, dto.getMem_id_receiver());
-			rs = pstmt.executeQuery();
-			int msg_id = 0;
-			if(rs.next()){
-				msg_id = rs.getInt("msg_id");
-			}
-					
-			// 메세지 보내면 Notification 테이블에도 insert 하기
-			sql = "INSERT INTO notification(nt_id, mem_id_sender, mem_id_receiver, nt_date, nt_type, nt_type_id, nt_isread) "
-					+ "VALUES(seq_nt_id.nextVal, ? ,?, sysdate, 'message', ?, 'f')";
-			pstmt.setInt(1, dto.getMem_id_sender());
-			pstmt.setInt(2, dto.getMem_id_receiver());
-			pstmt.setInt(3, msg_id);
 			pstmt.executeUpdate();
 		}
 		
@@ -159,8 +161,10 @@ public class MassageDao{
 				
 				sql="select * "
 					+"FROM Message "
-					+"WHERE (mem_id_sender ="+Msg_Sender;
-				sql=sql.concat(" and MEM_ID_RECEIVER="+String.valueOf(login_id)+")");
+					+"WHERE (mem_id_sender ="+Msg_Sender
+					+" and MEM_ID_RECEIVER="+String.valueOf(login_id)+")";
+				
+				System.out.println("dao"+ sql);
 				
 				//true일때 송신메세지가 출력된다.
 				if(All == true){
@@ -191,8 +195,6 @@ public class MassageDao{
 							"order by msg_date desc ";
 					
 				}
-				
-				
 			}
 			
 			
@@ -390,7 +392,6 @@ public class MassageDao{
 			String memId="0";
 			
 			try{
-				System.out.println(mem_eamil.trim());
 				//null이 들어가면 조건문이 죽게된다... 모든값조회.
 				if(!mem_eamil.equals("")){
 						sql="select mem_id FROM member WHERE Mem_email like '%"+mem_eamil.trim()+"%'" ;
@@ -472,58 +473,9 @@ public class MassageDao{
 	
 	
 	
-		
-		
-		
-		
-	//-----------------------------------[펌] 메서드------------------------------
-	private void updatePos(Connection con){
-		try{
-			String sql = "update tblBoard set b_pos=b_pos+1";
-			pstmt = con.prepareStatement(sql);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("updatePos()에서 오류");
-			err.printStackTrace();
-		}
-	}
 	
 	
-	
-	
-	
-	
-	// 답변글을 입력할 때 부모보다 큰 pos는 1씩 증가시킨다.
-	public void replyUpdatePos(MessageDto message){
-		try{
-			String sql = "update tblBoard set b_pos = b_pos+1 where b_pos > ?";
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			//pstmt.setInt(1, board.getB_pos());
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("replyUpdatePos()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
-		}
-	}
-	
-	
-	
-	
-	public String useDepth(int depth){
-		String result ="";
-		for(int i=0; i<depth*3; i++){
-			result += "&nbsp;";
-		}
-		return result;
-	}
-	
-	
+
 	
 }
 

@@ -16,8 +16,12 @@ import portit.model.action.MessageModel;
 
 @WebServlet("/msg")
 public class MessageController extends HttpServlet {
+	//0705
+	
 	//컨트롤러
-	//model에서 request로부터 뽑아서 데이터에 저장하는작업.	
+	//model에서 request로부터 뽑아서 데이터에 저장하는작업.
+	
+	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doPost(req, resp);
 	}
@@ -27,8 +31,8 @@ public class MessageController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		try {
+			
 			resp.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = resp.getWriter();
 			
 			HttpSession session = req.getSession();
 			String cmd= req.getParameter("cmd");
@@ -37,21 +41,31 @@ public class MessageController extends HttpServlet {
 			String url= "WebContent/msgList.html";
 			String pageName ="memberSearch.jsp";	//test page
 			
-			//Login된 Id session에서 추출.
-			//모델 : Request와 login_id전달
-			
-			int login_id = (int) session.getAttribute("loginId");
 			
 			
-			MessageModel model = new MessageModel(req,login_id);
+			int loginId=(int)session.getAttribute("loginId");
+			System.out.println(loginId+"가 로그인 되었습니다.");
+			
+			//인스턴스 생성!
+			MessageModel model = new MessageModel(req,loginId);
+			
 			
 			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
 			ArrayList list= (ArrayList)session.getAttribute("msgList");
+			
+			
+		
+			
 			
 			//msgList.jsp
 			//발신자목록  request!
 			 if(cmd.equals("list")){
 				//From msgDetail,msgSender
+				 
+				 String renewal= req.getParameter("renewal");
+				 
+				 System.out.println("check1");
+				 
 				 
 				url="myMsgList.jsp";
 				
@@ -66,15 +80,16 @@ public class MessageController extends HttpServlet {
 				//삭제 이후 돌아왔을때
 				//검색이후 돌아왔을때
 				//갱신요청 유무를 정한다...
-					
-				String renewal= req.getParameter("renewal");
+				
 				
 					//목록을 갱신할 필요가 있을때.
 					if(renewal==null){
 						
-						
+						System.out.println("check");
 						list=model.roomList(keyField,keyWord);
 						session.setAttribute("RoomList", list);
+						
+						System.out.println("CTRL 리스트전달");
 					}
 				}
 				
@@ -112,6 +127,7 @@ public class MessageController extends HttpServlet {
 			 }
 			 
 			
+			 //메세지를 보낼떄.
 			else if(cmd.equals("list_send")){
 				//From msgSend
 				
@@ -146,7 +162,7 @@ public class MessageController extends HttpServlet {
 			
 			else if(cmd.equals("detail")){
 				//1.List에서 발신자이름을 받아온다.
-				String mem_id_Sender=req.getParameter("mem_id_sender");
+				String mem_id_Sender=req.getParameter("mem_id_sender") ;
 			
 				
 				url="myMsgDetail.jsp";
@@ -157,18 +173,7 @@ public class MessageController extends HttpServlet {
 				session.setAttribute("chatroom", list);
 			}
 			
-			else if(cmd.equals("ntdetail")){
-				//1.List에서 발신자이름을 받아온다.
-				int mem_id_Sender=Integer.parseInt(req.getParameter("sender"));
 			
-				
-				url="myMsgDetail.jsp";
-
-				//대화방 with "mem_id_sender"
-				//2.발신자의 대화방을 얻어온다.
-				list=model.getChatRoom(String.valueOf(mem_id_Sender));
-				session.setAttribute("chatroom", list);
-			}
 			
 			
 			else if(cmd.equals("send")){
@@ -188,7 +193,7 @@ public class MessageController extends HttpServlet {
 			}
 			 
 			 
-			 
+			 //LIST
 			else if(cmd.equals("delete")){
 				//from msgList
 				
@@ -227,8 +232,16 @@ public class MessageController extends HttpServlet {
 			 
 			req.setAttribute("pageName", url);
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+			// resp.sendRedirect("/page?page=" + url);
+			
 			view.forward(req,resp);
+			
+			
+			
+			
+			
 		} catch (Exception e) {
+			System.out.println("MSG_CTRL 에러");
 			e.printStackTrace();
 		}
 	}
@@ -239,5 +252,4 @@ public class MessageController extends HttpServlet {
 	 -페이지 이동별 불필요한 연산을 건너뛰도록 정리가 필요함.
 	 -URL을 깔끔하게 만들필요가 있음.
 	 */
-	
 }

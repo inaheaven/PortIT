@@ -3,6 +3,10 @@ package portit.model.dto;
 import portit.model.dao.MassageDao;
 
 public class MessageDto {
+	//0705
+	
+	
+	
 	//발신자 수신자중 누가 '대화파트너'인가??
 	
 	
@@ -104,7 +108,9 @@ public class MessageDto {
 		
 		
 		//send_id값이 저장되는순간 convert 되어 이름이 저장된다.
-		this.sender_Name=dao.convertToName(String.valueOf(mem_id_sender));		
+		this.sender_Name=dao.convertToName(String.valueOf(mem_id_sender));
+		
+		
 		this.mem_id_sender = mem_id_sender;
 	}
 	public int getMem_id_receiver() {
