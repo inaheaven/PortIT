@@ -222,7 +222,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 								<div class="col-md-3 mb">
 									<div class="member-simple">
 										<div class="simple-content text-center">
-											<img class="memImg img-circle" alt="avatar" src="${pf_coworker.prof_img}" />
+											<a href="/view?type=profile&id=${pf_coworker.prof_nick}"><img class="memImg img-circle" alt="avatar" src="${pf_coworker.prof_img}" /></a>
 											<div>
 												<div class="memName">
 													<a href="/view?type=profile&id=${pf_coworker.prof_nick}">${pf_coworker.prof_name}</a>
@@ -267,7 +267,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 								<div class="col-md-3 mb">
 									<div class="portfolio-simple">
 										<div class="pfImg">
-											<img src="${pf_recommend.mediaList[0].ml_path}" />
+											<a href="/view?type=portfolio&id=${pf_recommend.pf_id}"><img src="${pf_recommend.mediaList[0].ml_path}" /></a>
 										</div>
 										<div class="pfInfo">
 											<div class="simple-content">

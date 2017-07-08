@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
-import portit.model.dto.Media;
 
 /**
  * 포트폴리오 DAO
@@ -26,12 +26,16 @@ public class PortfolioDao {
 	private DBConnectionMgr pool;
 	
 	private MediaDao mediaDao;
+	private ProfileDao profileDao;
+	private TagDao tagDao;
 	
 	public PortfolioDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			conn = pool.getConnection();
 			mediaDao = new MediaDao();
+			profileDao = new ProfileDao();
+			tagDao = new TagDao();
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -93,8 +97,8 @@ public class PortfolioDao {
 						.setPf_enddate(rs.getDate("pf_enddate"))
 						.setPf_url(rs.getString("pf_repository"));
 				
-				// 작성자명을 조회해서 DTO에 저장
-				sql = "SELECT prof.prof_name, prof.prof_img FROM profile prof"
+				// 작성자 정보를 조회해서 DTO에 저장
+				sql = "SELECT prof.prof_name, prof.prof_nick, prof.prof_img FROM profile prof"
 						+ " INNER JOIN prof_pf pp "
 						+ " ON prof.prof_id=pp.prof_id WHERE pp.pf_id=?";
 				stmt = conn.prepareStatement(sql);
@@ -102,11 +106,12 @@ public class PortfolioDao {
 				rs = stmt.executeQuery();
 				while (rs.next()) {
 					portfolio.setPf_prof_name(rs.getString("prof.prof_name"))
+					.setPf_prof_nick(rs.getString("prof.prof_nick"))
 					.setPf_prof_img(rs.getString("prof.prof_img"));
 				}
 				
 				// 좋아요 수를 조회해서 DTO에 저장
-				sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
+				sql = "SELECT COUNT(1) FROM pf_like WHERE pf_id=?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, pf_id);
 				rs = stmt.executeQuery();
@@ -157,7 +162,7 @@ public class PortfolioDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, pf_id);
 				rs = stmt.executeQuery();
-				ProfileDao profileDao = new ProfileDao();
+				profileDao = new ProfileDao();
 				while (rs.next()) {
 					Profile profile = profileDao.getProfile(rs.getInt("mem_id"));
 					coworkers.add(profile);
@@ -218,15 +223,18 @@ public class PortfolioDao {
 						.setPf_enddate(rs.getDate("rs_enddate"))
 						.setPf_url(rs.getString("pf_repository"));
 				
-				// 작성자명을 조회해서 DTO에 저장
-				sql = "SELECT prof.prof_name FROM profile prof "
-						+ "INNER JOIN prof_pf pp "
-						+ "ON prof.prof_id=pp.prof_id WHERE prof.pf_id=?";
+				// 작성자 정보를 조회해서 DTO에 저장
+				sql = "SELECT prof.prof_name, prof.prof_nick, prof.prof_img FROM profile prof"
+						+ " INNER JOIN prof_pf pp "
+						+ " ON prof.prof_id=pp.prof_id WHERE pp.pf_id=?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
-				rs.next();
-				portfolio.setPf_prof_name(rs.getString(1));
+				while (rs.next()) {
+					portfolio.setPf_prof_name(rs.getString("prof.prof_name"))
+					.setPf_prof_nick(rs.getString("prof.prof_nick"))
+					.setPf_prof_img(rs.getString("prof.prof_img"));
+				}
 				
 				// 좋아요 수를 조회해서 DTO에 저장
 				sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
@@ -280,7 +288,7 @@ public class PortfolioDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
-				ProfileDao profileDao = new ProfileDao();
+				profileDao = new ProfileDao();
 				while (rs.next()) {
 					Profile profile = profileDao.getProfile(rs.getInt("mem_id"));
 					coworkers.add(profile);
