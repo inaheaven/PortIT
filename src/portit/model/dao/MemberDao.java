@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Member;
+import portit.model.dto.Profile;
 
 /**
  * 회원 관련 DAO
@@ -102,6 +104,62 @@ public class MemberDao {
 
 		return checkMem;
 	}
+	
+	
+	
+
+	
+	
+	
+	
+	public  String getUserInformation(String mem_id){
+		
+		
+		String sql = null;
+		String name = null;
+		
+		try{
+			
+			//페이지에서 이름혹은 메일이 출력되어야합니다.
+			//이건 view에서 조건문으로 처리하도록합니다.
+			
+			//쿼리문 미확인입니다.
+			//  이메일,mem_id, 프로필이미지경로,이름이  출력되어야합니다.
+			
+				sql="select distinct PROF_NAME "+
+					"FROM MEMBER INNER JOIN	PROFILE "+
+					"on MEMBER.MEM_ID=profile.MEM_ID "+
+					"where MEMBER.MEM_ID=";
+				sql = sql.concat(mem_id);	
+
+				conn = pool.getConnection();
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				Profile mem_profile= new Profile();
+				name= rs.getString("PROF_NAME");
+				
+				
+				mem_profile.setMem_id(rs.getInt(""));
+				mem_profile.setProf_img(rs.getString(""));
+				mem_profile.setProf_name(name);
+				mem_profile.setProf_email("");
+			}
+	
+		}
+		catch(Exception err){
+			System.out.println("getUserInformation()에서 오류");
+			err.printStackTrace();
+		}
+		finally{
+			pool.freeConnection(conn, stmt, rs);
+		}
+		
+		return name;
+}
+
+	
 	
 	
 	

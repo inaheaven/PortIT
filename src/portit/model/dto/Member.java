@@ -9,6 +9,10 @@ import java.util.Date;
  */
 public class Member {
 	
+
+	
+	
+	
 	private int mem_id;
 	private String mem_email;
 	private String mem_password;

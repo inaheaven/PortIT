@@ -8,8 +8,22 @@
 <!--sidebar start-->
 <aside>
 <%		
+			/*
+			My페이지로 이동할때 거치는 Frontcontroller가 있어야한다.
+			그래서 my의 하위 카테고리인 profile, project 등의 하위 CTRL로 이동할때
+			"이름, 이미지URL, member_ID "등의 user정보가 담긴 dto를 request에 담아서 
+			View에 도착해야한다...
+			
+			현재같은 구조에서는 View에 도착한뒤에 다시 DB에 접근해서 USER 정보를 얻어와야하는 구조다...
+			그렇지 않으면 my의 모든 하위카테고리의 컨트롤러에 user정보를 rpuest에 담는 문법이 중복해서 선언해야한다.
+			
+			현재는 임시방편으로 MemberDao에 쿼리를 만들어서 직접 인스턴스를 생성해서 사용한다.
+			*/
+
+
+
 			//String pageName = (String)session.getAttribute("pageName");
-			String pageName = (String)request.getAttribute("pageName");			
+			String pageName = (String)request.getAttribute("pageName");		
 %>
 	<div id="sidebar" >
 		<!-- sidebar menu start-->

@@ -94,6 +94,9 @@
 					<li><a href="/page?page=myNotification&sort=all">더보기</a></li>
 				</ul>
 			</li>
+			
+		
+			
 			<li id="header_inbox_bar" class="dropdown mypage">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 					<img alt="profileImage" src="<%=prof.getProf_img() %>" class="img-circle">
