@@ -116,6 +116,49 @@ var Script = function () {
             }, 2000)
         })
     }
+    
+ // datepicker
+    $(function() {
+    	var start_date_input = $('input[name="pf_startdate"]'); //our date input has the name "date"
+		var end_date_input = $('input[name="pf_enddate"]'); //our date input has the name "date"
+		var container = $('.bootstrap-iso form').length > 0 ? $(
+				'.bootstrap-iso form').parent() : "body";
+		var options = {
+			format : 'yy-mm-dd',
+			container : container,
+			todayHighlight : true,
+			autoclose : true,
+		};
+		start_date_input.datepicker(options);
+		end_date_input.datepicker(options);
+    });
+    
+    $(function() {
+    	$('#fileUpload').on('change', function() {
+    		$(this).siblings('#fileName').val($(this)[0].files[0].name);
+    	});
+    });
+    
 
+ // 업로드할 파일 삭제
+    $(function() {
+    	var rows = 1;
+    	$('input#fileUpload').on('change', function() {
+    		var filelist = document.getElementById($(this).attr('id')).files;
+    		for(var i=0; i<filelist.length; i++) {
+    			if (rows == 10) {
+    				break;
+    			}
+    			$('#fileList').append('<li id="media">'+filelist[i].name+' <a id="mediaRemove"><i class="fa fa-times"></i></a></li>');
+    			rows++;
+    		};
+    	});
+    	$('#mediaRemove').on('click', function() {
+    		$(this).parent().empty.remove();
+    		rows--;
+    	});
+    });
+    
+    
 
 }();

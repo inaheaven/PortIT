@@ -26,7 +26,6 @@ public class AccountModel {
 	
 	private String deletePw;
 	boolean IdentityVerification;
-		
 	
 	public AccountModel(HttpServletRequest _req, int _login_id){
 		this.req=_req;
@@ -92,9 +91,3 @@ public class AccountModel {
 	return IdentityVerification;
 	}
 }
-
-
-
-
-
-

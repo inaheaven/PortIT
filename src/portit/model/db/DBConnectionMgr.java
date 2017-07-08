@@ -42,7 +42,6 @@ public class DBConnectionMgr {
     		_url = "jdbc:oracle:thin:@localhost:1521:orcl",
     		_user = "portit",
     		_password = "1111";
-
     
     private boolean _traceOn = false;
     private boolean initialized = false;
