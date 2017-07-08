@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import portit.model.dao.MassageDao;
 import portit.model.dao.ProjectDao;
 import portit.model.dto.MessageDto;
+import portit.model.dto.ProjectApp_mem;
 
 public class ProjcetModel {
 	
@@ -16,6 +17,11 @@ public class ProjcetModel {
 	private ArrayList list;			//Ctrl에 반환할 List 변수.
 	
 	ProjectDao dao= new ProjectDao();
+	
+	
+	public ProjcetModel(){
+		
+	}
 	
 	
 	public ProjcetModel(HttpServletRequest _req, String _login_id){
@@ -29,14 +35,14 @@ public class ProjcetModel {
 	}
 	
 
-	public List appyPjList(String login_id) {
+	public List appyPjList() {
 		
 		list=(ArrayList)dao.applyProjectList(login_id);
 		return list;
 	}
 	
 	
-	public ArrayList regPjList(String login_id){
+	public ArrayList regPjList(){
 		
 		//내가 등록한 프로젝트 list
 		//이 작업을 담아줄 model하나 필요...
@@ -59,8 +65,26 @@ public class ProjcetModel {
 			
 			//프로젝트정보
 			pj.add(dao.regProjectList(pf_id));
+			
+			
+			
 			//지원자 정보가 리스트로 반환
+	//지원자 정보를 반환받지못하고있음... 반환테스트 확인!!
 			pj.add(dao.ApplyMemList(pf_id));
+			
+			
+		/*	
+			//Test작업...
+			ArrayList app_list =(ArrayList)dao.ApplyMemList(pf_id);
+			
+			//첫번째 지원자.
+			ProjectApp_mem app_mem =(ProjectApp_mem)app_list.get(0);	
+			System.out.println("ModelTest="+app_mem.getName());
+			
+			*/
+			
+			
+			
 			
 			
 			//하나의 폼에 필요한 모든 정보들...
@@ -81,7 +105,7 @@ public class ProjcetModel {
 
 
 	//지원취소
-	public void pjCancle(String pf_id,String login_id) {
+	public void pjCancle(String pf_id) {
 		//내가 지원
 		dao.mem_delete(pf_id,login_id);
 	}

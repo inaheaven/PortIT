@@ -76,13 +76,23 @@
 							Project pj_Inform=(Project) pj.get(0);
 							//1:지원자리스트
 							ArrayList peoples= (ArrayList)  pj.get(1);
+							
+							
+							
+							/* 
+								전달확인..
+							ProjectApp_mem index1= (ProjectApp_mem)peoples.get(0);
+							System.out.println("JSP 출력 TEST "+index1.getName());
+							
+							 */
+							
 						%>
 						
 						<!-- R프로젝트:반복시작 -->
 							<div class="panel-heading clearfix" role="tab" >
 								<h4 class="panel-title">
 									<span class="col-sm-3"> 
-									<a href="javascript:fnParameter('pj_detail' , '' , '<%=pj_Inform.getPf_id()%>', '')">
+									<a href="javascript:fnParameter('pj_detail' , '' , '<%=pj_Inform.getProj_id()%>', '')">
 									<%=pj_Inform.getProj_title() %> 
 									</a>
 									</span> 
@@ -120,7 +130,7 @@
 											ProjectApp_mem p1 = (ProjectApp_mem) peoples.get(j);
 											
 											// 지원자라면...
-											if("N".equals(p1.getApp_confirm())){
+											if("n".equals(p1.getApp_confirm())){
 											%>
 										<!-- 지원자 반복. -->
 										<div class="col-lg-3">
@@ -153,7 +163,7 @@
 											//첫번째 지원자 정보.
 											ProjectApp_mem p1 = (ProjectApp_mem) peoples.get(j);
 											
-											if("Y".equals(p1.getApp_confirm())){
+											if("y".equals(p1.getApp_confirm())){
 										%>
 										
 										

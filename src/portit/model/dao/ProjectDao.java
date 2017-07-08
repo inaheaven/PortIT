@@ -160,7 +160,7 @@ public class ProjectDao {
 			+"where proj_id='"+proj_id+"' "
 			+"order by PROJ_APP_REGDATE desc";
 				 
-		 //System.out.println("dao  "+sql);
+		 System.out.println("dao  "+sql);
 		 //쿼리 이상무.
 		 
 		 
@@ -252,6 +252,10 @@ public class ProjectDao {
 	//1.내가 PJ지원한 리스트.
 	public List applyProjectList(String login_id){
 		
+		
+		System.out.println("DAO 수치전달="+login_id);
+		
+		
 		//인스턴스 생성.
 		rsList=new ArrayList();
 		sql="select  DISTINCT project.proj_title, project.proj_id, project.proj_regdate,  project.proj_regenddate-sysdate, project.proj_startDate, proj_app.proj_app_confirm "
@@ -297,7 +301,7 @@ public class ProjectDao {
 	
 	
 	
-	
+/*	
 	
 	public void read_proj(HttpServletRequest req, HttpServletResponse resp){
 		
@@ -449,7 +453,7 @@ public class ProjectDao {
 		}
 		
 	}
-	
+	*/
 	// 프로젝트 등록
 	public void reg_pro(HttpServletRequest req, HttpServletResponse resp) {
 

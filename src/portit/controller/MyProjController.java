@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 import portit.model.action.ProjcetModel;
@@ -36,6 +37,9 @@ public class MyProjController extends HttpServlet{
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		
+		//요청에서 저장된 session값에 접근할수 있다.
+		HttpSession session = req.getSession();
+		
 		/*
 			
 			남은적업
@@ -55,11 +59,15 @@ public class MyProjController extends HttpServlet{
 		String action=req.getParameter("cmdAction");
 		String param=req.getParameter("param");
 		String param2=req.getParameter("param2");
-		String login_id="102";	//세션에서 값을 받는다.
+		String longinId=(String)session.getAttribute("longinId");
 		String url = null;
 		String mem_id=null;
 		String pf_id=null;
-		ProjcetModel model=new ProjcetModel(req, login_id);
+		
+		
+		System.out.println("CTRL수치전달"+longinId);
+		
+		ProjcetModel model=new ProjcetModel(req, longinId);
 
 		
 		//dao 선언
@@ -111,7 +119,7 @@ public class MyProjController extends HttpServlet{
 				//param: 지원PJ의 PJ_ID
 				
 				
-				model.pjCancle(param,login_id);
+				model.pjCancle(param);
 			}
 			
 			
@@ -120,13 +128,13 @@ public class MyProjController extends HttpServlet{
 			
 			
 			//내가 등록한 프로젝트 정보...
-			list= model.regPjList(login_id);
+			list= model.regPjList();
 			req.setAttribute("regPjInform", list);
 			
 			
 			
 			//내가 지원한 프로젝트
-			list= model.appyPjList(login_id);
+			list= model.appyPjList();
 			req.setAttribute("applyProjectList", list);
 			
 			
