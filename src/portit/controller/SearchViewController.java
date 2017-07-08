@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import portit.model.dao.SearchDao;
 
 
-@WebServlet(urlPatterns="/SearchView")
+@WebServlet("/SearchView")
 public class SearchViewController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

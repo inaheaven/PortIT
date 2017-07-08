@@ -17,8 +17,6 @@ import portit.model.action.MessageModel;
 @WebServlet("/account")
 public class AccountController extends HttpServlet {
 	//컨트롤러
-	
-	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doPost(req, resp);
 	}

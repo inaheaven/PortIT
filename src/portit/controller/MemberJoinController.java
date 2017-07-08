@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import portit.model.dao.MemberDao;
 import portit.model.dto.Member;
 
-@SuppressWarnings("serial")
 @WebServlet("/join")
 public class MemberJoinController extends HttpServlet {
 	

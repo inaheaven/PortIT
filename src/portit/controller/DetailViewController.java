@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import portit.model.dao.ViewDao;
 
-@WebServlet(urlPatterns="/detailView")
+@WebServlet("/detailView")
 public class DetailViewController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

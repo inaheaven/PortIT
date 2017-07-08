@@ -16,7 +16,7 @@ import portit.model.dao.SearchDao;
 import portit.model.dto.Portfolio;
 
 
-@WebServlet(urlPatterns="/detailSearch")
+@WebServlet("/detailSearch")
 public class SearchDetailController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

@@ -17,15 +17,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import portit.model.dao.ProfileDao;
 import portit.model.dto.Profile;
 
-@WebServlet("/register")
+@WebServlet("/profReg")
 public class ProfileController extends HttpServlet {
 	/**
 	 * 업로드할 파일이 저장될 디렉토리 이름(/{UPLOAD_DIR})
@@ -143,7 +144,7 @@ public class ProfileController extends HttpServlet {
 
 		Map<String, String> map = new HashMap<String, String>();
 		try {
-			List<FileItem> items = upload.parseRequest(req);
+			List<FileItem> items = upload.parseRequest((RequestContext) req);
 			for (FileItem item : items) {
 				if (item.isFormField()) {
 					// isFormField()의 반환값이 true이면 일반 파라미터로 처리

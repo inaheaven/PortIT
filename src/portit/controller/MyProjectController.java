@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import portit.model.action.ProjcetModel;
+import portit.model.action.ProjectModel;
 import portit.model.dao.Portfolio_ViewDao;
 import portit.model.dao.ProjectDao;
 
-@WebServlet(urlPatterns="/myproj")
+@WebServlet("/myproj")
 public class MyProjectController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -52,7 +52,7 @@ public class MyProjectController extends HttpServlet {
 	String mem_id="";
 	String pf_id=null;
 	
-	ProjcetModel model=new ProjcetModel(req, login_id);
+	ProjectModel model=new ProjectModel(req, login_id);
 	//dao 선언
 	Portfolio_ViewDao dao = new Portfolio_ViewDao();
 	ProjectDao daoPRO = new ProjectDao();

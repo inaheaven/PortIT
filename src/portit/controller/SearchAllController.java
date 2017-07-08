@@ -21,7 +21,8 @@ import portit.model.dto.Portfolio;
  * 검색어를 받아 검색화면에 전달 해주기 위한 컨트롤러
  *
  */
-@WebServlet(urlPatterns="/search")
+
+@WebServlet("/search")
 public class SearchAllController extends HttpServlet{
 
 	@Override
