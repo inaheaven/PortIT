@@ -33,7 +33,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
+ 
 <body>
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
@@ -159,17 +159,17 @@
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
 							<input class="btn poptag" type="button" value="JAVA"
-								name="language" onclick="fnAppendItem()" /> <input
+								name="language" onclick="fnAppendItem('JAVA')" /> <input
 								class="btn poptag" type="button" value="C" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
+								onclick="fnAppendItem('C')" /> <input class="btn poptag"
 								type="button" value="c++" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
+								onclick="fnAppendItem('c++')" /> <input class="btn poptag"
 								type="button" value="Eclipse" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
+								onclick="fnAppendItem('Eclipse')" /> <input class="btn poptag"
 								type="button" value="jsp" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
+								onclick="fnAppendItem('jsp')" /> <input class="btn poptag"
 								type="button" value="servlet" name="language"
-								onclick="fnAppendItem()" /> .....
+								onclick="fnAppendItem('servlet')'" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
@@ -179,7 +179,14 @@
 						</div>
 						<br> <br>
 						<hr />
-						<div id="itemList" class="col-md-9"></div>
+						
+						<!--  태그가 삽입되는 부분  -->
+						<!--  이부분에 input hidden이 삽입되어야한다. -->
+						<div id="itemList" class="col-md-9">
+							
+							<input type="hidden" id="test3" name="test3" value="확인중.ㅎ">
+						
+						</div>
 						<button type="submit" class="btn common col-md-2">조건 검색하기</button>
 					</form>
 				</div>

@@ -28,6 +28,8 @@ public class SearchDetailController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		
+		System.out.println("CTRL: detailSearch 접근");
+		
 		String cmd = req.getParameter("cmd");
 		String url = null;
 		
@@ -38,7 +40,15 @@ public class SearchDetailController extends HttpServlet {
 		//pfSearch = pfSearch.toUpperCase();
 		
 		//1~6까지의 값을 불러옴 1,3,5는 최신순 정렬 2,4,6은 인기순 정렬
-		int list_value=Integer.parseInt(req.getParameter("list_value"));
+		int list_value=-1;
+		
+		//오류 수정..
+		String list_value_param = req.getParameter("list_value");
+		if(!"".equals(list_value_param)){
+			System.out.println("값전달 확인22  "+list_value_param);
+			list_value=Integer.parseInt(list_value_param);
+		}
+		
 		
 		//lineup = true(최신순) / false(인기순)
 		boolean lineup = true;
@@ -65,6 +75,17 @@ public class SearchDetailController extends HttpServlet {
 		
 		
 		if(cmd.equals("PFDETAIL")){
+			System.out.println("CTRL : PFDETAIL 접근확인");
+			
+			String param=req.getParameter("param1");
+			String param2=req.getParameter("test3");
+			
+			System.out.println("CTRL 파라미터전달확인="+param);
+			System.out.println("CTRL 파라미터전달확인22="+param2);
+			
+			//전달받는 파라미터 확인하기.
+			
+			
 			url="/pfSearch.jsp";
 		}
 		else if(cmd.equals("MEMDETAIL")){
