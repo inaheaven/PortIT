@@ -65,6 +65,7 @@ public class NotificationDao {
 				nt.setNt_type_id(rs.getInt("nt_type_id"));
 				nt.setNt_isread(rs.getString("nt_isread").charAt(0));
 				ntList.add(nt);
+				System.out.println(rs.getInt("nt_id"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

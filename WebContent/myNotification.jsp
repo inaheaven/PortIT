@@ -5,6 +5,34 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/notification.css" rel="stylesheet">
 
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// tr 반복 -> nt_isread가 t일때 -> css 바꾸기
+			$("tr").each(function(){
+				var ntid = $(this).find("input").val();
+				var tr = $(this);
+				
+				$.ajax({
+					url: "/nt", 
+					type: "post",
+					data: {act: "getread", id: ntid},
+					success: function(result){							
+			            if(result.charAt(0) == 'y') {
+			            	tr.find(".sort").css("color", "#797979");
+			            	tr.find(".content > a").css("font-weight", "normal");
+			            }
+		        }});
+			});
+		});
+	
+		
+		function fnSubmit() {
+			input.submit();
+		}
+	
+	</script>
+ 
 <jsp:useBean id="dao" class="portit.model.dao.NotificationDao" />
 <%
 	int loginId = (int)session.getAttribute("loginId");
@@ -50,26 +78,27 @@
 		                        <c:forEach begin="0" end="${ntList.size()-1}" var="i">
 	                   				<tr>
 	                   					<input type="hidden" value="${ntList[i].nt_id}">
-	                  					<c:if test="${ntList[i].nt_type eq 'like' }">
+	                  					<c:if test="${ntList[i].nt_type eq 'like'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-heart"></span></td>
 	                       					<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 포트폴리오를 좋아합니다.</a></td>
 	                  					</c:if>
-	                  					<c:if test="${ntList[i].nt_type  eq 'upload' }">
+	                  					<c:if test="${ntList[i].nt_type eq 'upload'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-upload"></span></td>
 	                        				<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 새로운 포트폴리오를 업로드했습니다.</a></td>
 	                  					</c:if>
-	                  					<c:if test="${ntList[i].nt_type  eq 'message' }">
+	                  					<c:if test="${ntList[i].nt_type eq 'message'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-envelope"></span></td>
 	                      			    	<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/msg?cmd=ntdetail&sender=${ntList[i].mem_id_sender}');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 메세지를 보냈습니다.</a></td>
 	                  					</c:if>
-	                  					<c:if test="${ntList[i].nt_type  eq 'project'}">
+	                  					<c:if test="${ntList[i].nt_type eq 'project'}">
 	                  					    <td class="sort"><span class="glyphicon glyphicon-ok-sign"></span></td>
 	                        				<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 프로젝트에 신청했습니다.</a></td>
 	                  					</c:if>
-	                  					<c:if test="${ntList[i].nt_type  eq 'follow' }">
+	                  					<c:if test="${ntList[i].nt_type eq 'follow'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-plus"></span></td>
 	                       		        	<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">님이 나를 팔로잉했습니다.</a></td>
 	                  					</c:if>
+	                  					
 	                   					<td class="date">${ntList[i].nt_date }</td>
 	                        			<td class="delete"><button type="button" class="btn" onclick="location.href='/nt?act=delete&id=${ntList[i].nt_id}'">삭제</button></td>
 	                   				</tr>
@@ -95,49 +124,3 @@
 			<!-- /wrapper --> 
 		</section>
 		
-
-
-
-
-	<!--  JavaScript dependencies -->
-	<script src="assets/js/jquery-3.2.1.min.js"></script>
-	<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-	<script src="assets/js/jquery.scrollTo.min.js"></script>
-	<script src="assets/js/jquery.nicescroll.js"></script>
-	<script src="jquery/lib/jquery.ajaxQueue.js"></script>
-	<script src="jquery/jquery.autocomplete.js"></script>
-	
-	<!--common script for all pages-->
-	<script src="assets/js/common-scripts.js"></script>
-	<!-- <script>jQuery.noConflict();</script> -->
-	
-	
-	<script>
-		$(document).ready(function(){
-			// tr 반복 -> nt_isread가 t일때 -> css 바꾸기
-			$("tr").each(function(){
-				var ntid = $(this).find("input").val();
-				var tr = $(this);
-				
-				$.ajax({
-					url: "/nt", 
-					type: "post",
-					data: {act: "getread", id: ntid},
-					success: function(result){							
-			            if(result.charAt(0) == 'y') {
-			            	tr.find(".sort").css("color", "#797979");
-			            	tr.find(".content > a").css("font-weight", "normal");
-			            }
-		        }});
-			});
-		});
-	
-		
-		function fnSubmit() {
-			input.submit();
-		}
-	
-	</script>
