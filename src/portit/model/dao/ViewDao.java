@@ -19,7 +19,7 @@ public class ViewDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
-	private ResultSet rs, rs2, rs3, rs4, rs5;
+	private ResultSet rs, rs2;
 	private DBConnectionMgr pool;
 	
 			
@@ -108,11 +108,11 @@ public class ViewDao {
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pf_id);
-			rs3 = pstmt.executeQuery();
+			rs2 = pstmt.executeQuery();
 
 			List<String> tags = new ArrayList<>();
-			while (rs3.next()) {
-				tags.add(rs3.getString("tag_name"));
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
 			}
 			return tags;
 		} 
@@ -332,11 +332,11 @@ public class ViewDao {
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, proj_id);
-			rs4 = pstmt.executeQuery();
+			rs2 = pstmt.executeQuery();
 
 			List<String> tags = new ArrayList<>();
-			while (rs4.next()) {
-				tags.add(rs4.getString("tag_name"));
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
 			}
 			return tags;
 		} 
@@ -447,11 +447,11 @@ public class ViewDao {
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pf_id);
-			rs5 = pstmt.executeQuery();
+			rs2 = pstmt.executeQuery();
 
 			List<String> tags = new ArrayList<>();
-			while (rs5.next()) {
-				tags.add(rs5.getString("tag_name"));
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
 			}
 			return tags;
 		} 
