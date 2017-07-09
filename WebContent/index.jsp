@@ -38,7 +38,7 @@
 	<script type="text/javascript"
 		src="assets/js/jquery.backstretch.min.js"></script>
 	<script>
-        $.backstretch("assets/img/login-bg.jpg", {speed: 500});
+        $.backstretch("assets/img/log	in-bg.jpg", {speed: 500});
         
         function fnPasswordConfirm() {
         	var pw = document.getElementById("userpw").value;

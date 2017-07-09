@@ -1,3 +1,5 @@
+<%@page import="portit.model.dto.Profile"%>
+<%@page import="portit.model.dao.MemberDao"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -19,18 +21,36 @@
 			
 			현재는 임시방편으로 MemberDao에 쿼리를 만들어서 직접 인스턴스를 생성해서 사용한다.
 			*/
+			
+			int mem_id = (int)session.getAttribute("loginId");
 
+			//System.out.println("JSP로그="+mem_id);
+	
 
+			MemberDao dao = new MemberDao();
+		 	Profile mem_prof= (Profile)dao.getUserInformation(mem_id);
+		 	
+		 	//System.out.println("JSP=="+mem_prof.getMem_id());
+		 	
+		 	String userName= "(이름없음)";
+		 	
+		 	//이름 미등록일시 메일출력.
+		 	if(mem_prof.getProf_name()==null){
+		 		userName=mem_prof.getProf_email();
+		 	}else{
+		 	userName=mem_prof.getProf_name();
+		 	}
+		 	
+		 	System.out.println(userName);
 
-			//String pageName = (String)session.getAttribute("pageName");
 			String pageName = (String)request.getAttribute("pageName");		
 %>
 	<div id="sidebar" >
 		<!-- sidebar menu start-->
 		<ul class="sidebar-menu">       
 			<div class="myImg">
-				<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-				<h5 class="centered">김수연 님</h5>              	  
+				<p class="centered"><a href="profile.html"><img src="<%=mem_prof.getProf_img() %>" class="img-circle" width="60"></a></p>
+				<h5 class="centered"><%=userName %> 님</h5>              	  
 			</div>       
 			<hr class="line" />
 			<li class="">
@@ -44,7 +64,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/myproj?cmd=list&mem_id=2" id="myProjList"> 
+				<a href="/myproj?cmd=list&mem_id=<%=mem_prof.getMem_id() %>" id="myProjList"> 
 				<!-- 로그인 아이디 값을 매개 변수로 줘야함 -->
 				    <span>My Project</span>	
 				</a>
