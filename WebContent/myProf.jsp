@@ -285,7 +285,7 @@ function fnSelectSnsInfo(snsName){
 		<div class="col-md-12 mt profreg">
 			<div class="profregForm">
 				<h3 class="formTitle text-center">프로필 등록</h3>
-				<form action="/register?cmd=REGISTER" method="post" name="frof_reg"	class="form-horizontal style-form" enctype="multipart/form-data"> 
+				<form action="/profReg?cmd=REGISTER" method="post" name="frof_reg"	class="form-horizontal style-form" enctype="multipart/form-data"> 
 
 					<!-- 프로필id hidden -->
 					<input type="hidden" class="form-control" name="prof_id">

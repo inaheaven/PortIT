@@ -47,6 +47,8 @@ public class MemberLoginController extends HttpServlet {
 			
 			int loginId = (int)session.getAttribute("loginId");
 			
+			String url = null;
+			String cmd = req.getParameter("cmd");
 			//dao 호출
 			ViewDao viewDao = new ViewDao();
 					
@@ -61,8 +63,12 @@ public class MemberLoginController extends HttpServlet {
 			req.setAttribute("proj_list", proj_list);			
 			req.setAttribute("time_list", time_list);	
 			
-			
-			out.println("<script>location.href='/page?page=main';</script>");
+			if(cmd.equals("MAIN")){
+				//out.println("<script>location.href='/page?page=main';</script>");
+				url="/page?page=main";
+			}
+			RequestDispatcher view = req.getRequestDispatcher(url);
+			view.forward(req,resp);
 		}
 		else {
 			out.println("<script>alert('이메일 또는 비밀번호가 틀렸습니다.'); location.href='/index.jsp';</script>");			

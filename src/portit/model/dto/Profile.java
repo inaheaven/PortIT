@@ -35,8 +35,14 @@ public class Profile {
 	private int prof_skill_level;
 	private int prof_skill_level2;
 	private int prof_skill_level3;
-
-
+	private List tags;
+	
+	public List getTags() {
+		return tags;
+	}
+	public void setTags(List tags) {
+		this.tags = tags;
+	}
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
 	private List<Tag> prof_tags_field;

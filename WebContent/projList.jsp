@@ -64,12 +64,12 @@
 						</div>
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
-							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c#" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem()" /> .....
+								<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
+							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
+							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
+							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
+							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
@@ -85,7 +85,6 @@
 				<!-- END - 조건 검색 box -->
 <%	
  	List list = proj_viewDao.project_info();
- 	List tag_list = proj_viewDao.project_info_tag();
  	
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
@@ -131,12 +130,9 @@
 		          						&nbsp;&nbsp;<a href=""></a></div>     		
 		          					<div class="pjIntro"><%=proj.getProj_intro() %></div><br><br><br>
 		          					<div class="pjTag">
-		          					<%
-										for(int j = (3*i)+0 ; j<=(3*i)+2; j++){
-											Project proj_tag = (Project) tag_list.get(j);	
-									%>
-		          						<a href=""># <%=proj_tag.getTag_name() %>&nbsp;</a>
-		          					<%} %>
+		          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
+								<a href="">#<%= proj.getTags().get(j)%></a>&nbsp;
+								<%} %>
 		          					</div>         					
 	          					</span>
 	          				</div>

@@ -36,6 +36,15 @@ public class Project {
 	private ArrayList<String> proj_tool;
 	private ArrayList<String> proj_field;
 	private ArrayList<Integer> proj_numofperson;
+	
+	 private List<String> tags;
+	 
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
 	public int getPf_id() {
 		return pf_id;
 	}
