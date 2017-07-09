@@ -38,6 +38,13 @@ public class Project {
 	private ArrayList<Integer> proj_numofperson;
 	
 	 private List<String> tags;
+	 public List<String> getTags2() {
+		return tags2;
+	}
+	public void setTags2(List<String> tags2) {
+		this.tags2 = tags2;
+	}
+	private List<String> tags2;
 	 
 	public List<String> getTags() {
 		return tags;

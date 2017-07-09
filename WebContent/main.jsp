@@ -112,7 +112,7 @@
 			else if(project.size() != 0 && project.size() < 4){
 				num = project.size();
 			}
-			for(int i=0; i<1; i++){
+			for(int i=0; i<num; i++){
 				Project proj = (Project) project.get(i);
 	%>
 										
@@ -129,7 +129,9 @@
 																<a href=""><%=proj.getProj_title() %> </a>
 															</div>
 															<div class="pjInfo">
-																<span class="pjField"><a href="">#필드(분야)</a></span>&nbsp;/&nbsp;
+																<span class="pjField"><a href="">#
+																	<//%proj.getTags2().get(0); %></a>
+																</span>&nbsp;/&nbsp;
 																<span class="pjTo"><%=proj.getProj_to() %> 명</span>
 															</div>
 															<div class="pjRegiEndDate">

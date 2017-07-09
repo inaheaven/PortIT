@@ -19,7 +19,7 @@ public class ViewDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
-	private ResultSet rs, rs2;
+	private ResultSet rs, rs2, rs3;
 	private DBConnectionMgr pool;
 	
 			
@@ -304,6 +304,7 @@ public class ViewDao {
 				
 				int proj_id = rs.getInt("proj_id");				
 				project.setTags(project_tag(proj_id));
+				project.setTags2(project_tag2(proj_id));
 			
 				list.add(project);
 			}
@@ -337,6 +338,30 @@ public class ViewDao {
 			List<String> tags = new ArrayList<>();
 			while (rs2.next()) {
 				tags.add(rs2.getString("tag_name"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("proj_tag 오류" + e);
+		}
+		return null;
+	}
+	/**
+	 * 프로젝트 간략 정보 (태그o -> 분야(필드))
+	 */
+	public List project_tag2(int proj_id) {
+		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'project'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+			
+			ArrayList list = new ArrayList();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, proj_id);
+			rs3 = pstmt.executeQuery();
+			
+			List<String> tags = new ArrayList<>();
+			while (rs3.next()) {
+				tags.add(rs3.getString("tag_name"));
 			}
 			return tags;
 		} 

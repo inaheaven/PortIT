@@ -20,7 +20,7 @@ public class SearchDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
-	private ResultSet rs, rs2, rs3, rs4;
+	private ResultSet rs, rs2, rs3;
 	private DBConnectionMgr pool;
 
 	
@@ -126,11 +126,11 @@ public class SearchDao {
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pf_id);
-			rs3 = pstmt.executeQuery();
+			rs2 = pstmt.executeQuery();
 
 			List<String> tags = new ArrayList<>();
-			while (rs3.next()) {
-				tags.add(rs3.getString("tag_name"));
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
 			}
 			return tags;
 		} 
@@ -139,6 +139,7 @@ public class SearchDao {
 		}
 		return null;
 	}
+	
 	
 	/**
 	 * 포트폴리오 다중 검색 (오버로딩) (검색조건 태그 2개)
@@ -360,6 +361,7 @@ public class SearchDao {
 				
 				int proj_id = rs.getInt("proj_id");				
 				project.setTags(project_tag(proj_id));			
+				project.setTags(project_tag2(proj_id));			
 		
 				list.add(project);
 			}
@@ -389,11 +391,35 @@ public class SearchDao {
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, proj_id);
-			rs4 = pstmt.executeQuery();
+			rs2 = pstmt.executeQuery();
 
 			List<String> tags = new ArrayList<>();
-			while (rs4.next()) {
-				tags.add(rs4.getString("tag_name"));
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("proj_tag 오류" + e);
+		}
+		return null;
+	}
+	/**
+	 * 프로젝트 간략 정보 (태그o -> 분야(필드))
+	 */
+	public List project_tag2(int proj_id) {
+		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'project'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+			
+			ArrayList list = new ArrayList();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, proj_id);
+			rs3 = pstmt.executeQuery();
+			
+			List<String> tags = new ArrayList<>();
+			while (rs3.next()) {
+				tags.add(rs3.getString("tag_name"));
 			}
 			return tags;
 		} 

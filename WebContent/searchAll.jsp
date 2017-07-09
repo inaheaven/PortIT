@@ -291,7 +291,7 @@
 								<span class="pjInfoTable">
 									<table class="table text-center">
 										<tr>
-											<td>백엔드개발자</td>
+											<td><//%proj.getTags2().get(0); %></td>
 										</tr>
 										<tr>
 											<td><%=proj.getProj_to() %> 명</td>
