@@ -22,8 +22,8 @@ public class Project {
 	private int proj_to;
 	private Date proj_regdate;
 	private Date proj_startdate;
-	private int proj_period;
 	private Date proj_regenddate;
+	private int proj_period;
 
 	private String tag_name;
 	private String prof_name;

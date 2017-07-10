@@ -81,7 +81,6 @@
 	var httpRequest = null;
 
 	function coworker_Search() {
-		alert("!");
 		httpRequest = new XMLHttpRequest();
 		var name = document.getElementById("coworker_search").value;
 		var url = "coworker_search";
@@ -123,7 +122,7 @@
 					<div class="projregForm">
 						<h3 class="formTitle text-center">프로젝트 등록</h3>
 						<form class="form-horizontal style-form" method="post"
-							action="myproj?cmd=list&save=save&mem_id=2">
+							action="myproj?cmd=list&save=save&mem_id=<%=session.getAttribute("loginId")%>">
 
 							<!-- mem_id값 알맞게 수정해야된다!! -->
 							
@@ -190,7 +189,7 @@
 									마감일</label>
 								<div class="col-md-9">
 									<input class="form-control" id="proj_regenddate"
-										name="proj_regenddate" placeholder="MM/DD/YYYY" type="date"
+										name="proj_regenddate" type="date"
 										required="true" />
 								</div>
 							</div>
@@ -201,7 +200,7 @@
 										예정 시작일</label>
 									<div class="col-md-4">
 											<input class="form-control" id="proj_startdate"
-											name="proj_startdate" placeholder="MM/DD/YYYY" type="date"
+											name="proj_startdate" type="date"
 											required="true" />
 									</div>
 									<label class="col-md-3 control-label" for="date">예상 기간</label>
@@ -219,8 +218,7 @@
 								<div class="col-sm-7">
 									<input type="text" class="form-control" readonly="readonly"
 										required="true" id="final_result">
-									<input type="hidden" class="form-control" name="final_result_id" id="final_result_id">
-										
+									<input type="hidden" class="form-control" name="final_result_id" id="final_result_id" readonly="readonly">
 								</div>
 								<div class="col-sm-2">
 									<button type="button" class="btn btn-default"

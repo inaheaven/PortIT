@@ -1,5 +1,6 @@
 package portit.model.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,33 @@ public class Profile {
 	private List<TagUse> prof_skillset;
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
+	
+
+	// 읽어오기 위해 prof_id, name, nick을 리스트로 묶는다.
+	private ArrayList<Integer> prof_id_list = new ArrayList<>();
+	private ArrayList<String> prof_name_list = new ArrayList<>();
+	private ArrayList<String> prof_nick_list = new ArrayList<>();
+	
+	public ArrayList<Integer> getProf_id_list() {
+		return prof_id_list;
+	}
+	public void setProf_id_list(ArrayList<Integer> prof_id_list) {
+		this.prof_id_list = prof_id_list;
+	}
+	public ArrayList<String> getProf_name_list() {
+		return prof_name_list;
+	}
+	public void setProf_name_list(ArrayList<String> prof_name_list) {
+		this.prof_name_list = prof_name_list;
+	}
+	public ArrayList<String> getProf_nick_list() {
+		return prof_nick_list;
+	}
+	public void setProf_nick_list(ArrayList<String> prof_nick_list) {
+		this.prof_nick_list = prof_nick_list;
+	}
+	
+	
 	public int getProf_id() {
 		return prof_id;
 	}
