@@ -8,7 +8,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>	
 <link href="assets/css/main.css" rel="stylesheet">
-<body>
+<%
+	List portfolio = (List)request.getAttribute("port_list");
+	List member = (List)request.getAttribute("mem_list");
+	List project = (List)request.getAttribute("proj_list");
+	List timeline = (List)request.getAttribute("time_list");
+%>
 	<section class="container">
 		<section class="wrapper site-min-height">
 			<div class="col-md-12 col-sm-12 col-xs-12 mt" id="main">
@@ -24,9 +29,12 @@
 						<!-- 포트폴리오 패널 -->
 						<div class="tab-pane active" id="pfRecommend">
 							<div class="row mt">
-
-								<c:if test="${port_list.size() != 0 }">
-									<c:forEach begin="0" end="3" var="i">
+					</h4>
+	<%	
+			for(int i=0; i< 4; i++){
+				Portfolio port = (Portfolio) portfolio.get(i);
+	%>
+							
 										<!-- 첫번째 포트폴리오 -->
 										<div class="col-md-3 mb">
 											<div class="portfolio-simple">
@@ -34,25 +42,23 @@
 												<div class="pfInfo">
 													<div class="simple-content">
 														<div class="pfTag">
-															<a href="">#${port_list[i].tag_name}&nbsp;</a>
+															<% for(int j=0; j<port.getTags().size(); j++) { %>
+															<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+															<%} %>
 														</div>
 														<div class="pfTitle">
-															<a href="">${port_list[i].pf_title} </a>
+															<a href=""><%=port.getPf_title()%> </a>
 														</div>
 														<div class="pfBottom">
-															<span class="pfmemName"><a href="">${port_list[i].prof_name}</a></span>
+															<span class="pfmemName"><a href=""><%=port.getProf_name()%></a></span>
 															<span class="pfLikeCount"><span
-																class="fa fa-heart"></span>&nbsp;&nbsp;${port_list[i].pf_like}</span>
+																class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like()%></span>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</c:forEach>
-								</c:if>
-								<c:if test="${port_list.size() == 0 }">
-									검색된 결과가 없습니다.
-								</c:if>
+		<%} %>						
 							</div>
 						</div>
 		
@@ -60,72 +66,83 @@
 						<!-- 개발자 패널 -->
 						<div class="tab-pane" id="memRecommend">
 							<div class="row mt">
-								<c:if test="${mem_list.size() != 0 }">
-									<c:forEach begin="0" end="3" var="i">
+	<%	
+			for(int i=0; i< 4; i++){
+				Member mem = (Member) member.get(i);
+	%>						
+								
 										<!-- 첫 번째 member-->
 										<div class="col-md-3 mb">
 											<div class="member-simple">
 												<div class="simple-content text-center">
 													<img class="memImg img-circle" alt="avatar"
-														src="${mem_list[i].prof_img}" />
+														src="<%=mem.getProf_img()%>" />
 													<div>
 														<div class="memName">
-															<a href=""> ${mem_list[i].prof_name}</a>
+															<a href=""> <%=mem.getProf_name()%></a>
 														</div>
 														<div class="memTag">
-															<a href=""># ${mem_list[i].tag_name}&nbsp;</a>
+															<% for(int j=0; j<mem.getTags().size(); j++) { %>
+															<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+															<%} %>
 														</div>
 														<div class="memFollow">
 															<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-																class="memFollowCount">${mem_list[i].prof_follower}</span>
+																class="memFollowCount"><%=mem.getProf_follower() %></span>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</c:forEach>
-								</c:if>
-								<c:if test="${mem_list.size() == 0 }">
-									검색된 결과가 없습니다.
-								</c:if>
+	<%
+			}
+	%>						
 							</div>
 						</div>
 
 						<!-- 모집 패널 -->
 						<div class="tab-pane" id="projRecommend">
 							<div class="row mt">
-								<div class="col-lg-12">
-									<div class="row">
-										<c:if test="${proj_list.size() != 0 }">
-											<c:forEach begin="0" end="3" var="i">
+								
+	<%			
+			int num = 0;
+			if(project.size() >= 4 && project.size() != 0){
+				num = 4;
+			}
+			else if(project.size() != 0 && project.size() < 4){
+				num = project.size();
+			}
+			for(int i=0; i<num; i++){
+				Project proj = (Project) project.get(i);
+	%>
+										
 												<!-- 첫번째 모집 -->
 												<div class="col-md-3 mb">
 													<div class="project-simple">
 														<div class="simple-content text-center">
 															<div class="pjTag">
-																<a href=""> #${proj_list[i].tag_name}&nbsp;</a>
-															</div>
+									          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
+															<a href="">#<%= proj.getTags().get(j)%></a>&nbsp;
+															<%} %>
+									          				</div>
 															<div class="pjTitle">
-																<a href="">${proj_list[i].proj_title} </a>
+																<a href=""><%=proj.getProj_title() %> </a>
 															</div>
 															<div class="pjInfo">
-																<span class="pjField"><a href="">#${proj_list[i].tag_name}</a></span>&nbsp;/&nbsp;
-																<span class="pjTo">${proj_list[i].proj_to} 명</span>
+																<span class="pjField"><a href="">#
+																	<//%proj.getTags2().get(0); %></a>
+																</span>&nbsp;/&nbsp;
+																<span class="pjTo"><%=proj.getProj_to() %> 명</span>
 															</div>
 															<div class="pjRegiEndDate">
 																<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>
-																		${ proj_list[i].d_day} %></span></span>
+																		<%=proj.getD_day() %> </span></span>
 															</div>
 														</div>
 													</div>
 												</div>
-											</c:forEach>
-										</c:if>
-										<c:if test="${proj_list.size() == 0 }">
-											검색된 결과가 없습니다.
-										</c:if>
-									</div>
-								</div>
+	<%} %>
+									
 							</div>
 						</div>
 						
@@ -141,9 +158,17 @@
 						<b> Timeline </b>
 					</h3>
 
-
-					<c:if test="${time_list.size() != 0 && time_list.size() > 0}">
-						<c:forEach begin="0" end="${time_list.size()-1}" var="i">
+	<%	
+			int num1 = 0;
+			if(timeline.size() < 4 && timeline.size() != 0){
+				num1 = timeline.size();
+			}
+			else if(timeline.size() != 0 && timeline.size() >= 4){
+				num1 = 4;
+			}
+			for(int i=0; i< num1; i++){
+				Timeline time = (Timeline) timeline.get(i);
+	%>
 							<!-- 첫번째 타임라인 -->
 							<div class="col-md-12 mt">
 								<div class="portfolio-timeline">
@@ -154,31 +179,29 @@
 									</div>
 									<span class="pfInfo">
 										<div>
-											<span class="pfTitle"><a href="">${time_list[i].pf_title}</a></span>
+											<span class="pfTitle"><a href=""><%=time.getPf_title() %></a></span>
 											<span class="pfLike"> <span
 												class="glyphicon glyphicon-heart"></span> <span
-												class="pfLikeCount">234</span>
+												class="pfLikeCount"><%=time.getPf_like() %></span>
 											</span>
 										</div>
 										<div class="pfmemName">
-											<span class="fa fa-user">${time_list[i].prof_name}</span>&nbsp;&nbsp;
+											<span class="fa fa-user"><%=time.getProf_name() %></span>&nbsp;&nbsp;
 											<span><a href=""></a></span>
 										</div>
 										<div class="pfTag">
-											<a href="">#${time_list[i].tag_name}&nbsp;</a>
+											<% for(int j=0; j<time.getTags().size(); j++) { %>
+											<a href="">#<%= time.getTags().get(j)%></a>&nbsp;
+											<%} %>
 										</div>
 									</span> <span class="pfImage"> <span><img
-											src="${time_list[i].ml_path}" /></span> <span><img
+											src="" /></span> <span><img
 											src="assets/img/instagram.jpg" /></span> <span><img
 											src="assets/img/instagram.jpg" /></span>
 									</span>
 								</div>
 							</div>
-						</c:forEach>
-					</c:if>
-					<c:if test="${time_list.size() == 0 }">
-						검색된 결과가 없습니다.
-					</c:if>
+	<%} %>				
 
 				</div>
 			</div>

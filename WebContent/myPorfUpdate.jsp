@@ -19,7 +19,7 @@
 	//int mem_id = Integer.parseInt(request.getParameter("mem_id"));
 
 	/////////////////102 -> mem_id로 //////////////
-	Profile prof= dao.getProfile(103);
+	Profile prof= dao.getProfile(3);
 
 %>
 
@@ -218,24 +218,34 @@ function fnSelectSnsInfo(snsName){
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 언어</label>
 						<div class="col-md-9">
-							<input class="form-control" id="Prof_language" type="text"
-								name="tag_name" placeholder="ex) C, JAVA, Python 등" value="<%=prof.getTag_name()%>">
+							<input class="form-control tagInput" id="Prof_language1" type="text" name="tag_lang">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_language2" type="text" name="tag_lang">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_language3" type="text" name="tag_lang">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_language4" type="text" name="tag_lang">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_language5" type="text" name="tag_lang">
+							<br><br>* 태그로 작성됩니다. ( 예시 : C, JAVA, Python 등 )
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 툴</label>
 						<div class="col-md-9">
-							<input class="form-control" id="disabledInput" type="text"
-								name="tag_name2"
-								placeholder="ex) Eclipse, Visual Studio2013, Bootstrap 등" value="<%=prof.getTag_name2()%>">
+							<input class="form-control tagInput" id="Prof_tool1" type="text" name="tag_tool">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_tool2" type="text" name="tag_tool">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_tool3" type="text" name="tag_tool">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_tool4" type="text" name="tag_tool">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_tool5" type="text" name="tag_tool">
+							<br><br>* 태그로 작성됩니다. ( 예시 : Window7, OracleDB, Eclipse, Visual Studio2013  등 )
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 분야</label>
 						<div class="col-md-9">
-							<input class="form-control" id="disabledInput" type="text"
-								name="tag_name3"
-								placeholder="ex) 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등" value="<%=prof.getTag_name3()%>">
+							<input class="form-control tagInput" id="Prof_field1" type="text" name="tag_field">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_field2" type="text" name="tag_field">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_field3" type="text" name="tag_field">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_field4" type="text" name="tag_field">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_field5" type="text" name="tag_field">
+							<br><br>* 태그로 작성됩니다. ( 예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )
 						</div>
 					</div>
 					<div class="form-group">

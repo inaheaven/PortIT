@@ -28,10 +28,10 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=MEMSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="pfSearch"
+							<input type="text" class="form-control" name="memSearch"
 								value="${sessionScope.search}" />
 						</div>
-						<button type="submit" class="col-md-1 btn common" id="pfsubmit">
+						<button type="submit" class="col-md-1 btn common" >
 							<i class="fa fa-search"></i>
 						</button>
 					</form>
@@ -63,18 +63,12 @@
 						</div>
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
-							<input class="btn poptag" type="button" value="JAVA"
-								name="language" onclick="fnAppendItem()" /> <input
-								class="btn poptag" type="button" value="C" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
-								type="button" value="c++" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
-								type="button" value="Eclipse" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
-								type="button" value="jsp" name="language"
-								onclick="fnAppendItem()" /> <input class="btn poptag"
-								type="button" value="servlet" name="language"
-								onclick="fnAppendItem()" /> .....
+							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
+							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
+							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
+							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
+							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
@@ -91,11 +85,10 @@
 				<!-- END - 조건 검색 box -->
 <%	
  	List list = member_viewDao.member_info();
-	List tag_list = member_viewDao.member_info_tag();
  
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
- 		int numPerPage = 16;			//한 페이지당 보여질 글의 갯수
+ 		int numPerPage = 3;			//한 페이지당 보여질 글의 갯수
  		int totalPage = 0;				//전체 페이지 수
  		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
  		int beginPerPage = 1;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
@@ -134,12 +127,9 @@
 			         				<div>
 			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
-			         					<%
-										for(int j = (3*i)+0 ; j<=(3*i)+2; j++){
-											Member mem_tag = (Member) tag_list.get(j);	
-										%>
-			         						<a href="javascript:tag_name('')"># <%=mem_tag.getTag_name() %>&nbsp;</a>
-			         					<%} %>
+			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
+										<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+										<%} %>
 			         					</div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;

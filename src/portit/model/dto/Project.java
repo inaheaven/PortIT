@@ -39,6 +39,35 @@ public class Project {
 	private ArrayList<String> proj_tool;
 	private ArrayList<String> proj_field;
 	private ArrayList<Integer> proj_numofperson;
+	
+	private List<String> tags;
+	private List<String> tags2;
+	private List<String> media_path;
+	 
+	
+	
+	
+	public List<String> getTags() {
+		return tags;
+	}
+	public List<String> getTags2() {
+		return tags2;
+	}
+	public List<String> getMedia_path() {
+		return media_path;
+	}
+	public Project setTags(List<String> tags) {
+		this.tags = tags;
+		return this;
+	}
+	public Project setTags2(List<String> tags2) {
+		this.tags2 = tags2;
+		return this;
+	}
+	public Project setMedia_path(List<String> media_path) {
+		this.media_path = media_path;
+		return this;
+	}
 	public int getMem_id() {
 		return mem_id;
 	}

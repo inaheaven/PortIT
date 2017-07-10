@@ -35,7 +35,7 @@ public class Profile {
 	private int prof_skill_level;
 	private int prof_skill_level2;
 	private int prof_skill_level3;
-
+	private List tags;
 
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
@@ -44,7 +44,13 @@ public class Profile {
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
 	
-	
+	public List getTags() {
+		return tags;
+	}
+	public Profile setTags(List tags) {
+		this.tags = tags;
+		return this;
+	}
 	public int getProf_id() {
 		return prof_id;
 	}

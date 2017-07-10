@@ -57,6 +57,17 @@ public class Portfolio {
     private String prof_name;
     private String tag_name;
     private String ml_path;
+    private List<String> tags;
+    
+    
+    
+	public List<String> getTags() {
+		return tags;
+	}
+	public Portfolio setTags(List<String> tags) {
+		this.tags = tags;
+		return this;
+	}
 	public int getMem_id() {
 		return mem_id;
 	}

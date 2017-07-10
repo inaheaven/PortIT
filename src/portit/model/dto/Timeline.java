@@ -1,6 +1,7 @@
 package portit.model.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class Timeline {
 	private int pf_id;
@@ -16,6 +17,27 @@ public class Timeline {
 	private String tag_name;
 	private String ml_path;
 	private int mem_id;
+	private int mem_id2;
+	private List tags;
+	
+	
+	
+	
+	
+	public int getMem_id2() {
+		return mem_id2;
+	}
+	public List getTags() {
+		return tags;
+	}
+	public Timeline setMem_id2(int mem_id2) {
+		this.mem_id2 = mem_id2;
+		return this;
+	}
+	public Timeline setTags(List tags) {
+		this.tags = tags;
+		return this;
+	}
 	public int getPf_id() {
 		return pf_id;
 	}
