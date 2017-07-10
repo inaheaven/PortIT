@@ -57,12 +57,13 @@ public class ProfileController extends HttpServlet {
 		String prof_nick = req.getParameter("prof_nick");
 		String prof_intro = req.getParameter("prof_intro");
 		String prof_website = req.getParameter("prof_website");
+		String prof_facebook = req.getParameter("prof_facebook");
+		String prof_github = req.getParameter("prof_github");
 		String tag_name = req.getParameter("tag_name");
-		String tag_name2 = req.getParameter("tag_name2");
-		String tag_name3 = req.getParameter("tag_name3");
-		String tag_name4 = req.getParameter("tag_name4");
-		String tag_name5 = req.getParameter("tag_name5");
-		String tag_name6 = req.getParameter("tag_name6");
+
+		String[] tag_lang = req.getParameterValues("tag_lang");
+		String[] tag_tool = req.getParameterValues("tag_tool");
+		String[] tag_field = req.getParameterValues("tag_field");
 
 		//null값이 넘어 오는 경우 오류 처리
 		int prof_skill_level = 0;
@@ -89,9 +90,7 @@ public class ProfileController extends HttpServlet {
 
 //		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
 		int prof_follower =0;
-		String prof_facebook = req.getParameter("prof_facebook");
-		String prof_github = req.getParameter("prof_github");
-
+		
 		prof_reg.setProf_img(prof_img);
 		prof_reg.setProf_background(prof_background);
 		prof_reg.setProf_name(prof_name);
@@ -99,17 +98,17 @@ public class ProfileController extends HttpServlet {
 		prof_reg.setProf_intro(prof_intro);
 		prof_reg.setProf_website(prof_website);
 		prof_reg.setTag_name(tag_name);
-		prof_reg.setTag_name2(tag_name2);
-		prof_reg.setTag_name3(tag_name3);
-		prof_reg.setTag_name4(tag_name4);
-		prof_reg.setTag_name5(tag_name5);
-		prof_reg.setTag_name6(tag_name6);
+	
 		prof_reg.setProf_skill_level(prof_skill_level);
 		prof_reg.setProf_skill_level2(prof_skill_level2);
 		prof_reg.setProf_skill_level3(prof_skill_level3);
 		prof_reg.setProf_follower(prof_follower);
 		prof_reg.setProf_facebook(prof_facebook);
 		prof_reg.setProf_github(prof_github);
+		prof_reg.setTag_lang(tag_lang);
+		prof_reg.setTag_tool(tag_tool);
+		prof_reg.setTag_field(tag_field);
+		
 
 		////////////////////////////102 -> mem_id로///////////////////////////////
 		//INSERT
@@ -169,13 +168,13 @@ public class ProfileController extends HttpServlet {
 
 		if (cmd.equals("REGISTER")) {
 			//return  new RegisterCommand();
-			url = "/myPorfUpdate.jsp";
+			url = "/page?page=myPorfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
 			//UPDATE
 			profileDao.updateProfile(prof_reg, 103);
-			url = "/myPorfUpdate.jsp";
+			url = "/page?page=myPorfUpdate";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

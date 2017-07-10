@@ -35,20 +35,19 @@ public class Profile {
 	private int prof_skill_level;
 	private int prof_skill_level2;
 	private int prof_skill_level3;
-	private List tags;
 	
-	public List getTags() {
-		return tags;
-	}
-	public void setTags(List tags) {
-		this.tags = tags;
-	}
 	private List<Tag> prof_tags_language;
 	private List<Tag> prof_tags_tool;
 	private List<Tag> prof_tags_field;
 	private List<TagUse> prof_skillset;
 	private List<Portfolio> prof_myPf;
 	private List<Project> prof_myProj;
+	
+	private List tag_lang;
+	private List tag_tool;
+	private List tag_field;
+	
+	
 	public int getProf_id() {
 		return prof_id;
 	}
@@ -234,6 +233,24 @@ public class Profile {
 	}
 	public void setProf_myProj(List<Project> prof_myProj) {
 		this.prof_myProj = prof_myProj;
+	}
+	public List getTag_lang() {
+		return tag_lang;
+	}
+	public void setTag_lang(List tag_lang) {
+		this.tag_lang = tag_lang;
+	}
+	public List getTag_tool() {
+		return tag_tool;
+	}
+	public void setTag_tool(List tag_tool) {
+		this.tag_tool = tag_tool;
+	}
+	public List getTag_field() {
+		return tag_field;
+	}
+	public void setTag_field(List tag_field) {
+		this.tag_field = tag_field;
 	}
 
 	
