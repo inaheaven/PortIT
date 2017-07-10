@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,7 +12,7 @@
 				<!-- BASIC FORM ELELEMNTS -->
 				<div class="pfregForm">		
 					<h3 class="formTitle text-center">포트폴리오 등록</h3>			
-					<form class="form-horizontal style-form" method="post" action="#">
+					<form class="form-horizontal style-form" method="post" action="/post?type=portfolio">
 						<div class="form-group">
 							<label class="col-md-3 control-label">포트폴리오 제목</label>
 							<div class="col-md-9">
@@ -22,12 +21,12 @@
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">포트폴리오 제작 기간</label> 
-							<label class="col-md-1 control-label" for="date">시작 	일</label>
+							<label class="col-md-1 control-label" for="date">시작일</label>
 							<div class="col-md-3">
 								<input class="form-control" id="start_date" name="start_date" type="date" /> 
 							</div>
 							<div class="col-md-1"></div>
-							<label class="col-md-1 control-label" for="date">마감 일</label>
+							<label class="col-md-1 control-label" for="date">마감일</label>
 							<div class="col-md-3">
 								<input class="form-control" id="end_date" name="end_date" type="date" />
 							</div>
@@ -41,22 +40,22 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 언어</label>
 							<div class="col-md-9">
-								<input class="form-control tagInput" id="pf_language1" type="text" name="tag_lang">&nbsp;,&nbsp;							
-								<input class="form-control tagInput" id="pf_language2" type="text" name="tag_lang">&nbsp;,&nbsp;							
-								<input class="form-control tagInput" id="pf_language3" type="text" name="tag_lang">&nbsp;,&nbsp;
-								<input class="form-control tagInput" id="pf_language4" type="text" name="tag_lang">&nbsp;,&nbsp;					
-								<input class="form-control tagInput" id="pf_language5" type="text" name="tag_lang">
+								<input class="form-control tagInput" id="pf_language1" type="text" name="tag_lang[]">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_language2" type="text" name="tag_lang[]">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_language3" type="text" name="tag_lang[]">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="pf_language4" type="text" name="tag_lang[]">&nbsp;,&nbsp;					
+								<input class="form-control tagInput" id="pf_language5" type="text" name="tag_lang[]">
 								<br><br>* 태그로 작성됩니다. ( 예시 : C, JAVA, Python 등 )
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">개발 도구</label>
 							<div class="col-md-9">
-								<input class="form-control tagInput" id="pf_tool1" type="text" name="tag_tool">&nbsp;,&nbsp;							
-								<input class="form-control tagInput" id="pf_tool2" type="text" name="tag_tool">&nbsp;,&nbsp;							
-								<input class="form-control tagInput" id="pf_tool3" type="text" name="tag_tool">&nbsp;,&nbsp;
-								<input class="form-control tagInput" id="pf_tool4" type="text" name="tag_tool">&nbsp;,&nbsp;					
-								<input class="form-control tagInput" id="pf_tool5" type="text" name="tag_tool">
+								<input class="form-control tagInput" id="pf_tool1" type="text" name="tag_tool[]">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_tool2" type="text" name="tag_tool[]">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_tool3" type="text" name="tag_tool[]">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="pf_tool4" type="text" name="tag_tool[]">&nbsp;,&nbsp;					
+								<input class="form-control tagInput" id="pf_tool5" type="text" name="tag_tool[]">
 								<br><br>* 태그로 작성됩니다. ( 예시 : Window7, OracleDB, Eclipse, Visual Studio2013  등 )
 							</div>
 						</div>
@@ -69,16 +68,16 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label">담당 업무</label>
 							<div class="col-md-9">
-								<input class="form-control tagInput" id="pf_field1" type="text" name="tag_field">&nbsp;,&nbsp;							
-								<input class="form-control tagInput" id="pf_field2" type="text" name="tag_field">&nbsp;,&nbsp;							
-								<input class="form-control tagInput" id="pf_field3" type="text" name="tag_field">
+								<input class="form-control tagInput" id="pf_field1" type="text" name="tag_field[]">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_field2" type="text" name="tag_field[]">&nbsp;,&nbsp;							
+								<input class="form-control tagInput" id="pf_field3" type="text" name="tag_field[]">
 								<br><br>* 태그로 작성됩니다. ( 예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">Github URL</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="ex) github URL">
+								<input type="text" class="form-control" name="url" placeholder="ex) github URL">
 							</div>
 						</div>
 						<div class="form-group">
@@ -93,7 +92,7 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label">이미지 및 동영상</label>
 							<div class="col-md-9">
-								<input type="file" class="form-control">
+								<input type="file" name="image[]" accept="image/jpg,image/jpeg,image/png,inage/gif" multiple="multiple" class="form-control">
 							</div>
 						</div>
 						<div class="form-group text-center buttonDiv" >
