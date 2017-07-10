@@ -19,7 +19,7 @@ public class ViewDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
-	private ResultSet rs, rs2, rs3;
+	private ResultSet rs, rs2, rs3, rs4;
 	private DBConnectionMgr pool;
 	
 			
@@ -305,6 +305,7 @@ public class ViewDao {
 				int proj_id = rs.getInt("proj_id");				
 				project.setTags(project_tag(proj_id));
 				project.setTags2(project_tag2(proj_id));
+				project.setMedia_path(project_media(proj_id));
 			
 				list.add(project);
 			}
@@ -366,7 +367,32 @@ public class ViewDao {
 			return tags;
 		} 
 		catch (Exception e) {
-			System.out.println("proj_tag 오류" + e);
+			System.out.println("proj_tag(필드) 오류" + e);
+		}
+		return null;
+	}
+	/**
+	 * 프로젝트 간략 정보 (미디어 라이브러리)
+	 */
+	public List project_media(int proj_id) {
+		try {
+			String sql = "SELECT ml_path FROM (SELECT * FROM project proj, media_library ml "
+					+ " WHERE proj.proj_id = ml.ml_type_id AND ml.ml_type = 'proj'  AND ml.ml_type_id = ? ) "
+					+ " WHERE rownum < 3 " ;
+			
+			ArrayList list = new ArrayList();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, proj_id);
+			rs4 = pstmt.executeQuery();
+			
+			List<String> media_path = new ArrayList<>();
+			while (rs4.next()) {
+				media_path.add(rs4.getString("ml_path"));
+			}
+			return media_path;
+		} 
+		catch (Exception e) {
+			System.out.println("ml_path(proj) 오류" + e);
 		}
 		return null;
 	}
@@ -461,7 +487,7 @@ public class ViewDao {
 		return list;
 	}
 	/**
-	 * 타임라인 정보를 불러오는 메서드	  
+	 * 타임라인 정보를 불러오는 메서드	(태그) 
 	 */
 	public List timeline_info_tag(int pf_id) {
 		try {

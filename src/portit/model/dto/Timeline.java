@@ -17,6 +17,7 @@ public class Timeline {
 	private String tag_name;
 	private String ml_path;
 	private int mem_id;
+	private int mem_id2;
 	private List tags;
 	
 	public List getTags() {
@@ -102,5 +103,11 @@ public class Timeline {
 	}
 	public void setPf_repository(String pf_repository) {
 		this.pf_repository = pf_repository;
+	}
+	public int getMem_id2() {
+		return mem_id2;
+	}
+	public void setMem_id2(int mem_id2) {
+		this.mem_id2 = mem_id2;
 	}
 }

@@ -97,7 +97,9 @@
 
 									<div class="pfTag">
 										<% for(int j=0; j<port.getTags().size(); j++) { %>
-										<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+										<a href="javascript:tag(<%= port.getTags().get(j)%>)">
+											#<%= port.getTags().get(j)%>
+										</a>&nbsp;
 										<%} %>
 									</div>
 
@@ -158,7 +160,7 @@
 %>
 				</div>
 
-				<form post="method" name="move" action="/SearchView">
+				<form method="post" name="move" action="/SearchView">
 					<input type="hidden" name="totalsearch" value="${search}" /> 
 					<input type="hidden" name="cmd" value="PFSEARCH" />
 
@@ -238,9 +240,9 @@
 %>
 	
 			</div>
-			<form post="method" name="move" action="/SearchView">
-				<input type="hidden" name="totalsearch" value="${search}" /> <input
-					type="hidden" name="cmd" value="MEMSEARCH" />
+			<form method="post" name="move" action="/SearchView">
+				<input type="hidden" name="totalsearch" value="${search}" /> 
+				<input type="hidden" name="cmd" value="MEMSEARCH" />
 
 				<div class="text-right">
 					<button type="submit" class="btn moreBtn">더 보기</button>
@@ -366,7 +368,7 @@
 		}
 %>
 
-			<form post="method" name="move" action="/SearchView">
+			<form method="post" name="move" action="/SearchView">
 				<input type="hidden" name="totalsearch" value="${search}" /> <input
 					type="hidden" name="cmd" value="PROJSEARCH" />
 
@@ -385,20 +387,20 @@
 
 <!-- 상세페이지로 이동하기 위한 폼 -->
 <form name="pf_info" method="post" action="/detailView">
-	<input type="hidden" name="pf_id" /> <input type="hidden" name="cmd"
-		value="PORTFOLIO" />
+	<input type="hidden" name="pf_id" /> 
+	<input type="hidden" name="cmd" value="PORTFOLIO" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
-	<input type="hidden" name="tag_name" /> <input type="hidden"
-		name="cmd" value="MEMBER" />
+	<input type="hidden" name="tag_name" /> 
+	<input type="hidden" name="cmd" value="TAG" />
 </form>
 <form name="prof_info" method="post" action="/detailView">
-	<input type="hidden" name="prof_id" /> <input type="hidden" name="cmd"
-		value="PROJECT" />
+	<input type="hidden" name="prof_id" /> 
+	<input type="hidden" name="cmd" value="PROJECT" />
 </form>
 <form name="proj_info" method="post" action="/detailView">
-	<input type="hidden" name="proj_id" /> <input type="hidden" name="cmd"
-		value="TAG" />
+	<input type="hidden" name="proj_id" /> 
+	<input type="hidden" name="cmd" value="MEMBER" />
 </form>
 
 <!-- 포트폴리오 정보 -->
@@ -410,10 +412,11 @@
 	function tag(tag_name){
 		document.tag_info.tag_name.value = tag_name;
 		document.tag_info.submit();	
+		alert(tag_name);
 	}
 	function prof(prof_id){
 		document.prof_info.prof_id.value = prof_id;
-		document.prof_info.submit();
+		document.prof_info.submit();		
 	}
 	function proj(proj_id){
 		document.proj_info.proj_id.value = proj_id;

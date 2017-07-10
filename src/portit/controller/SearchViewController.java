@@ -26,14 +26,18 @@ public class SearchViewController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
+		
 		String cmd = req.getParameter("cmd");
+		
 		String url = null;
 		HttpSession session = req.getSession();
 	
 		//검색어 결과 저장
 		String totalsearch = req.getParameter("totalsearch");	//통합 검색한 결과
 		String pfSearch = req.getParameter("pfSearch");	//포트폴리오 페이지 내에서 검색 결과 값
+		System.out.println(pfSearch);
 		String memSearch = req.getParameter("memSearch");  // 멤버 페이지 내에서 검색 결과 값
+		System.out.println(memSearch);
 		String projSearch = req.getParameter("projSearch");	 // 프로젝트 페이지 내에서 검색 결과 값
 		
 		
@@ -85,8 +89,8 @@ public class SearchViewController extends HttpServlet {
 		}
 		else if(cmd.equals("MEMSEARCH")){
 			if(totalsearch != null){
+				System.out.println(totalsearch);
 				list = searchDao.searchAll_member(totalsearch,lineup);
-
 				req.setAttribute("mem_list", list);
 
 			}			

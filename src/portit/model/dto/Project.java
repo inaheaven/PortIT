@@ -38,13 +38,15 @@ public class Project {
 	private ArrayList<Integer> proj_numofperson;
 	
 	 private List<String> tags;
+	 private List<String> tags2;
+	 private List<String> media_path;
+	 
 	 public List<String> getTags2() {
 		return tags2;
 	}
 	public void setTags2(List<String> tags2) {
 		this.tags2 = tags2;
 	}
-	private List<String> tags2;
 	 
 	public List<String> getTags() {
 		return tags;
@@ -171,6 +173,12 @@ public class Project {
 	}
 	public void setProj_numofperson(ArrayList<Integer> proj_numofperson) {
 		this.proj_numofperson = proj_numofperson;
+	}
+	public List<String> getMedia_path() {
+		return media_path;
+	}
+	public void setMedia_path(List<String> media_path) {
+		this.media_path = media_path;
 	}
 	
 	

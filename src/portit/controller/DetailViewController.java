@@ -24,11 +24,12 @@ public class DetailViewController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		
+		String cmd = req.getParameter("cmd");
 		int pf_id = Integer.parseInt(req.getParameter("pf_id"));
 		int prof_id = Integer.parseInt(req.getParameter("prof_id"));
 		int proj_id = Integer.parseInt(req.getParameter("proj_id"));
 		String tag_name = req.getParameter("tag_name");
-		String cmd = req.getParameter("cmd");
+		System.out.println(tag_name);
 		String url = null;
 		
 		ViewDao viewdao = new ViewDao();		
@@ -46,8 +47,10 @@ public class DetailViewController extends HttpServlet {
 			url="/page?page=";
 		}
 		else if(cmd.equals("TAG")){
+			String tag_name2 = req.getParameter("tag_name");
+			System.out.println(tag_name2);
 			req.setAttribute("proj_view",viewdao.project_info(proj_id));			
-			url="/page?page=";
+			url="/page?page=searchAll";
 		}
 		
 
