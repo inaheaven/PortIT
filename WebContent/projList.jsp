@@ -6,8 +6,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="header.jsp"></jsp:include>
-<link href="assets/css/search.css" rel="stylesheet">
+
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
@@ -17,8 +16,9 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
 <link href="assets/css/custom.css" rel="stylesheet">
+<link href="assets/css/search.css" rel="stylesheet">
 
-<script src="assets/js/chart-master/Chart.js"></script>
+<jsp:include page="header.jsp"></jsp:include>
 
 <jsp:useBean id="proj_viewDao" class="portit.model.dao.ViewDao" />
 

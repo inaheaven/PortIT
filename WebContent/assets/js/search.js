@@ -18,6 +18,8 @@ var count = 0;
 
 		//span tag에 id를 입력한다.
 		newSpan.setAttribute("id", "item_" + count);
+		newSpan.setAttribute("class", "btn");
+		newSpan.className += " tagcondition";
 		//newSpan_value.setAttribute("id","item_value" + count);
 
 		//속성셋팅..
@@ -28,8 +30,8 @@ var count = 0;
 
 		//span tag안에 자식태그를 삽입한다. <삭제버튼>
 		newSpan.innerHTML = window.event.target.value
-				+ "<input type='button' value='x' onclick='fnDeleteItem("
-				+ count + ")'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				+ "<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("
+				+ count + ")'/>"
 		//newSpan_value.innerHTML = window.event.target.value +"<input type='hidden' name='param"+count+"' id='param"+count+"' value='"+_param+"' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 
 		//itemList의 태그위치 저장
@@ -70,11 +72,14 @@ var count = 0;
 		var newSpan = document.createElement("span");
 
 		newSpan.setAttribute("id", "item_" + count);
+		newSpan.setAttribute("class", "btn");
+		newSpan.className += " tagcondition";
+		
 		var choice = document.getElementById("language").value;
 
 		newSpan.innerHTML = window.event.target.value
-				+ "<input type='button' value='x' onclick='fnDeleteItem("
-				+ count + ")'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				+ "<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("
+				+ count + ")'/>"
 
 		var itemList = document.getElementById("itemList");
 		itemList.appendChild(newSpan);
