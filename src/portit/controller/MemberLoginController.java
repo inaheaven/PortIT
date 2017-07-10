@@ -64,8 +64,11 @@ public class MemberLoginController extends HttpServlet {
 			req.setAttribute("time_list", time_list);	
 			
 			if(cmd.equals("MAIN")){
-				out.println("<script>location.href='/page?page=main';</script>");
-				//url="/page?page=main";
+				//out.println("<script>location.href='/page?page=main';</script>");
+				url="/page?page=main";
+				
+				RequestDispatcher view = req.getRequestDispatcher(url);
+				view.forward(req,resp);
 			}
 			
 		}
