@@ -59,11 +59,23 @@
         }
         
         function fnSubmit() {
+        	//비밀번호 유효성
         	var pw = document.getElementById("userpw").value;
         	var pwcf = document.getElementById("userpwcf").value;
+        	var $pw = $('#userpw');
+        	
+        	//이메일 유효성
+        	var $email = $('#userid');
+        	var exptext = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
         	
         	if(pw != pwcf) {
         		confirm("비밀번호를 다시 확인하세요!");
+        		$pw.focus();
+        	}
+        	else if(!exptext.test($email.val())) {
+        		alert("이메일 형식이 올바르지 않습니다!!!!!!!!!!!");
+        		$email.focus();
+        		return false;
         	}
         	else {
         		document.getElementById("join").submit();

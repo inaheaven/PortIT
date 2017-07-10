@@ -1,14 +1,12 @@
 package portit.model.dao;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Member;
+import portit.model.dto.Profile;
 
 /**
  * 회원 관련 DAO
@@ -103,7 +101,43 @@ public class MemberDao {
 		return checkMem;
 	}
 	
+	public  Profile getUserInformation(int mem_id){
+		String sql = null;
+		String name = null;
+		Profile mem_profile=null;
+		
+		try{	
+			sql="select distinct profile.mem_id ,profile.PROF_NAME, MEMBER.MEM_EMAIL, PROFILE.PROF_IMG  "+
+				"FROM MEMBER INNER JOIN	PROFILE "+
+				"on MEMBER.MEM_ID=profile.MEM_ID "+
+				"where MEMBER.MEM_ID="+mem_id;
+			
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+		
+			
+			while(rs.next()){
+				 mem_profile= new Profile();
+				//name= rs.getString("profile.prof_name");
+				mem_profile.setMem_id(rs.getInt("mem_id"));
+				mem_profile.setProf_img(rs.getString("PROF_IMG"));
+				mem_profile.setProf_name(rs.getString("prof_name"));
+				mem_profile.setProf_email(rs.getString("MEM_EMAIL"));
+			}
 	
+		}
+		catch(Exception err){
+			System.out.println("getUserInformation()에서 오류");
+			err.printStackTrace();
+		}
+		finally{
+			pool.freeConnection(conn, stmt, rs);
+		}
+			
+		return mem_profile;
+	}
+
 	
 	/**
 	 * 회원 탈퇴
