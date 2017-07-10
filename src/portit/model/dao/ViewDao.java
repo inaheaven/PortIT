@@ -451,7 +451,7 @@ public class ViewDao {
 				+ "join tag on tag.tag_id = tag_use.tag_id  "
 				+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
 				+ "join member on member.mem_id = profile.mem_id "
-				+ "where tag_use_type ='portfolio' and ml_type = 'portf' and "
+				+ "where tag_use_type ='pf' and ml_type = 'pf' and "
 				+ "member.mem_id="+mem_id + " " 
 				+ "order by pf_regdate desc";
 		try {
