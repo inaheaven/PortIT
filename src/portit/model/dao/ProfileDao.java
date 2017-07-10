@@ -470,6 +470,27 @@ public class ProfileDao {
 	}
 	
 	
+	/**
+	 * 닉네임으로 프로필 번호 얻기
+	 * @param nick
+	 * @return
+	 */
+	public int nickToId(String nick) {
+		int prof_id = 0;
+		getConnection();
+		try {
+			String sql = "SELECT prof_id FROM profile WHERE prof_nick=?";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			rs.next();
+			prof_id = rs.getInt("prof_id");
+			return prof_id;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prof_id;
+	}
+	
 	
 	
 	

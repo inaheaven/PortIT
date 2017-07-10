@@ -30,8 +30,13 @@ public class Portfolio {
 	private String pf_url;
 	/** 포트폴리오 작성자명 */
 	private String pf_authorName;
+	private String pf_prof_name;
+	private String pf_prof_nick;
+	
 	/** 포트폴리오 작성자 사진 */
 	private String pf_authorIcon;
+	private String pf_prof_img;
+	
 	/** 포트폴리오 태그 목록 - 개발환경 */
 	private List<Tag> pf_tags_env;
 	/** 포트폴리오 태그 목록 - 언어 */
@@ -41,7 +46,7 @@ public class Portfolio {
 	/** 포트폴리오 태그 목록 - 분야 */
 	private List<Tag> pf_tags_field;
 	/** 미디어 파일 목록 */
-	private List<Media> pf_mediae;
+	private List<Media> pf_mediaList;
 	/** 공동 작업자 목록 */
 	private List<Profile> pf_coworkers;
 	/** 추천 포트폴리오 목록 */
@@ -51,38 +56,9 @@ public class Portfolio {
 	private String prof_nick;
     private String prof_name;
     private String tag_name;
-    
     private String ml_path;
-    
-    
-	public String getMl_path() {
-		return ml_path;
-	}
-	public String getTag_name() {
-		return tag_name;
-	}
-	public void setTag_name(String tag_name) {
-		this.tag_name = tag_name;
-	}
 	public int getMem_id() {
 		return mem_id;
-	}
-	public void setMem_id(int mem_id) {
-		this.mem_id = mem_id;
-	}
-	public String getProf_name() {
-		return prof_name;
-	}
-	public void setProf_name(String prof_name) {
-		this.prof_name = prof_name;
-	}
-	private int bm_id;
-	
-	public int getBm_id() {
-		return bm_id;
-	}
-	public void setBm_id(int bm_id) {
-		this.bm_id = bm_id;
 	}
 	public int getPf_id() {
 		return pf_id;
@@ -114,8 +90,17 @@ public class Portfolio {
 	public String getPf_authorName() {
 		return pf_authorName;
 	}
+	public String getPf_prof_name() {
+		return pf_prof_name;
+	}
+	public String getPf_prof_nick() {
+		return pf_prof_nick;
+	}
 	public String getPf_authorIcon() {
 		return pf_authorIcon;
+	}
+	public String getPf_prof_img() {
+		return pf_prof_img;
 	}
 	public List<Tag> getPf_tags_env() {
 		return pf_tags_env;
@@ -129,8 +114,8 @@ public class Portfolio {
 	public List<Tag> getPf_tags_field() {
 		return pf_tags_field;
 	}
-	public List<Media> getPf_mediae() {
-		return pf_mediae;
+	public List<Media> getPf_mediaList() {
+		return pf_mediaList;
 	}
 	public List<Profile> getPf_coworkers() {
 		return pf_coworkers;
@@ -138,7 +123,22 @@ public class Portfolio {
 	public List<Portfolio> getPf_recommends() {
 		return pf_recommends;
 	}
-	
+	public String getProf_nick() {
+		return prof_nick;
+	}
+	public String getProf_name() {
+		return prof_name;
+	}
+	public String getTag_name() {
+		return tag_name;
+	}
+	public String getMl_path() {
+		return ml_path;
+	}
+	public Portfolio setMem_id(int mem_id) {
+		this.mem_id = mem_id;
+		return this;
+	}
 	public Portfolio setPf_id(int pf_id) {
 		this.pf_id = pf_id;
 		return this;
@@ -179,8 +179,20 @@ public class Portfolio {
 		this.pf_authorName = pf_authorName;
 		return this;
 	}
+	public Portfolio setPf_prof_name(String pf_prof_name) {
+		this.pf_prof_name = pf_prof_name;
+		return this;
+	}
+	public Portfolio setPf_prof_nick(String pf_prof_nick) {
+		this.pf_prof_nick = pf_prof_nick;
+		return this;
+	}
 	public Portfolio setPf_authorIcon(String pf_authorIcon) {
 		this.pf_authorIcon = pf_authorIcon;
+		return this;
+	}
+	public Portfolio setPf_prof_img(String pf_prof_img) {
+		this.pf_prof_img = pf_prof_img;
 		return this;
 	}
 	public Portfolio setPf_tags_env(List<Tag> pf_tags_env) {
@@ -199,8 +211,8 @@ public class Portfolio {
 		this.pf_tags_field = pf_tags_field;
 		return this;
 	}
-	public Portfolio setPf_mediae(List<Media> pf_mediae) {
-		this.pf_mediae = pf_mediae;
+	public Portfolio setPf_mediaList(List<Media> pf_mediaList) {
+		this.pf_mediaList = pf_mediaList;
 		return this;
 	}
 	public Portfolio setPf_coworkers(List<Profile> pf_coworkers) {
@@ -211,15 +223,26 @@ public class Portfolio {
 		this.pf_recommends = pf_recommends;
 		return this;
 	}
-	public void setMl_path(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-	public String getProf_nick() {
-		return prof_nick;
-	}
-	public void setProf_nick(String prof_nick) {
+	public Portfolio setProf_nick(String prof_nick) {
 		this.prof_nick = prof_nick;
+		return this;
 	}
-	
+	public Portfolio setProf_name(String prof_name) {
+		this.prof_name = prof_name;
+		return this;
+	}
+	public Portfolio setTag_name(String tag_name) {
+		this.tag_name = tag_name;
+		return this;
+	}
+	public Portfolio setMl_path(String ml_path) {
+		this.ml_path = ml_path;
+		return this;
+	}
+
+    
+    
+    
+    
+    
 }

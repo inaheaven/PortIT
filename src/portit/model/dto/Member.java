@@ -24,11 +24,10 @@ public class Member {
 	public int getProf_id(){
 		return prof_id;
 	}
-	public void setProf_id(int prof_id){
+	public Member setProf_id(int prof_id){
 		this.prof_id = prof_id;
+		return this;
 	}
-	
-	
 	public int getMem_id() {
 		return mem_id;
 	}
@@ -42,47 +41,56 @@ public class Member {
 		return mem_regdate;
 	}
 	
-	public void setMem_id(int mem_id) {
+	public Member setMem_id(int mem_id) {
 		this.mem_id = mem_id;
+		return this;
 	}
-	public void setMem_email(String mem_email) {
+	public Member setMem_email(String mem_email) {
 		this.mem_email = mem_email;
+		return this;
 	}
-	public void setMem_password(String mem_password) {
+	public Member setMem_password(String mem_password) {
 		this.mem_password = mem_password;
+		return this;
 	}
-	public void setMem_regdate(Date mem_regdate) {
+	public Member setMem_regdate(Date mem_regdate) {
 		this.mem_regdate = mem_regdate;
+		return this;
 	}
 	public String getTag_name() {
 		return tag_name;
 	}
-	public void setTag_name(String tag_name) {
+	public Member setTag_name(String tag_name) {
 		this.tag_name = tag_name;
+		return this;
 	}
 	public String getProf_img() {
 		return prof_img;
 	}
-	public void setProf_img(String prof_img) {
+	public Member setProf_img(String prof_img) {
 		this.prof_img = prof_img;
+		return this;
 	}
 	public String getProf_name() {
 		return prof_name;
 	}
-	public void setProf_name(String prof_name) {
+	public Member setProf_name(String prof_name) {
 		this.prof_name = prof_name;
+		return this;
 	}
 	public int getProf_follower() {
 		return prof_follower;
 	}
-	public void setProf_follower(int prof_follower) {
+	public Member setProf_follower(int prof_follower) {
 		this.prof_follower = prof_follower;
+		return this;
 	}
 	public Date getProf_regdate() {
 		return prof_regdate;
 	}
-	public void setProf_regdate(Date prof_regdate) {
+	public Member setProf_regdate(Date prof_regdate) {
 		this.prof_regdate = prof_regdate;
+		return this;
 	}
 }
 

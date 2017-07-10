@@ -48,26 +48,24 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
       *********************************************************************************************************************************************************** -->
 		<!-- Profile header -->
 		<section id="pfHeader">
+
 			<div class="container">
 				<h1>${portfolio.pf_title}</h1>
 				<h4 class="tags">
-					<%
-						if (portfolio.getPf_tags_language() != null) {
-							for (Tag tag : portfolio.getPf_tags_language()) {
-					%>
-					<span> <a href="">${tag.tag_name}</a> </span>
-					<%
-							}
-						}
-					%>
+					<c:if test="${!empty portfolio.pf_tags_language}">
+						<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
+							<span> <a href="">${pf_tag_language.tag_name}</a> </span>
+						</c:forEach>
+					</c:if>
 				</h4>
+				
 				<h4>
 					<i class="fa fa-heart"></i>
 					
 				</h4>
 				<div class="actions">
 					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-heart"></i></button>
-		<!--  요버튼 클릭시 북마크 한번더 클릭 비활성화 북마크크 취소 -->			
+					<!--  요버튼 클릭시 북마크 한번더 클릭 비활성화 북마크크 취소 -->			
 					<button type="button" class="btn common" onclick="location.href='/serial?cmd=BOOKMARK'"><i class="fa fa-bookmark"></i></button>
 					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-share-alt"></i></button>				
 				</div>
@@ -83,8 +81,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 						<li><a href="#pfAbout">About</a></li>
 						<li><a href="#Collaborators">Collaborators</a></li>
 						<li><a href="#Recommendations">Recommendations</a></li>
-						<li><a href="#" id="BackToTop"><i
-								class="fa fa-angle-double-up" aria-hidden="true"></i></a>
+						<li><a href="#" id="BackToTop"><i class="fa fa-angle-double-up" aria-hidden="true"></i></a>
 					</ul>
 				</div>
 			</div>
@@ -100,24 +97,16 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					</div>
 					<div class="col-md-offset-2 col-md-8 pfMem">
 						<div class="col-xs-2">
-							<img src="${portfolio.pf_authorIcon}"
-								alt="${portfolio.pf_authorName}"
+							<img src="${portfolio.pf_prof_img}"
+								alt="${portfolio.pf_prof_name}"
 								class="img-circle uploaderImage" />
 						</div>
 						<div class="col-xs-6">
 							<h3 class="uploaderName">
-								<a href="">${portfolio.pf_authorName}</a>
+								<a href="">${portfolio.pf_prof_name}</a>
 							</h3>
 							<div class="tags">
-								<%
-									if (portfolio.getPf_tags_language() != null) {
-										for (Tag tag : portfolio.getPf_tags_language()) {
-								%>
-								<span> <a href="">${tag.tag_name}</a> </span>
-								<%
-										}
-									}
-								%>
+							
 							</div>
 						</div>
 						<div class="col-xs-4 text-right">
@@ -149,96 +138,73 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 							<tr>
 								<th>사용언어</th>
 								<td>
-									<% 
-										if (portfolio.getPf_tags_language() != null) {
-											for (Tag tag : portfolio.getPf_tags_language()) {
-									%>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<%
-											}
-										}
-									%>
+									<c:if test="${!empty portfolio.pf_tags_language}">
+										<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
+											<span> <a href="">${pf_tag_language.tag_name}</a> </span>
+										</c:forEach>
+									</c:if>
 								</td>
 							</tr>
 							<tr>
 								<th>사용도구</th>
 								<td>
-									<% 
-										if (portfolio.getPf_tags_tool() != null) {
-											for (Tag tag : portfolio.getPf_tags_tool()) {
-									%>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<%
-											}
-										}
-									%>
+									<c:if test="${!empty portfolio.pf_tags_tool}">
+										<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
+											<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
+										</c:forEach>
+									</c:if>
 								</td>
 							</tr>
 							<tr>
 								<th>인원</th>
-								<td>명</td>
+								<td>${portfolio.pf_numofperson}명</td>
 							</tr>
 							<tr>
 								<th>담당분야</th>
 								<td>
-									<% 
-										if (portfolio.getPf_tags_field() != null) {
-											for (Tag tag : portfolio.getPf_tags_field()) {
-									%>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<%
-											}
-										}
-									%>
+									<c:if test="${!empty portfolio.pf_tags_field}">
+										<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
+											<span> <a href="">${pf_tag_field.tag_name}</a> </span>
+										</c:forEach>
+									</c:if>
 								</td>
 							</tr>
 							<tr>
 								<th>저장소</th>
-								<td><a href=""></a></td>
+								<td><a href="${portfolio.pf_url}">${portfolio.pf_url}</a></td>
 							</tr>
 						</table>
 					</div>
 				</div>
-				<%
-				List<Media> mediae = portfolio.getPf_mediae();
-				if (mediae != null && mediae.size() > 0) {
-				%>
-				<div class="col-md-offset-2 col-md-8 pfMedia">
-					<div id="Screenshots" class="carousel slide" data-ride="carousel">
-						<%
-							for (int idx = 0; idx < mediae.size(); idx++) {
-								Media media = mediae.get(idx);
-
-								if (idx == 0) {
-						%>
-						<!-- Indicators -->
-						<ol class="carousel-indicators">
-							
-							<li data-target="#Screenshots" data-slide-to="">
-								
-						</ol>
-					
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner">
-							
-							<div class="item">
-								<img src="" />
+				<c:if test="${!empty portfolio.pf_mediaList}">
+					<div class="col-md-offset-2 col-md-8 pfMedia">
+						<div id="Screenshots" class="carousel slide" data-ride="carousel">
+							<!-- Indicators -->
+							<ol class="carousel-indicators">
+								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+									<li data-target="#Screenshots" data-slide-to="${status.index}">
+								</c:forEach>	
+							</ol>
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner">
+								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+									<div class="item">
+										<img src="${pf_media.ml_path}" />
+									</div>
+								</c:forEach>				
 							</div>
-							
+							<!-- Controls -->
+							<a class="left carousel-control" href="#Screenshots" data-slide="prev">
+								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="right carousel-control" href="#Screenshots" data-slide="next">
+								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
 						</div>
-						
-						<!-- Controls -->
-						<a class="left carousel-control" href="#Screenshots"
-							data-slide="prev"> <span
-							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a> <a class="right carousel-control" href="#Screenshots"
-							data-slide="next"> <span
-							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
 					</div>
-				</div><% } %>
+				</c:if>
 			</div>
 		</section>
 		<!-- /About -->
@@ -249,55 +215,41 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 				<div class="row">
 					<h2 class="text-center">Collaborators</h2>
 				</div>
-				<%
-					List<Profile> coworkers = portfolio.getPf_coworkers();
-					if (coworkers != null && coworkers.size() > 0) {
-						for (int i = 0; i < coworkers.size(); i++) {
-							Profile profile = coworkers.get(i);
-							if (i == 0 || i % 4 == 0) {
-				%>
 				<div class="row collaboList">
-				<%
-							}
-				%>
-					<div class="col-md-3 mb">
-						<div class="member-simple">
-							<div class="simple-content text-center">
-								<img class="memImg img-circle" alt="avatar"
-									src="" />
-								<div>
-									<div class="memName">
-										<a href=""></a>
-									</div>
-									<div class="memTag">
-										
-										#<a href="">&nbsp;</a>
-									
-									</div>
-									<div class="memFollow">
-										<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-											class="memFollowCount"></span>
+					<c:choose>
+						<c:when test="${!empty portfolio.pf_coworkers}">						
+							<c:forEach var="pf_coworker" items="${portfolio.pf_coworkers}">
+								<div class="col-md-3 mb">
+									<div class="member-simple">
+										<div class="simple-content text-center">
+											<a href="/view?type=profile&id=${pf_coworker.prof_nick}"><img class="memImg img-circle" alt="avatar" src="${pf_coworker.prof_img}" /></a>
+											<div>
+												<div class="memName">
+													<a href="/view?type=profile&id=${pf_coworker.prof_nick}">${pf_coworker.prof_name}</a>
+												</div>
+												<div class="memTag">
+													<c:if test="${!empty pf_coworker.prof_tags_language}">
+														<c:forEach var="prof_tag_language" items="${pf_coworker.prof_tags_language}">
+															#<a href="">${prof_tag_language}</a>
+														</c:forEach>
+													</c:if>
+												</div>
+												<div class="memFollow">
+													<span class="fa fa-user"></span>&nbsp;&nbsp; <span
+														class="memFollowCount">${pf_coworker.prof_follower}</span>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<!-- member-simple end -->
-					<%
-							if (i == 0 || i % 4 == 0) {
-					%>
-				</div>
-				<%
-							}
-						}
-					} else {
-				%>
-				<div class="row collaboList">
-					<p class="text-center">이 작업을 같이 수행한 사람이 없습니다.</p>
-				</div>
-				<%
-					}
-				%>
+								<!-- member-simple end -->
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p class="text-center">이 작업을 같이 수행한 사람이 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
+				</div>				
 			</div>
 		</section>
 		<!-- /Collaborators -->
@@ -308,54 +260,44 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 				<div class="row">
 					<h2 class="text-center">Recommendations</h2>
 				</div>
-				<%
-					List<Portfolio> recommends = portfolio.getPf_recommends();
-					if (coworkers != null && coworkers.size() > 0) {
-						for (int j = 0; j < recommends.size(); j++) {
-							Portfolio r = recommends.get(j);
-							if (j == 0 || j % 4 == 0) {
-				%>
 				<div class="row recoList">
-					<%
-							}
-					%>
-					<div class="col-md-3 mb">
-						<div class="portfolio-simple">
-							<div class="pfImg"></div>
-							<div class="pfInfo">
-								<div class="simple-content">
-									<div class="pfTag">
-									
-										#<a href="">&nbsp;</a>
-									
-									</div>
-									<div class="pfTitle">
-										<a href=""></a>
-									</div>
-									<div class="pfBottom">
-										<span class="pfmemName"><a href=""></a></span>
-										<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;</span>
+					<c:choose>
+						<c:when test="${!empty portfolio.pf_recommends}">
+							<c:forEach var="pf_recommend" items="${portfolio.pf_recommends}">
+								<div class="col-md-3 mb">
+									<div class="portfolio-simple">
+										<div class="pfImg">
+											<a href="/view?type=portfolio&id=${pf_recommend.pf_id}"><img src="${pf_recommend.mediaList[0].ml_path}" /></a>
+										</div>
+										<div class="pfInfo">
+											<div class="simple-content">
+												<div class="pfTag">
+													<c:if test="${!empty pf_recommend.pf_tags_language}">
+														<c:forEach var="pf_tag_language" items="${pf_recommend.pf_tags_language}">
+															#<a href="">${pf_tag_language}</a>
+														</c:forEach>
+													</c:if>
+													#<a href="">&nbsp;</a>
+												</div>
+												<div class="pfTitle">
+													<a href="/view?type=portfolio&id=${pf_recommend.pf_id}">${pf_recommend.pf_title}</a>
+												</div>
+												<div class="pfBottom">
+													<span class="pfmemName"><a href="/view?type=profile&id=${pf_coworker.pf_prof_nick}">${pf_recommend.pf_prof_name}</a></span>
+													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;</span>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<!-- portfolio-simple end -->
-					<%
-							if (j == 0 || j % 4 == 0) {
-					%>
+								<!-- portfolio-simple end -->
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p class="text-center">이 작업과 비슷한 작업이 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</div>
-				<%
-							}
-						}
-					} else {
-				%>
-				<div class="row recoList">
-					<p class="text-center">이 작업과 비슷한 작업이 없습니다.</p>
-				</div>
-				<%		
-					}
-				%>
 			</div>
 		</section>
 		<!-- /Recommendations -->

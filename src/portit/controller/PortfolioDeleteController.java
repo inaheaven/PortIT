@@ -19,7 +19,7 @@ import portit.model.dto.Profile;
 import portit.model.dto.Tag;
 
 /**
- * 포트폴리오 조회 컨트롤러
+ * 포트폴리오 삭제 컨트롤러
  *
  */
 public class PortfolioDeleteController implements Controller {

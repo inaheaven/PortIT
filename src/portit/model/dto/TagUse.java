@@ -12,7 +12,6 @@ public class TagUse {
 	private int tag_use_type_id;
 	private int tag_id;
 	private int prof_skill_level; // 프로필에 사용된 skill점수
-	
 	public int getTag_use_id() {
 		return tag_use_id;
 	}
@@ -28,7 +27,6 @@ public class TagUse {
 	public int getProf_skill_level() {
 		return prof_skill_level;
 	}
-	
 	public TagUse setTag_use_id(int tag_use_id) {
 		this.tag_use_id = tag_use_id;
 		return this;
@@ -49,5 +47,7 @@ public class TagUse {
 		this.prof_skill_level = prof_skill_level;
 		return this;
 	}
+	
+
 	
 }
