@@ -45,7 +45,7 @@
 						<span class="hasAlarm"></span>
 					</c:if>
 				</a>
-				<ul class="dropdown-menu extended inbox">
+				<ul class="dropdown-menu extended inbox" style="width: 260px !important; left: -200px;">
 					<div class="notify-arrow notify-arrow-yellow"></div>
 					<li>
 						<p class="yellow">Notification</p>
