@@ -75,7 +75,7 @@
  	
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
- 		int numPerPage = 4;			//한 페이지당 보여질 글의 갯수
+ 		int numPerPage = 12;			//한 페이지당 보여질 글의 갯수
  		int totalPage = 0;				//전체 페이지 수
  		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
  		int beginPerPage = 1;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)

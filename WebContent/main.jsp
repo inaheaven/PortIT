@@ -31,7 +31,14 @@
 							<div class="row mt">
 					</h4>
 	<%	
-			for(int i=0; i< 4; i++){
+		int num = 0;
+		if(portfolio.size() >= 4 && portfolio.size() != 0){
+			num = 4;
+		}
+		else if(portfolio.size() != 0 && portfolio.size() < 4){
+			num = portfolio.size();
+		}
+			for(int i=0; i< num; i++){
 				Portfolio port = (Portfolio) portfolio.get(i);
 	%>
 							
@@ -67,7 +74,13 @@
 						<div class="tab-pane" id="memRecommend">
 							<div class="row mt">
 	<%	
-			for(int i=0; i< 4; i++){
+		if(member.size() >= 4 && member.size() != 0){
+			num = 4;
+		}
+		else if(member.size() != 0 && member.size() < 4){
+			num = member.size();
+		}
+			for(int i=0; i< num; i++){
 				Member mem = (Member) member.get(i);
 	%>						
 								
@@ -105,7 +118,7 @@
 							<div class="row mt">
 								
 	<%			
-			int num = 0;
+			
 			if(project.size() >= 4 && project.size() != 0){
 				num = 4;
 			}

@@ -64,7 +64,7 @@ public class SearchDao {
 					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
 					+ "join tag on tag.tag_id = tag_use.tag_id  "
 					+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
-					+ "where tag_use_type ='portfolio' and ml_type = 'portf' "
+					+ "where tag_use_type ='pf' and ml_type = 'pf' "
 					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by pf_regdate desc";
 		}
@@ -75,7 +75,7 @@ public class SearchDao {
 					+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
 					+ "join tag on tag.tag_id = tag_use.tag_id  "
 					+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
-					+ "where tag_use_type ='portfolio' and ml_type = 'portf' "
+					+ "where tag_use_type ='pf' and ml_type = 'pf' "
 					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by portfolio.PF_LIKE desc";
 		}
