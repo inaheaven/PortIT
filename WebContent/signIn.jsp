@@ -16,6 +16,7 @@
 		</div>
 		<div class="col-md-6">
 			<form class="login" method="post" action="/login">
+				<input type="hidden" name="cmd" value="MAIN"/>
 				<div class="login-wrap">
 					<input type="text" name="userid" class="form-control" placeholder="Email ID" autofocus="autofocus"> <br> 
 					<input type="password" name="userpw" class="form-control" placeholder="Password"> <br>
