@@ -49,6 +49,7 @@ public class MemberLoginController extends HttpServlet {
 			
 			String url = null;
 			String cmd = req.getParameter("cmd");
+			
 			//dao 호출
 			ViewDao viewDao = new ViewDao();
 					
@@ -70,7 +71,6 @@ public class MemberLoginController extends HttpServlet {
 				RequestDispatcher view = req.getRequestDispatcher(url);
 				view.forward(req,resp);
 			}
-			
 		}
 		else {
 			out.println("<script>alert('이메일 또는 비밀번호가 틀렸습니다.'); location.href='/index.jsp';</script>");			

@@ -33,14 +33,13 @@ $(document).ready(function() {
 		</thead>
 		<tbody>
 			<c:if test="${!empty list}">
-				<c:forEach items="${list}" var="record">
+				<c:forEach items="${list}" var="result">
 					<tr>
-						<td></td>
-						<td>${record.prof_name }</td>
-						<td>${record.prof_nick }</td>
+						<td style="text-align: center">${result.prof_name }</td>
+						<td>${result.prof_nick }</td>
 						<td>
-						<button type="button" class="btn btn-primary btn-xs" id="append_search">추가 
-						</button>
+						<button type="button" class="btn btn-primary btn-xs" id="append" onclick="append_result(this, '${result.prof_name }', '${result.prof_nick }', '${result.prof_id }')" >추가 
+						</button> 
 						</td>
 					</tr>
 				</c:forEach>
