@@ -174,8 +174,7 @@
 								<div class="portfolio-timeline">
 									<div class="pfTlType">
 										<span class="glyphicon glyphicon-heart"></span> <span
-											class="pfTypeText">[멤버이름]님이 내 포트폴리오를 좋아합니다. (mem_id
-											받기)</span>
+											class="pfTypeText">[멤버이름]님이 내 포트폴리오를 좋아합니다. </span>
 									</div>
 									<span class="pfInfo">
 										<div>

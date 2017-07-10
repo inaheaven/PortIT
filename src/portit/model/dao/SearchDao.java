@@ -120,7 +120,7 @@ public class SearchDao {
 
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' AND tu.tag_use_type_id = ?) "
 					+ " WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -244,7 +244,7 @@ public class SearchDao {
 					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
-					+ "where (tag_use_type = 'developer') and "
+					+ "where (tag_use_type = 'prof') and "
 					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
 					+ "order by prof_regdate desc";
 		}	
@@ -253,7 +253,7 @@ public class SearchDao {
 					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
-					+ "where (tag_use_type = 'developer') and "
+					+ "where (tag_use_type = 'prof') and "
 					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
 					+ "order by profile.prof_follower desc";
 		}
@@ -295,7 +295,7 @@ public class SearchDao {
 	public List member_tag(int prof_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'developer' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'prof' " + " AND tu.tag_use_type_id = ?) "
 					+ " WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -327,7 +327,7 @@ public class SearchDao {
 					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "join media_library on media_library.ml_type_id = project.proj_id "
-					+ "where tag_use_type = 'project' and ml_type = 'proj' "
+					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
 					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') ";
 		}
 		else{
@@ -338,7 +338,7 @@ public class SearchDao {
 					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "join media_library on media_library.ml_type_id = project.proj_id "
-					+ "where tag_use_type = 'project' and ml_type = 'proj' "
+					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
 					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') ";
 
 		}
@@ -385,7 +385,7 @@ public class SearchDao {
 	public List project_tag(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'project' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' " + " AND tu.tag_use_type_id = ?) "
 					+ "  WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -410,7 +410,7 @@ public class SearchDao {
 	public List project_tag2(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'project'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);

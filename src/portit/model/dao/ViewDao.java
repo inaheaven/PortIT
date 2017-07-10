@@ -102,7 +102,7 @@ public class ViewDao {
 
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' AND tu.tag_use_type_id = ?) "
 					+ " WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -173,7 +173,7 @@ public class ViewDao {
 				+ "from profile join tag_use  "
 				+ "on tag_use.tag_use_type_id = profile.prof_id "
 				+ "join tag  on tag.tag_id = tag_use.tag_id  "
-				+ "where (tag_use_type = 'developer')  ";
+				+ "where (tag_use_type = 'prof')  ";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -212,7 +212,7 @@ public class ViewDao {
 	public List member_tag(int prof_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'developer' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'prof' " + " AND tu.tag_use_type_id = ?) "
 					+ " WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -241,7 +241,7 @@ public class ViewDao {
 					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
-					+ "where (tag_use_type = 'developer') and  prof_id=? "
+					+ "where (tag_use_type = 'prof') and  prof_id=? "
 					+ "order by prof_regdate desc"; 
 				
 		
@@ -284,7 +284,7 @@ public class ViewDao {
 				+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 				+ "join tag on tag.tag_id = tag_use.tag_id "
 				+ "join media_library on media_library.ml_type_id = project.proj_id "
-				+ "where tag_use_type = 'project' and ml_type = 'proj' ";
+				+ "where tag_use_type = 'proj' and ml_type = 'proj' ";
 				
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -328,7 +328,7 @@ public class ViewDao {
 	public List project_tag(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'project' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' " + " AND tu.tag_use_type_id = ?) "
 					+ "  WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -353,7 +353,7 @@ public class ViewDao {
 	public List project_tag2(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'project'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
@@ -408,7 +408,7 @@ public class ViewDao {
 				+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 				+ "join tag on tag.tag_id = tag_use.tag_id "
 				+ "join media_library on media_library.ml_type_id = project.proj_id "
-				+ "where tag_use_type = 'project' and ml_type = 'proj' and  proj_id=? ";
+				+ "where tag_use_type = 'proj' and ml_type = 'proj' and  proj_id=? ";
 				
 			
 		try {
@@ -492,7 +492,7 @@ public class ViewDao {
 	public List timeline_info_tag(int pf_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' AND tu.tag_use_type_id = ?) "
 					+ " WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
