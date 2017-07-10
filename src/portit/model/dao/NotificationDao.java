@@ -53,6 +53,8 @@ public class NotificationDao {
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
 			
+			
+			
 			while(rs.next()) {
 				Notification nt = new Notification();				
 				nt.setNt_id(rs.getInt("nt_id"));
@@ -63,6 +65,7 @@ public class NotificationDao {
 				nt.setNt_type_id(rs.getInt("nt_type_id"));
 				nt.setNt_isread(rs.getString("nt_isread").charAt(0));
 				ntList.add(nt);
+				System.out.println(rs.getInt("nt_id"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -82,7 +85,7 @@ public class NotificationDao {
 		ArrayList ntList = new ArrayList();
 		try {
 			conn = pool.getConnection();
-			sql = "SELECT * FROM NOTIFICATION WHERE mem_id_receiver = ? and nt_isread = 'f' ORDER BY nt_id DESC";
+			sql = "SELECT * FROM NOTIFICATION WHERE mem_id_receiver = ? and nt_isread = 'n' ORDER BY nt_id DESC";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
@@ -157,7 +160,7 @@ public class NotificationDao {
 		try {
 			conn = pool.getConnection();
 			sql = "INSERT INTO notification(nt_id, mem_id_sender, mem_id_receiver, nt_date, nt_type, nt_type_id, nt_isread) "
-					+ "VALUES(seq_nt_id.nextVal, ?, ?, sysdate, ?, ?, 'f')";
+					+ "VALUES(seq_nt_id.nextVal, ?, ?, sysdate, ?, ?, 'n')";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, nt.getMem_id_sender());
 			stmt.setInt(2, nt.getMem_id_receiver());
@@ -195,7 +198,7 @@ public class NotificationDao {
 	public void isRead(int nt_id) {
 		try {
 			conn = pool.getConnection();
-			sql = "UPDATE notification SET nt_isread = 't' WHERE nt_id = ?";
+			sql = "UPDATE notification SET nt_isread = 'y' WHERE nt_id = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, nt_id);
 			stmt.executeUpdate();

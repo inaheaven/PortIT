@@ -23,7 +23,7 @@ public class Notification {
 	private Date nt_date;
 	private String nt_type;
 	private int nt_type_id;
-	private char nt_isread = 'f';
+	private char nt_isread = 'n';
 	
 	
 	public int getNt_id() {

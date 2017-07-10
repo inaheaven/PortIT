@@ -52,7 +52,7 @@ public class NotificationController extends HttpServlet {
 		// 구분 필터링
 		else if(act.equals("select")) {
 			String sort = req.getParameter("sort"); // 선택한 정렬 value 값을 가져옴
-			req.setAttribute("sort2", sort); // value 값을 'sort'라는 request 변수에 저장
+			req.setAttribute("sort2", sort); // value 값을 'sort2'라는 request 변수에 저장
 			resp.sendRedirect("/page?page=myNotification&sort=" + sort);
 		}
 	}
