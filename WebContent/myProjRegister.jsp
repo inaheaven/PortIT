@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-
+<script src="assets/js/jquery-3.2.1.js"></script>
 <script>
 	var i = 1;
 	$(document).ready(function() {
@@ -29,11 +29,9 @@
 				alert("모집 분야수를 1개 이상으로 제한합니다.")
 			}
 		});
-
 		$('#btnSave').click(function(){
 			document.getElementById("final_result").value=prof_arr;
 			document.getElementById("final_result_id").value=prof_id_arr;
-			
 		})
 		
 });
@@ -83,7 +81,6 @@
 	var httpRequest = null;
 
 	function coworker_Search() {
-		alert("!");
 		httpRequest = new XMLHttpRequest();
 		var name = document.getElementById("coworker_search").value;
 		var url = "coworker_search";
@@ -125,7 +122,7 @@
 					<div class="projregForm">
 						<h3 class="formTitle text-center">프로젝트 등록</h3>
 						<form class="form-horizontal style-form" method="post"
-							action="myproj?cmd=list&save=save&mem_id=2">
+							action="myproj?cmd=list&save=save&mem_id=<%=session.getAttribute("loginId")%>">
 
 							<!-- mem_id값 알맞게 수정해야된다!! -->
 							
@@ -147,7 +144,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 개발 언어</label>
 								<div class="col-md-9">
-									<input class="form-control tagInput" id="proj_language1" type="text" name="tag_lang">&nbsp;,&nbsp;							
+									<input class="form-control tagInput" id="proj_language1" type="text" name="tag_lang" required="true">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_language2" type="text" name="tag_lang">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_language3" type="text" name="tag_lang">&nbsp;,&nbsp;
 									<input class="form-control tagInput" id="proj_language4" type="text" name="tag_lang">&nbsp;,&nbsp;					
@@ -158,7 +155,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트 개발 도구</label>
 								<div class="col-md-9">
-									<input class="form-control tagInput" id="proj_tool1" type="text" name="tag_tool">&nbsp;,&nbsp;							
+									<input class="form-control tagInput" id="proj_tool1" type="text" name="tag_tool" required="true">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_tool2" type="text" name="tag_tool">&nbsp;,&nbsp;							
 									<input class="form-control tagInput" id="proj_tool3" type="text" name="tag_tool">&nbsp;,&nbsp;
 									<input class="form-control tagInput" id="proj_tool4" type="text" name="tag_tool">&nbsp;,&nbsp;					
@@ -192,7 +189,7 @@
 									마감일</label>
 								<div class="col-md-9">
 									<input class="form-control" id="proj_regenddate"
-										name="proj_regenddate" placeholder="MM/DD/YYYY" type="date"
+										name="proj_regenddate" type="date"
 										required="true" />
 								</div>
 							</div>
@@ -203,7 +200,7 @@
 										예정 시작일</label>
 									<div class="col-md-4">
 											<input class="form-control" id="proj_startdate"
-											name="proj_startdate" placeholder="MM/DD/YYYY" type="date"
+											name="proj_startdate" type="date"
 											required="true" />
 									</div>
 									<label class="col-md-3 control-label" for="date">예상 기간</label>
@@ -221,8 +218,7 @@
 								<div class="col-sm-7">
 									<input type="text" class="form-control" readonly="readonly"
 										required="true" id="final_result">
-									<input type="hidden" class="form-control" name="final_result_id" id="final_result_id">
-										
+									<input type="hidden" class="form-control" name="final_result_id" id="final_result_id" readonly="readonly">
 								</div>
 								<div class="col-sm-2">
 									<button type="button" class="btn btn-default"

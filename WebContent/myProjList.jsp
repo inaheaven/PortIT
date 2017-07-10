@@ -11,7 +11,58 @@
 <%@page import="portit.model.dto.Project"%>
 
 
-<link href="assets/css/profpfproj.css" rel="stylesheet">
+	<link href="assets/css/profpfproj.css" rel="stylesheet">
+
+	<script>
+		$(document).ready(
+		function() {
+			var httpRequest = null;
+			$("#delete_my_reg").click(function() {
+				httpRequest = new XMLHttpRequest();
+				var name = "7"
+				alert(name);
+				var param = "/project_delete?proj_id=" + name;
+				httpRequest.open("GET", param, true);
+				httpRequest.onreadystatechange = callback;
+				httpRequest.send(null);
+				$(this).parent().parent().parent().parent().remove();
+				$(this).next().remove();
+			});
+		});
+		function callback() {
+			if (httpRequest.readyState == 4) {
+				if (httpRequest.status == 200) {
+					alert("1");
+				}
+			}
+		}
+		function fnParameter(_cmd, _action, _param, _param2) {
+			if (_action == "delete") {
+				var r = confirm("정말로 삭제하시겠습니까?");
+				if (r == true) {
+					//전달할 데이터 setting
+					document.frmPJ.cmd.value = _cmd;
+					document.frmPJ.cmdAction.value = _action;
+					document.frmPJ.param.value = _param;
+					document.frmPJ.param2.value = _param2;
+					//해당 폼 submit
+					document.frmPJ.submit();
+					alert("삭제되었습니다.")
+				} else {
+					alert("삭제가 취소되었습니다.")
+				}
+			} else {
+				alert("수정?")
+				document.frmPJ.cmd.value = _cmd;
+				document.frmPJ.cmdAction.value = _action;
+				document.frmPJ.param.value = _param;
+				document.frmPJ.param2.value = _param2;
+				//해당 폼 submit
+				document.frmPJ.submit();
+			}
+		}
+	</script>
+
 	<%--sidenavbar start--%>
 	<jsp:include page="my.jsp"></jsp:include>
 	<%--sidenavbar end--%>
@@ -91,12 +142,12 @@
 						<!-- R프로젝트:반복시작 -->
 							<div class="panel-heading clearfix" role="tab" >
 								<h4 class="panel-title">
-									<span class="col-sm-3"> 
+									<span class="col-sm-4"> 
 									<a href="javascript:fnParameter('pj_detail' , '' , '<%=pj_Inform.getProj_id()%>', '')">
 									<%=pj_Inform.getProj_title() %> 
 									</a>
 									</span> 
-									<span class="col-sm-6"> D-<%=pj_Inform.getD_day() %></span>
+									<span class="col-sm-5">지원 마감일까지 D-<%=pj_Inform.getD_day() %></span>
 									<span class="col-md-3 text-right">
 										<button type="button" class="btn common"onclick="fnParameter('modify','','<%=pj_Inform.getPf_id()%>', '')">수정</button>
 										<button type="button" class="btn common"onclick="fnParameter('list','delete','<%=pj_Inform.getPf_id()%>', '')">삭제</button>
