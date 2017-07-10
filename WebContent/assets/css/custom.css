@@ -59,13 +59,21 @@
 
 /**************************** Sign In Page *****************************/
 
-#login-page .intro {
+#login-pgae .main {
+	height: 100%;
+}
+#login-page .intro {	
 	position: absolute;
 	margin: 0;
 	top: 50%;
 	left: 20%;
 	-ms-transform: translate(50%, 50%);
-	transform: translate(0, 50%);
+	transform: translate(0, 180%);
+	color: #fff;
+}
+#login-page .intro > p {
+	font-size: 16px;
+	line-height: 1.5em;
 }
 #login-page .login{
 	position: absolute;
@@ -73,7 +81,7 @@
 	top: 50%;
 	left: 0;
 	-ms-transform: translate(0, 50%);
-	transform: translate(0, 50%);
+	transform: translate(0, 180%);
 }
 
 .login-wrap > input {
