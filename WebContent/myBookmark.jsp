@@ -18,7 +18,6 @@
 
 <%
 	List<Bookmark> portfolios = (List)request.getAttribute("portfolio");
-	System.out.println("add = "+portfolios);
 	if(portfolios.isEmpty()){
 		portfolios= new ArrayList();
 	}

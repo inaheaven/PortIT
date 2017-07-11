@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Bookmark;
 import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
@@ -22,7 +23,7 @@ public class PortfolioDao {
 
 	private Connection conn;
 	private PreparedStatement stmt;
-	private ResultSet rs;
+	private ResultSet rs, rs1, rs2;
 	private DBConnectionMgr pool;
 	
 	private MediaDao mediaDao;
@@ -765,5 +766,115 @@ public class PortfolioDao {
 		}
 		return tag_id;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 내가 작성한 포트폴리오 조회하기 
+	 * 
+	 * @author hyang
+	 */
+	
+	public List myPortfolio(int prof_id) {
+		ArrayList portlist = new ArrayList();
+		String sql = "";
+		
+		try {
+			conn = pool.getConnection();
+			sql = "SELECT PORT.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH"
+					+ " FROM PORTFOLIO PORT INNER JOIN PROF_PF PROF ON PORT.PF_ID = PROF.PF_ID"
+					+ " JOIN MEDIA_LIBRARY MEDIA ON PORT.PF_ID = MEDIA.ML_TYPE_ID"
+					+ " JOIN PROFILE P ON P.PROF_ID = PROF.PROF_ID"
+		            + " WHERE PROF.PROF_ID = ?";
+		        
+					
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs1 = stmt.executeQuery();
 
+			
+			while (rs.next()) {
+				Portfolio port = new Portfolio();
+				port.setProf_pf_id(rs.getInt("prof_pf_id"));
+				port.setMem_id(rs.getInt("mem_id"));
+				port.setPf_id(rs.getInt("pf_id"));
+				port.setPf_regdate(rs.getDate("pf_regdate"));
+				port.setMl_path(rs.getString("ml_path"));
+				port.setProf_nick(rs.getString("prof_nick"));
+				port.setPf_title(rs.getString("pf_title"));
+				port.setPf_like(rs.getInt("pf_like"));
+				int pf_id = rs.getInt("pf_id");
+				
+							
+				port.setTags(getTag(port, pf_id));
+				portlist.add(port);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, stmt, rs);
+		}
+		return portlist;
+	}
+	
+	/**
+	 * 내가 작성한 포트폴리오의 태그 부분 가져오기 
+	 * 
+	 * @param pf_id
+	 */
+	
+	
+	public List<String> getTag(Portfolio port, int pf_id) {
+		String sql = "";
+		try {
+			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' "
+					+ " AND tu.tag_use_type_id = ? "
+					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 "; // 랜덤하게
+																		// 3개
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, pf_id);
+			rs2 = stmt.executeQuery();
+
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
+				
+			}
+			return tags; 
+		} catch (Exception e) {
+			System.out.println("TAG() : 여기 에러나지마라 " + e);
+		}
+		return null;
+	}
+	
+	
+	
+	/**
+	 * myPortfolio 페이지에서 x버튼 눌러서 삭제
+	 * 
+	 * @param prof_pf_id
+	 */
+	public void deleteMyport(int prof_pf_id) {
+		String sql = "delete from PROF_PF where prof_pf_id =" + prof_pf_id + "";
+
+		try {
+			conn = pool.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+		} catch (Exception err) {
+			System.out.println("DBCP  : " + err);
+		}
+	}
+
+	
+	
+	
+	
 }

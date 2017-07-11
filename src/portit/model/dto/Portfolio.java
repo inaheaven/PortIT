@@ -59,8 +59,16 @@ public class Portfolio {
     private String ml_path;
     private List<String> tags;
     
+    private int prof_pf_id;
+    //내가 작성한 포트폴리오 아이디
     
     
+	public int getProf_pf_id() {
+		return prof_pf_id;
+	}
+	public void setProf_pf_id(int prof_pf_id) {
+		this.prof_pf_id = prof_pf_id;
+	}
 	public List<String> getTags() {
 		return tags;
 	}
