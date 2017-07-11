@@ -65,7 +65,7 @@
 									</div>
 									<div class="top-hover-right">
 										<div class="after-hover" >
-											<button type="button" class="btn btn-hover" id ="hover"<%=i %>onclick="location.href='/page?page=myPfList&prpf_pf_id=<%=portfo.getProf_pf_id() %>'">>
+											<button type="button" class="btn btn-hover" id ="hover"<%=i %>onclick="location.href='/pfList?cmd=myPfList&prpf_pf_id=<%=portfo.getProf_pf_id() %>'">>
 												<span class="glyphicon glyphicon-edit"></span>
 											</button>
 											<button type="button" class="btn btn-hover">

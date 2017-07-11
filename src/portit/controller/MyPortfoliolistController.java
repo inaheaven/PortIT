@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,8 @@ import portit.model.dao.BookmarkDao;
 import portit.model.dao.PortfolioDao;
 import portit.model.dto.Portfolio;
 
+
+@WebServlet("/pfList")
 public class MyPortfoliolistController extends HttpServlet{
 
 	@Override
