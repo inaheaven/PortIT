@@ -129,8 +129,19 @@ public class TagDao {
 	public int updateTagUse(Connection conn, String articleType, int articleId, Tag tag) {
 		int rows = 0;
 		try {
-			sql = "UPDATE tag_use SET prof_skill_level=?, proj_numofperson=? "
-					+ "WHERE tag_use_type=? AND tag_use_type_id=?";
+			sql = "MERGE INTO tag_use tu "
+					+ "USING ("
+					+ "SELECT * FROM tag tg INNER JOIN tag_use tgu "
+					+ "ON tg.tag_id=tgu.tag_id "
+					+ "WHERE tgu.tag_use_type=? AND tgu.tag_use_type_id=?"
+					+ ") t"
+					+ "ON tu.tag_id=t.tag_id"
+					+ "WHEN MATCHED THEN "
+					+ "UPDATE SET "
+					+ "WHERE tag_use_type=? AND tag_use_type_id=? "
+					+ "DELETE WHERE "
+					+ "WHEN NOT MATCHED THEN "
+					+ "INSERT";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, tag.getProf_skill_level());
 			stmt.setString(2, articleType);
