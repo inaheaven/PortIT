@@ -34,9 +34,9 @@
           						Portfolio portfo = myport.get(i);
          					%>				
 						<span class="pull-left sorting">
-							<b>정렬</b>&nbsp; &nbsp;&nbsp;&nbsp;
+							<!-- <b>정렬</b>&nbsp; &nbsp;&nbsp;&nbsp;
 							<a href="">등록순</a>&nbsp;&nbsp;&nbsp;
-							<a href="">인기순</a>
+							<a href="">인기순</a>-->
 						</span>
 						<span class="pull-right">
 							<button type="button" class="btn common" onclick="location.href='/page?page=myPfRegister'">포트폴리오 등록하기</button>
