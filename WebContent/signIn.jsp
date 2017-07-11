@@ -6,7 +6,7 @@
 		<div class="contents">
 			<div class="col-md-6">
 				<div class="intro pull-right">
-					<h1 align=center>CREATE AND SHARE <br>YOUR IT PORTFOLIO</h1>
+					<h1 align=center>CREATE&nbsp;&nbsp;AND&nbsp;&nbsp;SHARE&nbsp;<br>YOUR&nbsp;&nbsp;IT&nbsp;&nbsp;PORTFOLIO</h1>
 					<br>
 					<p align=center>
 						PORTIT는 크리에이티브 콘텐츠 공유 플랫폼입니다. </br>

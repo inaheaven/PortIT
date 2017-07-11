@@ -77,18 +77,21 @@ body.index {
 	vertical-align: middle;
 }
 #login-page .contents {
-	 margin-left: auto;
+	margin-left: auto;
     margin-right: auto; 
 }
 #login-page .intro {	
 	color: #fff;
+}
+#login-page .intro > h1 {
+	line-height: 1.2em;	
 }
 #login-page .intro > p {
 	font-size: 18px;
 	line-height: 1.8em;
 }
 .login-wrap {
-    padding: 25px 100px;
+    padding: 30px 100px;
 }
 .login-wrap > input {
 	width: 300px;
