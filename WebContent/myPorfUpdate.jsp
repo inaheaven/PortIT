@@ -11,16 +11,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-<jsp:useBean id="dao" class="portit.model.dao.ProfileDao" />
-<jsp:useBean id="dto" class="portit.model.dto.Profile" />
 
 
-<%
-	//int mem_id = Integer.parseInt(request.getParameter("mem_id"));
-
-	/////////////////102 -> mem_id로 //////////////
-	Profile prof= dao.getProfile(3);
-
+<%	
+	List prof = (List)request.getAttribute("prof");
 %>
 
 <script src="assets/js/search.js"></script>

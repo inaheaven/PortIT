@@ -278,35 +278,48 @@ function fnSelectSnsInfo(snsName){
 </script>
 
 <%--sidenavbar start--%>
+
+<%--sidenavbar start--%>
 <jsp:include page="my.jsp"></jsp:include>
 <%--sidenavbar end--%>
 <section id="main-content">
 	<section class="wrapper site-min-height">
 		<div class="col-md-12 mt profreg">
 			<div class="profregForm">
-				<h3 class="formTitle text-center">프로필 등록</h3>
-				<form action="/profReg?cmd=REGISTER" method="post" name="frof_reg"	class="form-horizontal style-form" enctype="multipart/form-data"> 
+				<h3 class="formTitle text-center">프로필 수정</h3>
+				<form action="/profReg?cmd=REGISTER" method="post" class="form-horizontal style-form">
 
 					<!-- 프로필id hidden -->
-					<input type="hidden" class="form-control" name="prof_id">
-				
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input type="hidden" class="form-control" name="prof_id">
+						</div>
+					</div>
 					<!-- 등록일자  hidden -->
-					<input type="hidden" class="form-control" name="prof_regdate">
-				
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input type="hidden" class="form-control" name="prof_regdate">
+						</div>
+					</div>
 					<!-- 팔로워 수 hidden (초기값 0) -->
-					<input type="hidden" class="form-control" name="prof_follower" value="0">
-				
-				
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input type="hidden" class="form-control" name="prof_follower" value="0">
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">프로필 사진</label>
 						<div class="col-md-9">
-							<input type="file" class="form-control" name="prof_img">
+							<input type="file" class="form-control" name="prof_img"">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">배경 사진</label>
 						<div class="col-md-9">
-							<input type="file" class="form-control" name="prof_background">
+							<input type="file" class="form-control" name="prof_background" ">
 						</div>
 
 					</div>
@@ -314,21 +327,21 @@ function fnSelectSnsInfo(snsName){
 						<label class="col-md-3 control-label">이름</label>
 						<div class="col-md-9">
 							<input class="form-control" name="prof_name" type="text"
-								placeholder="한글로 입력하세요." id="prof_name" />
+								placeholder="한글로 입력하세요."" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">닉네임</label>
 						<div class="col-md-9">
-							<input class="form-control" name="prof_nick" type="text" id="prof_nick"
-								placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" >
+							<input class="form-control" name="prof_nick" type="text"
+								placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)"">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">소개</label>
 						<div class="col-md-9">
 							<textarea class="form-control" rows="5" name="prof_intro"
-								placeholder="2000byte 이내로 입력하세요."></textarea>
+								placeholder="" ></textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -431,4 +444,5 @@ function fnSelectSnsInfo(snsName){
 	<!--/wrapper -->
 </section>
 <!-- /MAIN CONTENT -->
+
 

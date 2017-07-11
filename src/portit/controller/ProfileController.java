@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -39,9 +41,14 @@ public class ProfileController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
+		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
 
+		HttpSession session = req.getSession();
+		int loginId = (int)session.getAttribute("loginId");
+		System.out.println(loginId);
+		
+		
 		String cmd = req.getParameter("cmd");
 		String url = "";
 
@@ -51,19 +58,47 @@ public class ProfileController extends HttpServlet {
 		ProfileDao profileDao = new ProfileDao();
 		Profile prof_reg = new Profile();
 
+		int prof_follower =0;
 		String prof_img = req.getParameter("prof_img");
 		String prof_background = req.getParameter("prof_background");
 		String prof_name = req.getParameter("prof_name");
 		String prof_nick = req.getParameter("prof_nick");
 		String prof_intro = req.getParameter("prof_intro");
 		String prof_website = req.getParameter("prof_website");
-		String tag_name = req.getParameter("tag_name");
-		String tag_name2 = req.getParameter("tag_name2");
-		String tag_name3 = req.getParameter("tag_name3");
+		String prof_facebook = req.getParameter("prof_facebook");
+		String prof_github = req.getParameter("prof_github");
+	
 		String tag_name4 = req.getParameter("tag_name4");
 		String tag_name5 = req.getParameter("tag_name5");
 		String tag_name6 = req.getParameter("tag_name6");
 
+		String[] tag_lang = req.getParameterValues("tag_lang");
+		String[] tag_tool = req.getParameterValues("tag_tool");
+		String[] tag_field = req.getParameterValues("tag_field");
+		
+		
+		List<String> lang_list = new ArrayList();
+		for(String tags : tag_lang){
+		  lang_list.add(tags);
+		}
+		
+		List<String> tool_list = new ArrayList();
+		for(String tags : tag_tool){
+			tool_list.add(tags);
+		}
+		
+		List<String> field_list = new ArrayList();
+		for(String tags : tag_field){
+			field_list.add(tags);
+		}
+		
+		
+		
+		System.out.println(lang_list);
+		System.out.println(tool_list);
+		System.out.println(field_list);
+		System.out.println("name :" + prof_name);
+		
 		//null값이 넘어 오는 경우 오류 처리
 		int prof_skill_level = 0;
 		int prof_skill_level2 = 0;
@@ -88,32 +123,29 @@ public class ProfileController extends HttpServlet {
 		}
 
 //		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
-		int prof_follower =0;
-		String prof_facebook = req.getParameter("prof_facebook");
-		String prof_github = req.getParameter("prof_github");
+		
 
 		prof_reg.setProf_img(prof_img);
 		prof_reg.setProf_background(prof_background);
+		prof_reg.setProf_follower(prof_follower);
 		prof_reg.setProf_name(prof_name);
 		prof_reg.setProf_nick(prof_nick);
 		prof_reg.setProf_intro(prof_intro);
 		prof_reg.setProf_website(prof_website);
-		prof_reg.setTag_name(tag_name);
-		prof_reg.setTag_name2(tag_name2);
-		prof_reg.setTag_name3(tag_name3);
+		prof_reg.setProf_facebook(prof_facebook);
+		prof_reg.setProf_github(prof_github);
+		
 		prof_reg.setTag_name4(tag_name4);
 		prof_reg.setTag_name5(tag_name5);
 		prof_reg.setTag_name6(tag_name6);
 		prof_reg.setProf_skill_level(prof_skill_level);
 		prof_reg.setProf_skill_level2(prof_skill_level2);
 		prof_reg.setProf_skill_level3(prof_skill_level3);
-		prof_reg.setProf_follower(prof_follower);
-		prof_reg.setProf_facebook(prof_facebook);
-		prof_reg.setProf_github(prof_github);
-
-		////////////////////////////102 -> mem_id로///////////////////////////////
-		//INSERT
-		profileDao.addprofile(prof_reg, 103);
+		prof_reg.setTag_lang(lang_list);
+		prof_reg.setTag_tool(tool_list);
+		prof_reg.setTag_field(field_list);
+		
+		profileDao.addprofile(prof_reg, loginId);
 		req.setAttribute("prof_reg", prof_reg);
 
 		if (!ServletFileUpload.isMultipartContent(req)) {
@@ -168,14 +200,17 @@ public class ProfileController extends HttpServlet {
 		}
 
 		if (cmd.equals("REGISTER")) {
-			//return  new RegisterCommand();
-			url = "/myPorfUpdate.jsp";
+			ProfileDao dao = new ProfileDao();
+			Profile prof= dao.getProfile(loginId);
+			req.setAttribute("prof", prof);
+			//url = "/page?page=myProfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
-			//UPDATE
-			profileDao.updateProfile(prof_reg, 103);
-			url = "/myPorfUpdate.jsp";
+			ProfileDao dao = new ProfileDao();
+			Profile prof= dao.getProfile(loginId);
+			req.setAttribute("prof", prof);
+			//url = "/page?page=myProfUpdate";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

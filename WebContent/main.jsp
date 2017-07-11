@@ -59,7 +59,8 @@
 															<%} %>
 														</div>
 														<div class="pfTitle">
-															<a href=""><%=port.getPf_title()%> </a>
+															<a href="javascript:pf('<%=port.getPf_id()%>">
+															<%=port.getPf_title()%> </a>
 														</div>
 														<div class="pfBottom">
 															<span class="pfmemName"><a href=""><%=port.getProf_name()%></a></span>
@@ -189,40 +190,45 @@
 			for(int i=0; i< num1; i++){
 				Timeline time = (Timeline) timeline.get(i);
 	%>
-							<!-- 첫번째 타임라인 -->
-							<div class="col-md-12 mt">
-								<div class="portfolio-timeline">
-									<div class="pfTlType">
-										<span class="glyphicon glyphicon-heart"></span> <span
-											class="pfTypeText"><%= time.getProf_id2() %>님이 내 포트폴리오를 좋아합니다. </span>
-									</div>
-									<span class="pfInfo">
-										<div>
-											<span class="pfTitle"><a href=""><%=time.getPf_title() %></a></span>
-											<span class="pfLike"> <span
-												class="glyphicon glyphicon-heart"></span> <span
-												class="pfLikeCount"><%=time.getPf_like() %></span>
-											</span>
-										</div>
-										<div class="pfmemName">
-											<span class="fa fa-user"><%=time.getProf_name() %></span>&nbsp;&nbsp;
-											<span><a href=""></a></span>
-										</div>
-										<div class="pfTag">
-											<% for(int j=0; j<proj.getTags().size(); j++) { %>
-											<a href="javascript:tag('<%=time.getTags().get(j)%>')">#<%= time.getTags().get(j)%></a>&nbsp;
-											<%} %>
-										</div>
-									</span> 
-									
-									<span class="pfImage">
-										<span><img src="" /></span> 
-										<span><img src="assets/img/instagram.jpg" /></span> 
-										<span><img src="assets/img/instagram.jpg" /></span>
-									</span>
-								</div>
+				<!-- 첫번째 타임라인 -->
+				<div class="col-md-12 mt">
+					<div class="portfolio-timeline">
+						<div class="pfTlType">
+							<span class="glyphicon glyphicon-heart"></span> <span
+								class="pfTypeText"><%=time.getProf_id2()%>님이 내 포트폴리오를
+								좋아합니다. </span>
+						</div>
+						<span class="pfInfo">
+							<div>
+								<span class="pfTitle"><a href=""><%=time.getPf_title()%></a></span>
+								<span class="pfLike"> <span
+									class="glyphicon glyphicon-heart"></span>
+									 <span class="pfLikeCount"><%=time.getPf_like()%></span>
+								</span>
 							</div>
-					
+							<div class="pfmemName">
+								<span class="fa fa-user"><%=time.getProf_name()%></span>&nbsp;&nbsp;
+								<span><a href=""></a></span>
+							</div>
+
+							<div class="pfTag">
+								<% for(int j=0; j<time.getTags().size(); j++) { %>
+								<a href="javascript:tag('<%=time.getTags().get(j)%>')">
+								#<%= time.getTags().get(j)%></a>&nbsp;
+								<%} %>
+							</div>
+							
+						 	</span> <span class="pfImage"> <span><img
+											src="" /></span> <span><img
+											src="assets/img/instagram.jpg" /></span> <span><img
+											src="assets/img/instagram.jpg" /></span>
+									</span>
+						</span>
+					</div>
+				</div>
+				<%
+					}
+				%>			
 
 				</div>
 			</div>
@@ -234,7 +240,7 @@
 <!-- 상세페이지로 이동하기 위한 폼 -->
 <form name="pf_info" method="post" action="/detailView">
 	<input type="hidden" name="pf_id" /> 
-	<input type="hidden" name="cmd" value="PORTFOLIO" />
+	<input type="hidden" name="type" value="view" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 

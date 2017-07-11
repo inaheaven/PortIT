@@ -2,7 +2,6 @@ package portit.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import portit.model.dao.SearchDao;
-import portit.model.dto.Portfolio;
 
 
 @WebServlet(urlPatterns="/detailSearch")
@@ -28,20 +26,19 @@ public class SearchDetailController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		
-		System.out.println("CTRL: detailSearch 접근");
-		
+
 		String cmd = req.getParameter("cmd");
 		String url = null;
 		
 		SearchDao searchDao = new SearchDao();
 		//검색어 결과저장
-		String pfSearch = req.getParameter("pfSearch");
+		
 		String memSearch = req.getParameter("memSearch");
 		String projSearch = req.getParameter("projSearch");
 		//pfSearch = pfSearch.toUpperCase();
-		
+	
 		//1~6까지의 값을 불러옴 1,3,5는 최신순 정렬 2,4,6은 인기순 정렬
-		int list_value=-1;
+		int list_value=0;
 		
 		//오류 수정..
 		String list_value_param = req.getParameter("list_value");
@@ -50,18 +47,13 @@ public class SearchDetailController extends HttpServlet {
 			list_value=Integer.parseInt(list_value_param);
 		}
 		
-		
+		List list = null;
 		//lineup = true(최신순) / false(인기순)
 		boolean lineup = true;
 	
 		SearchDao dao = new SearchDao();
-		if(list_value == 1){
-			req.setAttribute("port_list",dao.searchAll_port("", lineup));
-		}		
-		else if(list_value == 2){
-			req.setAttribute("port_list",dao.searchAll_port("", !lineup));		
-		}
-		else if(list_value == 3){
+		
+		 if(list_value == 3){
 			req.setAttribute("mem_list", dao.searchAll_member("", lineup));
 		}
 		else if(list_value == 4){
@@ -76,30 +68,64 @@ public class SearchDetailController extends HttpServlet {
 		
 		
 		if(cmd.equals("PFDETAIL")){
+			String pfSearch = (String) session.getAttribute("pfSearch");
 			System.out.println("CTRL : PFDETAIL 접근확인");
 			
-			String param=req.getParameter("param1");
-			String param2=req.getParameter("test3");
-			
-			System.out.println("CTRL 파라미터전달확인="+param);
+			String param1=req.getParameter("param1");
+			String param2=req.getParameter("param2");
+			String param3=req.getParameter("param3");
+
+			System.out.println("CTRL 파라미터전달확인="+param1);
 			System.out.println("CTRL 파라미터전달확인22="+param2);
-			List list = searchDao.searchAll_port(param, true);
-			req.setAttribute("port_list", list);
-			//전달받는 파라미터 확인하기.
+			System.out.println("CTRL 파라미터전달확인33="+param3);
+
+			//정렬
+			//list_value = Integer.parseInt(req.getParameter("list_value"));			
+			
+			
+			if(list_value == 0 ){
+				if(param1 == null){
+					list = searchDao.searchAll_member(" ", true);
+				}
+				else if(param2 ==null){
+					list = searchDao.searchAll_port(param1, true);	
+					req.setAttribute("port_list", list);
+				}
+				else if(param3 ==null){
+					list = searchDao.searchAll_port(param1, param2);
+					req.setAttribute("port_list", list);
+				}
+				else{
+					list = searchDao.searchAll_port(param1, param2, param3);
+					req.setAttribute("port_list", list);
+				}
+			}
+			else if(list_value == 1){
+				req.setAttribute("pfSearch", pfSearch);
+				list = dao.searchAll_port(pfSearch, lineup);
+				req.setAttribute("port_list", list);
+			}
+			else if(list_value == 2){
+				req.setAttribute("pfSearch", pfSearch);
+				list = dao.searchAll_port(pfSearch, !lineup);
+				req.setAttribute("port_list", list);	
+			}
+			System.out.println("pfsearch : "+pfSearch);
+			System.out.println("list_value : "+list_value);
 			
 			
 			url="/page?page=pfSearch";
 		}
 		else if(cmd.equals("MEMDETAIL")){
 			String param=req.getParameter("param1");
-			List list = searchDao.searchAll_member(param, true);
+			list = searchDao.searchAll_member(param, true);
 			req.setAttribute("mem_list", list);
 			
 			url="/page?page=memSearch";
 		}
 		else if(cmd.equals("PROJDETAIL")){
 			String param=req.getParameter("param1");
-			List list = searchDao.searchAll_member(param, true);
+			list = searchDao.searchAll_member(param, true);
 			req.setAttribute("proj_list", list);
 			
 			url="page?page=projSearch";

@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
@@ -13,7 +17,7 @@ public class ProfileDao {
 
 	private Connection conn;
 	private PreparedStatement stmt;
-	private ResultSet rs;
+	private ResultSet rs, rs2;
 	private DBConnectionMgr pool;
 	private String sql = null;
 
@@ -62,9 +66,9 @@ public class ProfileDao {
 	 */
 	public Profile addprofile(Profile dto, int mem_id) {
 		try {
-
+			
 			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_facebook, prof_github, prof_regdate, prof_follower) "
-					+ "values(prof_id.nextVal, ? , ? , ? , ? , ? , ? , ?, ?, ? , sysdate, ?)";
+					+ "values(seq_prof_id.nextVal, ? , ? , ? , ? , ? , ? , ?, ?, ? , sysdate, ?)";
 
 			conn = pool.getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -80,226 +84,73 @@ public class ProfileDao {
 			stmt.setInt(10, dto.getProf_follower());
 
 			stmt.executeUpdate();
-
-			// 태그 테이블 입력(언어)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'language',?)";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, dto.getTag_name());
-
-			stmt.executeUpdate();
-
+		
 			// 프로필 id를 가지고 오는 부분
-			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
+			sql = "select * from profile where mem_id ='" + mem_id + "'" ;
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-
-			rs.next();
 			int req_prof_id = rs.getInt("prof_id");
-
+			
+			// tag테이블에 이미 같은 태그명이 있을때
 			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
-			sql = "select * from tag order by tag_id desc";
+			sql = "select * from tag where tag_type = 'language' ";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-
-			rs.next();
 			int req_tag_id = rs.getInt("tag_id");
-
+			
 			// 태그 유즈 테이블 입력
 			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id)"
-					+ "values(tag_use_id.nextVal, 'profile', ? , ? )";
-
+					+ "values(tag_use_id.nextVal, 'prof', ? , ? )";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, req_prof_id);
 			stmt.setInt(2, req_tag_id);
-
+			stmt.executeUpdate();
+			
+		
+			// 태그 테이블 입력(언어)
+			sql = "insert into tag(tag_id, tag_type, tag_name) values(seq_tag_id.nextVal,'language',?)";
+			stmt = conn.prepareStatement(sql);
+			List<String> lang_list = new ArrayList<>();
+	
+			//tmt.setString(1, dto.getTag_lang());			
 			stmt.executeUpdate();
 			
 			
 			
-			// 태그 테이블 입력(툴)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'tool',?)";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, dto.getTag_name2());
-
-			stmt.executeUpdate();
-
-			// 프로필 id를 가지고 오는 부분
-			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_prof_id = rs.getInt("prof_id");
-
-			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
-			sql = "select * from tag order by tag_id desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_tag_id = rs.getInt("tag_id");
-
-			// 태그 유즈 테이블 입력
-			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id)"
-					+ "values(tag_use_id.nextVal, 'profile', ? , ? )";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, req_prof_id);
-			stmt.setInt(2, req_tag_id);
-
-			stmt.executeUpdate();
-
 			
-			// 태그 테이블 입력(분야)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'분야(field)',?)";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, dto.getTag_name3());
-
-			stmt.executeUpdate();
-
-			// 프로필 id를 가지고 오는 부분
-			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_prof_id = rs.getInt("prof_id");
-
-			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
-			sql = "select * from tag order by tag_id desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_tag_id = rs.getInt("tag_id");
-
-			// 태그 유즈 테이블 입력
-			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id)"
-					+ "values(tag_use_id.nextVal, 'profile', ? , ? )";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, req_prof_id);
-			stmt.setInt(2, req_tag_id);
-
-			stmt.executeUpdate();
-			
-			// 태그 테이블 입력(skill)(첫번째)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'skill',?)";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, dto.getTag_name4());
-
-			stmt.executeUpdate();
-
-			// 프로필 id를 가지고 오는 부분
-			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_prof_id = rs.getInt("prof_id");
-
-			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
-			sql = "select * from tag order by tag_id desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_tag_id = rs.getInt("tag_id");
-
-			// 태그 유즈 테이블 입력(태그 스킬  점수 입력)
-			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
-					+ "values(tag_use_id.nextVal, 'profile', ? , ? , ?)";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, req_prof_id);
-			stmt.setInt(2, req_tag_id);
-			stmt.setInt(3, dto.getProf_skill_level());
-
-			stmt.executeUpdate();
-			
-			
-			// 태그 테이블 입력(skill)(두번째)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'skill',?)";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, dto.getTag_name5());
-
-			stmt.executeUpdate();
-
-			// 프로필 id를 가지고 오는 부분
-			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_prof_id = rs.getInt("prof_id");
-
-			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
-			sql = "select * from tag order by tag_id desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-
-			rs.next();
-			req_tag_id = rs.getInt("tag_id");
-			
-			//두번째 스킬 점수 입력
-			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
-					+ "values(tag_use_id.nextVal, 'profile', ? , ? , ?)";
-			
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, req_prof_id);
-			stmt.setInt(2, req_tag_id);
-			stmt.setInt(3, dto.getProf_skill_level2());
-			
-			stmt.executeUpdate();
-			
-			
-			// 태그 테이블 입력(skill)(세번째)
-			sql = "insert into tag(tag_id, tag_type, tag_name) values(tag_id.nextVal,'skill',?)";
-			
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, dto.getTag_name6());
-			
-			stmt.executeUpdate();
-			
-			// 프로필 id를 가지고 오는 부분
-			sql = "select * from profile where mem_id ='" + mem_id + "'" + "order by prof_regdate desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-			
-			rs.next();
-			req_prof_id = rs.getInt("prof_id");
-			
-			// 태그 유즈테이블에서 특정 사람이 사용한 태그를 가져오기위한 부분
-			sql = "select * from tag order by tag_id desc";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-			
-			rs.next();
-			req_tag_id = rs.getInt("tag_id");
-			
-			//세번째 스킬 점수 입력
-			sql = "insert into tag_use(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level)"
-					+ "values(tag_use_id.nextVal, 'profile', ? , ? , ?)";
-			
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, req_prof_id);
-			stmt.setInt(2, req_tag_id);
-			stmt.setInt(3, dto.getProf_skill_level3());
-			
-			stmt.executeUpdate();
 		}
-
-		catch (Exception err) {
-			System.out.println("addprofile에서 오류 " + err);
-		} finally {
+		catch(Exception e){
+			System.out.println("insert 오류 " + e);
+		} 
+		finally {
 			freeConnection();
 		}
 		return dto;
+	}
+		
+	/**
+	 * 특정 멤버의 태그를 가지고 오는 메서드
+	 */
+	public List member_tag(int prof_id) {
+		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'prof' AND tu.tag_use_type_id = ?) ";
+
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs2 = stmt.executeQuery();
+
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("member_tag 오류 " + e);
+		}
+		return null;
 	}
 
 	/**
