@@ -21,8 +21,8 @@ import portit.model.dto.Portfolio;
 public class MyPortfoliolistController extends HttpServlet{
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.doPost(req, resp);
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		doPost(req, resp);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class MyPortfoliolistController extends HttpServlet{
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			view.forward(req, resp);
 		}
-		else if (cmd.equals("MYPORTDELETE")) {
+		else if (cmd.equals("MYPORTFOLIODELETE")) {
 			PortfolioDao pfDao = new PortfolioDao();
 			int prof_pf_id = 0;
 			if (req.getParameter("pf_id") != null) {
