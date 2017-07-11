@@ -50,7 +50,8 @@
 													<div class="simple-content">
 														<div class="pfTag">
 															<% for(int j=0; j<port.getTags().size(); j++) { %>
-															<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+															<a href="javascript:tag('<%=port.getTags().get(j)%>')">
+															#<%= port.getTags().get(j)%></a>&nbsp;
 															<%} %>
 														</div>
 														<div class="pfTitle">
@@ -96,7 +97,8 @@
 														</div>
 														<div class="memTag">
 															<% for(int j=0; j<mem.getTags().size(); j++) { %>
-															<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+															<a href="javascript:tag('<%=mem.getTags().get(j)%>')">
+															#<%= mem.getTags().get(j)%></a>&nbsp;
 															<%} %>
 														</div>
 														<div class="memFollow">
@@ -135,7 +137,8 @@
 														<div class="simple-content text-center">
 															<div class="pjTag">
 									          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
-															<a href="">#<%= proj.getTags().get(j)%></a>&nbsp;
+															<a href="javascript:tag('<%=proj.getTags().get(j)%>')">
+															#<%= proj.getTags().get(j)%></a>&nbsp;
 															<%} %>
 									          				</div>
 															<div class="pjTitle">
@@ -143,7 +146,7 @@
 															</div>
 															<div class="pjInfo">
 																<span class="pjField"><a href="">#
-																	<//%proj.getTags2().get(0); %></a>
+																	<%=proj.getTags2() %></a>
 																</span>&nbsp;/&nbsp;
 																<span class="pjTo"><%=proj.getProj_to() %> 명</span>
 															</div>
@@ -187,7 +190,7 @@
 								<div class="portfolio-timeline">
 									<div class="pfTlType">
 										<span class="glyphicon glyphicon-heart"></span> <span
-											class="pfTypeText">[멤버이름]님이 내 포트폴리오를 좋아합니다. </span>
+											class="pfTypeText"><%= time.getProf_id2() %>님이 내 포트폴리오를 좋아합니다. </span>
 									</div>
 									<span class="pfInfo">
 										<div>
@@ -203,7 +206,7 @@
 										</div>
 										<div class="pfTag">
 											<% for(int j=0; j<time.getTags().size(); j++) { %>
-											<a href="">#<%= time.getTags().get(j)%></a>&nbsp;
+											<a href="javascript:tag('<%=time.getTags().get(j)%>')">#<%= time.getTags().get(j)%></a>&nbsp;
 											<%} %>
 										</div>
 									</span> <span class="pfImage"> <span><img
@@ -220,3 +223,25 @@
 		</section>
 		<!-- Timeline page end -->
 	</section>
+	
+<script src="assets/js/paging.js"></script>
+<!-- 상세페이지로 이동하기 위한 폼 -->
+<form name="pf_info" method="post" action="/detailView">
+	<input type="hidden" name="pf_id" /> 
+	<input type="hidden" name="cmd" value="PORTFOLIO" />
+</form>
+<form name="tag_info" method="post" action="/detailView">
+	<input type="hidden" name="tag_name" /> 
+	<input type="hidden" name="cmd" value="TAG" />
+</form>
+<form name="prof_info" method="post" action="/detailView">
+	<input type="hidden" name="prof_id" /> 
+	<input type="hidden" name="cmd" value="PROJECT" />
+</form>
+<form name="proj_info" method="post" action="/detailView">
+	<input type="hidden" name="proj_id" /> 
+	<input type="hidden" name="cmd" value="MEMBER" />
+</form>
+<!-- 포트폴리오 정보 -->
+
+	

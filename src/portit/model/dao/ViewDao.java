@@ -328,7 +328,7 @@ public class ViewDao {
 	public List project_tag(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' AND tu.tag_use_type_id = ?) "
 					+ "  WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -353,7 +353,8 @@ public class ViewDao {
 	public List project_tag2(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' "
+					+ " AND tu.tag_use_type_id = ? AND t.tag_type = 'field' )" ;
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
@@ -471,6 +472,7 @@ public class ViewDao {
 				int pf_id = rs.getInt("pf_id");
 				
 				timeline.setTags(timeline_info_tag(pf_id));
+				timeline.setProf_id2(timeline_info_like(pf_id));
 				list.add(timeline);
 
 			}
@@ -508,6 +510,34 @@ public class ViewDao {
 		} 
 		catch (Exception e) {
 			System.out.println("timeline 태그 " + e);
+		}
+		return null;
+	}
+	
+	/**
+	 *	좋아요 
+	 */
+	public List timeline_info_like(int pf_id) {
+		try {
+			String sql = "select  prof_name, profile.prof_id, member.mem_id , portfolio.pf_id  "
+					+ "from member join pf_like on member.mem_id = pf_like.mem_id "
+					+ "join portfolio on portfolio.pf_id = pf_like.pf_id "
+					+ "join profile on profile.mem_id = member.mem_id "
+					+ "where portfolio.pf_id=?";
+			
+			ArrayList list = new ArrayList();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pf_id);
+			rs2 = pstmt.executeQuery();
+			
+			List<String> like = new ArrayList<>();
+			while (rs2.next()) {
+				like.add(rs2.getString("prof_name"));
+			}
+			return like;
+		} 
+		catch (Exception e) {
+			System.out.println("timeline like " + e);
 		}
 		return null;
 	}

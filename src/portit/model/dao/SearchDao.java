@@ -350,6 +350,7 @@ public class SearchDao {
 			
 			while (rs.next()) {
 				Project project = new Project(); 
+				project.setProj_id(rs.getInt("proj_id"));
 				project.setProj_title(rs.getString("proj_title"));
 				project.setProf_name(rs.getString("prof_name"));
 				project.setProj_intro(rs.getString("proj_intro"));
@@ -360,8 +361,8 @@ public class SearchDao {
 				project.setD_day(rs.getInt("d_day"));
 				
 				int proj_id = rs.getInt("proj_id");				
-				project.setTags(project_tag(proj_id));			
-				project.setTags(project_tag2(proj_id));			
+				project.setTags(project_tag(proj_id));
+				project.setTags2(project_tag2(proj_id));
 		
 				list.add(project);
 			}
@@ -385,7 +386,7 @@ public class SearchDao {
 	public List project_tag(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' AND tu.tag_use_type_id = ?) "
 					+ "  WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -410,7 +411,8 @@ public class SearchDao {
 	public List project_tag2(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' "
+					+ " AND tu.tag_use_type_id = ? AND t.tag_type = 'field' )" ;
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
@@ -424,7 +426,7 @@ public class SearchDao {
 			return tags;
 		} 
 		catch (Exception e) {
-			System.out.println("proj_tag 오류" + e);
+			System.out.println("proj_tag(필드) 오류" + e);
 		}
 		return null;
 	}

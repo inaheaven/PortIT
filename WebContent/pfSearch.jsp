@@ -17,7 +17,7 @@
 					<form class="col-md-10 searchKeyword" method="post" 
 						action="/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-					<input type="text" class="form-control" name="pfSearch" value="${search	 }" />
+					<input type="text" class="form-control" name="pfSearch" value="${search	}" />
 				</div>
 						<button type="submit" class="col-md-1 btn common" id="pfsubmit">
 							<i class="fa fa-search"></i>
@@ -116,7 +116,8 @@
 							<div class="pfTag">
 							
 							<% for(int j=0; j<port.getTags().size(); j++) { %>
-							<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+							<a href="javascript:tag('<%=port.getTags().get(j)%>')">
+							#<%= port.getTags().get(j)%></a>&nbsp;
 							<%} %>
 							</div>
 
@@ -171,6 +172,7 @@
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
+	<script src="assets/js/paging.js"></script>
 
 	<!--script for this page-->
 	<script>
@@ -204,3 +206,22 @@
 			document.detailsearch.submit();
 		}	
 	</script>
+	
+	<!-- 상세페이지로 이동하기 위한 폼 -->
+<form name="pf_info" method="post" action="/detailView">
+	<input type="hidden" name="pf_id" /> 
+	<input type="hidden" name="cmd" value="PORTFOLIO" />
+</form>
+<form name="tag_info" method="post" action="/detailView">
+	<input type="hidden" name="tag_name" /> 
+	<input type="hidden" name="cmd" value="PFTAG" />
+</form>
+<form name="prof_info" method="post" action="/detailView">
+	<input type="hidden" name="prof_id" /> 
+	<input type="hidden" name="cmd" value="PROJECT" />
+</form>
+<form name="proj_info" method="post" action="/detailView">
+	<input type="hidden" name="proj_id" /> 
+	<input type="hidden" name="cmd" value="MEMBER" />
+</form>
+<!-- 포트폴리오 정보 -->

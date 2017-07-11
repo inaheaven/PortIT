@@ -117,7 +117,8 @@
 		         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
 		         					<div class="memTag">
 		         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
-									<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+									<a href="javascript:tag('<%=mem.getTags().get(j)%>')">
+									#<%= mem.getTags().get(j)%></a>&nbsp;
 									<%} %>
 		         					</div>
 		         					<div class="memFollow">
@@ -167,6 +168,7 @@
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
+	<script src="assets/js/paging.js"></script>
 
 	<!--script for this page-->
 	<script>
@@ -196,3 +198,21 @@
 			document.detailsearch.submit();
 		}	
 	</script>
+	
+		<!-- 상세페이지로 이동하기 위한 폼 -->
+<form name="pf_info" method="post" action="/detailView">
+	<input type="hidden" name="pf_id" /> 
+	<input type="hidden" name="cmd" value="PORTFOLIO" />
+</form>
+<form name="tag_info" method="post" action="/detailView">
+	<input type="hidden" name="tag_name" /> 
+	<input type="hidden" name="cmd" value="MEMTAG" />
+</form>
+<form name="prof_info" method="post" action="/detailView">
+	<input type="hidden" name="prof_id" /> 
+	<input type="hidden" name="cmd" value="PROJECT" />
+</form>
+<form name="proj_info" method="post" action="/detailView">
+	<input type="hidden" name="proj_id" /> 
+	<input type="hidden" name="cmd" value="MEMBER" />
+</form>

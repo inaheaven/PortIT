@@ -97,14 +97,15 @@
 
 									<div class="pfTag">
 										<% for(int j=0; j<port.getTags().size(); j++) { %>
-										<a href="javascript:tag(<%= port.getTags().get(j)%>)">
+										<a href="javascript:tag('<%=port.getTags().get(j)%>')">
 											#<%= port.getTags().get(j)%>
 										</a>&nbsp;
 										<%} %>
 									</div>
 
 									<div class="pfTitle">
-										<a href=""><%=port.getPf_title()%></a>
+										<a href="javascript:pf('<%=port.getPf_id()%>')">
+											<%=port.getPf_title()%></a>
 									</div>
 									<div class="pfBottom">
 
@@ -135,12 +136,14 @@
 
 									<div class="pfTag">
 										<% for(int j=0; j<port.getTags().size(); j++) { %>
-										<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+										<a href="javascript:tag('<%=port.getTags().get(j)%>')">
+											#<%= port.getTags().get(j)%></a>&nbsp;
 										<%} %>
 									</div>
 
 									<div class="pfTitle">
-										<a href=""><%=port.getPf_title()%></a>
+										<a href="javascript:pf('<%=port.getPf_id()%>')">
+										<%=port.getPf_title()%></a>
 									</div>
 									<div class="pfBottom">
 
@@ -196,7 +199,7 @@
 			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
 			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
-										<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+										<a href="javascript:tag('<%=mem.getTags().get(j)%>')">#<%= mem.getTags().get(j)%></a>&nbsp;
 										<%} %>
 			         					</div>
 			         					<div class="memFollow">
@@ -223,7 +226,7 @@
 			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
 			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
-										<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+										<a href="javascript:tag('<%=mem.getTags().get(j)%>')">#<%= mem.getTags().get(j)%></a>&nbsp;
 										<%} %>
 			         					</div>
 			         					<div class="memFollow">
@@ -284,7 +287,8 @@
 								<br>
 									<div class="pjTag">
 			          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
-									<a href="">#<%= proj.getTags().get(j)%></a>&nbsp;
+									<a href="javascript:tag('<%=proj.getTags().get(j)%>')">
+									#<%= proj.getTags().get(j)%></a>&nbsp;
 									<%} %>
 			          				</div>
 								</span>
@@ -347,7 +351,7 @@
 								<span class="pjInfoTable">
 									<table class="table text-center">
 										<tr>
-											<td>백엔드개발자</td>
+											<td><%=proj.getTags2() %></td>
 										</tr>
 										<tr>
 											<td><%=proj.getProj_to() %> 명</td>
@@ -384,11 +388,11 @@
 
 <!-- detail search bar -->
 <script src="assets/js/search.js"></script>
-
+<script src="assets/js/paging.js"></script>
 <!-- 상세페이지로 이동하기 위한 폼 -->
 <form name="pf_info" method="post" action="/detailView">
 	<input type="hidden" name="pf_id" /> 
-	<input type="hidden" name="cmd" value="PORTFOLIO" />
+	<input type="hidden" name="type" value="view" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
@@ -403,23 +407,3 @@
 	<input type="hidden" name="cmd" value="MEMBER" />
 </form>
 
-<!-- 포트폴리오 정보 -->
-<script>	
-	function pf(pf_id){
-		document.pf_info.pf_id.value = pf_id;
-		document.pf_info.submit();
-	}
-	function tag(tag_name){
-		document.tag_info.tag_name.value = tag_name;
-		document.tag_info.submit();	
-		alert(tag_name);
-	}
-	function prof(prof_id){
-		document.prof_info.prof_id.value = prof_id;
-		document.prof_info.submit();		
-	}
-	function proj(proj_id){
-		document.proj_info.proj_id.value = proj_id;
-		document.proj_info.submit();
-	}
-</script>
