@@ -490,7 +490,4 @@ public class ProfileDao {
 		}
 		return prof_id;
 	}
-	
-	
-	
 }

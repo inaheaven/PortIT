@@ -46,8 +46,10 @@ public class DetailViewController extends HttpServlet {
 			url="/page?page=";
 		}
 		else if(cmd.equals("TAG")){
+			String tag_name2 = req.getParameter("tag_name");
+			System.out.println(tag_name2);
 			req.setAttribute("proj_view",viewdao.project_info(proj_id));			
-			url="/page?page=";
+			url="/page?page=searchAll";
 		}
 		
 

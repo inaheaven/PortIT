@@ -26,7 +26,9 @@
 						<div class="col-md-4 mb"> <!-- 반복 -->
 							<div class="image-hover">
 								<div class="portfolio-simple">
-									<div class="pfImg"></div>
+									<div class="pfImg">
+		            					<img src="assets/img/profile-02.jpg"/>   
+				         			</div>
 									<div class="pfInfo">
 										<div class="simple-content">
 											<div class="pfTag">

@@ -110,7 +110,7 @@ public class TagDao {
 		try {
 			sql = "INSERT INTO tag_use"
 					+ "(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level, proj_numofperson) "
-					+ "VALUES(seq_tag_use_id.nextVal,?,?,?,?)";
+					+ "VALUES(seq_tag_use_id.nextVal,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, articleType);
 			stmt.setInt(2, articleId);
@@ -125,23 +125,12 @@ public class TagDao {
 		return rows;
 	}
 	
-	/**
-	 * 태그 사용 정보 수정
-	 * @param conn
-	 * @param articleType
-	 * @param articleId
-	 * @param tag
-	 * @return
-	 */
+	
 	public int updateTagUse(Connection conn, String articleType, int articleId, Tag tag) {
 		int rows = 0;
 		try {
-			sql = "MERGE INTO tag_use tu "
-					+ "USING (SELECT * FROM tag WHERE tag_id=?) t "
-					+ "ON tu.tag_id=t.tag_id "
-					+ "WHEN MATCHED THEN UPDATE SET ";
-			/* sql = "UPDATE tag_use SET prof_skill_level=?, proj_numofperson=? "
-					+ "WHERE tag_use_type=? AND tag_use_type_id=?"; */
+			sql = "UPDATE tag_use SET prof_skill_level=?, proj_numofperson=? "
+					+ "WHERE tag_use_type=? AND tag_use_type_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, tag.getProf_skill_level());
 			stmt.setString(2, articleType);
@@ -156,13 +145,6 @@ public class TagDao {
 		return rows;
 	}
 	
-	/**
-	 * 태그 사용 정보 삭제
-	 * @param conn
-	 * @param articleType
-	 * @param articleId
-	 * @return
-	 */
 	public int deleteTagUse(Connection conn, String articleType, int articleId) {
 		int rows = 0;
 		try {

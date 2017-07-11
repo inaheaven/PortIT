@@ -4,7 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="header.jsp"></jsp:include>
+
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
@@ -14,88 +14,97 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/style-responsive.css" rel="stylesheet">
 <link href="assets/css/custom.css" rel="stylesheet">
-
-<script src="assets/js/chart-master/Chart.js"></script>
 <link href="assets/css/search.css" rel="stylesheet">
-<jsp:useBean id="portfolio_viewDao" class="portit.model.dao.ViewDao"></jsp:useBean>
 
-<section class="container">
-	<section class="wrapper site-min-height">
-		<div class="col-md-12 mt search" id="searchPf">
-			<!-- 검색어 검색 폼 -->
 
-			<div class="col-md-12 mt mb">
-				<form class="col-md-10 searchKeyword" method="post"
-					action="/SearchView?cmd=PFSEARCH">
-					<div class="form-group col-md-11">
-						<input type="text" class="form-control" name="pfSearch"
-							value="${sessionScope.search}" />
+<jsp:include page="header.jsp"></jsp:include>
+
+<jsp:useBean id="portfolio_viewDao"	class="portit.model.dao.ViewDao"></jsp:useBean>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+	<!--main content start-->
+	<section class="container">
+		<section class="wrapper site-min-height">
+			<div class="col-md-12 mt search" id="searchPf">
+				<!-- 검색어 검색 폼 -->
+
+				<div class="col-md-12 mt mb">
+					<form class="col-md-10 searchKeyword" method="post"
+						action="/SearchView?cmd=PFSEARCH">
+						<div class="form-group col-md-11">
+							<input type="text" class="form-control" name="pfSearch"
+								value="${sessionScope.search}" />
+						</div>
+						<button type="submit" class="col-md-1 btn common" >
+							<i class="fa fa-search"></i>
+						</button>
+					</form>
+					<div class="col-md-2 collapsed sortingBtn text-right"
+						data-toggle="collapse" data-parent="#searchPf"
+						href="#searchSorting">
+						<button type="button" class="btn common updown">
+							조건 검색&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+						</button>
 					</div>
-					<button type="submit" class="col-md-1 btn common" id="pfsubmit">
-						<i class="fa fa-search"></i>
-					</button>
-				</form>
-				<div class="col-md-2 collapsed sortingBtn text-right"
-					data-toggle="collapse" data-parent="#searchPf"
-					href="#searchSorting">
-					<button type="button" class="btn common updown">
-						조건 검색&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
-					</button>
 				</div>
-			</div>
-			<!-- 조건 검색 box -->
-			<div class="searchSorting col-md-12 collapse" id="searchSorting">
-				<form class="" method="post" name="detailsearch"
-					action="/detailSearch?cmd=PFDETAIL">
-					<input type="hidden" name="list_value" />
-					<div class="">
+				<!-- 조건 검색 box -->
+				<div class="searchSorting col-md-12 collapse" id="searchSorting">
+					<form class="" method="post" name="detailsearch"
+						action="/detailSearch?cmd=PFDETAIL">
+						<input type="hidden" name="list_value" />
+						<div class="">
+							<div class="sortKey col-md-1">
+								<b>정렬</b>
+							</div>
+							<div class="col-md-11">
+								<a href="javascript:detailSearch(1)">최신순</a> 
+								<a href="javascript:detailSearch(2)">인기순</a>
+							</div>
+						</div>
+						<br> <br>
 						<div class="sortKey col-md-1">
-							<b>정렬</b>
+							<b>태그</b>
 						</div>
 						<div class="col-md-11">
-							<a href="javascript:detailSearch(1)">최신순</a> <a
-								href="javascript:detailSearch(2)">인기순</a>
+							<!-- 인기 태그 6개 띄우기 -->
+							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
+							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
+							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
+							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
+							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
 						</div>
-					</div>
-					<br> <br>
-					<div class="sortKey col-md-1">
-						<b>태그</b>
-					</div>
-					<div class="col-md-11">
-						<!-- 인기 태그 6개 띄우기 -->
-						<input class="btn poptag" type="button" value="JAVA"
-							name="language" onclick="fnAppendItem()" /> <input
-							class="btn poptag" type="button" value="C" name="language"
-							onclick="fnAppendItem()" /> <input class="btn poptag"
-							type="button" value="c++" name="language"
-							onclick="fnAppendItem()" /> <input class="btn poptag"
-							type="button" value="Eclipse" name="language"
-							onclick="fnAppendItem()" /> <input class="btn poptag"
-							type="button" value="jsp" name="language"
-							onclick="fnAppendItem()" /> <input class="btn poptag"
-							type="button" value="servlet" name="language"
-							onclick="fnAppendItem()" /> .....
-					</div>
-					<br> <br>
-					<div class="col-md-offset-1 col-md-4">
-						<input type="text" class="form-control taginput" id="language"
-							name="language" placeholder="검색하고 싶은 태그를 입력하세요."
-							onchange="fnAppendItem2()" />
-					</div>
-					<br> <br>
-					<hr />
-					<div id="itemList" class="col-md-9"></div>
-					<button type="submit" class="btn common col-md-2">조건 검색하기</button>
-				</form>
-			</div>
+						<br> <br>
+						<div class="col-md-offset-1 col-md-4">
+							<input type="text" class="form-control taginput" id="language"
+								name="language" placeholder="검색하고 싶은 태그를 입력하세요."
+								onchange="fnAppendItem2()" />
+						</div>
+						<br> <br>
+						<hr />
+						
+						<!--  태그가 삽입되는 부분  -->
+						<!--  이부분에 input hidden이 삽입되어야한다. -->
+						<div id="itemList" class="col-md-9">
+							
+							<input type="hidden" id="test3" name="test3" value="확인중.ㅎ">
+						
+						</div>
+						<button type="submit" class="btn common col-md-2">조건 검색하기</button>
+					</form>
+				</div>
 			<!-- END - 조건 검색 box -->
-			<%	
+<%	
  	List list = portfolio_viewDao.portfolio_info();
-	List tag_list = portfolio_viewDao.portfolio_info_tag();
  	
  	// 페이징 기능 추가
  		int totalRecord = list.size();	//전체 글의 갯수
- 		int numPerPage = 16;			//한 페이지당 보여질 글의 갯수
+ 		int numPerPage = 12;			//한 페이지당 보여질 글의 갯수
  		int totalPage = 0;				//전체 페이지 수
  		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
  		int beginPerPage = 1;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
@@ -130,16 +139,16 @@
 			<!-- 첫번째 포트폴리오 -->
 			<div class="col-md-3 mb">
 				<div class="portfolio-simple">
-					<div class="pfImg"></div>
+					<div class="pfImg">
+   						<img src="assets/img/profile-02.jpg"/>   
+         			</div>
 					<div class="pfInfo">
 						<div class="simple-content">
 						
 							<div class="pfTag">
-							<%
-							for(int j = (3*i)+0 ; j<=(3*i)+2; j++){
-								Portfolio port_tag = (Portfolio) tag_list.get(j);	
-							%>
-								<a href="javascript:tag_name('${port_list[i].tag_name}')">#<%=port_tag.getTag_name() %>&nbsp;</a>
+							
+							<% for(int j=0; j<port.getTags().size(); j++) { %>
+							<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
 							<%} %>
 							</div>
 
@@ -195,7 +204,6 @@
 
 <!-- detail search bar -->
 <script src="assets/js/search.js"></script>
-
 <!--script for this page-->
 <script>
 		$(document).ready(
@@ -219,3 +227,4 @@
 			document.detailsearch.submit();
 		}
 	</script>
+	

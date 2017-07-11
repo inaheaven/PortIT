@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="portit.model.dto.Profile"%>
+<%@page import="portit.model.dao.MemberDao"%>
       
 <!-- **********************************************************************************************************************************************************
  			My Page Sidebar Navigation
@@ -8,6 +10,32 @@
 <!--sidebar start-->
 <aside>
 <%		
+			/*
+			My페이지로 이동할때 거치는 Frontcontroller가 있어야한다.
+			그래서 my의 하위 카테고리인 profile, project 등의 하위 CTRL로 이동할때
+			"이름, 이미지URL, member_ID "등의 user정보가 담긴 dto를 request에 담아서 
+			View에 도착해야한다...
+			
+			현재같은 구조에서는 View에 도착한뒤에 다시 DB에 접근해서 USER 정보를 얻어와야하는 구조다...
+			그렇지 않으면 my의 모든 하위카테고리의 컨트롤러에 user정보를 rpuest에 담는 문법이 중복해서 선언해야한다.
+			
+			현재는 임시방편으로 MemberDao에 쿼리를 만들어서 직접 인스턴스를 생성해서 사용한다.
+			*/
+			
+			int mem_id = (int)session.getAttribute("loginId");
+			
+			MemberDao dao = new MemberDao();
+			Profile mem_prof= (Profile)dao.getUserInformation(mem_id);
+			
+			String userName= "(이름없음)";
+			
+			//이름 미등록일시 메일출력.
+			if(mem_prof.getProf_name()==null){
+				userName=mem_prof.getProf_email();
+			}else{
+				userName=mem_prof.getProf_name();
+			}
+
 			//String pageName = (String)session.getAttribute("pageName");
 			String pageName = (String)request.getAttribute("pageName");			
 %>
@@ -15,8 +43,8 @@
 		<!-- sidebar menu start-->
 		<ul class="sidebar-menu">       
 			<div class="myImg">
-				<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-				<h5 class="centered">김수연 님</h5>              	  
+				<p class="centered"><a href="profile.html"><img src="<%=mem_prof.getProf_img() %>" class="img-circle" width="60"></a></p>
+				<h5 class="centered"><%=userName %> 님</h5>              	  
 			</div>       
 			<hr class="line" />
 			<li class="">
@@ -30,7 +58,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/myproj?cmd=list&mem_id=2" id="myProjList"> 
+				<a href="/myproj?cmd=list" id="myProjList"> 
 				<!-- 로그인 아이디 값을 매개 변수로 줘야함 -->
 				    <span>My Project</span>	
 				</a>

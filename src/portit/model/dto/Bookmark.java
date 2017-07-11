@@ -27,62 +27,72 @@ public class Bookmark {
     public String getProf_nick() {
 		return prof_nick;
 	}
-	public void setProf_nick(String prof_nick) {
+	public Bookmark setProf_nick(String prof_nick) {
 		this.prof_nick = prof_nick;
+		return this;
 	}
 	public String getMl_path() {
 		return ml_path;
 	}
-	public void setMl_path(String ml_path) {
+	public Bookmark setMl_path(String ml_path) {
 		this.ml_path = ml_path;
+		return this;
 	}
 	public String getPf_title() {
 		return pf_title;
 	}
-	public void setPf_title(String pf_title) {
+	public Bookmark setPf_title(String pf_title) {
 		this.pf_title = pf_title;
+		return this;
 	}
 	public int getPf_like() {
 		return pf_like;
 	}
-	public void setPf_like(int pf_like) {
+	public Bookmark setPf_like(int pf_like) {
 		this.pf_like = pf_like;
+		return this;
 	}
 	public String getProf_name() {
 		return prof_name;
 	}
-	public void setProf_name(String prof_name) {
+	public Bookmark setProf_name(String prof_name) {
 		this.prof_name = prof_name;
+		return this;
 	}
 	public int getBm_id() {
 		return bm_id;
 	}
-	public void setBm_id(int bm_id) {
+	public Bookmark setBm_id(int bm_id) {
 		this.bm_id = bm_id;
+		return this;
 	}
 	public int getMem_id() {
 		return mem_id;
 	}
-	public void setMem_id(int mem_id) {
+	public Bookmark setMem_id(int mem_id) {
 		this.mem_id = mem_id;
+		return this;
 	}
 	public int getPf_id() {
 		return pf_id;
 	}
-	public void setPf_id(int pf_id) {
+	public Bookmark setPf_id(int pf_id) {
 		this.pf_id = pf_id;
+		return this;
 	}
 	public Date getBm_date() {
 		return bm_date;
 	}
-	public void setBm_date(Date bm_date) {
+	public Bookmark setBm_date(Date bm_date) {
 		this.bm_date = bm_date;
+		return this;
 	}
     public List<String> getTags() {
 		return tags;
 	}
-	public void setTags(List<String> tags) {
+	public Bookmark setTags(List<String> tags) {
 		this.tags = tags;
+		return this;
 	}
 	
 }

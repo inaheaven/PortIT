@@ -50,12 +50,12 @@
 						</div>
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
-							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c#" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem()" /> .....
+							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
+							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
+							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
+							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
+							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
@@ -70,40 +70,100 @@
 				</div>
 				<!-- END - 조건 검색 box -->
 
-				<c:if test="${mem_list.size() != 0 && mem_list.size()>0 }">			
-				<c:forEach begin="0" end="${mem_list.size()-1}" var="i" >	
-						<!-- member -->
-						<div class="col-md-3 mb">
-	          				<div class="member-simple">
-		          				<div class="simple-content text-center">	      
-			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
-			         				<div>
-			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag">
-			         						<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+0].tag_name}&nbsp;</a>
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+1].tag_name}&nbsp;</a>
-											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${mem_list_tag[(3*i)+2].tag_name}&nbsp;</a>
-			         					</div>
-			         					<div class="memFollow">
-			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
-			         					</div>
-			         				</div>
-		          				</div>          				
-	          				</div>
-	          			</div> 
-        			</c:forEach>
-        	</c:if>	
-			<c:if test="${mem_list.size() == 0 }">
-				검색된 결과가 없습니다.
-			</c:if>					
-				</div>
-
-				<!-- 페이지네이션 -->
+<%	
+ 	List list = (List)request.getAttribute("mem_list");
+ 	
+ 	// 페이징 기능 추가
+ 		int totalRecord = list.size();	//전체 글의 갯수
+ 		int numPerPage = 12;			//한 페이지당 보여질 글의 갯수
+ 		int totalPage = 0;				//전체 페이지 수
+ 		int nowPage = 0;				//현재 선택한(보고있는) 페이지 번호
+ 		int beginPerPage = 1;			//각 페이지의 시작번호(예를 들어 한 페이지에 5개씩 담는다면 2페이지의 값은 6 3페이지는 11)
+ 		int pagePerBlock = 10;			//한 블록당 묶을 페이지 수 (값이 3이므로 1,2,3 / 4,5,6 / ..페이지로 묶임)
+ 		int totalBlock = 0;				//전체 블럭 갯수
+ 		int nowBlock = 0;				//현재 블럭
+ 		
+ 		totalPage = (int)Math.ceil((double)totalRecord/numPerPage);
+ 		
+ 		if(request.getParameter("nowPage")!=null)
+ 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+ 		
+ 		if(request.getParameter("nowBlock")!=null)
+ 			nowBlock = Integer.parseInt(request.getParameter("nowBlock"));
+ 		
+ 		totalBlock = (int)Math.ceil((double)totalPage/pagePerBlock);
+ 		
+ 		beginPerPage = nowPage * numPerPage;
+ 		
+ 		if(list.size() == 0){
+ 
+ 		}
+ 		else{
+ 			for(int i=beginPerPage; i< numPerPage+beginPerPage; i++){
+ 				if(i == totalRecord){	//마지막 페이지에 게시글이 16개가 아닐 때 오류가 나는 것 방지
+ 					break;
+ 			}
+ 		Member mem = (Member) list.get(i);
 		
-		</section>
-		<!--/wrapper -->
+ %>
+
+			
+			<!-- member -->
+			<div class="col-md-3 mb">
+          				<div class="member-simple">
+	          				<div class="simple-content text-center">	      
+		          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
+		         				<div>
+		         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
+		         					<div class="memTag">
+		         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
+									<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+									<%} %>
+		         					</div>
+		         					<div class="memFollow">
+		         						<span class="fa fa-user"></span>&nbsp;&nbsp;
+		         						<span class="memFollowCount"><%=mem.getProf_follower() %></span>
+		         					</div>
+		         				</div>
+	          				</div>          				
+          				</div>
+          			</div>
+			<%
+ 		}
+ 	}
+ %>
+		</div>
+
+		<!-- 페이지네이션 -->
+		<div align="center">
+			<% if(nowBlock > 0){%>
+			<a
+				href="/page?page=memSearch?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">이전<%=pagePerBlock%>개
+			</a>
+			<% }%>
+			:::
+			<%
+ 			for(int i=0; i<pagePerBlock; i++){
+ 				if((nowBlock*pagePerBlock)+i == totalPage)
+ 					break;
+ 		%>
+			<a
+				href="/page?page=memSearch?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+			<%
+ 			}
+ 		%>
+			:::
+			<% if(totalBlock > nowBlock+1){%>
+			<a
+				href="/page?page=memSearch?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">다음<%=pagePerBlock%>개
+			</a>
+			<% }%>
+		</div>
+
 	</section>
+	<!--/wrapper -->
+
+</section>
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>

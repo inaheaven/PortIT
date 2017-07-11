@@ -22,7 +22,7 @@ public class Notification {
 	private Date nt_date;
 	private String nt_type;
 	private int nt_type_id;
-	private char nt_isread = 'f';
+	private char nt_isread = 'n';
 	
 	
 	public int getNt_id() {
@@ -48,25 +48,32 @@ public class Notification {
 	}
 	
 	
-	public void setNt_id(int nt_id) {
+	public Notification setNt_id(int nt_id) {
 		this.nt_id = nt_id;
+		return this;
 	}
-	public void setMem_id_sender(int mem_id_sender) {
+	public Notification setMem_id_sender(int mem_id_sender) {
 		this.mem_id_sender = mem_id_sender;
+		return this;
 	}
-	public void setMem_id_receiver(int mem_id_receiver) {
+	public Notification setMem_id_receiver(int mem_id_receiver) {
 		this.mem_id_receiver = mem_id_receiver;
+		return this;
 	}
-	public void setNt_date(Date nt_date) {
+	public Notification setNt_date(Date nt_date) {
 		this.nt_date = nt_date;
+		return this;
 	}
-	public void setNt_type(String nt_type) {
+	public Notification setNt_type(String nt_type) {
 		this.nt_type = nt_type;
+		return this;
 	}
-	public void setNt_type_id(int nt_type_id) {
+	public Notification setNt_type_id(int nt_type_id) {
 		this.nt_type_id = nt_type_id;
+		return this;
 	}
-	public void setNt_isread(char nt_isread) {
+	public Notification setNt_isread(char nt_isread) {
 		this.nt_isread = nt_isread;
+		return this;
 	}
 }

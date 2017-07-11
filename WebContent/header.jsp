@@ -45,7 +45,7 @@
 						<span class="hasAlarm"></span>
 					</c:if>
 				</a>
-				<ul class="dropdown-menu extended inbox">
+				<ul class="dropdown-menu extended inbox" style="width: 260px !important; left: -200px;">
 					<div class="notify-arrow notify-arrow-yellow"></div>
 					<li>
 						<p class="yellow">Notification</p>
@@ -105,7 +105,7 @@
 					</li>
 					<li><a href="/page?page=myProf">내 프로필</a></li>
 					<li><a href="/page?page=myPfList">내 포트폴리오</a></li>
-					<li><a href="/page?page=myProjList">내 프로젝트</a></li>
+					<li><a href="/myproj?cmd=list">내 프로젝트</a></li>
 					<li><a href="/bmk?cmd=MYBOOKMARK">북마크</a></li>
 					<li><a href="/page?page=myFollowing">팔로잉</a></li>
 					<li><a href="/msg?cmd=list">메세지</a></li>
