@@ -26,7 +26,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body class="index">
 	<jsp:include page="signIn.jsp"></jsp:include>
 
 	<!-- js placed at the end of the document so the pages load faster -->
@@ -38,7 +38,7 @@
 	<script type="text/javascript"
 		src="assets/js/jquery.backstretch.min.js"></script>
 	<script>
-        $.backstretch("assets/img/login-bg.jpg", {speed: 500});
+       // $.backstretch("assets/img/login-bg.jpg", {speed: 500});
         
         function fnPasswordConfirm() {
         	var pw = document.getElementById("userpw").value;
