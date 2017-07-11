@@ -203,11 +203,18 @@
 .portfolio-simple .pfImg {
 	height: 180px;
 	border-radius: 10px 10px 0 0;
-	background: url(../img/profile-02.jpg) no-repeat center center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+
+	display: block;
+    position: relative;
+    overflow: hidden;
+}
+.portfolio-simple .pfImg img {
+	border-radius: 10px 10px 0 0;
+	height: 180px;
+		
+  	position: absolute;
+    top: 0;
+    left: -50%;
 }
 .portfolio-simple .pfInfo {
 	display: table;
