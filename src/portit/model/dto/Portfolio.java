@@ -57,8 +57,7 @@ public class Portfolio {
     private String prof_name;
     private String tag_name;
     private String ml_path;
-    private List<String> tags;
-    
+    private List<String> tags;   
     
     
 	public List<String> getTags() {

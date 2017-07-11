@@ -19,7 +19,7 @@ public class Timeline {
 	private int mem_id;
 	private List prof_id2;
 	private List tags;
-	
+	private List ml_path2;
 	
 	
 	
@@ -131,6 +131,14 @@ public class Timeline {
 
 	public void setProf_id2(List prof_id2) {
 		this.prof_id2 = prof_id2;
+	}
+
+	public List getMl_path2() {
+		return ml_path2;
+	}
+
+	public void setMl_path2(List ml_path2) {
+		this.ml_path2 = ml_path2;
 	}
 
 	

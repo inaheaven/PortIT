@@ -59,31 +59,40 @@
 
 /**************************** Sign In Page *****************************/
 
-#login-pgae .main {
+body.index {
+	background: url("../img/login-bg.jpg") no-repeat center center fixed; ;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#login-page {
+	display: table;
+	position: absolute;
 	height: 100%;
+	width: 100%;
+}
+#login-page .container {
+	display: table-cell;
+	vertical-align: middle;
+}
+#login-page .contents {
+	margin-left: auto;
+    margin-right: auto; 
 }
 #login-page .intro {	
-	position: absolute;
-	margin: 0;
-	top: 50%;
-	left: 20%;
-	-ms-transform: translate(50%, 50%);
-	transform: translate(0, 180%);
 	color: #fff;
 }
+#login-page .intro > h1 {
+	line-height: 1.2em;	
+}
 #login-page .intro > p {
-	font-size: 16px;
-	line-height: 1.5em;
+	font-size: 18px;
+	line-height: 1.8em;
 }
-#login-page .login{
-	position: absolute;
-	margin: 0;
-	top: 50%;
-	left: 0;
-	-ms-transform: translate(0, 50%);
-	transform: translate(0, 180%);
+.login-wrap {
+    padding: 30px 100px;
 }
-
 .login-wrap > input {
 	width: 300px;
 	height: 40px;
@@ -203,11 +212,18 @@
 .portfolio-simple .pfImg {
 	height: 180px;
 	border-radius: 10px 10px 0 0;
-	background: url(../img/profile-02.jpg) no-repeat center center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+
+	display: block;
+    position: relative;
+    overflow: hidden;
+}
+.portfolio-simple .pfImg img {
+	border-radius: 10px 10px 0 0;
+	height: 180px;
+		
+  	position: absolute;
+    top: 0;
+    left: -50%;
 }
 .portfolio-simple .pfInfo {
 	display: table;
@@ -515,7 +531,6 @@ button.common:focus {
 /* add padding  */
 .left-addon input  { padding-left:  50px; }
 .right-addon input { padding-right: 30px; }
-
 
 
 

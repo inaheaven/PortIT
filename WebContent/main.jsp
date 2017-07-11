@@ -42,13 +42,17 @@
 				Portfolio port = (Portfolio) portfolio.get(i);
 	%>
 							
-										<!-- 첫번째 포트폴리오 -->
-										<div class="col-md-3 mb">
-											<div class="portfolio-simple">
-												<div class="pfImg"></div>
-												<div class="pfInfo">
-													<div class="simple-content">
-														<div class="pfTag">
+														<!-- 첫번째 포트폴리오 -->
+  										<div class="col-md-3 mb">
+  											<div class="portfolio-simple">
+ 											
+ 												<div class="pfImg">
+ 					            					<img src="<%=port.getMl_path()%>"/>     
+ 							         			</div>
+  												<div class="pfInfo">
+  													<div class="simple-content">
+  														<div class="pfTag">
+
 															<% for(int j=0; j<port.getTags().size(); j++) { %>
 															<a href="javascript:tag('<%=port.getTags().get(j)%>')">
 															#<%= port.getTags().get(j)%></a>&nbsp;
@@ -205,18 +209,20 @@
 											<span><a href=""></a></span>
 										</div>
 										<div class="pfTag">
-											<% for(int j=0; j<time.getTags().size(); j++) { %>
+											<% for(int j=0; j<proj.getTags().size(); j++) { %>
 											<a href="javascript:tag('<%=time.getTags().get(j)%>')">#<%= time.getTags().get(j)%></a>&nbsp;
 											<%} %>
 										</div>
-									</span> <span class="pfImage"> <span><img
-											src="" /></span> <span><img
-											src="assets/img/instagram.jpg" /></span> <span><img
-											src="assets/img/instagram.jpg" /></span>
+									</span> 
+									
+									<span class="pfImage">
+										<span><img src="" /></span> 
+										<span><img src="assets/img/instagram.jpg" /></span> 
+										<span><img src="assets/img/instagram.jpg" /></span>
 									</span>
 								</div>
 							</div>
-	<%} %>				
+					
 
 				</div>
 			</div>

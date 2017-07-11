@@ -90,11 +90,13 @@
 
 
 					<div class="col-md-3 mb">
-						<div class="portfolio-simple">
-							<div class="pfImg"></div>
-							<div class="pfInfo">
-								<div class="simple-content">
-
+  						<div class="portfolio-simple">
+ 							
+ 							<div class="pfImg">
+           						<img src="<%=port.getMl_path()%>"/>   
+ 		         			</div>
+  							<div class="pfInfo">
+  								<div class="simple-content">
 									<div class="pfTag">
 										<% for(int j=0; j<port.getTags().size(); j++) { %>
 										<a href="javascript:tag('<%=port.getTags().get(j)%>')">
@@ -129,10 +131,13 @@
 
 
 					<div class="col-md-3 mb">
-						<div class="portfolio-simple">
-							<div class="pfImg"></div>
-							<div class="pfInfo">
-								<div class="simple-content">
+  						<div class="portfolio-simple">
+ 				
+ 							<div class="pfImg">
+            					<img src="<%=port.getMl_path()%>"/>   
+ 		         			</div>
+  							<div class="pfInfo">
+  								<div class="simple-content">
 
 									<div class="pfTag">
 										<% for(int j=0; j<port.getTags().size(); j++) { %>

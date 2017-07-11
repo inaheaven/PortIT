@@ -138,10 +138,13 @@
 
 			<!-- 첫번째 포트폴리오 -->
 			<div class="col-md-3 mb">
-				<div class="portfolio-simple">
-					<div class="pfImg"></div>
-					<div class="pfInfo">
-						<div class="simple-content">
+  				<div class="portfolio-simple">
+
+ 					<div class="pfImg">
+   						<img src="<%=port.getMl_path()%>"/>    
+        			</div>
+  					<div class="pfInfo">
+  						<div class="simple-content">
 						
 							<div class="pfTag">
 							
