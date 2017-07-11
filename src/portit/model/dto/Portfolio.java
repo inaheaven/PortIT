@@ -58,7 +58,6 @@ public class Portfolio {
     private String tag_name;
     private String ml_path;
     private List<String> tags;
-    
     private int prof_pf_id;
     //내가 작성한 포트폴리오 아이디
     

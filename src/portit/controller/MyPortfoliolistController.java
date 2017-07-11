@@ -50,8 +50,8 @@ public class MyPortfoliolistController extends HttpServlet{
 		else if (cmd.equals("MYPORTFOLIODELETE")) {
 			PortfolioDao pfDao = new PortfolioDao();
 			int prof_pf_id = 0;
-			if (req.getParameter("pf_id") != null) {
-				prof_pf_id = Integer.parseInt(req.getParameter("pf_id"));
+			if (req.getParameter("prof_pf_id") != null) {
+				prof_pf_id = Integer.parseInt(req.getParameter("prof_pf_id"));
 				pfDao.deleteMyport(prof_pf_id);
 				List<Portfolio> pfPortfolio = pfDao.myPortfolio(prof_pf_id);
 				if (pfPortfolio.isEmpty()) {

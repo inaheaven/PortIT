@@ -29,20 +29,20 @@
 					<h3 class="formTitle text-center">내 포트폴리오</h3>	
 					<!-- BASIC FORM ELELEMNTS -->
 					<div class="pflist_top col-md-12 center clearfix">		
-					<% 
-          					for(int i=0; i<myport.size(); i++){
-          						Portfolio portfo = myport.get(i);
-         					%>				
 						<span class="pull-left sorting">
-							<!-- <b>정렬</b>&nbsp; &nbsp;&nbsp;&nbsp;
+							<b>정렬</b>&nbsp; &nbsp;&nbsp;&nbsp;
 							<a href="">등록순</a>&nbsp;&nbsp;&nbsp;
-							<a href="">인기순</a>-->
+							<a href="">인기순</a>
 						</span>
 						<span class="pull-right">
 							<button type="button" class="btn common" onclick="location.href='/page?page=myPfRegister'">포트폴리오 등록하기</button>
 						</span>
 					</div>
 					<div class="pflist_box clearfix">
+						<% 
+          					for(int i=0; i<myport.size(); i++){
+          						Portfolio portfo = myport.get(i);
+         					%>	
 						<div class="col-md-4 mb"> <!-- 반복 -->
 							<div class="image-hover">
 								<div class="portfolio-simple">

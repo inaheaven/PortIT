@@ -23,7 +23,7 @@ public class PortfolioDao {
 
 	private Connection conn;
 	private PreparedStatement stmt;
-	private ResultSet rs, rs1, rs2;
+	private ResultSet rs, rs2, rs3;
 	private DBConnectionMgr pool;
 	
 	private MediaDao mediaDao;
@@ -786,7 +786,7 @@ public class PortfolioDao {
 		
 		try {
 			conn = pool.getConnection();
-			sql = "SELECT PORT.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH"
+			sql = "SELECT distinct PORT.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH"
 					+ " FROM PORTFOLIO PORT INNER JOIN PROF_PF PROF ON PORT.PF_ID = PROF.PF_ID"
 					+ " JOIN MEDIA_LIBRARY MEDIA ON PORT.PF_ID = MEDIA.ML_TYPE_ID"
 					+ " JOIN PROFILE P ON P.PROF_ID = PROF.PROF_ID"
@@ -795,20 +795,21 @@ public class PortfolioDao {
 					
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, prof_id);
-			rs1 = stmt.executeQuery();
+			rs2 = stmt.executeQuery();
 
 			
-			while (rs.next()) {
+			while (rs2.next()) {
 				Portfolio port = new Portfolio();
-				port.setProf_pf_id(rs.getInt("prof_pf_id"));
-				port.setMem_id(rs.getInt("mem_id"));
-				port.setPf_id(rs.getInt("pf_id"));
-				port.setPf_regdate(rs.getDate("pf_regdate"));
-				port.setMl_path(rs.getString("ml_path"));
-				port.setProf_nick(rs.getString("prof_nick"));
-				port.setPf_title(rs.getString("pf_title"));
-				port.setPf_like(rs.getInt("pf_like"));
-				int pf_id = rs.getInt("pf_id");
+				//port.setProf_pf_id(rs2.getInt("prof_pf_id"));
+				//port.setMem_id(rs2.getInt("mem_id"));
+				port.setPf_id(rs2.getInt("pf_id"));
+				port.setPf_regdate(rs2.getDate("pf_regdate"));
+				port.setMl_path(rs2.getString("ml_path"));
+				port.setProf_nick(rs2.getString("prof_nick"));
+				port.setPf_title(rs2.getString("pf_title"));
+				port.setPf_like(rs2.getInt("pf_like"));
+				
+				int pf_id = rs2.getInt("pf_id");
 				
 							
 				port.setTags(getTag(port, pf_id));
@@ -817,7 +818,7 @@ public class PortfolioDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pool.freeConnection(conn, stmt, rs);
+			pool.freeConnection(conn, stmt, rs2);
 		}
 		return portlist;
 	}
@@ -831,20 +832,21 @@ public class PortfolioDao {
 	
 	public List<String> getTag(Portfolio port, int pf_id) {
 		String sql = "";
+		
 		try {
 			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' "
 					+ " AND tu.tag_use_type_id = ? "
 					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 "; // 랜덤하게
 																		// 3개
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, pf_id);
-			rs2 = stmt.executeQuery();
+			rs3 = stmt.executeQuery();
 
 			List<String> tags = new ArrayList<>();
-			while (rs2.next()) {
-				tags.add(rs2.getString("tag_name"));
+			while (rs3.next()) {
+				tags.add(rs3.getString("tag_name"));
 				
 			}
 			return tags; 
