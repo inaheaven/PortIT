@@ -91,7 +91,9 @@
 
 					<div class="col-md-3 mb">
 						<div class="portfolio-simple">
-							<div class="pfImg"></div>
+							<div class="pfImg">
+            					<img src="assets/img/profile-02.jpg"/>   
+		         			</div>
 							<div class="pfInfo">
 								<div class="simple-content">
 
@@ -129,7 +131,9 @@
 
 					<div class="col-md-3 mb">
 						<div class="portfolio-simple">
-							<div class="pfImg"></div>
+							<div class="pfImg">
+            					<img src="assets/img/profile-02.jpg"/>   
+		         			</div>
 							<div class="pfInfo">
 								<div class="simple-content">
 

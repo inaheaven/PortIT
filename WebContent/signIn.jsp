@@ -3,31 +3,33 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div id="login-page">
 	<div class="container">
-		<div class="col-md-6">
-			<div class="intro">
-				<h1 align=center>CREATE AND SHARE <br>YOUR IT PORTFOLIO</h1>
-				<br><br>
-				<p align=center>
-					PORTIT는 크리에이티브 콘텐츠 공유 플랫폼입니다. </br>
-					여러분이 직접 제작한 IT 콘텐츠를 PORTIT를 통해 공유하고, </br>
-					새로운 프로젝트를 시작하세요 ! 
-				</p>
+		<div class="contents">
+			<div class="col-md-6">
+				<div class="intro pull-right">
+					<h1 align=center>CREATE AND SHARE <br>YOUR IT PORTFOLIO</h1>
+					<br>
+					<p align=center>
+						PORTIT는 크리에이티브 콘텐츠 공유 플랫폼입니다. </br>
+						여러분이 직접 제작한 IT 콘텐츠를 PORTIT를 통해 공유하고, </br>
+						새로운 프로젝트를 시작하세요 ! 
+					</p>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<form class="login" method="post" action="/login">
+					<input type="hidden" name="cmd" value="MAIN" />
+					<div class="login-wrap">
+						<input type="text" name="userid" class="form-control" placeholder="Email ID" autofocus="autofocus"> <br> 
+						<input type="password" name="userpw" class="form-control" placeholder="Password"> <br>
+						<br>
+						<br> 
+						<span><input type="submit" class="btn signin" value="Sign In">&nbsp;&nbsp;&nbsp;</span> 
+						<span><input type="button" class="btn signup" value="Sign Up" data-toggle="modal" data-target="#signUpModal"></span>
+					</div>
+				</form>
 			</div>
 		</div>
-		<div class="col-md-6">
-			<form class="login" method="post" action="/login">
-				<input type="hidden" name="cmd" value="MAIN" />
-				<div class="login-wrap">
-					<input type="text" name="userid" class="form-control" placeholder="Email ID" autofocus="autofocus"> <br> 
-					<input type="password" name="userpw" class="form-control" placeholder="Password"> <br>
-					<br>
-					<br> 
-					<span><input type="submit" class="btn signin" value="Sign In">&nbsp;&nbsp;&nbsp;</span> 
-					<span><input type="button" class="btn signup" value="Sign Up" data-toggle="modal" data-target="#signUpModal"></span>
-				</div>
-			</form>
-		</div>
-
+		
 		<!-- Sign Up Modal -->
 		<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
 			aria-labelledby="signUpModalLabel" aria-hidden="true" data-backdrop="static">
