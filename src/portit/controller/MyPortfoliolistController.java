@@ -47,7 +47,7 @@ public class MyPortfoliolistController extends HttpServlet{
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			view.forward(req, resp);
 		}
-		else if (cmd.equals("MYPORTDELETE")) {
+		else if (cmd.equals("MYPORTFOLIODELETE")) {
 			PortfolioDao pfDao = new PortfolioDao();
 			int prof_pf_id = 0;
 			if (req.getParameter("pf_id") != null) {
