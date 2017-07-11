@@ -15,21 +15,10 @@ public class Tag {
 	/** 프로젝트 모집인원수 */
 	private int proj_numofperson;
 	
-<<<<<<< HEAD
-=======
-	/** 프로필 스킬레벨 */
-	private int prof_skill_level;
-	/** 프로젝트 모집인원수 */
-	private int proj_numofperson;
-	
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
 	private ArrayList<String> proj_tool_list  = new ArrayList<>();
 	private ArrayList<String> proj_field_list = new ArrayList<>();
 	private ArrayList<String> proj_lang_list  = new ArrayList<>();
-<<<<<<< HEAD
-	
-=======
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
+
 	public int getTag_id() {
 		return tag_id;
 	}
@@ -86,15 +75,6 @@ public class Tag {
 	public Tag setProj_lang_list(ArrayList<String> proj_lang_list) {
 		this.proj_lang_list = proj_lang_list;
 		return this;
-<<<<<<< HEAD
-	}	
-	
-=======
 	}
 	
-	
-	
-	
-
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
 }

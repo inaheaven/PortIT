@@ -13,7 +13,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><%= profile.getProf_name() %></title>
+<title>${profile.prof_name} - PortIT</title>
 
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">

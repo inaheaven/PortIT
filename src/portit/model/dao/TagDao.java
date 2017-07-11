@@ -129,23 +129,36 @@ public class TagDao {
 	public int updateTagUse(Connection conn, String articleType, int articleId, Tag tag) {
 		int rows = 0;
 		try {
-			sql = "MERGE INTO tag_use tu "
-					+ "USING ("
-					+ "SELECT * FROM tag tg INNER JOIN tag_use tgu "
-					+ "ON tg.tag_id=tgu.tag_id "
-					+ "WHERE tgu.tag_use_type=? AND tgu.tag_use_type_id=?"
-					+ ") t"
-					+ "ON tu.tag_id=t.tag_id"
-					+ "WHEN MATCHED THEN "
-					+ "UPDATE SET "
-					+ "WHERE tag_use_type=? AND tag_use_type_id=? "
-					+ "DELETE WHERE "
-					+ "WHEN NOT MATCHED THEN "
-					+ "INSERT";
+			sql = "SELECT * FROM tag t INNER JOIN tag_use tu ON t.tag_id=tu.tag_id WHERE t.tag_name=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, tag.getProf_skill_level());
-			stmt.setString(2, articleType);
-			stmt.setInt(3, articleId);
+			stmt.setString(1, tag.getTag_name());
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				tag.setTag_id(rs.getInt("t.tag_id"))
+				.setTag_type(rs.getString("t.tag_type"))
+				.setProf_skill_level(rs.getInt("tu.prof_skill_level"))
+				.setProj_numofperson(rs.getInt("tu.proj_numofperson"));
+			}
+
+			sql = "MERGE INTO tag_use tu "
+					+ "USING (SELECT * FROM tag_use WHERE tag_use_type=? AND tag_use_type_id=?) t "
+					+ "ON tu.tag_use_id=t.tag_use_id "
+					+ "WHEN MATCHED THEN "
+					+ "UPDATE SET tu.tag_id=? "
+					+ "WHERE tu.tag_id!=? AND tag_use_type=? AND tag_use_type_id=? "
+					+ "WHEN NOT MATCHED THEN "
+					+ "INSERT (tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id) "
+					+ "VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, articleType);
+			stmt.setInt(2, articleId);
+			stmt.setInt(3, tag.getTag_id());
+			stmt.setInt(4, tag.getTag_id());
+			stmt.setString(5, articleType);
+			stmt.setInt(6, articleId);
+			stmt.setString(7, articleType);
+			stmt.setInt(8, articleId);
+			stmt.setInt(9, tag.getTag_id());
 			rows += stmt.executeUpdate();
 			return rows;
 		} catch (Exception e) {

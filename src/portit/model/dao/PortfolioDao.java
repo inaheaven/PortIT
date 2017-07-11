@@ -115,8 +115,9 @@ public class PortfolioDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, pf_id);
 				rs = stmt.executeQuery();
-				rs.next();
-				portfolio.setPf_like(rs.getInt(1));
+				if (rs.next()) {
+					portfolio.setPf_like(rs.getInt(1));
+				}
 				
 				// 태그 사용 데이터를 조회해서 DTO에 저장
 				List<Tag> tags_language = new ArrayList<Tag>();
@@ -131,25 +132,13 @@ public class PortfolioDao {
 				rs = stmt.executeQuery();
 				while (rs.next()) {
 					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_language = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_language.add(tag_language);
+						tags_language = tagDao.selectList(conn, "language", "portfolio", portfolio.getPf_id());
 					}
 					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_tool = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_tool.add(tag_tool);
+						tags_tool = tagDao.selectList(conn, "tool", "portfolio", portfolio.getPf_id());
 					}
 					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_field = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_field.add(tag_field);
+						tags_field = tagDao.selectList(conn, "field", "portfolio", portfolio.getPf_id());
 					}
 				}
 				portfolio.setPf_tags_language(tags_language)
@@ -241,8 +230,9 @@ public class PortfolioDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
-				rs.next();
-				portfolio.setPf_like(rs.getInt(1));
+				if (rs.next()) {
+					portfolio.setPf_like(rs.getInt(1));
+				}
 				
 				// 태그 사용 데이터를 조회해서 DTO에 저장
 				List<Tag> tags_language = new ArrayList<Tag>();
@@ -257,25 +247,13 @@ public class PortfolioDao {
 				rs = stmt.executeQuery();
 				while (rs.next()) {
 					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_language = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_language.add(tag_language);
+						tags_language = tagDao.selectList(conn, "language", "portfolio", portfolio.getPf_id());
 					}
 					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_tool = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_tool.add(tag_tool);
+						tags_tool = tagDao.selectList(conn, "tool", "portfolio", portfolio.getPf_id());
 					}
 					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_field = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tags_field.add(tag_field);
+						tags_field = tagDao.selectList(conn, "field", "portfolio", portfolio.getPf_id());
 					}
 				}
 				portfolio.setPf_tags_language(tags_language)
@@ -311,9 +289,22 @@ public class PortfolioDao {
 		return portfolios;
 	}
 	
-	public List<Portfolio> selectListByMemId(int mem_id) {
+	public List<Portfolio> selectListByNick(String prof_nick) {
 		List<Portfolio> portfolioList = new ArrayList<Portfolio>();
-		
+		getConnection();
+		try {
+			String sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, usernameToId(prof_nick));
+			rs = stmt.executeQuery();			
+			while (rs.next()) {
+				portfolioList.add(selectOne(rs.getInt("pf_id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}		
 		return portfolioList;
 	}
 	
@@ -344,8 +335,10 @@ public class PortfolioDao {
 			sql = "SELECT pf_id FROM portfolio WHERE pf_id=seq_pf_id.currVal";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			rs.next();
-			int pf_id = rs.getInt("pf_id");
+			int pf_id = 0;
+			if (rs.next()) {
+				pf_id = rs.getInt("pf_id");
+			}
 
 			// 태그 추가
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
@@ -430,7 +423,7 @@ public class PortfolioDao {
 	 * @param pf_id
 	 * @return 수정된 데이터 개수
 	 */
-	public int update(int pf_id, Portfolio portfolio) {
+	public int update(Portfolio portfolio) {
 		int rows = 0;
 		try {
 			// UPDATE문 지정
@@ -495,7 +488,7 @@ public class PortfolioDao {
 						+ "pfc.pf_co_id, pf_id, mem_id"
 						+ ") VALUES (seq_pf_co_id.nextVal,?,?)";
 				stmt.setInt(1, coworkers.get(i).getMem_id());
-				stmt.setInt(2, pf_id);
+				stmt.setInt(2, portfolio.getPf_id());
 				stmt.setInt(3, coworkers.get(i).getMem_id());
 				rows += stmt.executeUpdate();
 			}
@@ -580,39 +573,6 @@ public class PortfolioDao {
 		return rows;
 	}
 	
-	
-	/**
-	 * 특정인이 작성한 데이터 조회
-	 * @param mem_id
-	 * @return
-	 */
-	public List<Portfolio> selectSomeones(int mem_id) {
-		List<Portfolio> portfolios = new ArrayList<Portfolio>();
-		getConnection();
-		try {
-			String sql = "SELECT prof_id FROM profile WHERE mem_id=?";
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, mem_id);
-			rs = stmt.executeQuery();
-			while(rs.next()) {
-				int prof_id = rs.getInt("prof_id");
-				sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, prof_id);
-				rs = stmt.executeQuery();
-				while(rs.next()) {
-					portfolios.add(selectOne(rs.getInt("pf_id")));
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("");
-			e.printStackTrace();
-		} finally {
-			freeConnection();
-		}
-		return portfolios;
-	}
-	
 	/**
 	 * 포트폴리오의 좋아요 데이터를 추가하고 좋아요 숫자를 반환
 	 * @param mem_id
@@ -633,8 +593,9 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, pf_id);
 			rs = stmt.executeQuery();
-			rs.next();
-			likes = rs.getInt(1);
+			if (rs.next()) {
+				likes = rs.getInt(1);
+			}
 		} catch (SQLException e) {
 			if (conn != null) {
 				try {
@@ -663,8 +624,9 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
-			rs.next();
-			prof_id = rs.getInt("prof_id");
+			if (rs.next()) {
+				prof_id = rs.getInt("prof_id");
+			}
 		} catch (Exception e) {
 			System.out.println("");
 			e.printStackTrace();
@@ -687,8 +649,9 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			rs = stmt.executeQuery();
-			rs.next();
-			mem_id = rs.getInt("mem_id");
+			if (rs.next()) {
+				mem_id = rs.getInt("mem_id");
+			}
 		} catch (Exception e) {
 			System.out.println("");
 			e.printStackTrace();
@@ -711,8 +674,9 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag_name);
 			rs = stmt.executeQuery();
-			rs.next();
-			tag_id = rs.getInt("tag_id");
+			if (rs.next()) {
+				tag_id = rs.getInt("tag_id");
+			}
 		} catch (Exception e) {
 			System.out.println("");
 			e.printStackTrace();

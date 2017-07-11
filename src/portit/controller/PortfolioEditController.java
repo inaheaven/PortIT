@@ -19,17 +19,17 @@ import portit.model.dto.Tag;
 import portit.util.FileUpload;
 
 /**
- * 포트폴리오 작성 컨트롤러
+ * 포트폴리오 수정 컨트롤러
  *
  */
-public class PortfolioAddController implements Controller {
+public class PortfolioEditController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// PostServlet이 전달해준 데이터 받아오기
 		Map<String, Object> formData = (Map<String, Object>) req.getAttribute("formData");
 		List<String> fileNames = (List<String>) formData.get("fileList");
-		
+
 		// 태그, 공동 작업자 관련 처리
 		List<Tag> languageTagList = new ArrayList<Tag>();
 		List<Tag> toolTagList = new ArrayList<Tag>();
@@ -51,18 +51,19 @@ public class PortfolioAddController implements Controller {
 		for (int i = 0; i < pf_tags_language.length; i++) {
 			coworkerList.add(new Profile().setProf_nick(pf_coworkers[i]));
 		}
-		
+
 		// 파일 관련 처리
 		List<Media> mediaList = new ArrayList<Media>();
 		for (int i = 0; i < fileNames.size(); i++) {
 			mediaList.add(new Media().setMl_type("portfolio").setMl_path(fileNames.get(i)));
 		}
-		
+
 		// DTO에 추가
 		PortfolioDao portfolioDao = new PortfolioDao();
 		Portfolio portfolio = new Portfolio();
 		try {
-			portfolio.setMem_id((int) formData.get("mem_id")).setPf_title((String) formData.get("pf_title"))
+			portfolio.setMem_id((int) formData.get("mem_id")).setPf_id((int) formData.get("pf_id"))
+					.setPf_title((String) formData.get("pf_title"))
 					.setPf_intro(((String) formData.get("pf_intro")).replaceAll("\\r\\n", "<br />"))
 					.setPf_startdate(new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_start_date")))
 					.setPf_enddate(new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_end_date")))
@@ -71,15 +72,15 @@ public class PortfolioAddController implements Controller {
 					.setPf_tags_tool(toolTagList).setPf_tags_field(fieldTagList).setPf_mediaList(mediaList)
 					.setPf_coworkers(coworkerList);
 			// DAO의 추가 메서드 호출
-			portfolioDao.insert(portfolio);
+			portfolioDao.update(portfolio);
 		} catch (ParseException e) {
 			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
 			e.printStackTrace();
 		}
-		
+
 		// 뷰 URL 반환
 		String viewUrl = "rdr:/page?page=myPfList";
 		return viewUrl;
 	}
-	
+
 }

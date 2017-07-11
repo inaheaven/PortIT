@@ -16,12 +16,12 @@ import portit.util.FileUpload;
 
 
 /**
- * 게시물 작성 서블릿
+ * 게시물 수정 서블릿
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/post")
-public class PostServlet extends HttpServlet {
+@WebServlet("/edit")
+public class EditServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,11 +32,11 @@ public class PostServlet extends HttpServlet {
 		String articleType = req.getParameter("type");
 		RequestDispatcher rd = null;
 		if ("profile".equals(articleType)) {
-			rd = req.getRequestDispatcher("/MyProf.jsp");
+			rd = req.getRequestDispatcher("/MyProfUpdate.jsp");
 		} else if ("portfolio".equals(articleType)) {
-			rd = req.getRequestDispatcher("/MyPfRegister.jsp");
+			rd = req.getRequestDispatcher("/MyPfUpdate.jsp");
 		} else if ("project".equals(articleType)) {
-			rd = req.getRequestDispatcher("/MyProjRegister.jsp");
+			rd = req.getRequestDispatcher("/MyProjRegisterEdit.jsp");
 		}
 		rd.forward(req, resp);
 	}
@@ -60,14 +60,14 @@ public class PostServlet extends HttpServlet {
 		// 컨트롤러의 인스턴스를 생성하고 실행 메서드 호출 
 		ControllerFactory factory = ControllerFactory.getInstance();
 		if ("profile".equals(articleType)) {
-			Controller profileAddController = factory.newController("profileAdd");
-			viewUrl = profileAddController.execute(req, resp);
+			Controller profileEditController = factory.newController("profileEdit");
+			viewUrl = profileEditController.execute(req, resp);
 		} else if ("portfolio".equals(articleType)) {
-			Controller portfolioAddController = factory.newController("portfolioAdd");
-			viewUrl = portfolioAddController.execute(req, resp);
+			Controller portfolioEditController = factory.newController("portfolioEdit");
+			viewUrl = portfolioEditController.execute(req, resp);
 		} else if ("project".equals(articleType)) {
-			Controller projectAddController = factory.newController("projectAdd");
-			viewUrl = projectAddController.execute(req, resp);
+			Controller projectEditController = factory.newController("projectEdit");
+			viewUrl = projectEditController.execute(req, resp);
 		}
 		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		
