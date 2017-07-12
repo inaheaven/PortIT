@@ -919,7 +919,7 @@ public class ProjectDao {
 	}
 	// 업데이트문.
 	public void pjJoin(String mem_id) {
-		sql = "update proj_app set proj_app_confirm='Y' " + "where mem_id='" + mem_id + "'";
+		sql = "update proj_app set proj_app_confirm='y' " + "where mem_id='" + mem_id + "'";
 
 		try {
 			conn = pool.getConnection();

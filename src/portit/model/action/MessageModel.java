@@ -3,6 +3,8 @@ package portit.model.action;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import portit.model.dao.MassageDao;
 import portit.model.dto.MessageDto;
@@ -12,15 +14,20 @@ public class MessageModel {
 	
 	
 	private HttpServletRequest req;
-	private int login_id;			//Dao로 전달할 mem_id (Who)
+	private int loginId;			//Dao로 전달할 mem_id (Who)
 	private MassageDao dao;
 	private MessageDto dto;
 	private ArrayList list;			//Ctrl에 반환할 List 변수.
 	
 	
-	public MessageModel(HttpServletRequest _req, int _login_id){
+	public MessageModel(HttpServletRequest _req){
 		this.req=_req;
-		this.login_id=_login_id;
+		
+		
+		HttpSession session = req.getSession();
+		loginId=(int) session.getAttribute("loginId");
+		
+		//this.login_id=_login_id;
 		
 		//모델_DAO
 		//해당 사용자에 관한 db를 얻어야하기때문에 식별자를 전달한다.
@@ -28,7 +35,7 @@ public class MessageModel {
 		
 		//싱글톤 패턴을 위해 getInstace로 인스턴스를 공유라고 하는데 오류발생.. 원인은 모르겟음.
 		this.dao=new MassageDao();
-		dao.setLogin_id(_login_id);
+		dao.setLogin_id(loginId);
 	}
 	
 	
@@ -56,7 +63,7 @@ public class MessageModel {
 		
 		
 		dto = new MessageDto();
-		dto.setMem_id_sender(this.login_id);
+		dto.setMem_id_sender(this.loginId);
 		
 		
 		//1.login할때 ID를 session에 저장한다.
@@ -95,6 +102,10 @@ public class MessageModel {
 	
 	
 	
+	
+	
+	
+	
 	//msgList.jsp
 	public ArrayList roomList(String keyField, String keyWord){
 		//Login_id에 생성된 모든 대화방List를 리턴한다.
@@ -110,29 +121,78 @@ public class MessageModel {
 		//3. 발신자의 대화방
 		ArrayList chatroom;
 		
-		//대화방 list (by login_ID)
+		//4.대화방 list (by login_ID)
 		ArrayList Roomlist = new ArrayList();
+		
+		
+
+		
 		
 		
 		//로그인한 계정의  발신자목록 (검색조건 추가가능)
 		//필터링 : 발신자 목록에서 한다.
-		senderList = (ArrayList) dao.getSenderList(this.login_id,keyField, keyWord);
+		senderList = (ArrayList) dao.getSenderList(this.loginId,keyField, keyWord);
 	
+		
+		
 		
 		for(int i=0; i<senderList.size();i++){
 			//첫번째 발신자
 			mem_id_sender= (String)senderList.get(i);	
-			
 			//대화방
 			chatroom= dao.getChatRoom(keyField,keyWord,mem_id_sender,false);
-			
 			//ADD 대화방 리스트
 			Roomlist.add(chatroom);
+			
+			
+			
 		}
 		
 		
 		return Roomlist;
 	}
+	
+	
+	
+	public ArrayList partnerInform(){
+		
+		
+		//5. 발신자의 확장정보...(1.발신자 목록에 추가되면 금상첨화 지만 시간관계상 분리 ㅎ)
+		ArrayList<MessageDto> partnerInform=new ArrayList<MessageDto>();
+		
+		
+		
+		//로그인한 계정의  발신자목록 (검색조건 추가가능)
+		//필터링 : 발신자 목록에서 한다.
+		ArrayList senderList = (ArrayList) dao.getSenderList(this.loginId,null, null);
+	
+		
+		
+		
+		for(int i=0; i<senderList.size();i++){
+			//첫번째 발신자
+			String mem_id_sender= (String)senderList.get(i);	
+			
+			//발신자의 확장정보를 만든다...
+			partnerInform.add(dao.getPartnerInform(mem_id_sender));
+
+			
+		}
+		
+		
+		
+
+		
+		
+		
+		return partnerInform;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -145,9 +205,18 @@ public class MessageModel {
 		//[청소중]인스턴스 생성을 안해도된다.
 		//this.list = new ArrayList();	
 		
+		
+		System.out.println("model발신자="+Msg_Sender);
+		
 		this.list=dao.getChatRoom(null,null, Msg_Sender,true);
+		
+		System.out.println("model,복귀확인");
 		return list;
 	}
+	
+	
+	
+	
 	
 	
 	public void deleteMsg(String msg_id){

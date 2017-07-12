@@ -102,12 +102,11 @@ public class MassageDao{
 	
 	
 
-
 	// msgSend.jsp (메세지 보내기) 확인!!
 	public void insertMsg(MessageDto dto){
 		String sql = "insert into Message"
 			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
+			+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
 	
 		try{
 			con = pool.getConnection();
@@ -164,7 +163,7 @@ public class MassageDao{
 					+"WHERE (mem_id_sender ="+Msg_Sender
 					+" and MEM_ID_RECEIVER="+String.valueOf(login_id)+")";
 				
-				System.out.println("dao"+ sql);
+				System.out.println("dao="+ sql);
 				
 				//true일때 송신메세지가 출력된다.
 				if(All == true){
@@ -215,6 +214,7 @@ public class MassageDao{
 				Dto.setMsg_date(rs.getString("MSG_DATE"));
 				//Dto.setSender_Name(convertToName(String.valueOf(Dto.getMem_id_sender())));
 				//Dto.setSender_Nick(null);
+			//	System.out.println("dao체크");
 				list.add(Dto);
 			}
 		}
@@ -243,10 +243,9 @@ public class MassageDao{
 			// 검색조건이 없다면...
 			if (keyWord == null) {
 
-				sql = "Select mem_ID_sender, max(MSG_DATE)" + "From (select * from message where MEM_ID_RECEIVER= ";
-				sql = sql.concat(String.valueOf(mem_id));
-				sql = sql.concat(") group by (mem_ID_sender) ");
-				sql = sql.concat("order by max(MSG_DATE) desc");
+				sql = "Select mem_ID_sender, max(MSG_DATE)" + "From (select * from message where MEM_ID_RECEIVER= "+mem_id
+						+") group by (mem_ID_sender) "
+						+"order by max(MSG_DATE) desc";
 
 				con = pool.getConnection();
 				pstmt = con.prepareStatement(sql);
@@ -470,12 +469,45 @@ public class MassageDao{
 	
 	
 	
-	
-	
-	
-	
-	
-
-	
+	public MessageDto getPartnerInform(String mem_id_sender) {
+		
+		String sql ="select * from profile   where mem_id='"+mem_id_sender+"'";
+		
+		MessageDto msg = new MessageDto();
+		
+		try{
+				con = pool.getConnection();
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				   
+				
+				/* prof_id
+					mem_id
+					prof_nick
+					prof_name
+					prof_img
+					*/
+				while(rs.next()){
+					
+					msg.setPartner_id(rs.getInt("mem_id"));
+					msg.setProf_id(rs.getInt("prof_id"));
+					msg.setSender_Name(rs.getString("prof_name"));
+					msg.setSender_Nick(rs.getString("prof_nick"));
+					msg.setProf_img(rs.getString("prof_img"));
+					
+				}
+		}
+		catch(Exception err){
+			System.out.println("getPartnerInform()에서 오류"+err);
+		}
+		finally{
+			pool.freeConnection(con, pstmt, rs);
+		}
+		
+		
+		
+		return msg;
+	}
 }
+	
 

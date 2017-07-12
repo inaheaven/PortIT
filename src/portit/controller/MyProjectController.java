@@ -77,9 +77,10 @@ public class MyProjectController extends HttpServlet{
 		
 		
 		System.out.println("CTRL_CMD  "+cmd);
+		System.out.println("CTRLcmd액션  "+action);
 		System.out.println("CTRL파라미터  "+param);
 		System.out.println("CTRL파라미터2  "+param2);
-		System.out.println("CTRLcmd액션  "+action);
+		
 		
 
 		
@@ -99,6 +100,8 @@ public class MyProjectController extends HttpServlet{
 	//PJ삭제버튼.	
 			else if("delete".equals(action)){
 				//param:해당 팀원의 mem_id
+				
+				System.out.println("list_delete 접근/param="+param);
 				dao.deletePortforio(param);
 			}
 			
@@ -109,6 +112,8 @@ public class MyProjectController extends HttpServlet{
 				//param1: PJ_ID				What?
 				//param1: 지원지의 mem_id		Who?
 				
+				System.out.println("PJ_ID"+param);
+				System.out.println("mem_id"+param2);
 				model.mem_delete(param,param2);
 			}
 			
@@ -121,8 +126,6 @@ public class MyProjectController extends HttpServlet{
 				
 				model.pjCancle(param);
 			}
-			
-			
 			
 			
 			

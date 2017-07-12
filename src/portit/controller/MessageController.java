@@ -43,11 +43,21 @@ public class MessageController extends HttpServlet {
 			
 			
 			
-			int loginId=(int)session.getAttribute("loginId");
+			//CTRL에는 변수를 저장하면 안된다. 필요에 따라 변수를 저장하더라도 일시적으로 사용해야한다.
+		
+			System.out.println("[CTRL] 시작.");
+			
+			int loginId=-1;
+			
+			if(null!=session.getAttribute("loginId")){
+				loginId=(int) session.getAttribute("loginId");
 			System.out.println(loginId+"가 로그인 되었습니다.");
+			}
+			
+			
 			
 			//인스턴스 생성!
-			MessageModel model = new MessageModel(req,loginId);
+			MessageModel model = new MessageModel(req);
 			
 			
 			ArrayList msgSenderList= (ArrayList)session.getAttribute("msgSenderList");
@@ -64,7 +74,7 @@ public class MessageController extends HttpServlet {
 				 
 				 String renewal= req.getParameter("renewal");
 				 
-				 System.out.println("check1");
+				 System.out.println("[CTRL]"+renewal);
 				 
 				 
 				url="myMsgList.jsp";
@@ -82,15 +92,19 @@ public class MessageController extends HttpServlet {
 				//갱신요청 유무를 정한다...
 				
 				
-					//목록을 갱신할 필요가 있을때.
-					if(renewal==null){
+					
 						
-						System.out.println("check");
 						list=model.roomList(keyField,keyWord);
+						
 						session.setAttribute("RoomList", list);
 						
-						System.out.println("CTRL 리스트전달");
-					}
+						
+						//리스트갱신... 
+						req.setAttribute("partenrInform", model.partnerInform());
+						
+						
+						System.out.println("CTRL 리스트전달_ㅋㅋ");
+				
 				}
 				
 				catch(Exception err){
@@ -161,15 +175,40 @@ public class MessageController extends HttpServlet {
 			}
 			
 			else if(cmd.equals("detail")){
+				
+				System.out.println("디테일접근확인");
+				
 				//1.List에서 발신자이름을 받아온다.
 				String mem_id_Sender=req.getParameter("mem_id_sender") ;
-			
+				String mem_img = req.getParameter("mem_img");
+				String mem_nick = req.getParameter("mem_nick");
+				String profile_id = req.getParameter("profile_id");
 				
+				
+				System.out.println("CTRL확인="+mem_id_Sender);
 				url="myMsgDetail.jsp";
 
 				//대화방 with "mem_id_sender"
 				//2.발신자의 대화방을 얻어온다.
 				list=model.getChatRoom(mem_id_Sender);
+				
+				
+				
+				req.setAttribute("mem_id_Sender", mem_id_Sender);
+				req.setAttribute("mem_img", mem_img);
+				req.setAttribute("mem_nick", mem_nick);
+				req.setAttribute("profile_id", profile_id);
+				req.setAttribute("loginId",loginId);			//발신자와 수신자를 식별하기 위해서...
+				
+				
+				System.out.println("[CTRL]mem_img="+mem_img);
+				System.out.println("[CTRL]mem_nick="+mem_nick);
+				System.out.println("[CTRL]profile_id="+profile_id);
+				System.out.println("[CTRL]loginId="+loginId);
+				
+				
+				System.out.println("CTRL복귀확인="+list);
+				
 				session.setAttribute("chatroom", list);
 			}
 			
@@ -202,6 +241,13 @@ public class MessageController extends HttpServlet {
 				
 				model.deleteMsg(msg_id);
 				
+				
+				
+
+				//리스트갱신... 
+				req.setAttribute("partenrInform", model.partnerInform());
+				
+				
 				//request단위로 바꿔서 Test해보기.
 				list=model.roomList(keyField,keyWord);
 				session.setAttribute("RoomList", list);
@@ -214,6 +260,10 @@ public class MessageController extends HttpServlet {
 			else if(cmd.equals("delete_detail")){
 				//from msgDetail
 				
+				
+				System.out.println("CTRL:getAttribute 접근");
+				
+				
 				//JSP로부터 msg_id 전달받음.
 				String msg_id= req.getParameter("msg_id");
 				
@@ -222,14 +272,23 @@ public class MessageController extends HttpServlet {
 				
 				model.deleteMsg(msg_id);
 				
+				
+				//갱신.
 				//request단위로 바꿔서 Test해보기.
 				list=model.getChatRoom(mem_id_Sender);
 				session.setAttribute("chatroom", list);
 				
+				
+				
+				
+//				req.setAttribute("loginId",loginId);
+				System.out.println("CTRL:삭제완료");
 				url="myMsgDetail.jsp";
 			}
 			 
 			 
+			 
+			req.setAttribute("loginId",loginId);
 			req.setAttribute("pageName", url);
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			// resp.sendRedirect("/page?page=" + url);
