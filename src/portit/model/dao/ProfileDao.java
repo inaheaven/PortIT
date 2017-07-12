@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Media;
+import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
+import portit.model.dto.Tag;
 
 public class ProfileDao {
 
@@ -66,7 +69,7 @@ public class ProfileDao {
 	 */
 	public Profile addprofile(Profile dto, int mem_id) {
 		try {
-			
+			int rows=0;
 			sql = "insert into profile(prof_id, mem_id, prof_img, prof_background, prof_name, prof_nick, prof_intro, prof_website, prof_facebook, prof_github, prof_regdate, prof_follower) "
 					+ "values(seq_prof_id.nextVal, ? , ? , ? , ? , ? , ? , ?, ?, ? , sysdate, ?)";
 
@@ -83,8 +86,78 @@ public class ProfileDao {
 			stmt.setString(9, dto.getProf_github());
 			stmt.setInt(10, dto.getProf_follower());
 
-			stmt.executeUpdate();
-		
+			rows += stmt.executeUpdate();
+			
+			List tag_lang1 = dto.getTag_lang1();
+			List tag_tool1 = dto.getTag_tool1();
+			List tag_field1 = dto.getTag_field1();
+			
+			
+			if (tag_lang1 != null) {
+				for (int i = 0; i < tag_lang1.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "language");
+					stmt.setString(2, tag_lang1.get(i).toString());
+					rows += stmt.executeUpdate();
+				}
+			}
+			if (tag_tool1 != null) {
+				for (int i = 0; i < tag_tool1.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "tool");
+					stmt.setString(2, tag_tool1.get(i).toString());
+					rows += stmt.executeUpdate();
+				}
+			}
+			if (tag_field1 != null) {
+				for (int i = 0; i < tag_field1.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "field");
+					stmt.setString(2, tag_field1.get(i).toString());
+					rows += stmt.executeUpdate();
+				}
+			}
+			
+			// 태그 사용 추가
+			if (tag_lang1 != null) {
+				for (int i = 0; i < tag_lang1.size(); i++) {
+					sql = "INSERT INTO tag_use("
+							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "prof");
+					stmt.setInt(2, tagNameToId(tag_lang1.get(i).toString()));
+					rows += stmt.executeUpdate();
+				}
+			}
+			if (tag_tool1 != null) {
+				for (int i = 0; i < tag_tool1.size(); i++) {
+					sql = "INSERT INTO tag_use("
+							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "prof");
+					stmt.setInt(2, tagNameToId(tag_tool1.get(i).toString()));
+					rows += stmt.executeUpdate();
+				}
+			}
+			if (tag_field1 != null) {
+				for (int i = 0; i < tag_field1.size(); i++) {
+					sql = "INSERT INTO tag_use("
+							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "prof");
+					stmt.setInt(2, tagNameToId(tag_field1.get(i).toString()));
+					rows += stmt.executeUpdate();
+				}
+			}
+			
+			
+			/*
 			// 프로필 id를 가지고 오는 부분
 			sql = "select * from profile where mem_id ='" + mem_id + "'" ;
 			stmt = conn.prepareStatement(sql);
@@ -116,6 +189,7 @@ public class ProfileDao {
 			stmt.executeUpdate();
 			
 			
+			 */
 			
 			
 		}
@@ -128,6 +202,31 @@ public class ProfileDao {
 		return dto;
 	}
 		
+	
+	/**
+	 * 태그 이름으로 번호 얻기
+	 * @param tag_name
+	 * @return
+	 */
+	private int tagNameToId(String tag_name) {
+		int tag_id = 0;
+		getConnection();
+		try {
+			String sql = "SELECT tag_id FROM tag WHERE tag_name=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, tag_name);
+			rs = stmt.executeQuery();
+			rs.next();
+			tag_id = rs.getInt("tag_id");
+		} catch (Exception e) {
+			System.out.println("");
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return tag_id;
+	}
+	
 	/**
 	 * 특정 멤버의 태그를 가지고 오는 메서드
 	 */
@@ -242,6 +341,85 @@ public class ProfileDao {
 			freeConnection();
 		}
 		
+		return dto;
+	}
+	
+	/**
+	 * 프로필
+	 */
+	
+	public Profile selectOne(int mem_id) {
+		Profile dto = new Profile();
+		
+		// SELECT문 지정
+		String sql = "SELECT * FROM profile WHERE mem_id=?";
+		
+		// DB에 접속해서 작업 실행
+		getConnection();
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				// DB 조회 결과를 DTO에 저장
+				dto.setMem_id(rs.getInt("mem_id"));
+				dto.setProf_id(rs.getInt("prof_id"));
+				dto.setProf_nick(rs.getString("prof_nick"));
+				dto.setProf_name(rs.getString("prof_name"));
+				dto.setProf_intro(rs.getString("prof_intro"));
+				dto.setProf_img(rs.getString("prof_img"));
+				dto.setProf_background(rs.getString("prof_background"));
+				dto.setProf_website(rs.getString("prof_website"));
+				dto.setProf_github(rs.getString("prof_github"));
+				dto.setProf_facebook(rs.getString("prof_facebook"));	
+				
+				// 태그 사용 데이터를 조회해서 DTO에 저장
+				List tag_lang1 = dto.getTag_lang1();
+				List tag_tool1 = dto.getTag_tool1();
+				List tag_field1 = dto.getTag_field1();
+				
+				sql = "SELECT * FROM tag_use tu INNER JOIN tag t "
+						+ "ON tu.tag_id=t.tag_id "
+						+ "WHERE tu.tag_use_type=? AND tu.tag_use_type_id=?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, "prof");
+				stmt.setInt(2, dto.getProf_id());
+				rs = stmt.executeQuery();
+				
+				while (rs.next()) {
+					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+						Tag tag_language = new Tag()
+								.setTag_id(rs.getInt("t.tag_id"))
+								.setTag_type(rs.getString("t.tag_type"))
+								.setTag_name("t.tag_name");
+						tag_lang1.add(tag_language);
+					}
+					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+						Tag tag_tool = new Tag()
+								.setTag_id(rs.getInt("t.tag_id"))
+								.setTag_type(rs.getString("t.tag_type"))
+								.setTag_name("t.tag_name");
+						tag_tool1.add(tag_tool);
+					}
+					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+						Tag tag_field = new Tag()
+								.setTag_id(rs.getInt("t.tag_id"))
+								.setTag_type(rs.getString("t.tag_type"))
+								.setTag_name("t.tag_name");
+						tag_field1.add(tag_field);
+					}
+				}
+				dto.setTag_lang1(tag_field1);
+				dto.setTag_tool1(tag_tool1);
+				dto.setTag_field1(tag_field1);
+				
+			}
+		} catch (Exception e) {
+			System.out.println("DB 조회 오류 :");
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
 		return dto;
 	}
 

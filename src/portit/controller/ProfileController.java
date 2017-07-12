@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -25,8 +28,12 @@ import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import portit.model.dao.PortfolioDao;
 import portit.model.dao.ProfileDao;
+import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
+import portit.model.dto.Tag;
+import portit.util.FileUpload;
 
 @WebServlet("/profReg")
 public class ProfileController extends HttpServlet {
@@ -72,31 +79,29 @@ public class ProfileController extends HttpServlet {
 		String tag_name5 = req.getParameter("tag_name5");
 		String tag_name6 = req.getParameter("tag_name6");
 
-		String[] tag_lang = req.getParameterValues("tag_lang");
-		String[] tag_tool = req.getParameterValues("tag_tool");
-		String[] tag_field = req.getParameterValues("tag_field");
+		String[] tag_lang1 = req.getParameterValues("tag_lang");
+		String[] tag_tool1 = req.getParameterValues("tag_tool");
+		String[] tag_field1 = req.getParameterValues("tag_field");
 		
 		
-		List<String> lang_list = new ArrayList();
-		for(String tags : tag_lang){
-		  lang_list.add(tags);
+		List<String> lang_list1 = new ArrayList();
+		for(String tags : tag_lang1){
+		  lang_list1.add(tags);
 		}
 		
-		List<String> tool_list = new ArrayList();
-		for(String tags : tag_tool){
-			tool_list.add(tags);
+		List<String> tool_list1 = new ArrayList();
+		for(String tags : tag_tool1){
+			tool_list1.add(tags);
 		}
 		
-		List<String> field_list = new ArrayList();
-		for(String tags : tag_field){
-			field_list.add(tags);
+		List<String> field_list1 = new ArrayList();
+		for(String tags : tag_field1){
+			field_list1.add(tags);
 		}
-		
-		
-		
-		System.out.println(lang_list);
-		System.out.println(tool_list);
-		System.out.println(field_list);
+				
+		System.out.println(lang_list1);
+		System.out.println(tool_list1);
+		System.out.println(field_list1);
 		System.out.println("name :" + prof_name);
 		
 		//null값이 넘어 오는 경우 오류 처리
@@ -141,13 +146,14 @@ public class ProfileController extends HttpServlet {
 		prof_reg.setProf_skill_level(prof_skill_level);
 		prof_reg.setProf_skill_level2(prof_skill_level2);
 		prof_reg.setProf_skill_level3(prof_skill_level3);
-		prof_reg.setTag_lang(lang_list);
-		prof_reg.setTag_tool(tool_list);
-		prof_reg.setTag_field(field_list);
+		prof_reg.setTag_lang1(lang_list1);
+		prof_reg.setTag_tool1(tool_list1);
+		prof_reg.setTag_field1(field_list1);
 		
 		profileDao.addprofile(prof_reg, loginId);
 		req.setAttribute("prof_reg", prof_reg);
 
+		
 		if (!ServletFileUpload.isMultipartContent(req)) {
 			try {
 				throw new Exception("요청이 multipart/form-data로 인코딩되지 않았습니다.");
@@ -198,19 +204,21 @@ public class ProfileController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
+		
+		
 		if (cmd.equals("REGISTER")) {
 			ProfileDao dao = new ProfileDao();
-			Profile prof= dao.getProfile(loginId);
+			Profile prof= dao.selectOne(loginId);
 			req.setAttribute("prof", prof);
-			//url = "/page?page=myProfUpdate";
+			url = "/page?page=myProfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
 			ProfileDao dao = new ProfileDao();
-			Profile prof= dao.getProfile(loginId);
+			Profile prof= dao.selectOne(loginId);
 			req.setAttribute("prof", prof);
-			//url = "/page?page=myProfUpdate";
+			url = "/page?page=myProfUpdate";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);
@@ -258,5 +266,19 @@ public class ProfileController extends HttpServlet {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * 구분자가 있는 문자열을 문자열 배열로 변환
+	 * @param str 구분자가 있는 문자열
+	 * @return 문자열 배열
+	 */
+	private String[] toArray(Object data) {
+		StringTokenizer tkn = new StringTokenizer((String) data, ",");
+		String[] arr = new String[tkn.countTokens()];
+		for (int i = 0; tkn.hasMoreElements(); i++) {
+			arr[i] = tkn.nextToken().trim();
+		}
+		return arr;
 	}
 }

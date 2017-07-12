@@ -14,7 +14,7 @@
 
 
 <%	
-	List prof = (List)request.getAttribute("prof");
+	Profile prof = request.getAttribute("prof_reg");
 %>
 
 <script src="assets/js/search.js"></script>
@@ -152,7 +152,10 @@ function fnSelectSnsInfo(snsName){
 				<h3 class="formTitle text-center">프로필 수정</h3>
 				<form action="/register?cmd=UPDATE" method="post"
 					class="form-horizontal style-form">
-
+				<% 
+					for(int i=0; i<prof.size(); i++){
+						Bookmark port = portfolios.get(i);
+				%>
 					<!-- 프로필id hidden -->
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
