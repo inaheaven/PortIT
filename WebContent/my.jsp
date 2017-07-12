@@ -53,7 +53,7 @@
 				</a>
 			</li>
 			<li class="">
-				<a href="/page?page=myPfList" id="myPfList">
+				<a href="/pfList?cmd=MYPORTFOLIO" id="myPfList">
 				    <span>My Portfolio</span>
 				</a>
 			</li>

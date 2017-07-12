@@ -59,7 +59,7 @@ public class MyPortfoliolistController extends HttpServlet{
 				}
 				req.setAttribute("portfolio", pfPortfolio);
 
-				resp.sendRedirect("/page?page=myPfList");
+				resp.sendRedirect("/pfList?cmd=MYPORTFOLIO");
 			}
 
 		}

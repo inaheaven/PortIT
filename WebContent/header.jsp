@@ -104,7 +104,7 @@
 						<p class="yellow"><%=loginEmail %> 님</p> <!-- 로그인한 -->
 					</li>
 					<li><a href="/page?page=myProf">내 프로필</a></li>
-					<li><a href="/page?page=myPfList">내 포트폴리오</a></li>
+					<li><a href="/pfList?cmd=MYPORTFOLIO">내 포트폴리오</a></li>
 					<li><a href="/myproj?cmd=list">내 프로젝트</a></li>
 					<li><a href="/bmk?cmd=MYBOOKMARK">북마크</a></li>
 					<li><a href="/page?page=myFollowing">팔로잉</a></li>
