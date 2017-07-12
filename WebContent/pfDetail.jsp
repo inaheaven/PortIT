@@ -63,11 +63,15 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					<i class="fa fa-heart"></i>
 				</h4>
 				<div class="actions">
-					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-heart"></i></button>
-					<!--  요버튼 클릭시 북마크 한번더 클릭 비활성화 북마크크 취소 -->			
-					<button type="button" class="btn common" onclick="location.href='/bmk?cmd=BOOKMARK'"><i class="fa fa-bookmark"></i></button>
-					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-share-alt"></i></button>				
-
+					<button type="button" class="btn common" id="likeToggle" value="like">
+						<i class="fa fa-heart-o"></i>
+					</button>	
+					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark">
+						<i class="fa fa-bookmark-o"></i>
+					</button>
+					<!-- <button type="button" class="btn common" onclick="location.href='#'">
+						<i class="fa fa-share-alt"></i>
+					</button> -->
 				</div>
 			</div>
 		</section>
@@ -390,20 +394,82 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 			});
 			
 			// 좋아요 토글
-			function toggleLikeStatus() {
+			$("#likeToggle").click(function() {
+				var value = $(this).attr("value");
+				var mem_id = ${pageContext.session.loginId};
+				var pf_id = ${portfolio.pf_id}
+				
+				if (value == "like") {
+					data = {
+							"cmd" : "like",
+							"mem_id" : mem_id,
+							"pf_id" : pf_id
+							};
+				} else if (value == "dislike") {
+					data = {
+							"cmd" : "dislike",
+							"mem_id" : mem_id,
+							"pf_id" : pf_id
+							};
+				}
+				
 				$.ajax({
 					type : "POST",
-					url : "",
+					url : "/like",
+					data : data,
+					success : function() {
+						if (value == "like") {
+							$(this).empty();						
+							$(this).append("<i class=\"fa fa-heart\"></i>");
+							$(this).attr("value", "dislike");
+						} else {
+							$(this).empty();
+							$(this).append("<i class=\"fa fa-heart-o\"></i>");
+							$(this).attr("value", "like");
+						}
+					},
+					dataType : dataType
 				});
-			}
+			});
 			
 			// 북마크 토글
-			function toggleBookmarkStatus() {
+			$("#bookmarkToggle").click(function() {
+				var value = $(this).attr("value");
+				var mem_id = ${pageContext.session.loginId};
+				var pf_id = ${portfolio.pf_id}
+				
+				if (value == "bookmark") {
+					data = {
+							"cmd" : "bookmark",
+							"mem_id" : mem_id,
+							"pf_id" : pf_id
+							};
+				} else if (value == "unbookmark") {
+					data = {
+							"cmd" : "unbookmark",
+							"mem_id" : mem_id,
+							"pf_id" : pf_id
+							};
+				}
+				
 				$.ajax({
 					type : "POST",
-					url : "/bmk?cmd=BOOKMARK",
+					url : "/bmk",
+					data : data,
+					success : function() {
+						if (value == "bookmark") {
+							$(this).empty();						
+							$(this).append("<i class=\"fa fa-bookmark\"></i>");
+							$(this).attr("value", "unbookmark");
+						} else {
+							$(this).empty();
+							$(this).append("<i class=\"fa fa-bookmark-o\"></i>");
+							$(this).attr("value", "bookmark");
+						}
+					},
+					dataType : dataType
 				});
-			}
+			});
 		});		
 	</script>
 

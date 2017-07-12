@@ -20,6 +20,8 @@ import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import portit.model.dto.Media;
+
 public class FileUpload {
 	
 	/**
@@ -61,7 +63,7 @@ public class FileUpload {
 			}
 		}
 				
-		List<String> fileList = new ArrayList<String>();
+		List<Media> fileList = new ArrayList<Media>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			List<FileItem> items = upload.parseRequest((RequestContext) req);			
@@ -78,7 +80,7 @@ public class FileUpload {
 						if (item.getContentType().startsWith("image/")) {
 							String path = saveDir + File.separator + getFileName(item);
 							item.write(new File(path));
-							fileList.add(path);
+							fileList.add(new Media().setMl_path(path));
 						} else {
 							throw new Exception("이미지파일만 업로드할 수 있습니다.");
 						}
