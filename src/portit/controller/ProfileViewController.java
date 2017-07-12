@@ -31,7 +31,8 @@ public class ProfileViewController implements Controller {
 		req.setAttribute("profile", profile);
 		
 		// 뷰 URL 반환
-		String viewUrl = "fwd:/memDetail.jsp";
+		//String viewUrl = "fwd:/memDetail.jsp";
+		String viewUrl = "memDetail.jsp";
 		return viewUrl;
 	}
 

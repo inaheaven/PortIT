@@ -28,13 +28,15 @@ public class ControllerFactory {
 		System.out.println("#2 :"+param);
 		
 		if (param.equals("profileAdd")) {
-			return new ProfileAddController();
+			//return new ProfileAddController();
+			return null;
 		}
 		else if (param.equals("portfolioAdd")) {
 			return new PortfolioAddController();
 		}
 		else if (param.equals("projectAdd")) {
-			return new ProjectAddController();
+			//return new ProjectAddController();
+			return null;
 		}
 		else if (param.equals("profileView")) {
 			return new ProfileViewController();

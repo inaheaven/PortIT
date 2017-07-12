@@ -114,7 +114,9 @@
 	          				<div class="simple-content text-center">	      
 		          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 		         				<div>
-		         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
+		         					<div class="memName">
+		         						<a href="#" onclick="prof(<%=mem.getProf_id()%>)"> 
+		         							<%=mem.getProf_name()%></a></div>
 		         					<div class="memTag">
 		         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
 									<a href="javascript:tag('<%=mem.getTags().get(j)%>')">

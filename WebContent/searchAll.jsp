@@ -106,7 +106,7 @@
 									</div>
 
 									<div class="pfTitle">
-										<a href="javascript:pf('<%=port.getPf_id()%>')">
+										<a href="#" onclick="pf(<%=port.getPf_id()%>)">
 											<%=port.getPf_title()%></a>
 									</div>
 									<div class="pfBottom">
@@ -147,7 +147,7 @@
 									</div>
 
 									<div class="pfTitle">
-										<a href="javascript:pf('<%=port.getPf_id()%>')">
+										<a href="#" onclick="pf(<%=port.getPf_id()%>)">
 										<%=port.getPf_title()%></a>
 									</div>
 									<div class="pfBottom">
@@ -201,7 +201,9 @@
 		          				<div class="simple-content text-center">	      
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
+			         					<div class="memName">
+			         					<a href="#" onclick="prof(<%=mem.getProf_id()%>)">
+			         						<%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
 			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
 										<a href="javascript:tag('<%=mem.getTags().get(j)%>')">#<%= mem.getTags().get(j)%></a>&nbsp;
@@ -228,7 +230,9 @@
 		          				<div class="simple-content text-center">	      
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
+			         					<div class="memName">
+			         						<a href="#" onclick="prof(<%=mem.getProf_id()%>)">
+			         							<%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
 			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
 										<a href="javascript:tag('<%=mem.getTags().get(j)%>')">#<%= mem.getTags().get(j)%></a>&nbsp;
@@ -280,7 +284,8 @@
 							<div class="col-md-9 mb">
 								<span class="pjInfoText">
 									<div class="pjTitle">
-										<a href="javascript:proj('${proj_list[i].proj_id}')"><%=proj.getProj_title() %></a>
+										<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+										<%=proj.getProj_title() %></a>
 									</div>
 									<div class="pjmemName">
 										<a href=""> <span class="fa fa-user"><%=proj.getProf_name() %></span>&nbsp;&nbsp;
@@ -335,7 +340,8 @@
 							<div class="col-md-9 mb">
 								<span class="pjInfoText">
 									<div class="pjTitle">
-										<a href="javascript:proj('${proj_list[i].proj_id}')"><%=proj.getProj_title() %></a>
+										<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+										<%=proj.getProj_title() %></a>
 									</div>
 									<div class="pjmemName">
 										<a href=""> <span class="fa fa-user"><%=proj.getProf_name() %></span>&nbsp;&nbsp;
@@ -395,20 +401,21 @@
 <script src="assets/js/search.js"></script>
 <script src="assets/js/paging.js"></script>
 <!-- 상세페이지로 이동하기 위한 폼 -->
-<form name="pf_info" method="post" action="/detailView">
-	<input type="hidden" name="pf_id" /> 
-	<input type="hidden" name="type" value="view" />
+<form name="pf_info" method="post" action="/view">
+	<input type="hidden" name="id"  />							<!-- pf_id -->
+	<input type="hidden" name="type" value="portfolio" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
 	<input type="hidden" name="cmd" value="TAG" />
 </form>
-<form name="prof_info" method="post" action="/detailView">
-	<input type="hidden" name="prof_id" /> 
-	<input type="hidden" name="cmd" value="PROJECT" />
+<form name="prof_info" method="post" action="/view">
+	<input type="hidden" name="id" />					<!-- prof_nick -->
+	<input type="hidden" name="type" value="profile" />
 </form>
-<form name="proj_info" method="post" action="/detailView">
-	<input type="hidden" name="proj_id" /> 
-	<input type="hidden" name="cmd" value="MEMBER" />
+<form name="proj_info" method="post" action="/view">
+	<input type="hidden" name="id" /> 					<!-- proj_id --> 
+	<input type="hidden" name="type" value="project" />
 </form>
+<!-- 포트폴리오 정보 -->
 

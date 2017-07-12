@@ -98,7 +98,7 @@
 														src="<%=mem.getProf_img()%>" />
 													<div>
 														<div class="memName">
-															<a href="javascript:prof('<%=mem.getProf_nick()%>')">
+																<a href="#" onclick="prof(<%=mem.getProf_id()%>)">
 															<%=mem.getProf_name()%></a>
 														</div>
 														<div class="memTag">
@@ -148,7 +148,8 @@
 											<%} %>
 					          				</div>
 											<div class="pjTitle">
-												<a href=""><%=proj.getProj_title() %> </a>
+												<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+												<%=proj.getProj_title() %> </a>
 											</div>
 											<div class="pjInfo">
 												<span class="pjField"><a href="">#
@@ -201,7 +202,9 @@
 						</div>
 						<span class="pfInfo">
 							<div>
-								<span class="pfTitle"><a href=""><%=time.getPf_title()%></a></span>
+								<span class="pfTitle">
+									<a href="#" onclick="pf(<%=time.getPf_id()%>)">						
+										<%=time.getPf_title()%></a></span>
 								<span class="pfLike"> <span
 									class="glyphicon glyphicon-heart"></span>
 									 <span class="pfLikeCount"><%=time.getPf_like()%></span>
@@ -252,11 +255,11 @@
 	<input type="hidden" name="cmd" value="TAG" />
 </form>
 <form name="prof_info" method="post" action="/view">
-	<input type="hidden" name="id" value="" />					<!-- prof_nick -->
+	<input type="hidden" name="id" />					<!-- prof_nick -->
 	<input type="hidden" name="type" value="profile" />
 </form>
 <form name="proj_info" method="post" action="/view">
-	<input type="hidden" name="id" value="" /> 					<!-- proj_id --> 
+	<input type="hidden" name="id" /> 					<!-- proj_id --> 
 	<input type="hidden" name="type" value="project" />
 </form>
 <!-- 포트폴리오 정보 -->

@@ -113,7 +113,8 @@
 							<div class="col-md-9 mb">
 								<span class="pjInfoText">
 									<div class="pjTitle">
-										<a href="javascript:proj('${proj_list[i].proj_id}')"><%=proj.getProj_title() %></a>
+										<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+										<%=proj.getProj_title() %></a>
 									</div>
 									<div class="pjmemName">
 										<a href=""> <span class="fa fa-user"><%=proj.getProf_name() %></span>&nbsp;&nbsp;

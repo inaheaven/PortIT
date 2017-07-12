@@ -151,7 +151,8 @@
 							</div>
 
 							<div class="pfTitle">
-								<a href=""><%=port.getPf_title()%></a>
+								<a href="#" onclick="pf(<%=port.getPf_id()%>)">
+								<%=port.getPf_title()%></a>
 							</div>
 							<div class="pfBottom">
 
@@ -229,20 +230,15 @@
 	
 	
 <!-- 상세페이지로 이동하기 위한 폼 -->
-<form name="pf_info" method="post" action="/detailView">
-	<input type="hidden" name="pf_id" /> 
-	<input type="hidden" name="cmd" value="PORTFOLIO" />
+<form name="pf_info" method="post" action="/view">
+	<input type="hidden" name="id"  />							<!-- pf_id -->
+	<input type="hidden" name="type" value="portfolio" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
-	<input type="hidden" name="cmd" value="PFTAG" />
+	<input type="hidden" name="cmd" value="TAG" />
 </form>
-<form name="prof_info" method="post" action="/detailView">
-	<input type="hidden" name="prof_id" /> 
-	<input type="hidden" name="cmd" value="PROJECT" />
-</form>
-<form name="proj_info" method="post" action="/detailView">
-	<input type="hidden" name="proj_id" /> 
-	<input type="hidden" name="cmd" value="MEMBER" />
-</form>
+s
+<!-- 포트폴리오 정보 -->
+
 
