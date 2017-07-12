@@ -182,11 +182,7 @@ public class MyProjectController extends HttpServlet{
 		
 		else if("modify".equals(cmd)){
 			req.setAttribute("pj_id", param);
-			url="/수정페이지.jsp";
-		}
-		else if("pj_detail".equals(cmd)){
-			req.setAttribute("pj_id", param);
-			url="/프로필페이지.jsp";
+			url="/myProjRegisterEdit.jsp";
 		}
 		
 		

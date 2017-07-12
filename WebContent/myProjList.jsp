@@ -152,7 +152,7 @@
 									</span> 
 									<span class="col-sm-5">지원 마감일까지 D-<%=pj_Inform.getD_day() %></span>
 									<span class="col-md-3 text-right">
-										<button type="button" class="btn common"onclick="fnParameter('modify','','<%=pj_Inform.getPf_id()%>',   '')">수정</button>
+										<button type="button" class="btn common"onclick="fnParameter('modify','','<%=pj_Inform.getProj_id()%>', '')">수정</button>
 										<button type="button" class="btn common"onclick="fnParameter('list','delete','<%=pj_Inform.getProj_id()%>',   '')">삭제</button>
 										<a class="updown collapsed" data-toggle="collapse"
 										data-parent="#accordion" href="#pj_<%=i%>"
