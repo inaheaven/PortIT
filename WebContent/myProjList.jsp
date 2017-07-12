@@ -79,6 +79,8 @@
 	//2.내가 지원한 프로젝트 리스트.
 	ArrayList applyPj =(ArrayList) request.getAttribute("applyProjectList");
 	
+	System.out.println(applyPj.size());
+	
 	%>
 	
 	
@@ -123,6 +125,9 @@
 						
 						
 						<%
+						
+						if(pjList.size()!=0){
+						
 						for(int i=0; i<pjList.size();i++){
 							//첫번째 pj
 							ArrayList pj =(ArrayList) pjList.get(i);
@@ -177,6 +182,8 @@
 										APPLICANTS
 										<hr>
 										<%
+										if(peoples.size()!=0){
+										
 										//해당프로젝트의 지원자 리스트.
 										for(int j=0; j<peoples.size();j++){
 											
@@ -198,6 +205,14 @@
 							<%
 											}//IF 문
 										}//for 문.
+									}// 리스트가 있을때
+										else{
+											%>
+											
+										<h4> 지원자가 없습니다!</h4>	
+											
+							<%
+										}
 							%>
 									
 									</div>
@@ -243,8 +258,16 @@
 						
 						
 				<%
-						}//PF LIST
+						}//PJ LIST
+						
+						}
+						else{
 				%>
+						<h5>  내가 등록한 프로젝트가 없습니다.</h5>
+				<%
+						}
+				%>
+				
 				</div><!-- RegPj_end -->
 					</div>		<!-- my -->
 					
@@ -263,7 +286,8 @@
 						<p>내가 지원한 프로젝트</p>
 						<div class="panel panel-default">
 						
-						<%  for(int i=0; i<applyPj.size();i++){
+						<% if(applyPj.size()!=0){
+							for(int i=0; i<applyPj.size();i++){
 							Project app_PJ = (Project)applyPj.get(i);
 							
 							
@@ -285,8 +309,14 @@
 							</div>
 							
 							<%
-						}
+							}//for문
+						}//if
+						else{
 							%>
+							
+							<h5>  내가 지원한 PJ가 없습니다.</h5>
+							<%
+							}%>
 							
 						</div>
 					</div>
