@@ -22,23 +22,23 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">포트폴리오 제목</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="pf_title" value="${portfolio.pf_title}"
-								required="required" /> <span class="help-block">반드시
-								입력하여야 합니다.</span>
+							<input type="text" class="form-control" name="pf_title"
+								value="${portfolio.pf_title}" required="required" /> <span
+								class="help-block">반드시 입력하여야 합니다.</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">포트폴리오 제작 기간</label> <label
 							class="col-md-1 control-label" for="date">시작일</label>
 						<div class="col-md-3">
-							<input class="form-control" id="start_date" name="pf_start_date" value="${portfolio.pf_startdate}"
-								type="date" />
+							<input class="form-control" id="start_date" name="pf_start_date"
+								value="${portfolio.pf_startdate}" type="date" />
 						</div>
 						<div class="col-md-1"></div>
 						<label class="col-md-1 control-label" for="date">마감일</label>
 						<div class="col-md-3">
-							<input class="form-control" id="end_date" name="pf_end_date" value="${portfolio.pf_enddate}"
-								type="date" />
+							<input class="form-control" id="end_date" name="pf_end_date"
+								value="${portfolio.pf_enddate}" type="date" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -53,75 +53,110 @@
 						<label class="col-md-3 control-label">개발 언어</label>
 						<div class="col-md-9">
 							<c:choose>
-							<c:when test="${!empty portfolio.pf_tags_language}">
-							<input class="form-control tagInput" id="pf_language1" type="text" name="pf_tags_lang" value="${portfolio.pf_tags_language[0]}">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_language2" type="text" name="pf_tags_lang" value="${portfolio.pf_tags_language[1]}">&nbsp;,&nbsp; 
-							<input class="form-control tagInput" id="pf_language3" type="text" name="pf_tags_lang" value="${portfolio.pf_tags_language[2]}">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_language4" type="text" name="pf_tags_lang" value="${portfolio.pf_tags_language[3]}">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_language5" type="text" name="pf_tags_lang" value="${portfolio.pf_tags_language[4]}">
-							</c:when>
-							<c:otherwise>
-							<input class="form-control tagInput" id="pf_language1" type="text" name="pf_tags_lang">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_language2" type="text" name="pf_tags_lang">&nbsp;,&nbsp; 
-							<input class="form-control tagInput" id="pf_language3" type="text" name="pf_tags_lang">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_language4" type="text" name="pf_tags_lang">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_language5" type="text" name="pf_tags_lang">
-							</c:otherwise>
+								<c:when test="${!empty portfolio.pf_tags_language}">
+									<input class="form-control tagInput" id="pf_language1"
+										type="text" name="pf_tags_lang"
+										value="${portfolio.pf_tags_language[0]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_language2"
+										type="text" name="pf_tags_lang"
+										value="${portfolio.pf_tags_language[1]}">&nbsp;,&nbsp; 
+							<input class="form-control tagInput" id="pf_language3"
+										type="text" name="pf_tags_lang"
+										value="${portfolio.pf_tags_language[2]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_language4"
+										type="text" name="pf_tags_lang"
+										value="${portfolio.pf_tags_language[3]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_language5"
+										type="text" name="pf_tags_lang"
+										value="${portfolio.pf_tags_language[4]}">
+								</c:when>
+								<c:otherwise>
+									<input class="form-control tagInput" id="pf_language1"
+										type="text" name="pf_tags_lang">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_language2"
+										type="text" name="pf_tags_lang">&nbsp;,&nbsp; 
+							<input class="form-control tagInput" id="pf_language3"
+										type="text" name="pf_tags_lang">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_language4"
+										type="text" name="pf_tags_lang">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_language5"
+										type="text" name="pf_tags_lang">
+								</c:otherwise>
 							</c:choose>
-							<span class="help-block">* 태그로 작성됩니다. (예시 : C, JAVA, Python 등 )</span>
+							<span class="help-block">* 태그로 작성됩니다. (예시 : C, JAVA,
+								Python 등 )</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">개발 도구</label>
 						<div class="col-md-9">
 							<c:choose>
-							<c:when test="${!empty portfolio.pf_tags_tool}">
-							<input class="form-control tagInput" id="pf_tool1" type="text" name="pf_tags_tool" value="${portfolio.pf_tags_tool[0]}">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_tool2" type="text" name="pf_tags_tool" value="${portfolio.pf_tags_tool[1]}">&nbsp;,&nbsp; 
-							<input class="form-control tagInput" id="pf_tool3" type="text" name="pf_tags_tool" value="${portfolio.pf_tags_tool[2]}">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_tool4" type="text" name="pf_tags_tool" value="${portfolio.pf_tags_tool[3]}">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_tool5" type="text" name="pf_tags_tool" value="${portfolio.pf_tags_tool[4]}">
-							</c:when>
-							<c:otherwise>
-							<input class="form-control tagInput" id="pf_tool1" type="text" name="pf_tags_tool">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_tool2" type="text" name="pf_tags_tool">&nbsp;,&nbsp; 
-							<input class="form-control tagInput" id="pf_tool3" type="text" name="pf_tags_tool">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_tool4" type="text" name="pf_tags_tool">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_tool5" type="text" name="pf_tags_tool">
-							</c:otherwise>
+								<c:when test="${!empty portfolio.pf_tags_tool}">
+									<input class="form-control tagInput" id="pf_tool1" type="text"
+										name="pf_tags_tool" value="${portfolio.pf_tags_tool[0]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_tool2" type="text"
+										name="pf_tags_tool" value="${portfolio.pf_tags_tool[1]}">&nbsp;,&nbsp; 
+							<input class="form-control tagInput" id="pf_tool3" type="text"
+										name="pf_tags_tool" value="${portfolio.pf_tags_tool[2]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_tool4" type="text"
+										name="pf_tags_tool" value="${portfolio.pf_tags_tool[3]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_tool5" type="text"
+										name="pf_tags_tool" value="${portfolio.pf_tags_tool[4]}">
+								</c:when>
+								<c:otherwise>
+									<input class="form-control tagInput" id="pf_tool1" type="text"
+										name="pf_tags_tool">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_tool2" type="text"
+										name="pf_tags_tool">&nbsp;,&nbsp; 
+							<input class="form-control tagInput" id="pf_tool3" type="text"
+										name="pf_tags_tool">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_tool4" type="text"
+										name="pf_tags_tool">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_tool5" type="text"
+										name="pf_tags_tool">
+								</c:otherwise>
 							</c:choose>
-							<span class="help-block">* 태그로 작성됩니다. (예시 : Window7, OracleDB, Eclipse, Visual Studio2013 등)</span>
+							<span class="help-block">* 태그로 작성됩니다. (예시 : Window7,
+								OracleDB, Eclipse, Visual Studio2013 등)</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">수행 인원</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="pf_numofperson" value="${portfolio.pf_numofperson}">
+							<input type="text" class="form-control" name="pf_numofperson"
+								value="${portfolio.pf_numofperson}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">담당 업무</label>
 						<div class="col-md-9">
 							<c:choose>
-							<c:when test="${!empty portfolio.pf_tags_field}">
-							<input class="form-control tagInput" id="pf_field1" type="text" name="pf_tags_field" value="${portfolio.pf_tags_field[0]}">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_field2" type="text" name="pf_tags_field" value="${portfolio.pf_tags_field[1]}">&nbsp;,&nbsp; 
-							<input class="form-control tagInput" id="pf_field3" type="text" name="pf_tags_field" value="${portfolio.pf_tags_field[2]}">
-							</c:when>
-							<c:otherwise>
-							<input class="form-control tagInput" id="pf_field1" type="text" name="pf_tags_field">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="pf_field2" type="text" name="pf_tags_field">&nbsp;,&nbsp; 
-							<input class="form-control tagInput" id="pf_field3" type="text" name="pf_tags_field">
-							</c:otherwise>
+								<c:when test="${!empty portfolio.pf_tags_field}">
+									<input class="form-control tagInput" id="pf_field1" type="text"
+										name="pf_tags_field" value="${portfolio.pf_tags_field[0]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_field2" type="text"
+										name="pf_tags_field" value="${portfolio.pf_tags_field[1]}">&nbsp;,&nbsp; 
+							<input class="form-control tagInput" id="pf_field3" type="text"
+										name="pf_tags_field" value="${portfolio.pf_tags_field[2]}">
+								</c:when>
+								<c:otherwise>
+									<input class="form-control tagInput" id="pf_field1" type="text"
+										name="pf_tags_field">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="pf_field2" type="text"
+										name="pf_tags_field">&nbsp;,&nbsp; 
+							<input class="form-control tagInput" id="pf_field3" type="text"
+										name="pf_tags_field">
+								</c:otherwise>
 							</c:choose>
-							<span class="help-block">* 태그로 작성됩니다. (예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )</span>
+							<span class="help-block">* 태그로 작성됩니다. (예시 : 백엔드 개발, 프론트엔드
+								개발, 서버 개발, 디자이너, 기획 등 )</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">URL</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="pf_url" value="${portfolio.pf_url}"
-								placeholder="ex) github URL">
+							<input type="text" class="form-control" name="pf_url"
+								value="${portfolio.pf_url}" placeholder="ex) github URL">
 						</div>
 					</div>
 					<div class="form-group">
@@ -143,7 +178,8 @@
 					</div>
 					<div class="form-group text-center buttonDiv">
 						<input type="hidden" name="mem_id"
-							value="<%=session.getAttribute("loginId")%>" />
+							value="<%=session.getAttribute("loginId")%>" /> <input
+							type="hidden" name="pf_id" value="${portfolio.pf_id}" />
 						<button type="submit" class="btn common">등록하기</button>
 						&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn cancel"

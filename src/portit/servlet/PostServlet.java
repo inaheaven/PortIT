@@ -25,7 +25,7 @@ public class PostServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// GET 요청일 경우 등록화면으로
+		// GET 요청일 경우 폼 화면으로
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
 		

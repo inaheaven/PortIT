@@ -26,36 +26,43 @@ public class PortfolioAddController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// PostServlet이 전달해준 데이터 받아오기
+		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, Object> formData = (Map<String, Object>) req.getAttribute("formData");
-		List<String> fileNames = (List<String>) formData.get("fileList");
+		List<String> fileList = (List<String>) formData.get("fileList");
 		
 		// 태그, 공동 작업자 관련 처리
 		List<Tag> languageTagList = new ArrayList<Tag>();
 		List<Tag> toolTagList = new ArrayList<Tag>();
 		List<Tag> fieldTagList = new ArrayList<Tag>();
 		List<Profile> coworkerList = new ArrayList<Profile>();
-		String[] pf_tags_language = (String[]) formData.get("pf_tags_language");
-		for (int i = 0; i < pf_tags_language.length; i++) {
-			languageTagList.add(new Tag().setTag_type("language").setTag_name(pf_tags_language[i]));
-		}
-		String[] pf_tags_tool = (String[]) formData.get("pf_tags_tool");
-		for (int i = 0; i < pf_tags_tool.length; i++) {
-			toolTagList.add(new Tag().setTag_type("tool").setTag_name(pf_tags_tool[i]));
-		}
-		String[] pf_tags_field = (String[]) formData.get("pf_tags_field");
-		for (int i = 0; i < pf_tags_field.length; i++) {
-			fieldTagList.add(new Tag().setTag_type("field").setTag_name(pf_tags_field[i]));
-		}
-		String[] pf_coworkers = (String[]) formData.get("pf_coworkers");
-		for (int i = 0; i < pf_tags_language.length; i++) {
-			coworkerList.add(new Profile().setProf_nick(pf_coworkers[i]));
+		for (String key : formData.keySet()) {
+			if (key.equals("pf_tags_language")) {
+				String[] pf_tags_language = (String[]) formData.get(key);
+				for (int i = 0; i < pf_tags_language.length; i++) {
+					languageTagList.add(new Tag().setTag_type("language").setTag_name(pf_tags_language[i]));
+				}
+			} else if (key.equals("pf_tags_tool")) {
+				String[] pf_tags_tool = (String[]) formData.get(key);
+				for (int i = 0; i < pf_tags_tool.length; i++) {
+					toolTagList.add(new Tag().setTag_type("tool").setTag_name(pf_tags_tool[i]));
+				}
+			} else if (key.equals("pf_tags_field")) {
+				String[] pf_tags_field = (String[]) formData.get(key);
+				for (int i = 0; i < pf_tags_field.length; i++) {
+					fieldTagList.add(new Tag().setTag_type("field").setTag_name(pf_tags_field[i]));
+				}
+			} else if (key.equals("pf_coworkers")) {
+				String[] pf_coworker = (String[]) formData.get(key);
+				for (int i = 0; i < pf_coworker.length; i++) {
+					coworkerList.add(new Profile().setProf_nick(pf_coworker[i]));
+				}
+			}
 		}
 		
 		// 파일 관련 처리
 		List<Media> mediaList = new ArrayList<Media>();
-		for (int i = 0; i < fileNames.size(); i++) {
-			mediaList.add(new Media().setMl_type("portfolio").setMl_path(fileNames.get(i)));
+		for (int i = 0; i < fileList.size(); i++) {
+			mediaList.add(new Media().setMl_type("portfolio").setMl_path(fileList.get(i)));
 		}
 		
 		// DTO에 추가

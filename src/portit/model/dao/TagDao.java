@@ -29,7 +29,8 @@ public class TagDao {
 		List<Tag> tagList = new ArrayList<Tag>();
 		Tag tag = null;
 		try {
-			sql = "SELECT * FROM tag_use tu "
+			sql = "SELECT t.tag_id, t.tag_type, t.tag_name, tu.prof_skill_level, tu.proj_numofperson "
+					+ "FROM tag_use tu "
 					+ "INNER JOIN tag t "
 					+ "ON tu.tag_id=t.tag_id "
 					+ "WHERE t.tag_type=? AND tu.tag_use_type_id=?";
@@ -39,11 +40,11 @@ public class TagDao {
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				tag = new Tag()
-						.setTag_id(rs.getInt("t.tag_id"))
-						.setTag_type(rs.getString("t.tag_type"))
-						.setTag_name(rs.getString("t.tag_name"))
-						.setProf_skill_level(rs.getInt("tu.prof_skill_level"))
-						.setProj_numofperson(rs.getInt("tu.proj_numofperson"));
+						.setTag_id(rs.getInt(1))
+						.setTag_type(rs.getString(2))
+						.setTag_name(rs.getString(3))
+						.setProf_skill_level(rs.getInt(4))
+						.setProj_numofperson(rs.getInt(5));
 				tagList.add(tag);
 			}
 		} catch (Exception e) {
@@ -129,15 +130,18 @@ public class TagDao {
 	public int updateTagUse(Connection conn, String articleType, int articleId, Tag tag) {
 		int rows = 0;
 		try {
-			sql = "SELECT * FROM tag t INNER JOIN tag_use tu ON t.tag_id=tu.tag_id WHERE t.tag_name=?";
+			sql = "SELECT t.tag_id, t.tag_type, tu.prof_skill_level, tu.proj_numofperson "
+					+ "FROM tag t INNER JOIN tag_use tu "
+					+ "ON t.tag_id=tu.tag_id "
+					+ "WHERE t.tag_name=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag.getTag_name());
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				tag.setTag_id(rs.getInt("t.tag_id"))
-				.setTag_type(rs.getString("t.tag_type"))
-				.setProf_skill_level(rs.getInt("tu.prof_skill_level"))
-				.setProj_numofperson(rs.getInt("tu.proj_numofperson"));
+				tag.setTag_id(rs.getInt(1))
+				.setTag_type(rs.getString(2))
+				.setProf_skill_level(rs.getInt(3))
+				.setProj_numofperson(rs.getInt(4));
 			}
 
 			sql = "MERGE INTO tag_use tu "

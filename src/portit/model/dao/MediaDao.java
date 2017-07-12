@@ -75,6 +75,42 @@ public class MediaDao {
 	}
 	
 	/**
+	 * 미디어 정보 수정
+	 * @param conn 작업을 요청하는 DB 커넥션
+	 * @param media
+	 * @return 작업된 행 갯수
+	 */
+	public int update(Connection conn, Media media) {
+		int rows = 0;
+		try {
+			sql = "MERGE INTO media_library ml "
+					+ "USING (SELECT * FROM media_library WHERE ml_type=? AND ml_type_id=?)  "
+					+ "ON ml.ml_id=mls.ml_id"
+					+ "WHEN MATCHED THEN "
+					+ "UPDATE SET ml.ml_path=? "
+					+ "WHERE ml.ml_path!=? AND ml_type=? AND ml_id=? "
+					+ "WHEN NOT MATCHED THEN "
+					+ "INSERT (ml_id, ml_type, ml_type_id, ml_path) "
+					+ "VALUES(seq_ml_id.nextVal, ?, ?, ?)";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, media.getMl_type());
+			stmt.setInt(2, media.getMl_type_id());
+			stmt.setString(3, media.getMl_path());
+			stmt.setString(4, media.getMl_path());
+			stmt.setString(5, media.getMl_type());
+			stmt.setInt(6, media.getMl_id());
+			stmt.setString(7, media.getMl_type());
+			stmt.setInt(8, media.getMl_type_id());
+			stmt.setString(9, media.getMl_path());
+			rows = stmt.executeUpdate();
+			return rows;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rows;
+	}
+	
+	/**
 	 * 미디어 정보 삭제
 	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param articleType 게시물 구분
