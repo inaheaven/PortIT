@@ -43,8 +43,10 @@ public class BookmarkController extends HttpServlet {
 				mem_id = Integer.parseInt(req.getParameter("mem_id"));
 			}
 			BookmarkDao bmDao = new BookmarkDao();
-			bmDao.addBookmark(pf_id, mem_id);
-
+			bmDao.addBookmark(pf_id, mem_id);	
+			
+			resp.sendRedirect("/bmk?cmd=MYBOOKMARK");
+			
 			//엑스버튼 누를때 dto에서 deletebookmark 실행page?page=myBookmark
 
 			//포트폴리오 상세페이지에서 북마큰 버튼 누르면 북마크되는 dao메소드 실행

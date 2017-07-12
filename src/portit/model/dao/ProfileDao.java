@@ -101,7 +101,7 @@ public class ProfileDao {
 			//태그 테이블 추가//////////////////////////////////////////////
 			if (tag_lang != null) {
 				for (int i = 0; i < tag_lang.size(); i++) {
-					
+					//check=1 태그 테이블이 있는 목록 0이면 없는 목록
 					int check = tagNameCheck(tag_lang.get(i).toString());
 					
 					if(check==0){
@@ -110,32 +110,40 @@ public class ProfileDao {
 						stmt.setString(1, "language");
 						stmt.setString(2, tag_lang.get(i).toString());
 						rows += stmt.executeUpdate();
-					}
-					
+		
+					}					
 				}
 			}
 			
-		/*	
-			if (tag_tool != null) {
+			
+			if (tag_tool != null) {				
+				int check;				
 				for (int i = 0; i < tag_tool.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "tool");
-					stmt.setString(2, tag_tool.get(i).toString());
-					rows += stmt.executeUpdate();
+					check = tagNameCheck(tag_tool.get(i).toString());
+					if(check==0){
+						sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, "tool");
+						stmt.setString(2, tag_tool.get(i).toString());
+						rows += stmt.executeUpdate();
+					}
 				}
 			}
 			
 			if (tag_field != null) {
+				int check;
 				for (int i = 0; i < tag_field.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "field");
-					stmt.setString(2, tag_field.get(i).toString());
-					rows += stmt.executeUpdate();
+					check = tagNameCheck(tag_field.get(i).toString());
+					if(check==0){
+						sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, "field");
+						stmt.setString(2, tag_field.get(i).toString());
+						rows += stmt.executeUpdate();
+					}
 				}
 			}
-			*/
+			
 			// 태그 사용 추가
 			if (tag_lang != null) {
 				for (int i = 0; i < tag_lang.size(); i++) {
@@ -242,23 +250,25 @@ public class ProfileDao {
 		}
 		return tag_id;
 	}
-	
+	/**
+	 *	태그이름으로 태그 테이블에 있는지 여부 확인  0 = 없음 ,  1= 있는 목록
+	 */
 	private int tagNameCheck(String tag_name) {
 		int tag_check = 0;
 		getConnection();
 		try {
-			String sql = "SELECT tag_id FROM tag WHERE tag_name=?";
+			String sql = "SELECT tag_name FROM tag WHERE tag_name=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag_name);
 			rs = stmt.executeQuery();
 			rs.next();
 			
-			if(rs.getInt("tag_id") != 0){
+			if(rs.getString("tag_name") != null){
 				tag_check=1;
 			}
 			
 		} catch (Exception e) {
-			System.out.println("tagNameToId오류(profileDao)");
+			System.out.println("tagCheck오류");
 			e.printStackTrace();
 		} finally {
 			freeConnection();

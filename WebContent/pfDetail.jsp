@@ -66,7 +66,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 				<div class="actions">
 					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-heart"></i></button>
 					<!--  요버튼 클릭시 북마크 한번더 클릭 비활성화 북마크크 취소 -->			
-					<button type="button" class="btn common" onclick="location.href='/serial?cmd=BOOKMARK'"><i class="fa fa-bookmark"></i></button>
+					<button type="button" class="btn common" onclick="location.href='/bmk?cmd=BOOKMARK'"><i class="fa fa-bookmark"></i></button>
 					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-share-alt"></i></button>				
 				</div>
 			</div>
