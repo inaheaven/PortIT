@@ -152,7 +152,7 @@ public class ProfileController extends HttpServlet {
 		profileDao.addprofile(prof_reg, loginId);
 		req.setAttribute("prof_reg", prof_reg);
 
-	
+	/*
 		if (!ServletFileUpload.isMultipartContent(req)) {
 			try {
 				throw new Exception("요청이 multipart/form-data로 인코딩되지 않았습니다.");
@@ -203,7 +203,7 @@ public class ProfileController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+*/
 
 		
 		if (cmd.equals("REGISTER")) {
