@@ -55,11 +55,14 @@ public class MyProjectController extends HttpServlet{
 		 -매개변수:mem_ID, PF_ID.... 
 		 */
 		
+		
 		String cmd = req.getParameter("cmd");
+		
 		String action=req.getParameter("cmdAction");
 		String param=req.getParameter("param");
 		String param2=req.getParameter("param2");
 		String loginId= String.valueOf((int)session.getAttribute("loginId"));
+		String save = req.getParameter("save");
 		String url = null;
 		String mem_id=null;
 		String pf_id=null;
@@ -68,7 +71,6 @@ public class MyProjectController extends HttpServlet{
 		System.out.println("CTRL수치전달"+loginId);
 		
 		ProjectModel model=new ProjectModel(req, loginId);
-
 		
 		//dao 선언
 		Portfolio_ViewDao dao = new Portfolio_ViewDao();
@@ -83,7 +85,18 @@ public class MyProjectController extends HttpServlet{
 		
 		
 
-		
+		// 수정과 저장dao
+		if ("save".equals(save)) {
+			ProjectDao saveDao = new ProjectDao();
+			saveDao.reg_pro(req, resp);
+		} else if ("update".equals(save)) {
+			String proj_id = req.getParameter("proj_id");
+			System.out.println("수정하기 위해 controller에서 proj_id값 받아왔다" + proj_id);
+			ProjectDao updateDao = new ProjectDao();
+			req.setAttribute("proj_id", proj_id);
+			updateDao.update_proj(req, resp);
+		}
+				
 		//포트폴리오 리스트
 		if("list".equals(cmd)){
 		

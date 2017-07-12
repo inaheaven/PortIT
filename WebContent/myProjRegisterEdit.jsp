@@ -1,3 +1,5 @@
+<%@page import="portit.model.dto.Tag"%>
+<%@page import="portit.model.dto.Profile"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
@@ -5,44 +7,62 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link href="assets/css/profpfproj.css" rel="stylesheet">
+<script src="assets/js/jquery-3.2.1.js"></script>
+
+<%
+	ArrayList field_list = (ArrayList) request.getAttribute("field_list");
+	Tag tag_field = (Tag) field_list.get(0);
+	ArrayList tag_field_list = tag_field.getProj_field_list();
+	int counter = tag_field_list.size();
+%>
 
 <script>
-	var i = 1;
-	$(document).ready(function() {
-		$("#insert").click(function() {
-			if (i < 5) {
-				var $cloneRow = $(this)
-						.parent().parent()
-						.clone(true);
+	var i =
+<%=counter%>
+	;
+	$(document)
+			.ready(
+					function() {
+						$("#insert")
+								.click(
+										function() {
+											if (i < 5) {
+												var $cloneRow = $(this)
+														.parent().parent()
+														.clone(true);
 
-				$("#add-team-2")
-						.append(
-								"<label class='col-md-3 control-label'>모집 분야</label>");
-				$("#add-team-2").append(
-						$cloneRow);
-				i++;
-			} else {
-				alert("모집 분야수를 5개 이내로 제한합니다.");
-			}
-		});
+												$("#add-team-2")
+														.append(
+																"<label class='col-md-3 control-label'>모집 분야</label>");
+												$("#add-team-2").append(
+														$cloneRow);
+												i++;
+											} else {
+												alert("모집 분야수를 5개 이내로 제한합니다.");
+											}
+										});
 
-		$("#delete").click(function() {
-			if (i > 1) {
-				$(this).parent().parent().prev().remove();
-				$(this).parent().parent().remove();
-				i--;
-			} else {
-				alert("모집 분야수를 1개 이상으로 제한합니다.")
-			}
-		});
+						$("#delete").click(function() {
+							if (i > 1) {
+								$(this).parent().parent().prev().remove();
+								$(this).parent().parent().remove();
+								i--;
+							} else {
+								alert("모집 분야수를 1개 이상으로 제한합니다.")
+							}
+						});
 
-		$('#btnSave').click(function() {
-			document.getElementById("final_result").value = prof_arr;
-			document.getElementById("final_result_id").value = prof_id_arr;
-		})
+						$('#btnSave')
+								.click(
+										function() {
+											alert("선택하신 사용자가 프로젝트에 참가하도록 저장합니다.");
+											document
+													.getElementById("final_result").value = prof_arr;
+											document
+													.getElementById("final_result_id").value = prof_id_arr;
+										});
 
-	});
-	
+					});
 	var prof_arr = [];
 	var prof_id_arr = [];
 	function append_result(btn, name, nick, id) {
@@ -76,6 +96,7 @@
 		prof_id_arr.push(this.prof_id);
 
 		table_row.parentNode.removeChild(table_row);
+
 	}
 
 	function delete_result(btn, prof_id, prof_name) {
@@ -113,9 +134,9 @@
 </script>
 
 <%
-			String login_id=request.getParameter("mem_id");
-			String proj_id = request.getParameter("param");
-		%>
+	String login_id = request.getParameter("mem_id");
+	String proj_id = request.getParameter("param");
+%>
 
 <%--sidenavbar start--%>
 <jsp:include page="my.jsp"></jsp:include>
@@ -129,9 +150,9 @@
 
 				<h3 class="formTitle text-center">프로젝트 등록</h3>
 				<form class="form-horizontal style-form" method="post"
-					action="myproj?cmd=list&save=update&mem_id=<%=session.getAttribute("loginId")%>&proj_id=<%=proj_id%>">
+					action="myproj?cmd=list&save=update&proj_id=<%=proj_id%>">
 
-					<!-- mem_id값 알맞게 수정해야된다!! -->
+					<!-- mem_id값 알맞게 수정해야된다!! &mem_id=session.getAttribute("loginId") 지워버림-->
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">프로젝트 제목</label>
@@ -157,90 +178,75 @@
 						</div>
 					</div>
 
-
-					<c:if test="${not empty env_list}">
-						<c:forEach begin="0" end="${env_list.size()-1}" var="i">
-							<input type="text" class="form-control" name="proj_env"
-								value="${env_list[i].proj_env_list[i]}"
-								placeholder="ex) windows7, oracle DB 같은 실행 환경과 서버 환경 "
-								required="true">
-						</c:forEach>
-					</c:if>
-
-
-
 					<div class="form-group">
-						<label class="col-md-3 control-label">프로젝트 개발 언어</label>
-						<div class="col-md-9">
-							<input class="form-control tagInput" id="proj_language1"
-								type="text" name="tag_lang" required="true">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="proj_language2"
-								type="text" name="tag_lang">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="proj_language3" type="text"
-								name="tag_lang">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="proj_language4" type="text"
-								name="tag_lang">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="proj_language5" type="text"
-								name="tag_lang"> <br> <br>* 태그로 작성됩니다. ( 예시 :
-							C, JAVA, Python 등 )
-						</div>
+						<c:if test="${not empty language_list}">
+							<label class="col-md-3 control-label">프로젝트 개발 언어</label>
+							<div class="col-md-9">
+								<input class="form-control tagInput" id="proj_language1"
+									value="${language_list[0].proj_lang_list[0]}" type="text"
+									name="tag_lang" required="true">&nbsp;,&nbsp; <input
+									class="form-control tagInput" id="proj_language2"
+									value="${language_list[0].proj_lang_list[1]}" type="text"
+									name="tag_lang">&nbsp;,&nbsp; <input
+									class="form-control tagInput" id="proj_language3" type="text"
+									value="${language_list[0].proj_lang_list[2]}" name="tag_lang">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="proj_language4"
+									type="text" value="${language_list[0].proj_lang_list[3]}"
+									name="tag_lang">&nbsp;,&nbsp; <input
+									class="form-control tagInput" id="proj_language5" type="text"
+									value="${language_list[0].proj_lang_list[4]}" name="tag_lang">
+								<br> <br>* 태그로 작성됩니다. ( 예시 : C, JAVA, Python 등 )
+							</div>
+						</c:if>
 					</div>
+
 					<div class="form-group">
-						<label class="col-md-3 control-label">프로젝트 개발 도구</label>
-						<div class="col-md-9">
-							<input class="form-control tagInput" id="proj_tool1" type="text"
-								name="tag_tool" required="true">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="proj_tool2" type="text"
-								name="tag_tool">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="proj_tool3" type="text"
-								name="tag_tool">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="proj_tool4" type="text"
-								name="tag_tool">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="proj_tool5" type="text"
-								name="tag_tool"> <br> <br>* 태그로 작성됩니다. ( 예시 :
-							Window7, OracleDB, Eclipse, Visual Studio2013 등 )
-						</div>
+						<c:if test="${not empty tool_list}">
+							<label class="col-md-3 control-label">프로젝트 개발 도구</label>
+							<div class="col-md-9">
+								<input class="form-control tagInput" id="proj_tool1" type="text"
+									value="${tool_list[0].proj_tool_list[0]}" name="tag_tool"
+									required="true">&nbsp;,&nbsp; <input
+									class="form-control tagInput" id="proj_tool2" type="text"
+									value="${tool_list[0].proj_tool_list[1]}" name="tag_tool">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="proj_tool3" type="text"
+									value="${tool_list[0].proj_tool_list[2]}" name="tag_tool">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="proj_tool4" type="text"
+									value="${tool_list[0].proj_tool_list[3]}" name="tag_tool">&nbsp;,&nbsp;
+								<input class="form-control tagInput" id="proj_tool5" type="text"
+									value="${tool_list[0].proj_tool_list[4]}" name="tag_tool">
+								<br> <br>* 태그로 작성됩니다. ( 예시 : Window7, OracleDB,
+								Eclipse, Visual Studio2013 등 )
+
+							</div>
+						</c:if>
 					</div>
 
 					<div class="form-group" id="add-team">
-						<label class="col-md-3 control-label">모집 분야</label>
-						<div class="col-md-9">
-							<div class="col-md-5" id="add-team-input">
-								<c:if test="${not empty i}">
-									<c:forEach begin="0" end="${field_list.size()-1}" var="i">
+						<c:if test="${not empty field_list}">
+							<c:forEach begin="0" end="${field_list.size()-1}" var="i">
+								<label class="col-md-3 control-label">모집 분야</label>
+								<div class="col-md-9">
+									<div class="col-md-5" id="add-team-input">
 										<input type="text" class="form-control" name="proj_field"
-											value="${field_list[i].proj_field_list[i]}"
+											value="${field_list[0].proj_field_list[i]}"
 											placeholder="ex) 기획, 설계, 프론트, 백엔드 등" required="true">
-									</c:forEach>
-								</c:if>
-								<c:if test="${empty i}">
-									<input type="text" class="form-control" name="proj_field"
-										value="${field_list[i].proj_field_list[i]}"
-										placeholder="ex) 기획, 설계, 프론트, 백엔드 등" required="true">
-								</c:if>
-							</div>
-							<div class="col-md-2">
-								<label class="control-label">인원 수</label>
-							</div>
-							<div class="col-md-2">
-								<c:if test="${not empty i}">
-									<c:forEach begin="0" end="${field_list.size()-1}" var="i">
-										<input type="text" class="form-control"
+									</div>
+									<div class="col-md-2">
+										<label class="control-label">인원 수</label>
+									</div>
+									<div class="col-md-2">
+										<input type="text" class="form-control" id="proj_numofperson"
 											value="${list[0].proj_numofperson[i]}"
 											name="proj_numofperson" required="true">
-									</c:forEach>
-								</c:if>
-								<c:if test="${empty i}">
-									<input type="text" class="form-control"
-										value="${list[0].proj_numofperson[i]}" name="proj_numofperson"
-										required="true">
-								</c:if>
-							</div>
-							<div class="col-md-3">
-								<button type="button" class="btn btn-default" id="insert">추가</button>
-								<button type='button' class='btn btn-default' id='delete'>삭제</button>
-							</div>
-						</div>
+									</div>
+									<div class="col-md-3">
+										<button type="button" class="btn btn-default" id="insert">추가</button>
+										<button type='button' class='btn btn-default' id='delete'>삭제</button>
+									</div>
+								</div>
+							</c:forEach>
+						</c:if>
 						<div id="add-team-2"></div>
 					</div>
 
@@ -253,12 +259,8 @@
 									<input class="form-control" id="proj_regenddate"
 										value="${result.proj_regenddate}" name="proj_regenddate"
 										type="date" required="true" />
-							${result.proj_regenddate}
-							
 								</c:forEach>
 							</c:if>
-
-
 						</div>
 					</div>
 					<div class="form-group">
@@ -270,7 +272,7 @@
 									<c:forEach var="result" items="${list}">
 										<input class="form-control" id="proj_startdate"
 											value="${result.proj_startdate}" name="proj_startdate"
-											placeholder="MM/DD/YYYY" type="date" required="true" />
+											type="date" required="true" />
 									</c:forEach>
 								</c:if>
 							</div>
@@ -288,30 +290,32 @@
 							</div>
 						</div>
 					</div>
+
+					<%
+						ArrayList prof_list = (ArrayList) request.getAttribute("prof_list");
+						Profile profile = (Profile) prof_list.get(0);
+						ArrayList name_list = profile.getProf_name_list();
+						ArrayList nick_list = profile.getProf_nick_list();
+						ArrayList id_list = profile.getProf_id_list();
+						String names = "";
+						String ids = "";
+						Iterator<Integer> iter1 = name_list.iterator();
+						Iterator<Integer> iter2 = nick_list.iterator();
+						Iterator<Integer> iter3 = id_list.iterator();
+						while (iter1.hasNext()) {
+							names += iter1.next();
+							names += "(" + iter2.next() + "),";
+							ids += iter3.next() + ",";
+						}
+					%>
+
 					<div class="form-group">
 						<label class="col-md-3 control-label">함께할 사람</label>
 						<div class="col-sm-7">
-							<c:if test="${not empty i}">
-								<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
-									<input type="text" class="form-control" readonly="readonly"
-										value="${prof_list[0].prof_name_list[i]}(${prof_list[0].prof_nick_list[i]})"
-										required="true" id="final_result">
-								</c:forEach>
-								<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
-									<input type="text" class="form-control" name="final_result_id"
-										value="${prof_list[0].prof_id_list[i]}" id="final_result_id">
-								</c:forEach>
-							</c:if>
-							<c:if test="${empty i}">
-								<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
-									<input type="text" class="form-control" readonly="readonly"
-										required="true" id="final_result">
-								</c:forEach>
-								<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
-									<input type="hidden" class="form-control"
-										name="final_result_id" id="final_result_id">
-								</c:forEach>
-							</c:if>
+							<input type="text" class="form-control" readonly="readonly"
+								value="<%=names%>" required="true" id="final_result"> <input
+								type="text" class="form-control" name="final_result_id"
+								readonly="readonly" value="<%=ids%>" id="final_result_id">
 						</div>
 						<div class="col-sm-2">
 							<button type="button" class="btn btn-default" id="hello"
@@ -357,6 +361,20 @@
 														<th style="text-align: center"><i
 															class="fa fa-bookmark"></i> 사용자 삭제</th>
 													</tr>
+													<c:if test="${!empty prof_list}">
+														<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
+															<tr>
+																<td style="text-align: center">${prof_list[0].prof_name_list[i]}</td>
+																<td>${prof_list[0].prof_nick_list[i]}</td>
+																<td>
+																	<button type="button" class="btn btn-danger btn-xs"
+																		id="delete_search"
+																		onclick="delete_result(this, '${prof_list[0].prof_id_list[i] }', '${prof_list[0].prof_name_list[i]}')">삭제
+																	</button>
+																</td>
+															</tr>
+														</c:forEach>
+													</c:if>
 												</thead>
 												<tbody>
 												</tbody>
@@ -379,7 +397,7 @@
 						<button type="submit" class="btn common">수정하기</button>
 						&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn cancel"
-							onclick="location.href='/page?page=myProjList'">취소하기</button>
+							onclick="location.href='/myproj?cmd=list&mem_id=<%=session.getAttribute("loginId")%>'">취소하기</button>
 					</div>
 				</form>
 			</div>
