@@ -25,12 +25,14 @@ public class ViewDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
+		System.out.println("접근");
 		
 		// 프로필 글 주소 예:		/view?type=profile&id=username
 		// 포트폴리오 글 주소 예:	/view?type=portfolio&id=1234
-		// 프로젝트 글 주소 예:		/view?type=project&id=1234
+		// 프로젝트 글 주소 예:	/view?type=project&id=1234
 		
 		String articleType = req.getParameter("type"); // 작성할 게시물의 구분
+		System.out.println("#1 :"+articleType);
 		
 		// 컨트롤러는 처리 결과 viewUrl을 반환할 것
 		String viewUrl = "";
@@ -44,9 +46,12 @@ public class ViewDetailServlet extends HttpServlet {
 			req.setAttribute("profile", req.getAttribute("profile"));
 		} else if ("portfolio".equals(articleType)) {
 			int articleId = Integer.parseInt(req.getParameter("id")); // 게시물 번호
+			//System.out.println(req.getParameter("id"));
+			//System.out.println(articleId);
 			req.setAttribute("id", articleId);
 			Controller portfolioViewController = factory.newController("portfolioView");
 			viewUrl = portfolioViewController.execute(req, resp);
+			//System.out.println(viewUrl);
 			req.setAttribute("portfolio", req.getAttribute("portfolio"));
 		} else if ("project".equals(articleType)) {
 			int articleId = Integer.parseInt(req.getParameter("id")); // 게시물 번호
@@ -55,15 +60,17 @@ public class ViewDetailServlet extends HttpServlet {
 			viewUrl = projectViewController.execute(req, resp);
 			req.setAttribute("project", req.getAttribute("project"));
 		}
-		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
+		//System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
 		
 		// viewUrl로 포워딩
-		RequestDispatcher rd = req.getRequestDispatcher(viewUrl.substring(4));
+		RequestDispatcher rd = req.getRequestDispatcher(viewUrl);
 		rd.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
 		doGet(req, resp);
 	}
 

@@ -27,7 +27,6 @@ public class DetailViewController extends HttpServlet {
 		
 		String cmd = req.getParameter("cmd");
 	
-		
 		String url = null;
 		
 		SearchDao searchDao = new SearchDao();		
@@ -35,7 +34,7 @@ public class DetailViewController extends HttpServlet {
 		if(cmd.equals("PORTFOLIO")){
 			//int pf_id = Integer.parseInt(req.getParameter("pf_id"));
 			//req.setAttribute("pf_view", viewdao.portfolio_info(pf_id));	//이름만 바꿔주면 됨.
-			url="/page?page=";
+			url="/page?page=searchAll";
 		}
 		else if(cmd.equals("MEMBER")){
 			//int prof_id = Integer.parseInt(req.getParameter("prof_id"));

@@ -91,42 +91,51 @@ public class ProfileDao {
 			List tag_lang = dto.getTag_lang();
 			List tag_tool = dto.getTag_tool();
 			List tag_field = dto.getTag_field();
+			//////////////////////////////////////////////////////////
 			System.out.println("1st : " + tag_lang.get(0).toString());
 			System.out.println("2nd : " + tag_lang.get(1).toString());
 			System.out.println("3nd : " + tag_lang.get(2).toString());
+			//////////////////////////////////////////////////////////
 			
-			//태그 테이블 추가
+			
+			//태그 테이블 추가//////////////////////////////////////////////
 			if (tag_lang != null) {
 				for (int i = 0; i < tag_lang.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)  WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "language");
-					stmt.setString(2, tag_lang.get(i).toString());
-					stmt.setString(3, tag_lang.get(i).toString());
-					rows += stmt.executeUpdate();
+					
+					int check = tagNameCheck(tag_lang.get(i).toString());
+					
+					if(check==0){
+						sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, "language");
+						stmt.setString(2, tag_lang.get(i).toString());
+						rows += stmt.executeUpdate();
+					}
+					
 				}
 			}
+			
+		/*	
 			if (tag_tool != null) {
 				for (int i = 0; i < tag_tool.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "tool");
 					stmt.setString(2, tag_tool.get(i).toString());
-					stmt.setString(3, tag_tool.get(i).toString());
-					rows += stmt.executeUpdate();
-				}
-			}
-			if (tag_field != null) {
-				for (int i = 0; i < tag_field.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "field");
-					stmt.setString(2, tag_field.get(i).toString());
-					stmt.setString(3, tag_field.get(i).toString());
 					rows += stmt.executeUpdate();
 				}
 			}
 			
+			if (tag_field != null) {
+				for (int i = 0; i < tag_field.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "field");
+					stmt.setString(2, tag_field.get(i).toString());
+					rows += stmt.executeUpdate();
+				}
+			}
+			*/
 			// 태그 사용 추가
 			if (tag_lang != null) {
 				for (int i = 0; i < tag_lang.size(); i++) {
@@ -232,6 +241,29 @@ public class ProfileDao {
 			freeConnection();
 		}
 		return tag_id;
+	}
+	
+	private int tagNameCheck(String tag_name) {
+		int tag_check = 0;
+		getConnection();
+		try {
+			String sql = "SELECT tag_id FROM tag WHERE tag_name=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, tag_name);
+			rs = stmt.executeQuery();
+			rs.next();
+			
+			if(rs.getInt("tag_id") != 0){
+				tag_check=1;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("tagNameToId오류(profileDao)");
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return tag_check;
 	}
 	
 	/**

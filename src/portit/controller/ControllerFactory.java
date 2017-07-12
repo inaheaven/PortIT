@@ -24,6 +24,9 @@ public class ControllerFactory {
 	 * @return 기능별 컨트롤러 인스턴스
 	 */
 	public Controller newController(String param) {
+		
+		System.out.println("#2 :"+param);
+		
 		if (param.equals("profileAdd")) {
 			return new ProfileAddController();
 		}

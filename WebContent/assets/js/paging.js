@@ -3,15 +3,17 @@
  */
 	
 	function pf(pf_id){
-		document.pf_info.pf_id.value = pf_id;
+		alert(pf_id);
+		document.pf_info.id.value = pf_id;
+		alert(document.pf_info.id.value);
 		document.pf_info.submit();
 	}
 	function tag(tag_name){
-		document.tag_info.tag_name.value = tag_name;		
+		document.tag_info.tag_name.value = tag_name;	
 		document.tag_info.submit();	
 	}
-	function prof(prof_id){
-		document.prof_info.prof_id.value = prof_id;
+	function prof(prof_nick){
+		document.prof_info.prof_nick.value = prof_nick;
 		document.prof_info.submit();		
 	}
 	function proj(proj_id){

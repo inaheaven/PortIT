@@ -237,7 +237,7 @@ public class ViewDao {
 	 */
 	public List member_info(int prof_id) {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct prof_id, prof_img, prof_name,  prof_follower, prof_regdate  "
+		String sql = "select distinct prof_id, prof_img, prof_name,  prof_follower, prof_nick, prof_regdate  "
 					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
@@ -255,6 +255,7 @@ public class ViewDao {
 				//member.setTag_name(rs.getString("tag_name"));
 				member.setProf_img(rs.getString("prof_img"));
 				member.setProf_name(rs.getString("prof_name"));
+				member.setProf_nick(rs.getString("prof_nick"));
 				member.setProf_follower(rs.getInt("prof_follower"));
 				member.setProf_id(rs.getInt("prof_id"));
 		

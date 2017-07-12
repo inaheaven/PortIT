@@ -42,35 +42,35 @@
 				Portfolio port = (Portfolio) portfolio.get(i);
 	%>
 							
-														<!-- 첫번째 포트폴리오 -->
-  										<div class="col-md-3 mb">
-  											<div class="portfolio-simple">
- 											
- 												<div class="pfImg">
- 					            					<img src="<%=port.getMl_path()%>"/>     
- 							         			</div>
-  												<div class="pfInfo">
-  													<div class="simple-content">
-  														<div class="pfTag">
+									<!-- 첫번째 포트폴리오 -->
+										<div class="col-md-3 mb">
+											<div class="portfolio-simple">
+										
+											<div class="pfImg">
+				            					<img src="<%=port.getMl_path()%>"/>     
+						         			</div>
+												<div class="pfInfo">
+													<div class="simple-content">
+														<div class="pfTag">
 
-															<% for(int j=0; j<port.getTags().size(); j++) { %>
-															<a href="javascript:tag('<%=port.getTags().get(j)%>')">
-															#<%= port.getTags().get(j)%></a>&nbsp;
-															<%} %>
-														</div>
-														<div class="pfTitle">
-															<a href="javascript:pf('<%=port.getPf_id()%>">
-															<%=port.getPf_title()%> </a>
-														</div>
-														<div class="pfBottom">
-															<span class="pfmemName"><a href=""><%=port.getProf_name()%></a></span>
-															<span class="pfLikeCount"><span
-																class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like()%></span>
-														</div>
-													</div>
+													<% for(int j=0; j<port.getTags().size(); j++) { %>
+													<a href="javascript:tag('<%=port.getTags().get(j)%>')">
+													#<%= port.getTags().get(j)%></a>&nbsp;
+													<%} %>
+												</div>
+												<div class="pfTitle">
+													<a href="#" onclick="pf(<%=port.getPf_id()%>)">
+													<%=port.getPf_title()%> </a>
+												</div>
+												<div class="pfBottom">
+													<span class="pfmemName"><a href=""><%=port.getProf_name()%></a></span>
+													<span class="pfLikeCount"><span
+														class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like()%></span>
 												</div>
 											</div>
 										</div>
+									</div>
+								</div>
 		<%} %>						
 							</div>
 						</div>
@@ -98,7 +98,8 @@
 														src="<%=mem.getProf_img()%>" />
 													<div>
 														<div class="memName">
-															<a href=""> <%=mem.getProf_name()%></a>
+															<a href="javascript:prof('<%=mem.getProf_nick()%>')">
+															<%=mem.getProf_name()%></a>
 														</div>
 														<div class="memTag">
 															<% for(int j=0; j<mem.getTags().size(); j++) { %>
@@ -135,33 +136,33 @@
 			for(int i=0; i<num; i++){
 				Project proj = (Project) project.get(i);
 	%>
-										
-												<!-- 첫번째 모집 -->
-												<div class="col-md-3 mb">
-													<div class="project-simple">
-														<div class="simple-content text-center">
-															<div class="pjTag">
-									          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
-															<a href="javascript:tag('<%=proj.getTags().get(j)%>')">
-															#<%= proj.getTags().get(j)%></a>&nbsp;
-															<%} %>
-									          				</div>
-															<div class="pjTitle">
-																<a href=""><%=proj.getProj_title() %> </a>
-															</div>
-															<div class="pjInfo">
-																<span class="pjField"><a href="">#
-																	<%=proj.getTags2() %></a>
-																</span>&nbsp;/&nbsp;
-																<span class="pjTo"><%=proj.getProj_to() %> 명</span>
-															</div>
-															<div class="pjRegiEndDate">
-																<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>
-																		<%=proj.getD_day() %> </span></span>
-															</div>
-														</div>
-													</div>
-												</div>
+											
+								<!-- 첫번째 모집 -->
+								<div class="col-md-3 mb">
+									<div class="project-simple">
+										<div class="simple-content text-center">
+											<div class="pjTag">
+					          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
+											<a href="javascript:tag('<%=proj.getTags().get(j)%>')">
+											#<%= proj.getTags().get(j)%></a>&nbsp;
+											<%} %>
+					          				</div>
+											<div class="pjTitle">
+												<a href=""><%=proj.getProj_title() %> </a>
+											</div>
+											<div class="pjInfo">
+												<span class="pjField"><a href="">#
+													<%=proj.getTags2() %></a>
+												</span>&nbsp;/&nbsp;
+												<span class="pjTo"><%=proj.getProj_to() %> 명</span>
+											</div>
+											<div class="pjRegiEndDate">
+												<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>
+														<%=proj.getD_day() %> </span></span>
+											</div>
+										</div>
+									</div>
+								</div>
 	<%} %>
 									
 							</div>
@@ -234,26 +235,29 @@
 			</div>
 		</section>
 		<!-- Timeline page end -->
-	</section>
-	
-<script src="assets/js/paging.js"></script>
+	</section>	
+	<script src="assets/js/paging.js"></script>
+							<!-- 
+								// 포트폴리오 글 주소 예:	/view?type=portfolio&id=pf_id
+								// 프로필 글 주소 예:		/view?type=profile&id=prof_nick
+								// 프로젝트 글 주소 예:	/view?type=project&id=proj_id
+							 -->
 <!-- 상세페이지로 이동하기 위한 폼 -->
-<form name="pf_info" method="post" action="/detailView">
-	<input type="hidden" name="pf_id" /> 
-	<input type="hidden" name="type" value="view" />
+<form name="pf_info" method="post" action="/view">
+	<input type="hidden" name="id"  />							<!-- pf_id -->
+	<input type="hidden" name="type" value="portfolio" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
 	<input type="hidden" name="cmd" value="TAG" />
 </form>
-<form name="prof_info" method="post" action="/detailView">
-	<input type="hidden" name="prof_id" /> 
-	<input type="hidden" name="cmd" value="PROJECT" />
+<form name="prof_info" method="post" action="/view">
+	<input type="hidden" name="id" value="" />					<!-- prof_nick -->
+	<input type="hidden" name="type" value="profile" />
 </form>
-<form name="proj_info" method="post" action="/detailView">
-	<input type="hidden" name="proj_id" /> 
-	<input type="hidden" name="cmd" value="MEMBER" />
+<form name="proj_info" method="post" action="/view">
+	<input type="hidden" name="id" value="" /> 					<!-- proj_id --> 
+	<input type="hidden" name="type" value="project" />
 </form>
 <!-- 포트폴리오 정보 -->
 
-	
