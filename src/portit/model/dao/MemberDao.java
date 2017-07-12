@@ -107,7 +107,7 @@ public class MemberDao {
 		Profile mem_profile=null;
 		
 		try{	
-			sql="select distinct profile.mem_id ,profile.PROF_NAME, MEMBER.MEM_EMAIL, PROFILE.PROF_IMG  "+
+			sql="select distinct profile.mem_id ,profile.PROF_NAME, MEMBER.MEM_EMAIL, PROFILE.PROF_IMG, PROFILE.prof_id, PROFILE.prof_nick  "+
 				"FROM MEMBER INNER JOIN	PROFILE "+
 				"on MEMBER.MEM_ID=profile.MEM_ID "+
 				"where MEMBER.MEM_ID="+mem_id;
@@ -124,6 +124,8 @@ public class MemberDao {
 				mem_profile.setProf_img(rs.getString("PROF_IMG"));
 				mem_profile.setProf_name(rs.getString("prof_name"));
 				mem_profile.setProf_email(rs.getString("MEM_EMAIL"));
+				mem_profile.setProf_id(rs.getInt("prof_id"));
+				mem_profile.setProf_nick(rs.getString("prof_nick"));
 			}
 	
 		}

@@ -92,6 +92,8 @@ public class Portfolio_ViewDao {
    }   
    
    
+   
+   
    // Delete.jsp
    public void deletePortforio(String Portforio_Id){
       
@@ -99,6 +101,8 @@ public class Portfolio_ViewDao {
       String sql = "delete from project where proj_id='"+Portforio_Id+"'";
       //cascade 옵션을 삽입해야합니다.
       
+      
+      System.out.println("deleteSQL="+sql);
       
       try{
          con = pool.getConnection();

@@ -68,10 +68,16 @@ String keyWord = request.getParameter("keyWord");
 						
 						<%
 						
+						
+						
+						//세션값 저장이 안된다.... 세션이 수시로 나라간다.. 왜????
+						
 						ArrayList roomList; 
 						
 						//대화방 목록.(수신메세지만 담겨있다.)
 						roomList= (ArrayList)session.getAttribute("RoomList");
+						
+						ArrayList partenrInform =(ArrayList)request.getAttribute("partenrInform");
 						
 						
 						int msgNum;
@@ -128,6 +134,11 @@ String keyWord = request.getParameter("keyWord");
 							mem_id_Sender = dto3.getMem_id_sender();
 							
 							
+							
+							
+						///////////////////////////////////////////////
+						MessageDto partner =(MessageDto)partenrInform.get(i);	//첫번째 발신자의 정보.
+							
 						%>
 						
 						
@@ -140,9 +151,9 @@ String keyWord = request.getParameter("keyWord");
 							<!-- Head -->
 							<div class="panel-heading">
 								<span class="pull-left">
-									<a href="#">
-										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
-										<span class="msgSender"><%=name%></span>
+									<a onclick="window.open('/view?type=profile&id=<%=partner.getSender_Nick()%>');">
+										<img src="<%=partner.getProf_img()%>" class="img-circle">&nbsp;&nbsp;
+										<span class="msgSender"><%=partner.getSender_Name()%></span>
 									</a>
 
 								</span>	
@@ -192,9 +203,12 @@ String keyWord = request.getParameter("keyWord");
 									<!--  END_Msg_Content -->
 					<%
 							}	//메세지 반복.
-					%>
+					%>						<!--  mem_id_sende,mem_img,mem_nick-->
 									<form name="more" method="post" action="/msg?cmd=detail">
 										<input type="hidden" name="mem_id_sender" value="<%=mem_id_Sender%>">
+										<input type="hidden" name="mem_img" value="<%=partner.getProf_img()%>">
+										<input type="hidden" name="mem_nick" value="<%=partner.getSender_Nick()%>">
+										<input type="hidden" name="profile_id" value="<%=partner.getProf_id()%>">
 										<div class="pull-right">
 											<button type="submit" class="btn" >More</button>
 										</div>

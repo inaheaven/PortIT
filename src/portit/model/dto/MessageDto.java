@@ -14,6 +14,21 @@ public class MessageDto {
 		this.login_id=login_id;
 	}
 	
+	
+	//발신자 리스트....
+	
+	
+	//추가.
+	private String login_id;
+	private String sender_Nick;		//발신자 별명
+	private String sender_Name;		//발신자 이름
+	private int prof_id;			//발신자의 prof_id
+	private int partner_id;			//발신자의 mem_id
+	private String prof_img;		//프로필이미지
+	
+	
+	
+	//기본.
 	private int msg_id;				//MSG iD	
 	private int mem_id_sender;		//발신 FROM
 	private int mem_id_receiver;	//수신 TO
@@ -21,11 +36,39 @@ public class MessageDto {
 	private String msg_content;		//내용
 	private String msg_isread;		//수신여부
 	
-	private String login_id;
 	
-	private String sender_Nick;		//발신자 별명
-	private String sender_Name;		//발신자 이름
 	
+	
+	
+	
+
+	
+	public int getPartner_id() {
+		return partner_id;
+	}
+
+	public void setPartner_id(int partner_id) {
+		this.partner_id = partner_id;
+	}
+
+	public String getProf_img() {
+		return prof_img;
+	}
+
+	public void setProf_img(String prof_img) {
+		this.prof_img = prof_img;
+	}
+
+	
+	
+	public int getProf_id() {
+		return prof_id;
+	}
+
+	public void setProf_id(int prof_id) {
+		this.prof_id = prof_id;
+	}
+
 	//싱글톤 실험.
 	MassageDao dao = MassageDao.getInstance();
 	

@@ -26,20 +26,40 @@
 					
 					
 					<% 
-					//접속유져를 기록하는 방법 : session
-					int longin_id = Integer.parseInt((String) session.getAttribute("loginId"));
 					
-					
-					
+					System.out.println("JSP(detail)");
+					MessageDto firstMsg=null;
 					ArrayList chatroom= (ArrayList)session.getAttribute("chatroom");
-					MessageDto firstMsg= (MessageDto) chatroom.get(0);//첫번째 메세지
 					
+					if(null!=chatroom){
+					 firstMsg= (MessageDto) chatroom.get(0);//첫번째 메세지
+				
+					
+					
+					//Request값 수신.
+					
+					
+					//int profile_id=Integer.parseInt((String)request.getAttribute("profile_id"));
+					//int loginId = Integer.parseInt((String)request.getAttribute("loginId")); 
+					
+					int loginId = (int)request.getAttribute("loginId"); 
+					//int profile_id=(int)request.getAttribute("profile_id");
+					String mem_img=(String) request.getAttribute("mem_img");
+					String mem_nick=(String) request.getAttribute("mem_nick"); 
+				
+					//int log_id=Integer.parseInt(loginId);
+					System.out.println("JSP2222="+loginId);
+					
+					
+					
+					
+				
+					System.out.println("JSP333="+loginId);
 					
 					//대화방 첫번째 메세지의 발신자 ID,이름.
 					int mem_id=firstMsg.getMem_id_sender();
 					String name= firstMsg.getSender_Name();	
-					
-					
+				
 					
 
 					// 페이징 기능 추가
@@ -68,9 +88,10 @@
 				
 				
 					
-					
+					System.out.println("JSP444="+loginId);
 					//내가 첫번째 발산지라면 수신자를 기록.
-					if(firstMsg.getMem_id_sender()==longin_id){	
+					if(String.valueOf(firstMsg.getMem_id_sender()).equals(loginId)){	
+						System.out.println("JSP555="+loginId);
 						
 						//수신자의 mem_id_recever저장.
 						mem_id=firstMsg.getMem_id_receiver();
@@ -82,8 +103,8 @@
 						<div class="panel panel-default msgBox">
 							<div class="panel-heading">
 								<span class="pull-left">
-									<a href="#">
-										<img src="assets/img/you.png" class="img-circle">&nbsp;&nbsp;
+									<a onclick="window.open('/view?type=profile&id=<%=mem_nick%>');">
+										<img src="<%=mem_img%>" class="img-circle">&nbsp;&nbsp;
 										<span class="msgSender"><%=name %></span>
 									</a>
 								</span>
@@ -103,6 +124,8 @@
 							
 							
 							<% 
+							
+							System.out.println("[JSP]갯수출력="+chatroom.size());
 								//출력범위를 정한다.
 								for(int i=beginPerPage; i<numPerPage+beginPerPage; i++){
 									if(i == totalRecord)
@@ -117,13 +140,13 @@
 								<div class="msgContentBox mb clearfix" > 
 								
 								<%
-									String dir_1="left";
-									String dir_2="right";
+									String dir_1="right";
+									String dir_2="left";
 									
 									//방향바꾸셈.
-									if(longin_id==msg.getMem_id_receiver()){
-										 dir_1="right";
-										 dir_2="left";
+									if(loginId==msg.getMem_id_receiver()){
+										 dir_1="left";
+										 dir_2="right";
 									}
 								%>
 									<div class="pull-<%=dir_1%> col-md-10 msgContent clearfix">
@@ -168,7 +191,8 @@
 									<% if (totalBlock > nowBlock + 1) { %>
 									<a href="msg?cmd=lpDetail&nowBlock=<%=nowBlock + 1%>&nowPage=<%=pagePerBlock * (nowBlock + 1)%>">다음<%=pagePerBlock%>개
 									</a>
-									<% }%>
+									<% }
+									%>
 								</div>
 												
 								
@@ -178,9 +202,10 @@
 							</div>			
 								
 						</div> <!-- END - msgBoxOpen -->
+							<%} %>
 					</div> <!-- END - msgBox -->			
 						
-							
+						
 					</div>
 				</div>
 

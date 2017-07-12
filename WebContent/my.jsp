@@ -25,6 +25,7 @@
 			int mem_id = (int)session.getAttribute("loginId");
 			
 			MemberDao dao = new MemberDao();
+			
 			Profile mem_prof= (Profile)dao.getUserInformation(mem_id);
 			
 			String userName= "(이름없음)";
@@ -43,7 +44,7 @@
 		<!-- sidebar menu start-->
 		<ul class="sidebar-menu">       
 			<div class="myImg">
-				<p class="centered"><a href="profile.html"><img src="<%=mem_prof.getProf_img() %>" class="img-circle" width="60"></a></p>
+				<p class="centered"><a onclick="window.open('/view?type=profile&id=prof_nick<%=mem_prof.getProf_id_list()%>');"><img src="<%=mem_prof.getProf_img() %>" class="img-circle" width="60"></a></p>
 				<h5 class="centered"><%=userName %> 님</h5>              	  
 			</div>       
 			<hr class="line" />

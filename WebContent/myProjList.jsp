@@ -11,6 +11,9 @@
 <%@page import="portit.model.dto.Project"%>
 
 
+
+<!-- 0712 by Cater -->
+
 	<link href="assets/css/profpfproj.css" rel="stylesheet">
 
 	<script>
@@ -143,14 +146,14 @@
 							<div class="panel-heading clearfix" role="tab" >
 								<h4 class="panel-title">
 									<span class="col-sm-4"> 
-									<a href="javascript:fnParameter('pj_detail' , '' , '<%=pj_Inform.getProj_id()%>', '')">
+									<a onclick="window.open('/view?type=project&id=<%=pj_Inform.getProj_id()%>');">
 									<%=pj_Inform.getProj_title() %> 
 									</a>
 									</span> 
 									<span class="col-sm-5">지원 마감일까지 D-<%=pj_Inform.getD_day() %></span>
 									<span class="col-md-3 text-right">
-										<button type="button" class="btn common"onclick="fnParameter('modify','','<%=pj_Inform.getPf_id()%>', '')">수정</button>
-										<button type="button" class="btn common"onclick="fnParameter('list','delete','<%=pj_Inform.getPf_id()%>', '')">삭제</button>
+										<button type="button" class="btn common"onclick="fnParameter('modify','','<%=pj_Inform.getPf_id()%>',   '')">수정</button>
+										<button type="button" class="btn common"onclick="fnParameter('list','delete','<%=pj_Inform.getProj_id()%>',   '')">삭제</button>
 										<a class="updown collapsed" data-toggle="collapse"
 										data-parent="#accordion" href="#pj_<%=i%>"
 										aria-expanded="false" aria-controls="collapseOne"> 
@@ -224,7 +227,7 @@
 										</div>
 										<div class="col-lg-7"><%=p1.getNick() %></div>
 										<div class="col-lg-2">
-											<button type="button" class="btn btn-default" onclick="fnParameter('list','mem_delete','<%=pj_Inform.getPf_id()%>', '<%=p1.getMem_id()%>')">삭제</button>
+											<button type="button" class="btn btn-default" onclick="fnParameter('list','mem_delete','<%=pj_Inform.getProj_id()%>', '<%=p1.getMem_id()%>')">삭제</button>
 										</div>
 										<!-- 팀원반복 끝-->
 					<%
