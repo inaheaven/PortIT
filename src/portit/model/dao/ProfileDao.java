@@ -88,70 +88,77 @@ public class ProfileDao {
 
 			rows += stmt.executeUpdate();
 			
-			List tag_lang1 = dto.getTag_lang1();
-			List tag_tool1 = dto.getTag_tool1();
-			List tag_field1 = dto.getTag_field1();
+			List tag_lang = dto.getTag_lang();
+			List tag_tool = dto.getTag_tool();
+			List tag_field = dto.getTag_field();
+			System.out.println("1st : " + tag_lang.get(0).toString());
+			System.out.println("2nd : " + tag_lang.get(1).toString());
+			System.out.println("3nd : " + tag_lang.get(2).toString());
 			
-			
-			if (tag_lang1 != null) {
-				for (int i = 0; i < tag_lang1.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
+			//태그 테이블 추가
+			if (tag_lang != null) {
+				for (int i = 0; i < tag_lang.size(); i++) {
+					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?)  WHERE ? NOT IN (SELECT tag_name FROM tag)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "language");
-					stmt.setString(2, tag_lang1.get(i).toString());
+					stmt.setString(2, tag_lang.get(i).toString());
+					stmt.setString(3, tag_lang.get(i).toString());
 					rows += stmt.executeUpdate();
 				}
 			}
-			if (tag_tool1 != null) {
-				for (int i = 0; i < tag_tool1.size(); i++) {
+			if (tag_tool != null) {
+				for (int i = 0; i < tag_tool.size(); i++) {
 					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "tool");
-					stmt.setString(2, tag_tool1.get(i).toString());
+					stmt.setString(2, tag_tool.get(i).toString());
+					stmt.setString(3, tag_tool.get(i).toString());
 					rows += stmt.executeUpdate();
 				}
 			}
-			if (tag_field1 != null) {
-				for (int i = 0; i < tag_field1.size(); i++) {
+			if (tag_field != null) {
+				for (int i = 0; i < tag_field.size(); i++) {
 					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "field");
-					stmt.setString(2, tag_field1.get(i).toString());
+					stmt.setString(2, tag_field.get(i).toString());
+					stmt.setString(3, tag_field.get(i).toString());
 					rows += stmt.executeUpdate();
 				}
 			}
 			
 			// 태그 사용 추가
-			if (tag_lang1 != null) {
-				for (int i = 0; i < tag_lang1.size(); i++) {
+			if (tag_lang != null) {
+				for (int i = 0; i < tag_lang.size(); i++) {
 					sql = "INSERT INTO tag_use("
 							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_prof_id.currVal,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "prof");
-					stmt.setInt(2, tagNameToId(tag_lang1.get(i).toString()));
+					stmt.setInt(2, tagNameToId(tag_lang.get(i).toString()));
+					rows += stmt.executeUpdate();
+					
+				}
+			}
+			if (tag_tool != null) {
+				for (int i = 0; i < tag_tool.size(); i++) {
+					sql = "INSERT INTO tag_use("
+							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_prof_id.currVal,?)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, "prof");
+					stmt.setInt(2, tagNameToId(tag_tool.get(i).toString()));
 					rows += stmt.executeUpdate();
 				}
 			}
-			if (tag_tool1 != null) {
-				for (int i = 0; i < tag_tool1.size(); i++) {
+			if (tag_field != null) {
+				for (int i = 0; i < tag_field.size(); i++) {
 					sql = "INSERT INTO tag_use("
 							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
+							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_prof_id.currVal,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "prof");
-					stmt.setInt(2, tagNameToId(tag_tool1.get(i).toString()));
-					rows += stmt.executeUpdate();
-				}
-			}
-			if (tag_field1 != null) {
-				for (int i = 0; i < tag_field1.size(); i++) {
-					sql = "INSERT INTO tag_use("
-							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "prof");
-					stmt.setInt(2, tagNameToId(tag_field1.get(i).toString()));
+					stmt.setInt(2, tagNameToId(tag_field.get(i).toString()));
 					rows += stmt.executeUpdate();
 				}
 			}
@@ -219,7 +226,7 @@ public class ProfileDao {
 			rs.next();
 			tag_id = rs.getInt("tag_id");
 		} catch (Exception e) {
-			System.out.println("");
+			System.out.println("tagNameToId오류(profileDao)");
 			e.printStackTrace();
 		} finally {
 			freeConnection();
@@ -344,85 +351,7 @@ public class ProfileDao {
 		return dto;
 	}
 	
-	/**
-	 * 프로필
-	 */
 	
-	public Profile selectOne(int mem_id) {
-		Profile dto = new Profile();
-		
-		// SELECT문 지정
-		String sql = "SELECT * FROM profile WHERE mem_id=?";
-		
-		// DB에 접속해서 작업 실행
-		getConnection();
-		try {
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, mem_id);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				// DB 조회 결과를 DTO에 저장
-				dto.setMem_id(rs.getInt("mem_id"));
-				dto.setProf_id(rs.getInt("prof_id"));
-				dto.setProf_nick(rs.getString("prof_nick"));
-				dto.setProf_name(rs.getString("prof_name"));
-				dto.setProf_intro(rs.getString("prof_intro"));
-				dto.setProf_img(rs.getString("prof_img"));
-				dto.setProf_background(rs.getString("prof_background"));
-				dto.setProf_website(rs.getString("prof_website"));
-				dto.setProf_github(rs.getString("prof_github"));
-				dto.setProf_facebook(rs.getString("prof_facebook"));	
-				
-				// 태그 사용 데이터를 조회해서 DTO에 저장
-				List tag_lang1 = dto.getTag_lang1();
-				List tag_tool1 = dto.getTag_tool1();
-				List tag_field1 = dto.getTag_field1();
-				
-				sql = "SELECT * FROM tag_use tu INNER JOIN tag t "
-						+ "ON tu.tag_id=t.tag_id "
-						+ "WHERE tu.tag_use_type=? AND tu.tag_use_type_id=?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, "prof");
-				stmt.setInt(2, dto.getProf_id());
-				rs = stmt.executeQuery();
-				
-				while (rs.next()) {
-					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_language = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tag_lang1.add(tag_language);
-					}
-					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_tool = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tag_tool1.add(tag_tool);
-					}
-					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
-						Tag tag_field = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
-						tag_field1.add(tag_field);
-					}
-				}
-				dto.setTag_lang1(tag_field1);
-				dto.setTag_tool1(tag_tool1);
-				dto.setTag_field1(tag_field1);
-				
-			}
-		} catch (Exception e) {
-			System.out.println("DB 조회 오류 :");
-			e.printStackTrace();
-		} finally {
-			freeConnection();
-		}
-		return dto;
-	}
-
 	
 	/**
 	 * 같은 프로필 번호를 쓰는 프로필이 있는지 검사

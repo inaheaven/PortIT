@@ -49,9 +49,9 @@ public class Profile {
 	private ArrayList<Integer> prof_id_list = new ArrayList<>();
 	private ArrayList<String> prof_name_list = new ArrayList<>();
 	private ArrayList<String> prof_nick_list = new ArrayList<>();
-	private List tag_lang1;
-	private List tag_tool1;
-	private List tag_field1;
+	private List tag_lang;
+	private List tag_tool;
+	private List tag_field;
 	
 	
 	
@@ -301,24 +301,25 @@ public class Profile {
 		this.prof_myProj = prof_myProj;
 		return this;
 	}
-	public List getTag_lang1() {
-		return tag_lang1;
+	public List getTag_lang() {
+		return tag_lang;
 	}
-	public void setTag_lang1(List tag_lang1) {
-		this.tag_lang1 = tag_lang1;
+	public void setTag_lang(List tag_lang) {
+		this.tag_lang = tag_lang;
 	}
-	public List getTag_tool1() {
-		return tag_tool1;
+	public List getTag_tool() {
+		return tag_tool;
 	}
-	public void setTag_tool1(List tag_tool1) {
-		this.tag_tool1 = tag_tool1;
+	public void setTag_tool(List tag_tool) {
+		this.tag_tool = tag_tool;
 	}
-	public List getTag_field1() {
-		return tag_field1;
+	public List getTag_field() {
+		return tag_field;
 	}
-	public void setTag_field1(List tag_field1) {
-		this.tag_field1 = tag_field1;
+	public void setTag_field(List tag_field) {
+		this.tag_field = tag_field;
 	}
+	
 
 	
 	

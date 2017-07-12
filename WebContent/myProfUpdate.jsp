@@ -12,9 +12,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 
-
 <%	
-	Profile prof = request.getAttribute("prof_reg");
+	HttpSession session = req.getSession();
+	int loginId = (int)session.getAttribute("loginId");
+	System.out.println(loginId);
+
+	Profile prof= dao.getProfile(loginId);
 %>
 
 <script src="assets/js/search.js"></script>

@@ -55,15 +55,13 @@ public class ProfileController extends HttpServlet {
 		int loginId = (int)session.getAttribute("loginId");
 		System.out.println(loginId);
 		
-		
 		String cmd = req.getParameter("cmd");
 		String url = "";
 
 		//int mem_id = Integer.parseInt(req.getParameter("mem_id"));
 		//req.setAttribute("mem_id", mem_id);
 
-		ProfileDao profileDao = new ProfileDao();
-		Profile prof_reg = new Profile();
+	
 
 		int prof_follower =0;
 		String prof_img = req.getParameter("prof_img");
@@ -79,29 +77,28 @@ public class ProfileController extends HttpServlet {
 		String tag_name5 = req.getParameter("tag_name5");
 		String tag_name6 = req.getParameter("tag_name6");
 
-		String[] tag_lang1 = req.getParameterValues("tag_lang");
-		String[] tag_tool1 = req.getParameterValues("tag_tool");
-		String[] tag_field1 = req.getParameterValues("tag_field");
+		String[] lang_list1 = req.getParameterValues("tag_lang");
+		String[] tool_list1 = req.getParameterValues("tag_tool");
+		String[] field_list1 = req.getParameterValues("tag_field");
 		
-		
-		List<String> lang_list1 = new ArrayList();
-		for(String tags : tag_lang1){
-		  lang_list1.add(tags);
+		List<String> tag_lang = new ArrayList();
+		for(String tags : lang_list1){
+			tag_lang.add(tags);
 		}
 		
-		List<String> tool_list1 = new ArrayList();
-		for(String tags : tag_tool1){
-			tool_list1.add(tags);
+		List<String> tag_tool = new ArrayList();
+		for(String tags : tool_list1){
+			tag_tool.add(tags);
 		}
 		
-		List<String> field_list1 = new ArrayList();
-		for(String tags : tag_field1){
-			field_list1.add(tags);
+		List<String> tag_field = new ArrayList();
+		for(String tags : field_list1){
+			tag_field.add(tags);
 		}
 				
-		System.out.println(lang_list1);
-		System.out.println(tool_list1);
-		System.out.println(field_list1);
+		System.out.println(tag_lang);
+		System.out.println(tag_tool);
+		System.out.println(tag_field);
 		System.out.println("name :" + prof_name);
 		
 		//null값이 넘어 오는 경우 오류 처리
@@ -129,6 +126,8 @@ public class ProfileController extends HttpServlet {
 
 //		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
 		
+		ProfileDao profileDao = new ProfileDao();
+		Profile prof_reg = new Profile();
 
 		prof_reg.setProf_img(prof_img);
 		prof_reg.setProf_background(prof_background);
@@ -146,14 +145,14 @@ public class ProfileController extends HttpServlet {
 		prof_reg.setProf_skill_level(prof_skill_level);
 		prof_reg.setProf_skill_level2(prof_skill_level2);
 		prof_reg.setProf_skill_level3(prof_skill_level3);
-		prof_reg.setTag_lang1(lang_list1);
-		prof_reg.setTag_tool1(tool_list1);
-		prof_reg.setTag_field1(field_list1);
+		prof_reg.setTag_lang(tag_lang);
+		prof_reg.setTag_tool(tag_tool);
+		prof_reg.setTag_field(tag_field);
 		
 		profileDao.addprofile(prof_reg, loginId);
 		req.setAttribute("prof_reg", prof_reg);
 
-		
+	
 		if (!ServletFileUpload.isMultipartContent(req)) {
 			try {
 				throw new Exception("요청이 multipart/form-data로 인코딩되지 않았습니다.");
@@ -204,21 +203,21 @@ public class ProfileController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 		
 		if (cmd.equals("REGISTER")) {
 			ProfileDao dao = new ProfileDao();
-			Profile prof= dao.selectOne(loginId);
-			req.setAttribute("prof", prof);
-			url = "/page?page=myProfUpdate";
+		//	Profile prof= dao.selectOne(loginId);
+		//	req.setAttribute("prof", prof);
+			//url = "/page?page=myProfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
 			ProfileDao dao = new ProfileDao();
-			Profile prof= dao.selectOne(loginId);
-			req.setAttribute("prof", prof);
-			url = "/page?page=myProfUpdate";
+		//	Profile prof= dao.selectOne(loginId);
+		//	req.setAttribute("prof", prof);
+			//url = "/page?page=myProfUpdate";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);
