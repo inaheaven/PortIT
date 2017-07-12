@@ -17,12 +17,9 @@ public class ProjectModel {
 	private ArrayList list;			//Ctrl에 반환할 List 변수.
 	
 	ProjectDao dao= new ProjectDao();
-	
-	
 	public ProjectModel(){
 		
 	}
-	
 	
 	public ProjectModel(HttpServletRequest _req, String _login_id){
 		this.req=_req;
@@ -30,28 +27,21 @@ public class ProjectModel {
 		
 		//모델_DAO
 		//해당 사용자에 관한 db를 얻어야하기때문에 식별자를 전달한다.
-
-	
 	}
 	
 
 	public List appyPjList() {
-		
 		list=(ArrayList)dao.applyProjectList(login_id);
 		return list;
 	}
 	
 	
 	public ArrayList regPjList(){
-		
 		//내가 등록한 프로젝트 list
 		//이 작업을 담아줄 model하나 필요...
-		
 		//내가 등록한 PJ명단
 		list=(ArrayList)dao.RegPJlistName(login_id);
 				//.RegPJlistName(login_id);
-		
-		
 		//종합정보= 유저List+프로젝트정보..
 		ArrayList regPjPackage=new ArrayList();
 		

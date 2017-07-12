@@ -24,7 +24,6 @@ $(document).ready(function() {
 		</h4>
 		<thead>
 			<tr>
-				<th style="text-align: center"><i class="fa fa-bullhorn"></i> 프로필사진</th>
 				<th style="text-align: center"><i class="fa fa-bullhorn"></i> 이름</th>
 				<th style="text-align: center" class="hidden-phone"><i class="fa fa-question-circle"></i>
 					닉네임</th>
