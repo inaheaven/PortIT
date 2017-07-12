@@ -58,9 +58,19 @@ public class Portfolio {
     private String tag_name;
     private String ml_path;
     private List<String> tags;
+    private int prof_pf_id;
     
     
     
+    
+    
+	public int getProf_pf_id() {
+		return prof_pf_id;
+	}
+	public Portfolio setProf_pf_id(int prof_pf_id) {
+		this.prof_pf_id = prof_pf_id;
+		return this;
+	}
 	public List<String> getTags() {
 		return tags;
 	}

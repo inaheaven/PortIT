@@ -46,7 +46,7 @@ public class BookmarkDao {
 		ArrayList bmList = new ArrayList();
 		try {
 			conn = pool.getConnection();
-			sql = "SELECT BOOK.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH "
+			sql = "SELECT distinct BOOK.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH "
 				+ " FROM BOOKMARK BOOK INNER JOIN PORTFOLIO PORT ON BOOK.PF_ID = PORT.PF_ID "
 		        + " JOIN MEDIA_LIBRARY MEDIA ON PORT.PF_ID = MEDIA.ML_TYPE_ID"
 		        + " JOIN MEMBER M ON M.MEM_ID = BOOK.MEM_ID JOIN PROFILE P ON M.MEM_ID = P.MEM_ID "
@@ -132,7 +132,7 @@ public class BookmarkDao {
 	public List<String> getTag(Bookmark bm, int pf_id) {
 		try {
 			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'portfolio' "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' "
 					+ " AND tu.tag_use_type_id = ? "
 					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 "; // 랜덤하게
 																		// 3개

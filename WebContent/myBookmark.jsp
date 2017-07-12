@@ -15,10 +15,8 @@
 <link href="assets/css/bookmark.css" rel="stylesheet">
 <script src="assets/js/search.js"></script>
 <script language="javascript">
-
 <%
 	List<Bookmark> portfolios = (List)request.getAttribute("portfolio");
-	System.out.println("add = "+portfolios);
 	if(portfolios.isEmpty()){
 		portfolios= new ArrayList();
 	}
@@ -41,9 +39,7 @@
          					<div class="col-md-4 mb"> <!-- 반복 -->
 								<div class="image-hover">
 									<div class="portfolio-simple">
-										<div class="pfImg">
-			            					<img src="assets/img/profile-02.jpg"/>   
-					         			</div>
+										<div class="pfImg"></div>
 										<div class="pfInfo">
 											<div class="simple-content">
 												<div class="pfTag">
@@ -62,7 +58,7 @@
 										</div>
 										<div class="top-hover-right">
 											<div class="after-hover" >
-												<button type="button" id ="hover"<%=i %> class="btn btn-hover" onclick="location.href='/bmk?cmd=MYBOOKMARKDELETE&bm_id=<%=port.getBm_id() %>'">
+												<button type="button" id ="hover" class="btn btn-hover" onclick="location.href='/bmk?cmd=MYBOOKMARKDELETE&bm_id=<%=port.getBm_id() %>'">
 													<span class="glyphicon glyphicon-remove"></span>
 												</button>
 											</div>
