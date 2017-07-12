@@ -60,7 +60,8 @@
 /**************************** Sign In Page *****************************/
 
 body.index {
-	background: url("../img/login-bg.jpg") no-repeat center center fixed; ;
+	background: url("../img/login-bg4.png") no-repeat center center fixed;
+
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
