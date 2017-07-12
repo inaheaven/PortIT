@@ -21,10 +21,10 @@ import portit.model.dto.Tag;
 import portit.util.FileUpload;
 
 /**
- * 포트폴리오 작성 컨트롤러
+ * 포트폴리오 수정 컨트롤러
  *
  */
-public class PortfolioAddController implements Controller {
+public class PortfolioEditController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -83,7 +83,7 @@ public class PortfolioAddController implements Controller {
 					.setPf_mediaList(mediaList)
 					.setPf_coworkers(coworkerList);
 			// DAO의 추가 메서드 호출
-			portfolioDao.insert(portfolio);
+			portfolioDao.update(portfolio);
 		} catch (ParseException e) {
 			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
 			e.printStackTrace();
@@ -93,5 +93,5 @@ public class PortfolioAddController implements Controller {
 		String viewUrl = "rdr:/page?page=myPfList";
 		return viewUrl;
 	}
-	
+
 }

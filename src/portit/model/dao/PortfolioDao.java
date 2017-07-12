@@ -427,10 +427,10 @@ public class PortfolioDao {
 	
 	/**
 	 * 데이터 수정
-	 * @param pf_id
+	 * @param portfolio
 	 * @return 수정된 데이터 개수
 	 */
-	public int update(int pf_id, Portfolio portfolio) {
+	public int update(Portfolio portfolio) {
 		int rows = 0;
 		try {
 			// UPDATE문 지정
@@ -484,19 +484,22 @@ public class PortfolioDao {
 			for (int i = 0; i < coworkers.size(); i++) {
 				coworkers.get(i).setMem_id(usernameToId(coworkers.get(i).getProf_nick()));
 			}
-			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < coworkers.size(); i++) {
-				sql = "MERGE INTO pf_coworker pfc"
-						+ " USING portfolio pf"
-						+ " ON pfc.pf_id=pf.pf_id"
-						+ " WHEN MATCHED THEN"
-						+ " UPDATE SET mem_id=?"
-						+ " WHEN NOT MATCHED THEN INSERT ("
-						+ "pfc.pf_co_id, pf_id, mem_id"
+				sql = "MERGE INTO pf_coworker pfc "
+						+ "USING (SELECT * FROM pf_coworker WHERE pf_id=?) pfcs "
+						+ "ON pfc.pf_id=pfcs.pf_id "
+						+ "WHEN MATCHED THEN "
+						+ "UPDATE SET mem_id=? WHERE mem_id!=? AND pf_id=? "
+						+ "WHEN NOT MATCHED THEN INSERT ("
+						+ "pfc.pf_co_id, pfc.pf_id, pfc.mem_id"
 						+ ") VALUES (seq_pf_co_id.nextVal,?,?)";
-				stmt.setInt(1, coworkers.get(i).getMem_id());
-				stmt.setInt(2, pf_id);
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, portfolio.getPf_id());
+				stmt.setInt(2, coworkers.get(i).getMem_id());
 				stmt.setInt(3, coworkers.get(i).getMem_id());
+				stmt.setInt(4, portfolio.getPf_id());
+				stmt.setInt(5, portfolio.getPf_id());
+				stmt.setInt(6, coworkers.get(i).getMem_id());
 				rows += stmt.executeUpdate();
 			}
 			

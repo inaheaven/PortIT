@@ -29,25 +29,10 @@ public class Portfolio {
 	/** 포트폴리오 URL */
 	private String pf_url;
 	/** 포트폴리오 작성자명 */
-<<<<<<< HEAD
 	private String pf_prof_name;
 	private String pf_prof_nick;
-=======
-	private String pf_authorName;
-	private String pf_prof_name;
-	private String pf_prof_nick;
-	
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
 	/** 포트폴리오 작성자 사진 */
-<<<<<<< HEAD
 	private String pf_prof_img;
-=======
-	private String pf_authorIcon;
-	private String pf_prof_img;
-	
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
-	/** 포트폴리오 태그 목록 - 개발환경 */
-	private List<Tag> pf_tags_env;
 	/** 포트폴리오 태그 목록 - 언어 */
 	private List<Tag> pf_tags_language;
 	/** 포트폴리오 태그 목록 - 툴 */
@@ -61,8 +46,6 @@ public class Portfolio {
 	/** 추천 포트폴리오 목록 */
 	private List<Portfolio> pf_recommends;
 	
-<<<<<<< HEAD
-=======
 	//추가
 	private String prof_nick;
     private String prof_name;
@@ -79,7 +62,7 @@ public class Portfolio {
 		this.tags = tags;
 		return this;
 	}
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
+	
 	public int getMem_id() {
 		return mem_id;
 	}
@@ -113,25 +96,11 @@ public class Portfolio {
 	public String getPf_prof_name() {
 		return pf_prof_name;
 	}
-<<<<<<< HEAD
 	public String getPf_prof_nick() {
 		return pf_prof_nick;
-=======
-	public String getPf_prof_name() {
-		return pf_prof_name;
-	}
-	public String getPf_prof_nick() {
-		return pf_prof_nick;
-	}
-	public String getPf_authorIcon() {
-		return pf_authorIcon;
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
 	}
 	public String getPf_prof_img() {
 		return pf_prof_img;
-	}
-	public List<Tag> getPf_tags_env() {
-		return pf_tags_env;
 	}
 	public List<Tag> getPf_tags_language() {
 		return pf_tags_language;
@@ -151,9 +120,7 @@ public class Portfolio {
 	public List<Portfolio> getPf_recommends() {
 		return pf_recommends;
 	}
-<<<<<<< HEAD
-	
-=======
+
 	public String getProf_nick() {
 		return prof_nick;
 	}
@@ -166,7 +133,7 @@ public class Portfolio {
 	public String getMl_path() {
 		return ml_path;
 	}
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
+	
 	public Portfolio setMem_id(int mem_id) {
 		this.mem_id = mem_id;
 		return this;
@@ -211,29 +178,12 @@ public class Portfolio {
 		this.pf_prof_name = pf_prof_name;
 		return this;
 	}
-<<<<<<< HEAD
 	public Portfolio setPf_prof_nick(String pf_prof_nick) {
 		this.pf_prof_nick = pf_prof_nick;
-=======
-	public Portfolio setPf_prof_name(String pf_prof_name) {
-		this.pf_prof_name = pf_prof_name;
-		return this;
-	}
-	public Portfolio setPf_prof_nick(String pf_prof_nick) {
-		this.pf_prof_nick = pf_prof_nick;
-		return this;
-	}
-	public Portfolio setPf_authorIcon(String pf_authorIcon) {
-		this.pf_authorIcon = pf_authorIcon;
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
 		return this;
 	}
 	public Portfolio setPf_prof_img(String pf_prof_img) {
 		this.pf_prof_img = pf_prof_img;
-		return this;
-	}
-	public Portfolio setPf_tags_env(List<Tag> pf_tags_env) {
-		this.pf_tags_env = pf_tags_env;
 		return this;
 	}
 	public Portfolio setPf_tags_language(List<Tag> pf_tags_language) {
@@ -259,13 +209,10 @@ public class Portfolio {
 	public Portfolio setPf_recommends(List<Portfolio> pf_recommends) {
 		this.pf_recommends = pf_recommends;
 		return this;
-<<<<<<< HEAD
-=======
 	}
 	public Portfolio setProf_nick(String prof_nick) {
 		this.prof_nick = prof_nick;
 		return this;
->>>>>>> branch 'dev_v2' of https://github.com/gnsngck/PortIT.git
 	}
 	public Portfolio setProf_name(String prof_name) {
 		this.prof_name = prof_name;
