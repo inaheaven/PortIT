@@ -65,7 +65,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 				<div class="actions">
 					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-heart"></i></button>
 					<!--  요버튼 클릭시 북마크 한번더 클릭 비활성화 북마크크 취소 -->			
-					<button type="button" class="btn common" onclick="location.href='/serial?cmd=BOOKMARK'"><i class="fa fa-bookmark"></i></button>
+					<button type="button" class="btn common" onclick="location.href='/bmk?cmd=BOOKMARK'"><i class="fa fa-bookmark"></i></button>
 					<button type="button" class="btn common" onclick="location.href='#'"><i class="fa fa-share-alt"></i></button>				
 
 				</div>
@@ -374,19 +374,37 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
 	<!-- Custom JS -->
 	<script type="text/javascript">
-		// 스크롤 변화에 따른 프로필 메뉴바 상단 고정
-		$("#portfolioNavbar").sticky({
-			topSpacing : 0,
-			zIndex : '50'
-		});
+		$(document).ready(function() {
+			// 스크롤 변화에 따른 프로필 메뉴바 상단 고정
+			$("#portfolioNavbar").sticky({
+				topSpacing : 0,
+				zIndex : "50"
+			});
 
-		// 스크롤 맨 위로
-		$("#BackToTop").on("click", function(e) {
-			e.preventDefault();
-			$("html,body").animate({
-				scrollTop : 0
-			}, 500);
-		});
+			// 스크롤 맨 위로
+			$("#BackToTop").on("click", function(e) {
+				e.preventDefault();
+				$("html,body").animate({
+					scrollTop : 0
+				}, 500);
+			});
+			
+			// 좋아요 토글
+			function toggleLikeStatus() {
+				$.ajax({
+					type : "POST",
+					url : "",
+				});
+			}
+			
+			// 북마크 토글
+			function toggleBookmarkStatus() {
+				$.ajax({
+					type : "POST",
+					url : "/bmk?cmd=BOOKMARK",
+				});
+			}
+		});		
 	</script>
 
 </body>

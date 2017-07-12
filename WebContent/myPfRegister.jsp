@@ -86,7 +86,7 @@
 								<input type="text" class="form-control">
 							</div>
 							<div class="col-sm-2">
-								<button type="button" class="btn btn-default">검색</button>
+								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#coworkers">검색</button>
 							</div>
 						</div>
 						<div class="form-group">
@@ -102,6 +102,32 @@
 					</form>
 				</div>
 				<!-- /row -->
+				
+				<!-- modal for searching coworkers -->
+				<div class="modal fade" id="coworkers" tabindex="-1" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">함께한 사람 찾기</h4>
+							</div>
+							<div class="modal-body">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<input type="text" class="form-control" name="coworker_search" />
+										<button type="button" class="btn common"></button> 
+										<span class="help-block">이 작업을 함께한 PortIT 사용자를 찾아보세요.</span>
+									</div>
+								</form>
+								<ul></ul>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn cancel" data-dismiss="modal">취소</button>
+								<button type="submit" class="btn common">확인</button>
+							</div>
+						</div>
+					</div>				
+				</div><!-- /modal -->
 
 				</div>
 			</section>
