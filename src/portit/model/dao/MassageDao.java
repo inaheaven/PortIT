@@ -104,12 +104,11 @@ public class MassageDao{
 
 	// msgSend.jsp (메세지 보내기) 확인!!
 	public void insertMsg(MessageDto dto){
-		int msg_id = 0;
+		String sql = "insert into Message"
+			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
+			+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
+	
 		try{
-			String sql = "insert into Message"
-					+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-					+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
-			
 			con = pool.getConnection();
 			//updatePos(con);
 	 		pstmt = con.prepareStatement(sql);
@@ -118,28 +117,6 @@ public class MassageDao{
 			pstmt.setString(3, dto.getMsg_content());
 			pstmt.setString(4, dto.getMsg_isread());
 			pstmt.executeUpdate();
-			
-			
-			// msg_id 가져오기
-			sql = "select msg_id from message where mem_id_sender = ? and mem_id_receiver = ? order by msg_id desc";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, dto.getMem_id_sender());
-			pstmt.setInt(2, dto.getMem_id_receiver());
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				msg_id = rs.getInt("msg_id");
-			}
-			
-			// 알림 테이블에 넣기
-			sql = "insert into notification(nt_id, mem_id_sender, mem_id_receiver, nt_date, nt_type, nt_type_id, nt_isread) "
-					+ "values(seq_nt_id.nextVal, ?, ?, sysdate, 'message', ?, 'n')";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, dto.getMem_id_sender());
-			pstmt.setInt(2, dto.getMem_id_receiver());
-			pstmt.setInt(3, msg_id);
-			pstmt.executeUpdate();
-			
 		}
 		
 		catch(Exception err){
@@ -164,7 +141,11 @@ public class MassageDao{
 		
 		try{
 			//sql->connection->pstmt-rs
-			if(keyWord == null){
+			if(keyWord == null||"".equals(keyWord.trim())){
+				
+				System.out.println("검색어가없습니다="+keyWord);
+				
+				
 				//쿼리문이 닉네임을 검색할때와 이름을 검색할때로 나뉘어야한다.
 				//이 쿼리문은 profile이 생성되어있어야 등록이 가능하다. 따라서 profile 개설여부를 묻는 조건문이 필요하다
 				//혹은 쿼리문을 수정하여 name과 nick을 아예 빼버린다.
@@ -186,7 +167,6 @@ public class MassageDao{
 					+"WHERE (mem_id_sender ="+Msg_Sender
 					+" and MEM_ID_RECEIVER="+String.valueOf(login_id)+")";
 				
-				System.out.println("dao="+ sql);
 				
 				//true일때 송신메세지가 출력된다.
 				if(All == true){
@@ -201,6 +181,7 @@ public class MassageDao{
 			
 			else{//검색조건  유
 				
+				System.out.println("[DAO]앗 야생 검색어를 발견했다!="+keyWord);
 				
 				//내용검색.
 				if(keyField.equals("search_content")){
@@ -208,8 +189,8 @@ public class MassageDao{
 						+ Msg_Sender+" and MEM_ID_RECEIVER="+login_id+")) "+
 						"where MSG_Content like '%"+keyWord+"%' "+
 						"order by msg_date desc ";
-					
 				}
+				
 				//사람검색
 				else{
 					sql="select * from(select * FROM Message WHERE (mem_id_sender ="
@@ -264,8 +245,10 @@ public class MassageDao{
 		try {
 
 			// 검색조건이 없다면...
-			if (keyWord == null) {
+			if (null==keyWord||"".equals(keyWord.trim())) {
 
+				System.out.println("[DAO] 검색조건이 없습니다!"+keyWord);
+				
 				sql = "Select mem_ID_sender, max(MSG_DATE)" + "From (select * from message where MEM_ID_RECEIVER= "+mem_id
 						+") group by (mem_ID_sender) "
 						+"order by max(MSG_DATE) desc";
@@ -283,7 +266,10 @@ public class MassageDao{
 			else {
 				
 				//1.이름 검색.
-				if (keyField.equals("search_name")) {
+				if ("search_name".equals(keyField)) {
+					
+					System.out.println("[DAO] 검색조건이 있습니다!"+keyWord);
+					
 					// 1차적으로 이름을 조회한다. 
 					//resultset의 길이가 null인경우 mail을 키워드로 다시 조회한다.
 
@@ -315,7 +301,9 @@ public class MassageDao{
 				} 
 			
 			//2.내용 검색.
-			else if (keyField.equals("search_content")) {
+			else if ("search_content".equals(keyField)) {
+				System.out.println("[DAO] 검색조건이 있습니다!"+keyWord);
+				
 						
 					sql = "select distinct MEM_ID_SENDER from MESSAGE where msg_content like'%"+keyWord+"%'";
 
