@@ -40,7 +40,7 @@
 								<div class="image-hover">
 									<div class="portfolio-simple">
 										<div class="pfImg">
-											<img src="<%= %>"/> 
+											<img src="<%=port.getMl_path2() %>"/> 
 										</div>
 										<div class="pfInfo">
 											<div class="simple-content">

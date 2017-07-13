@@ -59,11 +59,18 @@ public class Portfolio {
     private String ml_path; // 포트폴리오 이미지
     private List<String> tags;
     private int prof_pf_id;
+    private List Ml_path2;// 포트폴리오 이미지 하나만 띄우기..
     
     
     
     
     
+	public List getMl_path2() {
+		return Ml_path2;
+	}
+	public void setMl_path2(List list) {
+		Ml_path2 = list;
+	}
 	public int getProf_pf_id() {
 		return prof_pf_id;
 	}

@@ -46,7 +46,7 @@
 							<div class="image-hover">
 								<div class="portfolio-simple">
 									<div class="pfImg" >
-		            					<img src="<%=portfo.getPf_prof_img() %>"/>   
+		            					<img src="<%=portfo.getMl_path2() %>"/>   
 				         			</div>
 									<div class="pfInfo">
 										<div class="simple-content">

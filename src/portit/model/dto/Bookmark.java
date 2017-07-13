@@ -16,6 +16,7 @@ public class Bookmark {
 	private Date bm_date;
     private String prof_name;
     private String ml_path = "assets/img/login-bg3.png"; // 포트폴리오의 이미지 
+    private List ml_path2;
 	private String pf_title;
     
 	private int pf_like;
@@ -25,6 +26,12 @@ public class Bookmark {
     
     
 
+    public List getMl_path2() {
+    	return ml_path2;
+    }
+    public void setMl_path2(List list) {
+    	this.ml_path2 = list;
+    }
 	public String getProf_nick() {
 		return prof_nick;
 	}
