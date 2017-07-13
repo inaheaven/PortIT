@@ -404,21 +404,21 @@ function fnSelectSnsInfo(snsName){
 					<div class="form-group">
 						<label class="col-md-3 control-label">Skill</label>
 						<div class="col-md-9">
-							<div class="col-md-3"><input class="form-control" id="skill" type="text" name = "tag_name4" placeholder="기술명" ></div>
+							<div class="col-md-3"><input class="form-control" id="skill" type="text" name = "tag_skill" placeholder="기술명" ></div>
 							<div class="col-md-7"><input class="form-control" id="score" type="text" name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" ></div>
 							<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">등록</button></div>
 						</div>
 						<div id="Skill" class="collapse">
 							<label class="col-md-3 control-label"></label>
 							<div class="col-md-9">
-								<div class="col-md-3"><input class="form-control" id="skill2" type="text" name = "tag_name5" placeholder="기술명" ></div>
-								<div class="col-md-7"><input class="form-control" id="score2" type="text" name = "prof_skill_level2" placeholder="숫자 1~5까지 입력하세요" ></div>
+								<div class="col-md-3"><input class="form-control" id="skill2" type="text" name = "tag_skill" placeholder="기술명" ></div>
+								<div class="col-md-7"><input class="form-control" id="score2" type="text" name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" ></div>
 								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill2()">등록</button></div>
 							</div>
 							<label class="col-md-3 control-label"></label>
 							<div class="col-md-9">
-								<div class="col-md-3"><input class="form-control" id="skill3" type="text" name = "tag_name6" placeholder="기술명" ></div>
-								<div class="col-md-7"><input class="form-control" id="score3" type="text" name = "prof_skill_level3" placeholder="숫자 1~5까지 입력하세요" ></div>
+								<div class="col-md-3"><input class="form-control" id="skill3" type="text" name = "tag_skill" placeholder="기술명" ></div>
+								<div class="col-md-7"><input class="form-control" id="score3" type="text" name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" ></div>
 								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill3()">등록</button></div>
 							</div>
 						</div>

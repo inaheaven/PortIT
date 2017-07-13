@@ -27,15 +27,6 @@ public class Profile {
 	private String prof_tool;
 	private String prof_field;
 	private String tag_name;
-
-	private String tag_name2;
-	private String tag_name3;
-	private String tag_name4;
-	private String tag_name5;
-	private String tag_name6;
-	private int prof_skill_level;
-	private int prof_skill_level2;
-	private int prof_skill_level3;
 	private List tags;
 
 	private List<Tag> prof_tags_language;
@@ -53,9 +44,21 @@ public class Profile {
 	private List tag_tool;
 	private List tag_field;
 	private List tag_skill;
+	private List prof_skill_level;
 	
 	
-	
+	public List getTag_field() {
+		return tag_field;
+	}
+	public void setTag_field(List tag_field) {
+		this.tag_field = tag_field;
+	}
+	public List getProf_skill_level() {
+		return prof_skill_level;
+	}
+	public void setProf_skill_level(List prof_skill_level) {
+		this.prof_skill_level = prof_skill_level;
+	}
 	public ArrayList<Integer> getProf_id_list() {
 		return prof_id_list;
 	}
@@ -135,30 +138,9 @@ public class Profile {
 	public String getTag_name() {
 		return tag_name;
 	}
-	public String getTag_name2() {
-		return tag_name2;
-	}
-	public String getTag_name3() {
-		return tag_name3;
-	}
-	public String getTag_name4() {
-		return tag_name4;
-	}
-	public String getTag_name5() {
-		return tag_name5;
-	}
-	public String getTag_name6() {
-		return tag_name6;
-	}
-	public int getProf_skill_level() {
-		return prof_skill_level;
-	}
-	public int getProf_skill_level2() {
-		return prof_skill_level2;
-	}
-	public int getProf_skill_level3() {
-		return prof_skill_level3;
-	}
+
+	
+
 	public List<Tag> getProf_tags_language() {
 		return prof_tags_language;
 	}
@@ -245,38 +227,7 @@ public class Profile {
 		this.tag_name = tag_name;
 		return this;
 	}
-	public Profile setTag_name2(String tag_name2) {
-		this.tag_name2 = tag_name2;
-		return this;
-	}
-	public Profile setTag_name3(String tag_name3) {
-		this.tag_name3 = tag_name3;
-		return this;
-	}
-	public Profile setTag_name4(String tag_name4) {
-		this.tag_name4 = tag_name4;
-		return this;
-	}
-	public Profile setTag_name5(String tag_name5) {
-		this.tag_name5 = tag_name5;
-		return this;
-	}
-	public Profile setTag_name6(String tag_name6) {
-		this.tag_name6 = tag_name6;
-		return this;
-	}
-	public Profile setProf_skill_level(int prof_skill_level) {
-		this.prof_skill_level = prof_skill_level;
-		return this;
-	}
-	public Profile setProf_skill_level2(int prof_skill_level2) {
-		this.prof_skill_level2 = prof_skill_level2;
-		return this;
-	}
-	public Profile setProf_skill_level3(int prof_skill_level3) {
-		this.prof_skill_level3 = prof_skill_level3;
-		return this;
-	}
+
 	public Profile setProf_tags_language(List<Tag> prof_tags_language) {
 		this.prof_tags_language = prof_tags_language;
 		return this;
@@ -313,12 +264,7 @@ public class Profile {
 	public void setTag_tool(List tag_tool) {
 		this.tag_tool = tag_tool;
 	}
-	public List getTag_field() {
-		return tag_field;
-	}
-	public void setTag_field(List tag_field) {
-		this.tag_field = tag_field;
-	}
+	
 	public List getTag_skill() {
 		return tag_skill;
 	}

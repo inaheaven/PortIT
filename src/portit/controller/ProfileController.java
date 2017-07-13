@@ -74,14 +74,11 @@ public class ProfileController extends HttpServlet {
 		String prof_website = req.getParameter("prof_website");
 		String prof_facebook = req.getParameter("prof_facebook");
 		String prof_github = req.getParameter("prof_github");
-	
-		String tag_name4 = req.getParameter("tag_name4");
-		String tag_name5 = req.getParameter("tag_name5");
-		String tag_name6 = req.getParameter("tag_name6");
-
 		String[] lang_list1 = req.getParameterValues("tag_lang");
 		String[] tool_list1 = req.getParameterValues("tag_tool");
 		String[] field_list1 = req.getParameterValues("tag_field");
+		String[] tag_skill1 = req.getParameterValues("tag_skill");
+		String[] prof_skill_level1 = req.getParameterValues("prof_skill_level");
 		
 		
 		List<String> tag_lang = new ArrayList();
@@ -99,35 +96,25 @@ public class ProfileController extends HttpServlet {
 			tag_field.add(tags);
 		}
 		
+		List<String> tag_skill = new ArrayList();
+		for(String tags : tag_skill1){
+			tag_skill.add(tags);
+		}
+		
+		List<String> prof_skill_level = new ArrayList();
+		for(String tags : prof_skill_level1){
+			prof_skill_level.add(tags);
+		}
+		
 				
 		System.out.println(tag_lang);
 		System.out.println(tag_tool);
 		System.out.println(tag_field);
+		System.out.println("tag_skill: "+ tag_skill);
+		System.out.println("prof_skill_level: "+ prof_skill_level);
 		
 		System.out.println("name :" + prof_name);
 		
-		//null값이 넘어 오는 경우 오류 처리
-		int prof_skill_level = 0;
-		int prof_skill_level2 = 0;
-		int prof_skill_level3 = 0;
-
-		if (req.getParameter("prof_skill_level") == null || req.getParameter("prof_skill_level").equals("")) {
-			prof_skill_level = 0;
-		} else {
-			prof_skill_level = Integer.parseInt(req.getParameter("prof_skill_level"));
-		}
-
-		if (req.getParameter("prof_skill_level2") == null || req.getParameter("prof_skill_level").equals("")) {
-			prof_skill_level2 = 0;
-		} else {
-			prof_skill_level2 = Integer.parseInt(req.getParameter("prof_skill_level2"));
-		}
-
-		if (req.getParameter("prof_skill_level3") == null || req.getParameter("prof_skill_level").equals("")) {
-			prof_skill_level3 = 0;
-		} else {
-			prof_skill_level3 = Integer.parseInt(req.getParameter("prof_skill_level3"));
-		}
 
 //		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
 		
@@ -143,16 +130,12 @@ public class ProfileController extends HttpServlet {
 		prof_reg.setProf_website(prof_website);
 		prof_reg.setProf_facebook(prof_facebook);
 		prof_reg.setProf_github(prof_github);
-		
-		prof_reg.setTag_name4(tag_name4);
-		prof_reg.setTag_name5(tag_name5);
-		prof_reg.setTag_name6(tag_name6);
-		prof_reg.setProf_skill_level(prof_skill_level);
-		prof_reg.setProf_skill_level2(prof_skill_level2);
-		prof_reg.setProf_skill_level3(prof_skill_level3);
+	
 		prof_reg.setTag_lang(tag_lang);
 		prof_reg.setTag_tool(tag_tool);
 		prof_reg.setTag_field(tag_field);
+		prof_reg.setTag_skill(tag_skill);
+		prof_reg.setProf_skill_level(prof_skill_level);
 		
 		profileDao.addprofile(prof_reg, loginId);
 		req.setAttribute("prof_reg", prof_reg);
