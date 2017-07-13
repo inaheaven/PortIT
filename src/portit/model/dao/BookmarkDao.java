@@ -19,7 +19,7 @@ import portit.model.dto.Tag;
 public class BookmarkDao {
 	private Connection conn;
 	private PreparedStatement stmt;
-	private ResultSet rs, rs2, rs3;
+	private ResultSet rs, rs2, rs3, rs4;
 	private DBConnectionMgr pool;
 	String sql = "";
 
@@ -64,14 +64,14 @@ public class BookmarkDao {
 				bm.setMem_id(rs.getInt("mem_id"));
 				bm.setPf_id(rs.getInt("pf_id"));
 				bm.setBm_date(rs.getDate("bm_date"));
-				bm.setMl_path(rs.getString("ml_path"));
+				//bm.setMl_path(rs.getString("ml_path"));
 				bm.setProf_nick(rs.getString("prof_nick"));//여기랑
 				bm.setPf_title(rs.getString("pf_title"));
 				bm.setPf_like(rs.getInt("pf_like"));
 				//bm.setPf_prof_img(rs.getString("pf_prof_img"));
-				int pf_id = rs.getInt("pf_id");
 				
-							
+				int pf_id = rs.getInt("pf_id");
+				bm.setMl_path2(bookmark_media(pf_id));
 				bm.setTags(getTag(bm, pf_id));
 				bmList.add(bm);
 			}
@@ -172,8 +172,8 @@ public class BookmarkDao {
 			sql = "MERGE INTO BOOKMARK  USING DUAL ON (MEM_ID=? and PF_ID=? ) "
 					+ "WHEN MATCHED THEN UPDATE SET bm_ID=1  DELETE  WHERE MEM_ID=? and PF_ID=? "
 					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE) "
-					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE) ";
-					/*//CREATE SEQUENCE SEQ_TAG_ID
+					+ "VALUES (SEQ_BM_ID.NEXTVAL,?,?,SYSDATE) ";
+					/*//CREATE SEQUENCE SEQ_BM_ID
 						           INCREMENT BY 1
 						           START WITH   1
 						           MAXVALUE 9999999999999999999999999999
@@ -213,5 +213,28 @@ public class BookmarkDao {
 		} catch (Exception err) {
 			System.out.println("DBCP  : " + err);
 		}
+	}
+	
+	public List bookmark_media(int pf_id) {
+		try {
+			String sql = "SELECT ml_path FROM (SELECT * FROM portfolio pf, media_library ml "
+					+ " WHERE pf.pf_id = ml.ml_type_id AND ml.ml_type = 'pf' AND ml.ml_type_id = ? ) "
+					+ " WHERE rownum < 1 ";
+			
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, pf_id);
+			rs4 = stmt.executeQuery();
+			
+			List<String> media_path = new ArrayList<>();
+			while (rs4.next()) {
+				media_path.add(rs4.getString("ml_path"));
+			}
+			return media_path;
+		} 
+		catch (Exception e) {
+			System.out.println("ml_path(proj) 오류" + e);
+		}
+		return null;
 	}
 }

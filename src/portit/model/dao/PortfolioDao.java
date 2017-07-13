@@ -22,7 +22,7 @@ public class PortfolioDao {
 
 	private Connection conn;
 	private PreparedStatement stmt;
-	private ResultSet rs, rs2, rs3;
+	private ResultSet rs, rs2, rs3, rs4;
 	private DBConnectionMgr pool;
 	
 	private MediaDao mediaDao;
@@ -758,7 +758,6 @@ public class PortfolioDao {
 	
 	
 
-	
 	/**
 	 * 내가 작성한 포트폴리오 조회하기 
 	 * 
@@ -789,14 +788,14 @@ public class PortfolioDao {
 				//port.setPf_prof_img(rs2.getString("ml_path"));
 				port.setPf_id(rs2.getInt("pf_id"));
 				port.setPf_regdate(rs2.getDate("pf_regdate"));
-				port.setMl_path(rs2.getString("ml_path"));
+				//port.setMl_path(rs2.getString("ml_path"));
 				port.setProf_nick(rs2.getString("prof_nick"));
 				port.setPf_title(rs2.getString("pf_title"));
 				port.setPf_like(rs2.getInt("pf_like"));
 				
 				int pf_id = rs2.getInt("pf_id");
 				
-							
+				port.setMl_path2(myportfolio_media(pf_id));		
 				port.setTags(getTag(port, pf_id));
 				portlist.add(port);
 			}
@@ -859,5 +858,31 @@ public class PortfolioDao {
 			System.out.println("DBCP  : " + err);
 		}
 	}
-
+	/**
+	 * 포트폴리오에서 하나의 사진만 가져오기 
+	 * @param pf_id
+	 * @return
+	 */
+	public List myportfolio_media(int pf_id) {
+		try {
+			String sql = "SELECT ml_path FROM (SELECT * FROM portfolio pf, media_library ml "
+					+ " WHERE pf.pf_id = ml.ml_type_id AND ml.ml_type = 'pf' AND ml.ml_type_id = ? ) "
+					+ " WHERE rownum < 1 ";
+			
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, pf_id);
+			rs4 = stmt.executeQuery();
+			
+			List<String> media_path = new ArrayList<>();
+			while (rs4.next()) {
+				media_path.add(rs4.getString("ml_path"));
+			}
+			return media_path;
+		} 
+		catch (Exception e) {
+			System.out.println("ml_path(proj) 오류" + e);
+		}
+		return null;
+	}
 }

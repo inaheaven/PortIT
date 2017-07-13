@@ -57,11 +57,17 @@ public class Portfolio {
     private String ml_path; // 포트폴리오 이미지
     private List<String> tags;
     private int prof_pf_id;
+    private List ml_path2;
     
     
     
     
-    
+	public List getMl_path2() {
+		return ml_path2;
+	}
+	public void setMl_path2(List ml_path2) {
+		this.ml_path2 = ml_path2;
+	}
 	public int getProf_pf_id() {
 		return prof_pf_id;
 	}
