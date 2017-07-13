@@ -99,6 +99,8 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					<div class="col-md-12">
 						<h2 class="text-center">About</h2>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-md-offset-2 col-md-8 pfMem">
 						<div class="col-xs-2">
 							<img src="${portfolio.pf_prof_img}"
@@ -127,136 +129,92 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 						</div>
 					</div>
 				</div>
-				<div class="col-md-offset-2 col-md-4">
-					<div class="intro">
-						${portfolio.pf_intro}
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="intro">
-						<table class="table">
-							<tr>
-								<th>기간</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>사용언어</th>
-								<td>
-									<c:if test="${!empty portfolio.pf_tags_language}">
-										<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-											<span> <a href="">${pf_tag_language.tag_name}</a> </span>
-										</c:forEach>
-									</c:if>
-								</td>
-							</tr>
-							<tr>
-								<th>사용도구</th>
-								<td>
-									<c:if test="${!empty portfolio.pf_tags_tool}">
-										<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
-											<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
-										</c:forEach>
-									</c:if>
-								</td>
-							</tr>
-							<tr>
-								<th>인원</th>
-								<td>${portfolio.pf_numofperson}명</td>
-							</tr>
-							<tr>
-								<th>담당분야</th>
-								<td>
-									<c:if test="${!empty portfolio.pf_tags_field}">
-										<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
-											<span> <a href="">${pf_tag_field.tag_name}</a> </span>
-										</c:forEach>
-									</c:if>
-								</td>
-							</tr>
-							<tr>
-								<th>저장소</th>
-								<td><a href="${portfolio.pf_url}">${portfolio.pf_url}</a></td>
-							</tr>
-						</table>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="intro">
-						<table class="table">
-							<tr>
-								<th>기간</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>사용언어</th>
-								<td>
-									<c:if test="${!empty portfolio.pf_tags_language}">
-										<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-											<span> <a href="">${pf_tag_language.tag_name}</a> </span>
-										</c:forEach>
-									</c:if>
-								</td>
-							</tr>
-							<tr>
-								<th>사용도구</th>
-								<td>
-									<c:if test="${!empty portfolio.pf_tags_tool}">
-										<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
-											<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
-										</c:forEach>
-									</c:if>
-								</td>
-							</tr>
-							<tr>
-								<th>인원</th>
-								<td>${portfolio.pf_numofperson}명</td>
-							</tr>
-							<tr>
-								<th>담당분야</th>
-								<td>
-									<c:if test="${!empty portfolio.pf_tags_field}">
-										<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
-											<span> <a href="">${pf_tag_field.tag_name}</a> </span>
-										</c:forEach>
-									</c:if>
-								</td>
-							</tr>
-							<tr>
-								<th>저장소</th>
-								<td><a href="${portfolio.pf_url}">${portfolio.pf_url}</a></td>
-							</tr>
-						</table>
-					</div>
-				</div>
-				<c:if test="${!empty portfolio.pf_mediaList}">
-					<div class="col-md-offset-2 col-md-8 pfMedia">
-						<div id="Screenshots" class="carousel slide" data-ride="carousel">
-							<!-- Indicators -->
-							<ol class="carousel-indicators">
-								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
-									<li data-target="#Screenshots" data-slide-to="${status.index}">
-								</c:forEach>	
-							</ol>
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner">
-								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
-									<div class="item">
-										<img src="${pf_media.ml_path}" />
-									</div>
-								</c:forEach>				
-							</div>
-							<!-- Controls -->
-							<a class="left carousel-control" href="#Screenshots" data-slide="prev">
-								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-								<span class="sr-only">Previous</span>
-							</a>
-							<a class="right carousel-control" href="#Screenshots" data-slide="next">
-								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-								<span class="sr-only">Next</span>
-							</a>
+				<div class="row">
+					<div class="col-md-offset-2 col-md-4">
+						<div class="intro">
+							${portfolio.pf_intro}
 						</div>
 					</div>
-				</c:if>
+					<div class="col-md-4">
+						<div class="intro">
+							<table class="table">
+								<tr>
+									<th>기간</th>
+									<td></td>
+								</tr>
+								<tr>
+									<th>사용언어</th>
+									<td>
+										<c:if test="${!empty portfolio.pf_tags_language}">
+											<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
+												<span> <a href="">${pf_tag_language.tag_name}</a> </span>
+											</c:forEach>
+										</c:if>
+									</td>
+								</tr>
+								<tr>
+									<th>사용도구</th>
+									<td>
+										<c:if test="${!empty portfolio.pf_tags_tool}">
+											<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
+												<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
+											</c:forEach>
+										</c:if>
+									</td>
+								</tr>
+								<tr>
+									<th>인원</th>
+									<td>${portfolio.pf_numofperson}명</td>
+								</tr>
+								<tr>
+									<th>담당분야</th>
+									<td>
+										<c:if test="${!empty portfolio.pf_tags_field}">
+											<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
+												<span> <a href="">${pf_tag_field.tag_name}</a> </span>
+											</c:forEach>
+										</c:if>
+									</td>
+								</tr>
+								<tr>
+									<th>저장소</th>
+									<td><a href="${portfolio.pf_url}">${portfolio.pf_url}</a></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<c:if test="${!empty portfolio.pf_mediaList}">
+						<div class="col-md-offset-2 col-md-8 pfMedia">
+							<div id="Screenshots" class="carousel slide" data-ride="carousel">
+								<!-- Indicators -->
+								<ol class="carousel-indicators">
+									<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+										<li data-target="#Screenshots" data-slide-to="${status.index}">
+									</c:forEach>	
+								</ol>
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner">
+									<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+										<div class="item">
+											<img src="${pf_media.ml_path}" />
+										</div>
+									</c:forEach>				
+								</div>
+								<!-- Controls -->
+								<a class="left carousel-control" href="#Screenshots" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="right carousel-control" href="#Screenshots" data-slide="next">
+									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</div>
+						</div>
+					</c:if>
+				</div>
 			</div>
 		</section>
 		<!-- /About -->
@@ -395,79 +353,83 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 			
 			// 좋아요 토글
 			$("#likeToggle").click(function() {
-				var value = $(this).attr("value");
-				var mem_id = ${pageContext.session.loginId};
+				var value = $("#likeToggle").attr("value");
+				var mem_id = ${sessionScope.loginId};
 				var pf_id = ${portfolio.pf_id}
 				
+				var param;
 				if (value == "like") {
-					data = {
-							"cmd" : "like",
+					param = {
+							"cmd" : value,
 							"mem_id" : mem_id,
 							"pf_id" : pf_id
 							};
 				} else if (value == "dislike") {
-					data = {
-							"cmd" : "dislike",
+					param = {
+							"cmd" : value,
 							"mem_id" : mem_id,
 							"pf_id" : pf_id
 							};
 				}
 				
-				$.ajax({
+				var request = $.ajax({
 					type : "POST",
 					url : "/like",
-					data : data,
-					success : function() {
-						if (value == "like") {
-							$(this).empty();						
-							$(this).append("<i class=\"fa fa-heart\"></i>");
-							$(this).attr("value", "dislike");
-						} else {
-							$(this).empty();
-							$(this).append("<i class=\"fa fa-heart-o\"></i>");
-							$(this).attr("value", "like");
-						}
-					},
-					dataType : dataType
+					data : param,
+					dataType : "text"
+				});
+				
+				request.done(function(likes) {
+					if (value == "like") {
+						$("#likeToggle").empty();						
+						$("#likeToggle").append("<i class=\"fa fa-heart\"></i>");
+						$("#likeToggle").attr("value", "dislike");
+					} else {
+						$("#likeToggle").empty();
+						$("#likeToggle").append("<i class=\"fa fa-heart-o\"></i>");
+						$("#likeToggle").attr("value", "like");
+					}
 				});
 			});
 			
 			// 북마크 토글
 			$("#bookmarkToggle").click(function() {
-				var value = $(this).attr("value");
-				var mem_id = ${pageContext.session.loginId};
+				var value = $("#bookmarkToggle").attr("value");
+				var mem_id = ${sessionScope.loginId};
 				var pf_id = ${portfolio.pf_id}
 				
+				var param;
 				if (value == "bookmark") {
-					data = {
-							"cmd" : "bookmark",
+					param = {
+							"cmd" : value,
 							"mem_id" : mem_id,
 							"pf_id" : pf_id
 							};
 				} else if (value == "unbookmark") {
-					data = {
-							"cmd" : "unbookmark",
+					param = {
+							"cmd" : value,
 							"mem_id" : mem_id,
 							"pf_id" : pf_id
 							};
 				}
 				
-				$.ajax({
+				var request = $.ajax({
 					type : "POST",
 					url : "/bmk",
-					data : data,
-					success : function() {
-						if (value == "bookmark") {
-							$(this).empty();						
-							$(this).append("<i class=\"fa fa-bookmark\"></i>");
-							$(this).attr("value", "unbookmark");
-						} else {
-							$(this).empty();
-							$(this).append("<i class=\"fa fa-bookmark-o\"></i>");
-							$(this).attr("value", "bookmark");
-						}
-					},
-					dataType : dataType
+					data : param,
+					dataType : "text"
+				});
+				
+				request.done(function(bookmark) {
+					if (value == "bookmark") {
+						$("#bookmarkToggle").empty();						
+						$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
+						$("#bookmarkToggle").attr("value", "unbookmark");
+					} else {
+						$("#bookmarkToggle").empty();
+						$("#bookmarkToggle").append("<i class=\"fa fa-bookmark-o\"></i>");
+						$("#bookmarkToggle").attr("value", "bookmark");
+					}
 				});
 			});
 		});		

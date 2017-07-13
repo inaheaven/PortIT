@@ -29,10 +29,13 @@ public class LikeServlet extends HttpServlet {
 		int mem_id = Integer.parseInt(req.getParameter("mem_id"));
 		String cmd = req.getParameter("cmd");
 		
+		int likes = 0;
 		if ("like".equals(cmd)) {
-			portfolioDao.addLike(mem_id, pf_id);
+			likes = portfolioDao.addLike(mem_id, pf_id);
 		} else if ("dislike".equals(cmd)) {
-			portfolioDao.minusLike(mem_id, pf_id);
+			likes = portfolioDao.minusLike(mem_id, pf_id);
 		}
+		
+		resp.getWriter().print(likes);
 	}
 }
