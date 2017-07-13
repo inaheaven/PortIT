@@ -13,9 +13,7 @@
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 
 <%	
-	HttpSession session = req.getSession();
-	int loginId = (int)session.getAttribute("loginId");
-	System.out.println(loginId);
+	int loginId = request.getAttribute("loginId");
 
 	Profile prof= dao.getProfile(loginId);
 %>

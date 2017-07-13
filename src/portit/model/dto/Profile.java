@@ -52,7 +52,7 @@ public class Profile {
 	private List tag_lang;
 	private List tag_tool;
 	private List tag_field;
-	
+	private List tag_skill;
 	
 	
 	
@@ -318,6 +318,12 @@ public class Profile {
 	}
 	public void setTag_field(List tag_field) {
 		this.tag_field = tag_field;
+	}
+	public List getTag_skill() {
+		return tag_skill;
+	}
+	public void setTag_skill(List tag_skill) {
+		this.tag_skill = tag_skill;
 	}
 	
 

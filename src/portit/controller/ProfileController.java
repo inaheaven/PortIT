@@ -53,7 +53,9 @@ public class ProfileController extends HttpServlet {
 
 		HttpSession session = req.getSession();
 		int loginId = (int)session.getAttribute("loginId");
-		System.out.println(loginId);
+		System.out.println("login Id :" +loginId);
+		req.setAttribute("loginId", loginId);
+		
 		
 		String cmd = req.getParameter("cmd");
 		String url = "";
@@ -81,6 +83,7 @@ public class ProfileController extends HttpServlet {
 		String[] tool_list1 = req.getParameterValues("tag_tool");
 		String[] field_list1 = req.getParameterValues("tag_field");
 		
+		
 		List<String> tag_lang = new ArrayList();
 		for(String tags : lang_list1){
 			tag_lang.add(tags);
@@ -95,10 +98,12 @@ public class ProfileController extends HttpServlet {
 		for(String tags : field_list1){
 			tag_field.add(tags);
 		}
+		
 				
 		System.out.println(tag_lang);
 		System.out.println(tag_tool);
 		System.out.println(tag_field);
+		
 		System.out.println("name :" + prof_name);
 		
 		//null값이 넘어 오는 경우 오류 처리
