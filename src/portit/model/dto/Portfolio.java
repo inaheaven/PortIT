@@ -29,12 +29,10 @@ public class Portfolio {
 	/** 포트폴리오 URL */
 	private String pf_url;
 	/** 포트폴리오 작성자명 */
-	private String pf_authorName;
 	private String pf_prof_name;
 	private String pf_prof_nick;
 	
 	/** 포트폴리오 작성자 사진 */
-	private String pf_authorIcon;
 	private String pf_prof_img;
 	
 	/** 포트폴리오 태그 목록 - 개발환경 */
@@ -108,17 +106,11 @@ public class Portfolio {
 	public String getPf_url() {
 		return pf_url;
 	}
-	public String getPf_authorName() {
-		return pf_authorName;
-	}
 	public String getPf_prof_name() {
 		return pf_prof_name;
 	}
 	public String getPf_prof_nick() {
 		return pf_prof_nick;
-	}
-	public String getPf_authorIcon() {
-		return pf_authorIcon;
 	}
 	public String getPf_prof_img() {
 		return pf_prof_img;
@@ -196,20 +188,12 @@ public class Portfolio {
 		this.pf_url = pf_url;
 		return this;
 	}
-	public Portfolio setPf_authorName(String pf_authorName) {
-		this.pf_authorName = pf_authorName;
-		return this;
-	}
 	public Portfolio setPf_prof_name(String pf_prof_name) {
 		this.pf_prof_name = pf_prof_name;
 		return this;
 	}
 	public Portfolio setPf_prof_nick(String pf_prof_nick) {
 		this.pf_prof_nick = pf_prof_nick;
-		return this;
-	}
-	public Portfolio setPf_authorIcon(String pf_authorIcon) {
-		this.pf_authorIcon = pf_authorIcon;
 		return this;
 	}
 	public Portfolio setPf_prof_img(String pf_prof_img) {

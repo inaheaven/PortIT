@@ -29,7 +29,8 @@ public class TagDao {
 		List<Tag> tagList = new ArrayList<Tag>();
 		Tag tag = null;
 		try {
-			sql = "SELECT * FROM tag_use tu "
+			sql = "SELECT t.tag_id, t.tag_type, t.tag_name, tu.prof_skill_level, tu.proj_numofperson "
+					+ "FROM tag_use tu "
 					+ "INNER JOIN tag t "
 					+ "ON tu.tag_id=t.tag_id "
 					+ "WHERE t.tag_type=? AND tu.tag_use_type_id=?";
@@ -39,11 +40,11 @@ public class TagDao {
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				tag = new Tag()
-						.setTag_id(rs.getInt("t.tag_id"))
-						.setTag_type(rs.getString("t.tag_type"))
-						.setTag_name(rs.getString("t.tag_name"))
-						.setProf_skill_level(rs.getInt("tu.prof_skill_level"))
-						.setProj_numofperson(rs.getInt("tu.proj_numofperson"));
+						.setTag_id(rs.getInt(1))
+						.setTag_type(rs.getString(2))
+						.setTag_name(rs.getString(3))
+						.setProf_skill_level(rs.getInt(4))
+						.setProj_numofperson(rs.getInt(5));
 				tagList.add(tag);
 			}
 		} catch (Exception e) {
@@ -75,6 +76,7 @@ public class TagDao {
 		}
 		return rows;
 	}
+	
 	
 	/**
 	 * 태그 정보 삭제
@@ -129,12 +131,39 @@ public class TagDao {
 	public int updateTagUse(Connection conn, String articleType, int articleId, Tag tag) {
 		int rows = 0;
 		try {
-			sql = "UPDATE tag_use SET prof_skill_level=?, proj_numofperson=? "
-					+ "WHERE tag_use_type=? AND tag_use_type_id=?";
+			sql = "SELECT t.tag_id, t.tag_type, tu.prof_skill_level, tu.proj_numofperson "
+					+ "FROM tag t INNER JOIN tag_use tu "
+					+ "ON t.tag_id=tu.tag_id "
+					+ "WHERE t.tag_name=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, tag.getProf_skill_level());
-			stmt.setString(2, articleType);
-			stmt.setInt(3, articleId);
+			stmt.setString(1, tag.getTag_name());
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				tag.setTag_id(rs.getInt(1))
+				.setTag_type(rs.getString(2))
+				.setProf_skill_level(rs.getInt(3))
+				.setProj_numofperson(rs.getInt(4));
+			}
+
+			sql = "MERGE INTO tag_use tu "
+					+ "USING (SELECT * FROM tag_use WHERE tag_use_type=? AND tag_use_type_id=?) t "
+					+ "ON tu.tag_use_id=t.tag_use_id "
+					+ "WHEN MATCHED THEN "
+					+ "UPDATE SET tu.tag_id=? "
+					+ "WHERE tu.tag_id!=? AND tag_use_type=? AND tag_use_type_id=? "
+					+ "WHEN NOT MATCHED THEN "
+					+ "INSERT (tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id) "
+					+ "VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, articleType);
+			stmt.setInt(2, articleId);
+			stmt.setInt(3, tag.getTag_id());
+			stmt.setInt(4, tag.getTag_id());
+			stmt.setString(5, articleType);
+			stmt.setInt(6, articleId);
+			stmt.setString(7, articleType);
+			stmt.setInt(8, articleId);
+			stmt.setInt(9, tag.getTag_id());
 			rows += stmt.executeUpdate();
 			return rows;
 		} catch (Exception e) {
@@ -159,5 +188,4 @@ public class TagDao {
 		}
 		return rows;
 	}
-	
 }

@@ -3,10 +3,13 @@ package portit.model.dto;
 import java.util.ArrayList;
 
 public class Tag {
+
+	/** 태그 ID */
 	private int tag_id;
+	/** 태그 분류(언어/도구/분야) */
 	private String tag_type;
+	/** 태그 이름 */
 	private String tag_name;
-	
 	/** 프로필 스킬레벨 */
 	private int prof_skill_level;
 	/** 프로젝트 모집인원수 */
@@ -15,6 +18,7 @@ public class Tag {
 	private ArrayList<String> proj_tool_list  = new ArrayList<>();
 	private ArrayList<String> proj_field_list = new ArrayList<>();
 	private ArrayList<String> proj_lang_list  = new ArrayList<>();
+
 	public int getTag_id() {
 		return tag_id;
 	}
@@ -73,8 +77,4 @@ public class Tag {
 		return this;
 	}
 	
-	
-	
-	
-
 }

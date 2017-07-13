@@ -42,6 +42,24 @@ public class ControllerFactory {
 		else if (param.equals("projectView")) {
 			return new ProjectViewController();
 		}
+		else if (param.equals("profileEdit")) {
+			return new ProfileEditController();
+		}
+		else if (param.equals("portfolioEdit")) {
+			return new PortfolioEditController();
+		}
+		else if (param.equals("projectEdit")) {
+			return new ProjectEditController();
+		}
+		else if (param.equals("profileDelete")) {
+			return new ProfileDeleteController();
+		}
+		else if (param.equals("portfolioDelete")) {
+			return new PortfolioDeleteController();
+		}
+		else if (param.equals("projectDelete")) {
+			return new ProjectDeleteController();
+		}
 		else {
 			return null;
 		}

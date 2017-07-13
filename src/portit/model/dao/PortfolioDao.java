@@ -100,14 +100,14 @@ public class PortfolioDao {
 				// 작성자 정보를 조회해서 DTO에 저장
 				sql = "SELECT prof.prof_name, prof.prof_nick, prof.prof_img FROM profile prof"
 						+ " INNER JOIN prof_pf pp "
-						+ " ON prof.prof_id=pp.prof_id WHERE pp.pf_id=?";
+						+ " ON prof.prof_id=pp.prof_id WHERE pp.prof_id=?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					portfolio.setPf_prof_name(rs.getString("prof.prof_name"))
-					.setPf_prof_nick(rs.getString("prof.prof_nick"))
-					.setPf_prof_img(rs.getString("prof.prof_img"));
+					portfolio.setPf_prof_name(rs.getString(1))
+					.setPf_prof_nick(rs.getString(2))
+					.setPf_prof_img(rs.getString(3));
 				}
 				
 				// 좋아요 수를 조회해서 DTO에 저장
@@ -115,14 +115,15 @@ public class PortfolioDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, pf_id);
 				rs = stmt.executeQuery();
-				rs.next();
-				portfolio.setPf_like(rs.getInt(1));
+				if (rs.next()) {
+					portfolio.setPf_like(rs.getInt(1));
+				}
 				
 				// 태그 사용 데이터를 조회해서 DTO에 저장
 				List<Tag> tags_language = new ArrayList<Tag>();
 				List<Tag> tags_tool= new ArrayList<Tag>();
 				List<Tag> tags_field= new ArrayList<Tag>();
-				sql = "SELECT * FROM tag_use tu INNER JOIN tag t "
+				sql = "SELECT tu.tag_id, t.tag_type, t.tag_name FROM tag_use tu INNER JOIN tag t "
 						+ "ON tu.tag_id=t.tag_id "
 						+ "WHERE tu.tag_use_type=? AND tu.tag_use_type_id=?";
 				stmt = conn.prepareStatement(sql);
@@ -130,25 +131,25 @@ public class PortfolioDao {
 				stmt.setInt(2, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("language".equalsIgnoreCase(rs.getString(2))) {
 						Tag tag_language = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
+								.setTag_id(rs.getInt(1))
+								.setTag_type(rs.getString(2))
+								.setTag_name(rs.getString(3));
 						tags_language.add(tag_language);
 					}
-					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("tool".equalsIgnoreCase(rs.getString(2))) {
 						Tag tag_tool = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
+								.setTag_id(rs.getInt(1))
+								.setTag_type(rs.getString(2))
+								.setTag_name(rs.getString(3));
 						tags_tool.add(tag_tool);
 					}
-					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("field".equalsIgnoreCase(rs.getString(2))) {
 						Tag tag_field = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
+								.setTag_id(rs.getInt(1))
+								.setTag_type(rs.getString(2))
+								.setTag_name(rs.getString(3));
 						tags_field.add(tag_field);
 					}
 				}
@@ -231,9 +232,9 @@ public class PortfolioDao {
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					portfolio.setPf_prof_name(rs.getString("prof.prof_name"))
-					.setPf_prof_nick(rs.getString("prof.prof_nick"))
-					.setPf_prof_img(rs.getString("prof.prof_img"));
+					portfolio.setPf_prof_name(rs.getString(1))
+					.setPf_prof_nick(rs.getString(2))
+					.setPf_prof_img(rs.getString(3));
 				}
 				
 				// 좋아요 수를 조회해서 DTO에 저장
@@ -241,14 +242,15 @@ public class PortfolioDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, portfolio.getPf_id());
 				rs = stmt.executeQuery();
-				rs.next();
-				portfolio.setPf_like(rs.getInt(1));
+				if (rs.next()) {
+					portfolio.setPf_like(rs.getInt(1));
+				}
 				
 				// 태그 사용 데이터를 조회해서 DTO에 저장
 				List<Tag> tags_language = new ArrayList<Tag>();
 				List<Tag> tags_tool= new ArrayList<Tag>();
 				List<Tag> tags_field= new ArrayList<Tag>();
-				sql = "SELECT * FROM tag_use tu INNER JOIN tag t "
+				sql = "SELECT tu.tag_id, t.tag_type, t.tag_name FROM tag_use tu INNER JOIN tag t "
 						+ "ON tu.tag_id=t.tag_id "
 						+ "WHERE tu.tag_use_type=? AND tu.tag_use_type_id=?";
 				stmt = conn.prepareStatement(sql);
@@ -256,25 +258,25 @@ public class PortfolioDao {
 				stmt.setInt(2, portfolio.getPf_id());
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					if ("language".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("language".equalsIgnoreCase(rs.getString(2))) {
 						Tag tag_language = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
+								.setTag_id(rs.getInt(1))
+								.setTag_type(rs.getString(2))
+								.setTag_name(rs.getString(3));
 						tags_language.add(tag_language);
 					}
-					if ("tool".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("tool".equalsIgnoreCase(rs.getString(2))) {
 						Tag tag_tool = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
+								.setTag_id(rs.getInt(1))
+								.setTag_type(rs.getString(2))
+								.setTag_name(rs.getString(3));
 						tags_tool.add(tag_tool);
 					}
-					if ("field".equalsIgnoreCase(rs.getString("t.tag_type"))) {
+					if ("field".equalsIgnoreCase(rs.getString(2))) {
 						Tag tag_field = new Tag()
-								.setTag_id(rs.getInt("t.tag_id"))
-								.setTag_type(rs.getString("t.tag_type"))
-								.setTag_name("t.tag_name");
+								.setTag_id(rs.getInt(1))
+								.setTag_type(rs.getString(2))
+								.setTag_name(rs.getString(3));
 						tags_field.add(tag_field);
 					}
 				}
@@ -310,10 +312,23 @@ public class PortfolioDao {
 		}
 		return portfolios;
 	}
-	
-	public List<Portfolio> selectListByMemId(int mem_id) {
+
+	public List<Portfolio> selectListByNick(String prof_nick) {
 		List<Portfolio> portfolioList = new ArrayList<Portfolio>();
-		
+		getConnection();
+		try {
+			String sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, usernameToId(prof_nick));
+			rs = stmt.executeQuery();			
+			while (rs.next()) {
+				portfolioList.add(selectOne(rs.getInt("pf_id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}		
 		return portfolioList;
 	}
 	
@@ -339,6 +354,15 @@ public class PortfolioDao {
 			stmt.setInt(6, portfolio.getPf_numofperson());
 			stmt.setString(7, portfolio.getPf_url());
 			rows += stmt.executeUpdate();
+			
+			// 작성된 게시물 번호 얻기
+			sql = "SELECT pf_id FROM portfolio WHERE pf_id=seq_pf_id.currVal";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			int pf_id = 0;
+			if (rs.next()) {
+				pf_id = rs.getInt("pf_id");
+			}
 
 			// 태그 추가
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
@@ -346,66 +370,33 @@ public class PortfolioDao {
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "language");
-					stmt.setString(2, pf_tags_language.get(i).getTag_name());
-					stmt.setString(3, pf_tags_language.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_language.get(i));
 				}
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "tool");
-					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
-					stmt.setString(3, pf_tags_tool.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_tool.get(i));
 				}
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "field");
-					stmt.setString(2, pf_tags_field.get(i).getTag_name());
-					stmt.setString(3, pf_tags_field.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_field.get(i));
 				}
 			}
-			// 태그 사용 추가
+			// 태그 사용 추가			
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
-					sql = "INSERT INTO tag_use("
-							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "portfolio");
-					stmt.setInt(2, tagNameToId(pf_tags_language.get(i).getTag_name()));
-					rows += stmt.executeUpdate();
+					tagDao.insertTagUse(conn, "portfolio", pf_id, pf_tags_language.get(i));
 				}
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
-					sql = "INSERT INTO tag_use("
-							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "portfolio");
-					stmt.setInt(2, tagNameToId(pf_tags_tool.get(i).getTag_name()));
-					rows += stmt.executeUpdate();
+					tagDao.insertTagUse(conn, "portfolio", pf_id, pf_tags_tool.get(i));
 				}
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
-					sql = "INSERT INTO tag_use("
-							+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-							+ ") VALUES(seq_tag_use_id.nextVal,?,seq_pf_id.currVal,?)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "portfolio");
-					stmt.setInt(2, tagNameToId(pf_tags_field.get(i).getTag_name()));
-					rows += stmt.executeUpdate();
+					tagDao.insertTagUse(conn, "portfolio", pf_id, pf_tags_field.get(i));
 				}
 			}
 			
@@ -437,7 +428,16 @@ public class PortfolioDao {
 			stmt.setInt(1, usernameToId(portfolio.getPf_prof_name()));
 			rows += stmt.executeUpdate();
 		} catch (SQLException e) {
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}
@@ -447,7 +447,7 @@ public class PortfolioDao {
 	 * @param pf_id
 	 * @return 수정된 데이터 개수
 	 */
-	public int update(int pf_id, Portfolio portfolio) {
+	public int update(Portfolio portfolio) {
 		int rows = 0;
 		try {
 			// UPDATE문 지정
@@ -471,77 +471,29 @@ public class PortfolioDao {
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
 			if (pf_tags_language != null) {
 				for (int i = 0; i < pf_tags_language.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "language");
-					stmt.setString(2, pf_tags_language.get(i).getTag_name());
-					stmt.setString(3, pf_tags_language.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_language.get(i));
 				}
 			}
 			if (pf_tags_tool != null) {
 				for (int i = 0; i < pf_tags_tool.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "tool");
-					stmt.setString(2, pf_tags_tool.get(i).getTag_name());
-					stmt.setString(3, pf_tags_tool.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_tool.get(i));
 				}
 			}
 			if (pf_tags_field != null) {
 				for (int i = 0; i < pf_tags_field.size(); i++) {
-					sql = "INSERT INTO tag(tag_id, tag_type, tag_name) VALUES(seq_tag_id.nextVal,?,?) WHERE ? NOT IN (SELECT tag_name FROM tag)";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, "field");
-					stmt.setString(2, pf_tags_field.get(i).getTag_name());
-					stmt.setString(3, pf_tags_field.get(i).getTag_name());
-					rows += stmt.executeUpdate();
+					tagDao.insertTag(conn, pf_tags_field.get(i));
 				}
 			}
+			
 			// 태그 사용 수정
-			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < pf_tags_language.size(); i++) {
-				sql = "MERGE INTO tag_use tu"
-						+ " USING tag t"
-						+ " ON tu.tag_id=t.tag_id"
-						+ " WHEN MATCHED THEN"
-						+ " UPDATE SET tu.tag_id=t.tag_id"
-						+ " WHEN NOT MATCHED THEN INSERT ("
-						+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-						+ ") VALUES (?,?,?,t.tag_id)";
-				stmt.setString(1, "'%"+ pf_tags_language.get(i).getTag_name() + "%'");
-				stmt.setString(2, "seq_tag_use_id.nextVal");
-				stmt.setString(3, "portfolio");
-				rows += stmt.executeUpdate();
+				tagDao.updateTagUse(conn, "portfolio", portfolio.getPf_id(), pf_tags_language.get(i));
 			}
 			for (int i = 0; i < pf_tags_tool.size(); i++) {
-				sql = "MERGE INTO tag_use tu"
-						+ " USING tag t"
-						+ " ON tu.tag_id=t.tag_id"
-						+ " WHEN MATCHED THEN"
-						+ " UPDATE SET tu.tag_id=t.tag_id"
-						+ " WHEN NOT MATCHED THEN INSERT ("
-						+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-						+ ") VALUES (?,?,?,t.tag_id)";
-				stmt.setString(1, "'%"+ pf_tags_tool.get(i).getTag_name() + "%'");
-				stmt.setString(2, "seq_tag_use_id.nextVal");
-				stmt.setString(3, "portfolio");
-				rows += stmt.executeUpdate();
+				tagDao.updateTagUse(conn, "portfolio", portfolio.getPf_id(), pf_tags_tool.get(i));
 			}
 			for (int i = 0; i < pf_tags_field.size(); i++) {
-				sql = "MERGE INTO tag_use tu"
-						+ " USING tag t"
-						+ " ON tu.tag_id=t.tag_id"
-						+ " WHEN MATCHED THEN"
-						+ " UPDATE SET tu.tag_id=t.tag_id"
-						+ " WHEN NOT MATCHED THEN INSERT ("
-						+ "tu.tag_use_id, tu.tag_use_type, tu.tag_use_type_id, tu.tag_id"
-						+ ") VALUES (?,?,?,t.tag_id)";
-				stmt.setString(1, "'%"+ pf_tags_field.get(i).getTag_name() + "%'");
-				stmt.setString(2, "seq_tag_use_id.nextVal");
-				stmt.setString(3, "portfolio");
-				rows += stmt.executeUpdate();
+				tagDao.updateTagUse(conn, "portfolio", portfolio.getPf_id(), pf_tags_field.get(i));
 			}
 			
 			// 공동 작업자 수정
@@ -549,19 +501,22 @@ public class PortfolioDao {
 			for (int i = 0; i < coworkers.size(); i++) {
 				coworkers.get(i).setMem_id(usernameToId(coworkers.get(i).getProf_nick()));
 			}
-			stmt = conn.prepareStatement(sql);
 			for (int i = 0; i < coworkers.size(); i++) {
-				sql = "MERGE INTO pf_coworker pfc"
-						+ " USING portfolio pf"
-						+ " ON pfc.pf_id=pf.pf_id"
-						+ " WHEN MATCHED THEN"
-						+ " UPDATE SET mem_id=?"
-						+ " WHEN NOT MATCHED THEN INSERT ("
-						+ "pfc.pf_co_id, pf_id, mem_id"
+				sql = "MERGE INTO pf_coworker pfc "
+						+ "USING (SELECT * FROM pf_coworker WHERE pf_id=?) pfcs "
+						+ "ON pfc.pf_id=pfcs.pf_id "
+						+ "WHEN MATCHED THEN "
+						+ "UPDATE SET mem_id=? WHERE mem_id!=? AND pf_id=? "
+						+ "WHEN NOT MATCHED THEN INSERT ("
+						+ "pfc.pf_co_id, pfc.pf_id, pfc.mem_id"
 						+ ") VALUES (seq_pf_co_id.nextVal,?,?)";
-				stmt.setInt(1, coworkers.get(i).getMem_id());
-				stmt.setInt(2, pf_id);
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, portfolio.getPf_id());
+				stmt.setInt(2, coworkers.get(i).getMem_id());
 				stmt.setInt(3, coworkers.get(i).getMem_id());
+				stmt.setInt(4, portfolio.getPf_id());
+				stmt.setInt(5, portfolio.getPf_id());
+				stmt.setInt(6, coworkers.get(i).getMem_id());
 				rows += stmt.executeUpdate();
 			}
 			
@@ -574,7 +529,16 @@ public class PortfolioDao {
 				rows++;
 			}
 		} catch (SQLException e) {
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}
@@ -621,48 +585,21 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, pf_id);
 			rows += stmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println("DB 삭제 오류 :");
+		} catch (SQLException e) {
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			e.printStackTrace();
 		} finally {
 			freeConnection();
 		}
 		return rows;
 	}
-	
-	
-	/**
-	 * 특정인이 작성한 데이터 조회
-	 * @param mem_id
-	 * @return
-	 */
-	public List<Portfolio> selectSomeones(int mem_id) {
-		List<Portfolio> portfolios = new ArrayList<Portfolio>();
-		getConnection();
-		try {
-			String sql = "SELECT prof_id FROM profile WHERE mem_id=?";
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, mem_id);
-			rs = stmt.executeQuery();
-			while(rs.next()) {
-				int prof_id = rs.getInt("prof_id");
-				sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, prof_id);
-				rs = stmt.executeQuery();
-				while(rs.next()) {
-					portfolios.add(selectOne(rs.getInt("pf_id")));
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("");
-			e.printStackTrace();
-		} finally {
-			freeConnection();
-		}
-		return portfolios;
-	}
-	
+
 	/**
 	 * 포트폴리오의 좋아요 데이터를 추가하고 좋아요 숫자를 반환
 	 * @param mem_id
@@ -679,14 +616,22 @@ public class PortfolioDao {
 			stmt.setInt(1, mem_id);
 			stmt.setInt(2, pf_id);
 			stmt.executeUpdate();
-			sql = "SELECT COUNT(*) FROM pf_like WHERE pf_id=?";
+			
+			sql = "SELECT COUNT(1) FROM pf_like WHERE pf_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, pf_id);
 			rs = stmt.executeQuery();
-			rs.next();
-			likes = rs.getInt(1);
-		} catch (Exception e) {
-			System.out.println("");
+			if (rs.next()) {
+				likes = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			e.printStackTrace();
 		} finally {
 			freeConnection();
@@ -694,6 +639,45 @@ public class PortfolioDao {
 		return likes;
 	}
 	
+	/**
+	 * 포트폴리오의 좋아요 데이터를 삭제하고 좋아요 숫자를 반환
+	 * @param mem_id
+	 * @param pf_id
+	 * @return
+	 */
+	public int minusLike(int mem_id, int pf_id) {
+		int likes = 0;
+		getConnection();
+		try {
+			String sql = "DELETE pf_like WHERE mem_id=? AND pf_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			stmt.setInt(2, pf_id);
+			stmt.executeUpdate();
+			
+			sql = "SELECT COUNT(1) FROM pf_like WHERE pf_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, pf_id);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				likes = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return likes;
+	}
+	
+
 	/**
 	 * 회원번호로 프로필 번호를 얻기
 	 * @param mem_id
@@ -707,8 +691,9 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
-			rs.next();
-			prof_id = rs.getInt("prof_id");
+			if (rs.next()) {
+				prof_id = rs.getInt("prof_id");
+			}
 		} catch (Exception e) {
 			System.out.println("");
 			e.printStackTrace();
@@ -731,8 +716,9 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			rs = stmt.executeQuery();
-			rs.next();
-			mem_id = rs.getInt("mem_id");
+			if (rs.next()) {
+				mem_id = rs.getInt("mem_id");
+			}
 		} catch (Exception e) {
 			System.out.println("");
 			e.printStackTrace();
@@ -755,8 +741,9 @@ public class PortfolioDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag_name);
 			rs = stmt.executeQuery();
-			rs.next();
-			tag_id = rs.getInt("tag_id");
+			if (rs.next()) {
+				tag_id = rs.getInt("tag_id");
+			}
 		} catch (Exception e) {
 			System.out.println("");
 			e.printStackTrace();
@@ -765,7 +752,7 @@ public class PortfolioDao {
 		}
 		return tag_id;
 	}
-	
+
 	
 
 	

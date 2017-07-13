@@ -13,7 +13,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><%= profile.getProf_name() %></title>
+<title>${profile.prof_name} - PortIT</title>
 
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -47,22 +47,19 @@ Profile profile = (Profile) request.getAttribute("profile");
 		<!-- Profile header -->
 		<section id="memHeader">
 			<div class="headerContainer">
-				<img src="<%= profile.getProf_img() %>" alt="<%= profile.getProf_name() %>" class="img-circle" />
-				<h1><%= profile.getProf_name() %></h1>
-				<h3 class="username"><%= profile.getProf_nick() %></h3>
+				<img src="${profile.prof_img}" alt="${profile.prof_name}" class="img-circle" />
+				<h1>${profile.prof_name}</h1>
+				<h3 class="username">${profile.prof_nick}</h3>
 				<h4 class="tags">
-					<%
-						for (Tag tag : profile.getProf_tags_language()) {
-					%>
-					<span>#<a href=""><%=tag.getTag_name()%></a>&nbsp;
-					</span>
-					<%
-						}
-					%>
+					<c:if test="${!empty profile.pf_tags_language}">
+						<c:forEach var="pf_tag_language" items="${portfolio.prof_tags_language}">
+							<span> <a href="">${prof_tag_language.tag_name}</a> </span>
+						</c:forEach>
+					</c:if>
 				</h4>
 				<h4>
 					<i class="fa fa-user"></i>
-					<%= profile.getProf_follower() %>
+					${profile.prof_follower}
 				</h4>
 				<div class="actions">
 					<button type="button" class="btn common" onclick="location.href='#'">+ Follow</button>					
@@ -95,7 +92,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="intro">
-							<%= profile.getProf_intro() %>
+							${profile.prof_intro}
 						</div>
 					</div>
 					<div class="col-md-offset-2 col-md-8">
@@ -126,65 +123,45 @@ Profile profile = (Profile) request.getAttribute("profile");
 				<div class="row">					
 					<h2 class="text-center">Portfolios</h2>
 				</div>
-				<div class="row">
-					<ul class="sorting">
-						<li><a href="#" class="active">전체</a></li>
-						<li><a href="#">최신순</a></li>
-						<li><a href="#">인기순</a></li>
-					</ul>
-				</div>
-				<%
-					List<Portfolio> myPf = profile.getProf_myPf();
-					if (myPf != null && myPf.size() > 0) {
-						for (int idx = 0; idx < myPf.size(); idx++) {
-							Portfolio pf = myPf.get(idx);
-							if (idx == 0 || idx % 4 == 0) {
-				%>
 				<div class="row recoList">
-					<%
-							}
-					%>
-					<div class="col-md-3 mb">
-						<div class="portfolio-simple">
-							<div class="pfImg"></div>
-							<div class="pfInfo">
-								<div class="simple-content">
-									<div class="pfTag">
-										<%
-											for (Tag tag : pf.getPf_tags_language()) {
-										%>
-										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
-										<%
-											}
-										%>
-									</div>
-									<div class="pfTitle">
-										<a href=""><%=pf.getPf_title()%></a>
-									</div>
-									<div class="pfBottom">
-										<span class="pfmemName"><a href=""><%=pf.getPf_authorName()%></a></span>
-										<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=pf.getPf_like()%></span>
+					<c:choose>
+						<c:when test="${!empty profile.prof_myPf}">
+							<c:forEach var="mypf" items="profile.prof_myPf">
+								<div class="col-md-3 mb">
+									<div class="portfolio-simple">
+										<div class="pfImg">
+											<a href="/view?type=portfolio&id=${mypf.pf_id}"><img src="" /></a>
+										</div>
+										<div class="pfInfo">
+											<div class="simple-content">
+												<div class="pfTag">
+													<%
+														for (Tag tag : mypf.getPf_tags_language()) {
+													%>
+													#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
+													<%
+														}
+													%>
+												</div>
+												<div class="pfTitle">
+													<a href="/view?type=portfolio&id=${mypf.pf_id}">${mypf.pf_title}</a>
+												</div>
+												<div class="pfBottom">
+													<span class="pfmemName"><a href="/view?type=profile&id=${mypf.pf_prof_nick}">${mypf.pf_prof_name}</a></span>
+													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;${mypf.pf_like}</span>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<!-- portfolio-simple end -->
-					<%
-							if (idx == 0 || idx % 4 == 0) {
-					%>
+								<!-- portfolio-simple end -->
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p class="text-center">아직 등록한 포트폴리오가 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</div>
-				<%
-							}
-						}
-					} else {
-				%>
-				<div class="row recoList">
-					<p class="text-center">아직 등록한 포트폴리오가 없습니다.</p>
-				</div>
-				<%
-					}
-				%>
 			</div>
 		</section><!-- /Portfolios -->
 		<hr />
@@ -208,51 +185,58 @@ Profile profile = (Profile) request.getAttribute("profile");
 							Project proj = myProj.get(idx);
 				%>
 				<div class="row">
-					<div class="col-md-12 mb">
-						<div class="project-list">
-							<span class="pjInfoText">
-								<div class="pjTitle">
-									<a href=""><%= proj.getProj_title() %></a>
+					<c:choose>
+						<c:when test="${!empty profile.prof_myProj}">
+							<c:forEach var="myproj" items="profile.prof_myProj">
+								<div class="col-md-12 mb">
+									<div class="project-list">
+										<div class="pjInfoText">
+											<div class="pjTitle">
+												<a href="/view?type=project&id=${myproj.proj_id}">${myproj.proj_title}</a>
+											</div>
+											<div class="pjmemName">
+												<span class="fa fa-user"></span>&nbsp;&nbsp;<a href="/view?type=profile?id=${myproj.prof_name}">${myproj.prof_name}</a>
+											</div>
+											<div class="pjIntro"><%=proj.getProj_intro()%></div>
+											<div class="pjTag">
+												<%
+													for (Tag tag : proj.getProj_tags_language()) {
+												%>
+												<span><a href=""><%=tag.getTag_name()%></a>&nbsp;</span>
+												<%
+													}
+												%>
+											</div>
+										</div>
+										<div class="pjInfoTable">
+											<table class="table text-center">
+												<%
+													for (Tag tag : proj.getProj_tags_field()) {
+												%>
+												<tr>
+													<td><span><a href=""><%=tag.getTag_name()%></a>&nbsp;</span>
+														/ <%=proj.getProj_numofperson()%> 명</td>
+												</tr>
+												<%
+													}
+												%>
+												<tr>
+													<td>마감일</td>
+												</tr>
+												<tr>
+													<td><fmt:formatDate value="${myproj.proj_period}" pattern="yyyy-MM-dd" /></td>
+												</tr>
+											</table>
+										</div>
+									</div>
 								</div>
-								<div class="pjmemName">
-									<span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""><%= proj.getProj_authorName() %></a>
-								</div>
-								<div class="pjIntro"><%= proj.getProj_intro() %></div>
-								<div class="pjTag">
-									<% for (Tag tag : proj.getProj_tags_language()) { %>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
-								</div>
-							</span> <span class="pjInfoTable">
-								<table class="table text-center">
-									<% for (Tag tag : proj.getProj_tags_field()) { %>
-									<tr>
-										<td><span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span> / <%= proj.getProj_numofperson() %> 명</td>
-									</tr>
-									<% } %>
-									<tr>
-										<td>마감일까지 D - <%= %></td>
-									</tr>
-									<tr>
-										<td></td>
-									</tr>
-								</table>
-							</span>
-						</div>
-					</div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p class="text-center">아직 등록한 프로젝트가 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</div>
-				<%
-						}
-					} else {
-				%>
-				<div class="row">
-					<div class="col-md-12">
-						<p class="text-center">아직 등록한 프로젝트가 없습니다.</p>
-					</div>
-				</div>
-				<%
-					}
-				%>
 				<!-- project-list end -->
 			</div>
 		</section><!-- /Projects -->
@@ -266,10 +250,10 @@ Profile profile = (Profile) request.getAttribute("profile");
 				<div class="row">
 					<div class="col-md-8 center">
 						<div class="actions col-md-12 text-center">
-							<a href="<%= profile.getProf_website() %>" title="Website"><span class="fa fa-globe"></span></a>
-							<a href="<%= profile.getProf_github() %>" title="GitHub"><span class="fa fa-github"></span></a>
-							<a href="<%= profile.getProf_facebook() %>" title="Facebook"><span class="fa fa-facebook-square"></span></a>
-							<a href="mailto:<%= profile.getProf_email() %>" title="Email"><span class="fa fa-envelope"></span></a>
+							<a href="${profile.prof_website}" title="Website"><span class="fa fa-globe"></span></a>
+							<a href="${profile.prof_github}" title="GitHub"><span class="fa fa-github"></span></a>
+							<a href="${profile.prof_facebook}" title="Facebook"><span class="fa fa-facebook-square"></span></a>
+							<a href="mailto:${profile.prof_email}" title="Email"><span class="fa fa-envelope"></span></a>
 							<a href="#" title="Message"><span class="fa fa-comment"></span></a>
 							<a data-toggle="collapse" href="#Share" title="Share"><span class="fa fa-share-alt"></span></a>
 							<div class="collapse pull-right" id="Share">

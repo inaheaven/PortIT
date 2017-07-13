@@ -26,9 +26,9 @@ public class ViewDetailServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
 		
-		// 프로필 글 주소 예:		/view?type=profile&id=username
-		// 포트폴리오 글 주소 예:	/view?type=portfolio&id=1234
-		// 프로젝트 글 주소 예:		/view?type=project&id=1234
+		// 프로필 글 주소 예:		/view?type=profile&id={prof_nick}
+		// 포트폴리오 글 주소 예:		/view?type=portfolio&id={pf_id}
+		// 프로젝트 글 주소 예:		/view?type=project&id={proj_id}
 		
 		String articleType = req.getParameter("type"); // 작성할 게시물의 구분
 		
