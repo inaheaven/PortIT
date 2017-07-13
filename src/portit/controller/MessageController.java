@@ -73,38 +73,20 @@ public class MessageController extends HttpServlet {
 				//From msgDetail,msgSender
 				 
 				 String renewal= req.getParameter("renewal");
-				 
-				 System.out.println("[CTRL]"+renewal);
-				 
-				 
 				url="myMsgList.jsp";
 				
 				
 				try{
 					
 				//2.RoomList
-				//굉장히 헤비한 요청...(Delete,Insert 등의 변화가 생기지 않으면 하지 않는게 좋다.)
-				//좀 라이트한 방식으로 변경할 필요성이 있다. 인터넷이 불안정하면 오류가 날 확률이 높다.
+				//List 갱신방법에 대해서 생각할것!
 					
-				//처음MsgList에 접근했을때
-				//삭제 이후 돌아왔을때
-				//검색이후 돌아왔을때
-				//갱신요청 유무를 정한다...
-				
-				
-					
-						
 						list=model.roomList(keyField,keyWord);
-						
 						session.setAttribute("RoomList", list);
-						
-						
 						//리스트갱신... 
-						req.setAttribute("partenrInform", model.partnerInform());
+						req.setAttribute("partenrInform", model.partnerInform(keyField,keyWord));
+						System.out.println("[CTRL]:리스트 조회합니다.");
 						
-						
-						System.out.println("CTRL 리스트전달_ㅋㅋ");
-				
 				}
 				
 				catch(Exception err){
@@ -120,6 +102,12 @@ public class MessageController extends HttpServlet {
 					url="myMsgList.jsp";
 					
 					try{
+						
+						list=model.roomList(keyField,keyWord);
+						session.setAttribute("RoomList", list);
+						req.setAttribute("partenrInform", model.partnerInform(keyField,keyWord));
+						
+						
 					}
 					
 					catch(Exception err){
@@ -245,7 +233,7 @@ public class MessageController extends HttpServlet {
 				
 
 				//리스트갱신... 
-				req.setAttribute("partenrInform", model.partnerInform());
+				req.setAttribute("partenrInform", model.partnerInform(keyField,keyWord));
 				
 				
 				//request단위로 바꿔서 Test해보기.
@@ -286,6 +274,10 @@ public class MessageController extends HttpServlet {
 				url="myMsgDetail.jsp";
 			}
 			 
+			 
+			 
+			 
+			// req.setAttribute("partenrInform", model.partnerInform(keyField,keyWord));
 			 
 			 
 			req.setAttribute("loginId",loginId);

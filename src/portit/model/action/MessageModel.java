@@ -28,7 +28,6 @@ public class MessageModel {
 		loginId=(int) session.getAttribute("loginId");
 		
 		//this.login_id=_login_id;
-		
 		//모델_DAO
 		//해당 사용자에 관한 db를 얻어야하기때문에 식별자를 전달한다.
 
@@ -154,7 +153,7 @@ public class MessageModel {
 	
 	
 	
-	public ArrayList partnerInform(){
+	public ArrayList partnerInform(String keyField, String keyWord){
 		
 		
 		//5. 발신자의 확장정보...(1.발신자 목록에 추가되면 금상첨화 지만 시간관계상 분리 ㅎ)
@@ -164,7 +163,7 @@ public class MessageModel {
 		
 		//로그인한 계정의  발신자목록 (검색조건 추가가능)
 		//필터링 : 발신자 목록에서 한다.
-		ArrayList senderList = (ArrayList) dao.getSenderList(this.loginId,null, null);
+		ArrayList senderList = (ArrayList) dao.getSenderList(this.loginId,keyField, keyWord);
 	
 		
 		
@@ -178,13 +177,6 @@ public class MessageModel {
 
 			
 		}
-		
-		
-		
-
-		
-		
-		
 		return partnerInform;
 	}
 	
