@@ -11,10 +11,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
+<jsp:useBean id="dao" class="portit.model.dao.ProfileDao" />
+<jsp:useBean id="dto" class="portit.model.dto.Profile" />
 
-<%	
-	int loginId = request.getAttribute("loginId");
-
+<%
+	int loginId = (int)request.getAttribute("loginId");	
 	Profile prof= dao.getProfile(loginId);
 %>
 
@@ -153,22 +154,19 @@ function fnSelectSnsInfo(snsName){
 				<h3 class="formTitle text-center">프로필 수정</h3>
 				<form action="/register?cmd=UPDATE" method="post"
 					class="form-horizontal style-form">
-				<% 
-					for(int i=0; i<prof.size(); i++){
-						Bookmark port = portfolios.get(i);
-				%>
-					<!-- 프로필id hidden -->
+				
+					<!-- 프로필id hidden -->	
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
 						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="prof_id">
+							<input type="hidden" class="form-control" name="prof_id" value="${prof.prof_id}">
 						</div>
 					</div>
 					<!-- 등록일자  hidden -->
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
 						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="prof_regdate">
+							<input type="hidden" class="form-control" name="prof_regdate" value="${prof.prof_regdate}">
 						</div>
 					</div>
 					<!-- 팔로워 수 hidden (초기값 0) -->
@@ -176,73 +174,72 @@ function fnSelectSnsInfo(snsName){
 						<label class="col-md-3 control-label"></label>
 						<div class="col-md-9">
 							<input type="hidden" class="form-control" name="prof_follower" 
-								value="0">
+								value="${prof.prof_follower}>">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">프로필 사진</label>
 						<div class="col-md-9">
-							<input type="file" class="form-control" name="prof_img" value="<%=prof.getProf_img() %>">
+							<input type="file" class="form-control" name="prof_img" value="${prof.prof_img}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">배경 사진</label>
 						<div class="col-md-9">
-							<input type="file" class="form-control" name="prof_background" value="<%=prof.getProf_background()%>">
+							<input type="file" class="form-control" name="prof_background" value="${prof.prof_background}">
 						</div>
-
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">이름</label>
 						<div class="col-md-9">
 							<input class="form-control" name="prof_name" type="text"
-								placeholder="한글로 입력하세요." value="<%=prof.getProf_name() %>" />
+								placeholder="한글로 입력하세요." value="${prof.prof_name}" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">닉네임</label>
 						<div class="col-md-9">
 							<input class="form-control" name="prof_nick" type="text"
-								placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="<%=prof.getProf_nick()%>">
+								placeholder="영문으로 입력하세요. 이 닉네임은 url로도 쓰입니다.(중복 불가)" value="${prof.prof_nick}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">소개</label>
 						<div class="col-md-9">
 							<textarea class="form-control" rows="5" name="prof_intro"
-								placeholder="" ><%=prof.getProf_intro()%></textarea>
+								placeholder="" >${prof.prof_intro}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 언어</label>
 						<div class="col-md-9">
-							<input class="form-control tagInput" id="Prof_language1" type="text" name="tag_lang">&nbsp;,&nbsp;							
-							<input class="form-control tagInput" id="Prof_language2" type="text" name="tag_lang">&nbsp;,&nbsp;							
-							<input class="form-control tagInput" id="Prof_language3" type="text" name="tag_lang">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="Prof_language4" type="text" name="tag_lang">&nbsp;,&nbsp;					
-							<input class="form-control tagInput" id="Prof_language5" type="text" name="tag_lang">
+							<input class="form-control tagInput" id="Prof_language1" type="text" name="tag_lang" value="${prof.tag_lang[0]}">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_language2" type="text" name="tag_lang" value="${prof.tag_lang[1]}">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_language3" type="text" name="tag_lang" value="${prof.tag_lang[2]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_language4" type="text" name="tag_lang" value="${prof.tag_lang[3]}">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_language5" type="text" name="tag_lang" value="${prof.tag_lang[4]}">
 							<br><br>* 태그로 작성됩니다. ( 예시 : C, JAVA, Python 등 )
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 툴</label>
 						<div class="col-md-9">
-							<input class="form-control tagInput" id="Prof_tool1" type="text" name="tag_tool">&nbsp;,&nbsp;							
-							<input class="form-control tagInput" id="Prof_tool2" type="text" name="tag_tool">&nbsp;,&nbsp;							
-							<input class="form-control tagInput" id="Prof_tool3" type="text" name="tag_tool">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="Prof_tool4" type="text" name="tag_tool">&nbsp;,&nbsp;					
-							<input class="form-control tagInput" id="Prof_tool5" type="text" name="tag_tool">
+							<input class="form-control tagInput" id="Prof_tool1" type="text" name="tag_tool" value="${prof.tag_tool[0]}" >&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_tool2" type="text" name="tag_tool" value="${prof.tag_tool[1]}" >&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_tool3" type="text" name="tag_tool" value="${prof.tag_tool[2]}" >&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_tool4" type="text" name="tag_tool" value="${prof.tag_tool[3]}" >&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_tool5" type="text" name="tag_tool" value="${prof.tag_tool[4]}" >
 							<br><br>* 태그로 작성됩니다. ( 예시 : Window7, OracleDB, Eclipse, Visual Studio2013  등 )
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">관심 분야</label>
 						<div class="col-md-9">
-							<input class="form-control tagInput" id="Prof_field1" type="text" name="tag_field">&nbsp;,&nbsp;							
-							<input class="form-control tagInput" id="Prof_field2" type="text" name="tag_field">&nbsp;,&nbsp;							
-							<input class="form-control tagInput" id="Prof_field3" type="text" name="tag_field">&nbsp;,&nbsp;
-							<input class="form-control tagInput" id="Prof_field4" type="text" name="tag_field">&nbsp;,&nbsp;					
-							<input class="form-control tagInput" id="Prof_field5" type="text" name="tag_field">
+							<input class="form-control tagInput" id="Prof_field1" type="text" name="tag_field" value="${prof.tag_field[0]}">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_field2" type="text" name="tag_field" value="${prof.tag_field[1]}">&nbsp;,&nbsp;							
+							<input class="form-control tagInput" id="Prof_field3" type="text" name="tag_field" value="${prof.tag_field[2]}">&nbsp;,&nbsp;
+							<input class="form-control tagInput" id="Prof_field4" type="text" name="tag_field" value="${prof.tag_field[3]}">&nbsp;,&nbsp;					
+							<input class="form-control tagInput" id="Prof_field5" type="text" name="tag_field" value="${prof.tag_field[4]}">
 							<br><br>* 태그로 작성됩니다. ( 예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )
 						</div>
 					</div>
@@ -250,18 +247,18 @@ function fnSelectSnsInfo(snsName){
 						<label class="col-md-3 control-label">Facebook</label>
 						<div class="col-md-9">
 							<input class="form-control" id="disabledInput" type="text"
-								name="prof_facebook" value=<%=prof.getProf_facebook() %> />
+								name="prof_facebook" value="${prof.prof_facebook}" />
 						</div>
 						<div id="theRemote" class="collapse in">
 							<label class="col-md-3 control-label">Github</label>
 							<div class="col-md-9">
 								<input class="form-control" id="disabledInput" type="text"
-									name="prof_github"  value=<%=prof.getProf_github() %> />
+									name="prof_github"  value="${prof.prof_github}" />
 							</div>
 							<label class="col-md-3 control-label">기타 내 홈페이지</label>
 							<div class="col-md-9">
 								<input class="form-control" id="disabledInput" type="text"
-									name="prof_website"  value=<%=prof.getProf_website() %>/>
+									name="prof_website"  value="${prof.prof_website}" />
 							</div>
 						</div>
 						<div class="col-md-12" align="right">
@@ -274,27 +271,27 @@ function fnSelectSnsInfo(snsName){
 							<label class="col-md-3 control-label">Skill</label>
 							<div class="col-md-9">
 								<div class="col-md-3"><input class="form-control" id="skill" type="text" 
-										name = "tag_name4" placeholder="기술명" value=<%=prof.getTag_name4() %> ></div>
+										name = "tag_name4" placeholder="기술명" value="${prof.tag_skill[0]}" ></div>
 								<div class="col-md-7"><input class="form-control" id="score" type="text" 
-										name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요"  value=<%=prof.getProf_skill_level()%>></div>
+										name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요"  value="${prof.prof_skill_level[0]}" ></div>
 								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">추가</button></div>
 							</div>
 							
 							<label class="col-md-3 control-label"></label>							
 							<div class="col-md-9">
 								<div class="col-md-3"><input class="form-control" id="skill2" type="text" 
-											name = "tag_name5" placeholder="기술명" value=<%=prof.getTag_name5() %>></div>
+											name = "tag_name5" placeholder="기술명" value="${prof.tag_skill[1]}" ></div>
 								<div class="col-md-7"><input class="form-control" id="score2" type="text" 
-											name = "prof_skill_level2" placeholder="숫자 1~5까지 입력하세요" value=<%=prof.getProf_skill_level2()%>></div>
+											name = "prof_skill_level2" placeholder="숫자 1~5까지 입력하세요" value="${prof.prof_skill_level[1]}" ></div>
 								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill2()">추가</button></div>
 							</div>
 							
 							<label class="col-md-3 control-label"></label>							
 							<div class="col-md-9">
 								<div class="col-md-3"><input class="form-control" id="skill2" type="text" 
-											name = "tag_name5" placeholder="기술명" value=<%=prof.getTag_name6() %>></div>
+											name = "tag_name5" placeholder="기술명" value="${prof.tag_skill[2]}" ></div>
 								<div class="col-md-7"><input class="form-control" id="score2" type="text" 
-											name = "prof_skill_level2" placeholder="숫자 1~5까지 입력하세요" value=<%=prof.getProf_skill_level3()%>></div>
+											name = "prof_skill_level2" placeholder="숫자 1~5까지 입력하세요" value="${prof.prof_skill_level[2]}" ></div>
 								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill2()">추가</button></div>
 							</div>
 			

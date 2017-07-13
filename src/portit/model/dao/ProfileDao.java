@@ -487,9 +487,11 @@ public class ProfileDao {
 	 */
 	public Profile getProfile(int mem_id) {
 		Profile dto = new Profile();
-		sql = "select * from tag join tag_use on tag.tag_id = tag_use.tag_id "
-				+ "join profile on tag_use_type_id = profile.prof_id "
-				+ "where mem_id="+mem_id+ " order by tag.tag_id desc";
+		sql = "select distinct mem_id,prof_id, prof_name, prof_nick, prof_website, prof_github, "
+				+ " prof_facebook, prof_regdate, prof_follower,prof_img,prof_background,prof_intro "
+				+ " from tag join tag_use on tag.tag_id = tag_use.tag_id "
+				+ " join profile on tag_use_type_id = profile.prof_id "
+				+ "where mem_id="+mem_id+ "";
 
 		try {
 			stmt = conn.prepareStatement(sql);
@@ -508,9 +510,14 @@ public class ProfileDao {
 			dto.setProf_github(rs.getString("prof_github"));
 			dto.setProf_facebook(rs.getString("prof_facebook"));
 			
+			int prof_id = rs.getInt("prof_id");
 			
- 
-			
+			dto.setTag_lang(tags_lang(prof_id));
+			dto.setTag_tool(tags_tool(prof_id));
+			dto.setTag_field(tags_field(prof_id));
+			dto.setTag_skill(tags_skill(prof_id));
+			dto.setProf_skill_level(prof_skill_levels(prof_id));
+
 		} 
 		catch (Exception err) {
 			System.out.println("getProfile 오류: " + err);
@@ -520,7 +527,136 @@ public class ProfileDao {
 		
 		return dto;
 	}
-	
+	/**
+	 * language 태그 리스트를 가지고 오는 메서드
+	 */
+	public List tags_lang(int prof_id) {
+		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id and tu.tag_use_type = 'prof' and"
+					+ " t.tag_type='language' and tu.tag_use_type_id = ?) ";
+
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs2 = stmt.executeQuery();
+
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("tags_lang 오류 " + e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * tool 태그 리스트를 가지고 오는 메서드
+	 */
+	public List tags_tool(int prof_id) {
+		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id and tu.tag_use_type = 'prof' and"
+					+ " t.tag_type='tool' and tu.tag_use_type_id = ?) ";
+			
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs2 = stmt.executeQuery();
+			
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("tags_tool 오류 " + e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * field 태그 리스트를 가지고 오는 메서드
+	 */
+	public List tags_field(int prof_id) {
+		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id and tu.tag_use_type = 'prof' and"
+					+ " t.tag_type='field' and tu.tag_use_type_id = ?) ";
+			
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs2 = stmt.executeQuery();
+			
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("tags_field 오류 " + e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * skill_level 태그 리스트를 가지고 오는 메서드
+	 */
+	public List tags_skill(int prof_id) {
+		try {
+			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id and tu.tag_use_type = 'prof' and"
+					+ " t.tag_type='skill_level' and tu.tag_use_type_id = ?) ";
+			
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs2 = stmt.executeQuery();
+			
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("tag_name"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("tags_skill 오류 " + e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * skill_level 점수 태그 리스트를 가지고 오는 메서드
+	 */
+	public List prof_skill_levels(int prof_id) {
+		try {
+			String sql = "SELECT prof_skill_level FROM (SELECT * FROM tag t, tag_use tu "
+					+ " WHERE t.tag_id = tu.tag_id and tu.tag_use_type = 'prof' and"
+					+ " t.tag_type='skill_level' and tu.tag_use_type_id = ?) ";
+			
+			ArrayList list = new ArrayList();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs2 = stmt.executeQuery();
+			
+			List<String> tags = new ArrayList<>();
+			while (rs2.next()) {
+				tags.add(rs2.getString("prof_skill_level"));
+			}
+			return tags;
+		} 
+		catch (Exception e) {
+			System.out.println("prof_skill_levels 오류 " + e);
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	/**

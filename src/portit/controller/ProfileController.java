@@ -66,6 +66,7 @@ public class ProfileController extends HttpServlet {
 	
 
 		int prof_follower =0;
+		String prof_id = req.getParameter("prof_id");
 		String prof_img = req.getParameter("prof_img");
 		String prof_background = req.getParameter("prof_background");
 		String prof_name = req.getParameter("prof_name");
@@ -79,7 +80,6 @@ public class ProfileController extends HttpServlet {
 		String[] field_list1 = req.getParameterValues("tag_field");
 		String[] tag_skill1 = req.getParameterValues("tag_skill");
 		String[] prof_skill_level1 = req.getParameterValues("prof_skill_level");
-		
 		
 		List<String> tag_lang = new ArrayList();
 		for(String tags : lang_list1){
@@ -195,17 +195,16 @@ public class ProfileController extends HttpServlet {
 
 		
 		if (cmd.equals("REGISTER")) {
-			ProfileDao dao = new ProfileDao();
-		//	Profile prof= dao.selectOne(loginId);
-		//	req.setAttribute("prof", prof);
-			//url = "/page?page=myProfUpdate";
+			prof_reg= profileDao.getProfile(loginId);
+			req.setAttribute("prof", prof_reg);
+			url = "/page?page=myProfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
-			ProfileDao dao = new ProfileDao();
+		//	ProfileDao dao = new ProfileDao();
 		//	Profile prof= dao.selectOne(loginId);
 		//	req.setAttribute("prof", prof);
-			//url = "/page?page=myProfUpdate";
+		//	url = "/page?page=myProfUpdate";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);
