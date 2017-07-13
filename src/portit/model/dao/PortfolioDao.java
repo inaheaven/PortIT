@@ -770,6 +770,8 @@ public class PortfolioDao {
 
 	
 	
+
+	
 	/**
 	 * 내가 작성한 포트폴리오 조회하기 
 	 * 
@@ -797,7 +799,7 @@ public class PortfolioDao {
 			while (rs2.next()) {
 				Portfolio port = new Portfolio();
 				//port.setProf_pf_id(rs2.getInt("prof_pf_id"));
-				//port.setMem_id(rs2.getInt("mem_id"));
+				//port.setPf_prof_img(rs2.getString("pf_prof_img"));
 				port.setPf_id(rs2.getInt("pf_id"));
 				port.setPf_regdate(rs2.getDate("pf_regdate"));
 				port.setMl_path(rs2.getString("ml_path"));
@@ -859,8 +861,8 @@ public class PortfolioDao {
 	 * 
 	 * @param prof_pf_id
 	 */
-	public void deleteMyport(int prof_pf_id) {
-		String sql = "delete from PROF_PF where prof_pf_id =" + prof_pf_id + "";
+	public void deleteMyport(int pf_id) {
+		String sql = "delete from PROF_PF where prof_pf_id =" + pf_id + "";
 
 		try {
 			conn = pool.getConnection();
