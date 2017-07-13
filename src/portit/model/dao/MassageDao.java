@@ -104,11 +104,12 @@ public class MassageDao{
 
 	// msgSend.jsp (메세지 보내기) 확인!!
 	public void insertMsg(MessageDto dto){
-		String sql = "insert into Message"
-			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-			+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
-	
+		int msg_id = 0;
 		try{
+			String sql = "insert into Message"
+					+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
+					+ "values(seq_msg_id.nextVal,?,?,sysdate,?,?)";
+			
 			con = pool.getConnection();
 			//updatePos(con);
 	 		pstmt = con.prepareStatement(sql);
@@ -117,6 +118,28 @@ public class MassageDao{
 			pstmt.setString(3, dto.getMsg_content());
 			pstmt.setString(4, dto.getMsg_isread());
 			pstmt.executeUpdate();
+			
+			
+			// msg_id 가져오기
+			sql = "select msg_id from message where mem_id_sender = ? and mem_id_receiver = ? order by msg_id desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getMem_id_sender());
+			pstmt.setInt(2, dto.getMem_id_receiver());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				msg_id = rs.getInt("msg_id");
+			}
+			
+			// 알림 테이블에 넣기
+			sql = "insert into notification(nt_id, mem_id_sender, mem_id_receiver, nt_date, nt_type, nt_type_id, nt_isread) "
+					+ "values(seq_nt_id.nextVal, ?, ?, sysdate, 'message', ?, 'n')";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getMem_id_sender());
+			pstmt.setInt(2, dto.getMem_id_receiver());
+			pstmt.setInt(3, msg_id);
+			pstmt.executeUpdate();
+			
 		}
 		
 		catch(Exception err){

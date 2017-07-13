@@ -35,7 +35,7 @@ public class MyProjectController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
-		
+		req.setCharacterEncoding("UTF-8");
 		
 		//요청에서 저장된 session값에 접근할수 있다.
 		HttpSession session = req.getSession();
@@ -182,7 +182,9 @@ public class MyProjectController extends HttpServlet{
 		
 		else if("modify".equals(cmd)){
 			req.setAttribute("pj_id", param);
-			url="/myProjRegisterEdit.jsp";
+			ProjectDao updateDao = new ProjectDao();
+			updateDao.read_proj(req, resp);
+			url = "/myProjRegisterEdit.jsp";
 		}
 		
 		
