@@ -799,7 +799,7 @@ public class PortfolioDao {
 			while (rs2.next()) {
 				Portfolio port = new Portfolio();
 				//port.setProf_pf_id(rs2.getInt("prof_pf_id"));
-				//port.setPf_prof_img(rs2.getString("pf_prof_img"));
+				//port.setPf_prof_img(rs2.getString("ml_path"));
 				port.setPf_id(rs2.getInt("pf_id"));
 				port.setPf_regdate(rs2.getDate("pf_regdate"));
 				port.setMl_path(rs2.getString("ml_path"));

@@ -15,15 +15,17 @@ public class Bookmark {
 	private int pf_id;
 	private Date bm_date;
     private String prof_name;
-    private String ml_path;
+    private String ml_path = "assets/img/login-bg3.png"; // 포트폴리오의 이미지 
 	private String pf_title;
     
 	private int pf_like;
     private List<String> tags;
     private String prof_nick;
+      
     
     
-    public String getProf_nick() {
+
+	public String getProf_nick() {
 		return prof_nick;
 	}
 	public Bookmark setProf_nick(String prof_nick) {

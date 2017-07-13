@@ -68,12 +68,15 @@ public class BookmarkDao {
 				bm.setProf_nick(rs.getString("prof_nick"));//여기랑
 				bm.setPf_title(rs.getString("pf_title"));
 				bm.setPf_like(rs.getInt("pf_like"));
+				//bm.setPf_prof_img(rs.getString("pf_prof_img"));
 				int pf_id = rs.getInt("pf_id");
 				
 							
 				bm.setTags(getTag(bm, pf_id));
 				bmList.add(bm);
 			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

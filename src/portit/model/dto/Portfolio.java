@@ -56,7 +56,7 @@ public class Portfolio {
 	private String prof_nick;
     private String prof_name;
     private String tag_name;
-    private String ml_path;
+    private String ml_path; // 포트폴리오 이미지
     private List<String> tags;
     private int prof_pf_id;
     
