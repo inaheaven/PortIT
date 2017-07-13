@@ -159,6 +159,34 @@ var Script = function () {
     	});
     });
     
-    
+ // 공동 작업자 찾기
+    $(function() {
+    	var saveUsers = new Array();
+    	
+    	$("#findUser button").on("click", function() {
+    		var input = $("#findUser input").text();
+    		var request = $.ajax({
+				type : "POST",
+				url : "/coworker_search",
+				data : input,
+				dataType : "xml"
+			});
+			
+			request.done(function(xml) {
+				if ($(xml).find("user").length > 0) {
+					var userList = "<ul>";
+					for (var i = 0; i < $(xml).find("user").length; i++) {
+						var prof_nick = $(this).find("nick").text();
+						var prof_name = $(this).find("name").text();
+						userList += "<li>"+prof_name+"("+prof_nick+")</li>";
+					}
+					userList += "</ul>";
+					$("#userList").append(userList);
+				} else {
+					$("#findList").append("<p class=\"text-center\">검색 결과가 없습니다.</p>");
+				}
+			});
+    	});
+    });
 
 }();

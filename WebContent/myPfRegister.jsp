@@ -105,20 +105,11 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">함께한 사람</label>
 						<div class="col-md-7">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" name="pf_coworkers" readonly="readonly">
 						</div>
 						<div class="col-sm-2">
 							<button type="button" class="btn btn-default" data-toggle="modal"
-								data-target="#coworkers">검색</button>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label">함께한 사람</label>
-						<div class="col-md-7">
-							<input type="text" class="form-control" readonly="readonly">
-						</div>
-						<div class="col-sm-2">
-							<button type="button" class="btn btn-default">검색</button>
+								data-target="#coworkers">찾기</button>
 						</div>
 					</div>
 					<div class="form-group">
@@ -154,43 +145,18 @@
 							<h4 class="modal-title">함께한 사람 찾기</h4>
 						</div>
 						<div class="modal-body">
-							<form class="form-horizontal">
+							<form class="form-horizontal" id="findUser">
 								<div class="form-group">
 									<input type="text" class="form-control" name="coworker_search" />
-									<button type="button" class="btn common"></button>
-									<span class="help-block">이 작업을 함께한 PortIT 사용자를 찾아보세요.</span>
+									<button type="button" class="btn common">찾기</button>
+									<span class="help-block">이 작업을 함께 한 PortIT 사용자를 찾아보세요.</span>
 								</div>
 							</form>
-							<ul></ul>
+							<div id="userList"></div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn cancel" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn common">확인</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /modal -->
-
-			<!-- modal for searching coworkers -->
-			<div class="modal fade">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title">함께한 사람 찾기</h4>
-						</div>
-						<div class="modal-body">
-							<p>같이 작업한 PortIT 사용자를 찾아보세요.</p>
-							<form></form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button>
+							<button type="submit" class="btn common" id="confirmCoworkers">확인</button>
 						</div>
 					</div>
 				</div>
