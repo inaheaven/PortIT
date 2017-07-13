@@ -35,7 +35,7 @@ public class MyPortfoliolistController extends HttpServlet{
 		String cmd = req.getParameter("cmd");
 		String url = null;
 		
-		
+		//마이포트폴리오리스트 조회
 		if (cmd.equals("MYPORTFOLIO")) {
 			PortfolioDao ptDao = new PortfolioDao();
 			List<Portfolio> pfPortfolio = ptDao.myPortfolio(loginId);
@@ -47,6 +47,7 @@ public class MyPortfoliolistController extends HttpServlet{
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			view.forward(req, resp);
 		}
+		//마이 포트폴리오리스트 삭제 
 		else if (cmd.equals("MYPORTFOLIODELETE")) {
 			PortfolioDao pfDao = new PortfolioDao();
 			int pf_id = 0;
