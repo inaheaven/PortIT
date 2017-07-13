@@ -64,7 +64,7 @@ public class BookmarkDao {
 				bm.setMem_id(rs.getInt("mem_id"));
 				bm.setPf_id(rs.getInt("pf_id"));
 				bm.setBm_date(rs.getDate("bm_date"));
-				bm.setMl_path(rs.getString("ml_path"));
+				//bm.setMl_path(rs.getString("ml_path"));
 				bm.setProf_nick(rs.getString("prof_nick"));//여기랑
 				bm.setPf_title(rs.getString("pf_title"));
 				bm.setPf_like(rs.getInt("pf_like"));
