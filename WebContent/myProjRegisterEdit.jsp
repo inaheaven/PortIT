@@ -267,7 +267,7 @@
 						<label class="col-md-3 control-label">프로젝트 운영 기간</label>
 						<div class="col-md-9">
 							<label class="col-md-2 control-label" for="date"> 예정 시작일</label>
-							<div class="col-md-4">
+							<div class="col-md-4">	
 								<c:if test="${not empty list}">
 									<c:forEach var="result" items="${list}">
 										<input class="form-control" id="proj_startdate"
@@ -291,31 +291,14 @@
 						</div>
 					</div>
 
-					<%
-						ArrayList prof_list = (ArrayList) request.getAttribute("prof_list");
-						Profile profile = (Profile) prof_list.get(0);
-						ArrayList name_list = profile.getProf_name_list();
-						ArrayList nick_list = profile.getProf_nick_list();
-						ArrayList id_list = profile.getProf_id_list();
-						String names = "";
-						String ids = "";
-						Iterator<Integer> iter1 = name_list.iterator();
-						Iterator<Integer> iter2 = nick_list.iterator();
-						Iterator<Integer> iter3 = id_list.iterator();
-						while (iter1.hasNext()) {
-							names += iter1.next();
-							names += "(" + iter2.next() + "),";
-							ids += iter3.next() + ",";
-						}
-					%>
-
 					<div class="form-group">
 						<label class="col-md-3 control-label">함께할 사람</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly"
-								value="<%=names%>" required="true" id="final_result"> <input
-								type="text" class="form-control" name="final_result_id"
-								readonly="readonly" value="<%=ids%>" id="final_result_id">
+							<input type="text" class="form-control" readonly="readonly" placeholder="다시 등록바랍니다."
+								required="true" id="final_result"> 
+								<input
+								type="hidden" class="form-control" name="final_result_id"
+								readonly="readonly" id="final_result_id">
 						</div>
 						<div class="col-sm-2">
 							<button type="button" class="btn btn-default" id="hello"
@@ -361,20 +344,11 @@
 														<th style="text-align: center"><i
 															class="fa fa-bookmark"></i> 사용자 삭제</th>
 													</tr>
-													<c:if test="${!empty prof_list}">
-														<c:forEach begin="0" end="${prof_list.size()-1}" var="i">
 															<tr>
-																<td style="text-align: center">${prof_list[0].prof_name_list[i]}</td>
-																<td>${prof_list[0].prof_nick_list[i]}</td>
-																<td>
-																	<button type="button" class="btn btn-danger btn-xs"
-																		id="delete_search"
-																		onclick="delete_result(this, '${prof_list[0].prof_id_list[i] }', '${prof_list[0].prof_name_list[i]}')">삭제
-																	</button>
-																</td>
+																<td style="text-align: center"></td>
+																<td></td>
+																<td></td>
 															</tr>
-														</c:forEach>
-													</c:if>
 												</thead>
 												<tbody>
 												</tbody>

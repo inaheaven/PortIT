@@ -35,7 +35,7 @@ public class MyProjectController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
-		
+		req.setCharacterEncoding("UTF-8");
 		
 		//요청에서 저장된 session값에 접근할수 있다.
 		HttpSession session = req.getSession();
@@ -147,15 +147,11 @@ public class MyProjectController extends HttpServlet{
 			list= model.regPjList();
 			req.setAttribute("regPjInform", list);
 			
-			
-			
 			//내가 지원한 프로젝트
 			list= model.appyPjList();
 			req.setAttribute("applyProjectList", list);
-			
-			
 			url="/myProjList.jsp";
-/*			
+		/*			
 			등록한 PJ 테스트완료
 			
 			//테스트해보기...
@@ -176,16 +172,14 @@ public class MyProjectController extends HttpServlet{
 			//프로젝트의 이름.
 			System.out.println("pj명  "+pjInfrom.getProj_title());
 		*/
-			
-		
 		}
 		
 		else if("modify".equals(cmd)){
 			req.setAttribute("pj_id", param);
+			ProjectDao updateDao= new ProjectDao();
+			updateDao.read_proj(req, resp);
 			url="/myProjRegisterEdit.jsp";
 		}
-		
-		
 		
 		req.setAttribute("pageName", url);
 		RequestDispatcher view = req.getRequestDispatcher("/template.jsp");

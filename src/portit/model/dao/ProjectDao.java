@@ -17,6 +17,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Profile;
@@ -170,16 +171,17 @@ public class ProjectDao {
 				stmt = conn.prepareStatement(member_name_sql);
 				stmt.setInt(1, iter.next()); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
 				rs = stmt.executeQuery();
-				rs.next();
-				prof_id = rs.getInt("prof_id");
-				prof_name = rs.getString("prof_name");
-				prof_nick = rs.getString("prof_nick");
-				coworker_list.add(prof_id);
-				prof_name_list.add(prof_name);
-				prof_nick_list.add(prof_nick);
-				profile.setProf_id_list(coworker_list);
-				profile.setProf_name_list(prof_name_list);
-				profile.setProf_nick_list(prof_nick_list);
+				if (rs.next()) {
+					prof_id = rs.getInt("prof_id");
+					prof_name = rs.getString("prof_name");
+					prof_nick = rs.getString("prof_nick");
+					coworker_list.add(prof_id);
+					prof_name_list.add(prof_name);
+					prof_nick_list.add(prof_nick);
+					profile.setProf_id_list(coworker_list);
+					profile.setProf_name_list(prof_name_list);
+					profile.setProf_nick_list(prof_nick_list);
+				}
 			}
 			prof_list.add(profile);
 		} catch (Exception e) {
@@ -213,24 +215,25 @@ public class ProjectDao {
 				stmt = conn.prepareStatement(tag_id_sql);
 				stmt.setInt(1, proj_tag_id);
 				rs = stmt.executeQuery();
-				rs.next();
-				proj_tag_name = rs.getString("TAG_NAME");
-				String tag_type = rs.getString("TAG_TYPE");
-				if (tag_type.equals("분야")) {
-					field = proj_tag_name;
-					proj_field_list.add(field);
-					field_tag.setProj_field_list(proj_field_list);
-					field_list.add(field_tag);
-				} else if (tag_type.equals("언어")) {
-					lang = proj_tag_name;
-					proj_language_list.add(lang);
-					lang_tag.setProj_lang_list(proj_language_list);
-					lang_list.add(lang_tag);
-				} else if (tag_type.equals("도구")) {
-					tool = proj_tag_name;
-					proj_tool_list.add(tool);
-					tool_tag.setProj_tool_list(proj_tool_list);
-					tool_list.add(tool_tag);
+				if (rs.next()) {
+					proj_tag_name = rs.getString("TAG_NAME");
+					String tag_type = rs.getString("TAG_TYPE");
+					if (tag_type.equals("field")) {
+						field = proj_tag_name;
+						proj_field_list.add(field);
+						field_tag.setProj_field_list(proj_field_list);
+						field_list.add(field_tag);
+					} else if (tag_type.equals("language")) {
+						lang = proj_tag_name;
+						proj_language_list.add(lang);
+						lang_tag.setProj_lang_list(proj_language_list);
+						lang_list.add(lang_tag);
+					} else if (tag_type.equals("tool")) {
+						tool = proj_tag_name;
+						proj_tool_list.add(tool);
+						tool_tag.setProj_tool_list(proj_tool_list);
+						tool_list.add(tool_tag);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -248,7 +251,7 @@ public class ProjectDao {
 		req.setAttribute("tool_list", tool_list);
 		req.setAttribute("field_list", field_list);
 		req.setAttribute("prof_list", prof_list);
-		
+
 	}
 
 	/**
@@ -259,7 +262,8 @@ public class ProjectDao {
 	 */
 	public void reg_pro(HttpServletRequest req, HttpServletResponse resp) {
 		// 내 아이디
-		String login_id = req.getParameter("mem_id");
+		HttpSession session = req.getSession();
+		String login_id = String.valueOf((int) session.getAttribute("loginId"));
 		String proj_title = req.getParameter("proj_title"); // 프로젝트 제목
 		String proj_intro = req.getParameter("proj_intro"); // 프로젝트 내용
 		String proj_startdate = req.getParameter("proj_startdate"); // 프로젝트 시작일
@@ -268,7 +272,7 @@ public class ProjectDao {
 																		// 등록마감일
 		int proj_to = 0;
 		String proj_tos[] = req.getParameterValues("proj_numofperson");
-		for(int i=0; i<proj_tos.length; i++){
+		for (int i = 0; i < proj_tos.length; i++) {
 			proj_to += Integer.parseInt(proj_tos[i]);
 		}
 		try {
@@ -316,13 +320,14 @@ public class ProjectDao {
 			stmt.setString(1, proj_intro);
 			stmt.setString(2, proj_title);
 			rs = stmt.executeQuery();
-			rs.next();
-			proj_id = rs.getInt("PROJ_ID"); // 테그에 사용하는 글번호 - 프로젝트 번호
+			if (rs.next()) {
+				proj_id = rs.getInt("PROJ_ID"); // 테그에 사용하는 글번호 - 프로젝트 번호
+			}
 		} catch (Exception e) {
 			System.out.println("검색 내용PROJECT_APP에 입력 쿼리" + e);
 		}
 		try {
-			String join ="y";
+			String join = "y";
 			String insert_proj_app_sql = "INSERT INTO PROJ_APP(PROJ_APP_ID, MEM_ID, PROJ_ID, PROJ_APP_REGDATE, PROJ_APP_CONFIRM) VALUES(seq_PROJ_APP_ID.nextval, ?, ?, sysdate, ?)";
 			stmt = conn.prepareStatement(insert_proj_app_sql);
 			Iterator<Integer> mem_id_iter = mem_id_list.iterator();
@@ -332,7 +337,6 @@ public class ProjectDao {
 				stmt.setInt(2, proj_id);
 				stmt.setString(3, join);
 				rs = stmt.executeQuery();
-				System.out.println(mem_id+"등록!");
 			}
 		} catch (Exception e) {
 			System.out.println("검색 내용PROJECT_APP에 입력 쿼리" + e);
@@ -348,9 +352,9 @@ public class ProjectDao {
 		String[] tag_lang = req.getParameterValues("tag_lang");
 		for (int i = 0; i < tag_lang.length; i++) {
 			// 프로젝트 개발 언어에 입력된 내용 호출 및 분리
-			String tag_lang_search_sql = "SELECT TAG_NAME FROM TAG WHERE TAG_NAME =? AND TAG_TYPE='언어'";
+			String tag_lang_search_sql = "SELECT TAG_NAME FROM TAG WHERE TAG_NAME =? AND TAG_TYPE='language'";
 			try {
-				String tag_type = "언어";
+				String tag_type = "language";
 				tag_name = tag_lang[i];
 				stmt = conn.prepareStatement(tag_lang_search_sql);
 				stmt.setString(1, tag_lang[i]);
@@ -372,16 +376,16 @@ public class ProjectDao {
 				stmt.setString(1, tag_type);
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
-				rs.next();
-				tag_id = rs.getInt("tag_id");
+				if (rs.next()) {
+					tag_id = rs.getInt("tag_id");
 
-				String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
-				stmt = conn.prepareStatement(insert_tag_use_sql);
-				stmt.setString(1, tag_use_type);
-				stmt.setInt(2, tag_use_type_id);
-				stmt.setInt(3, tag_id);
-				stmt.executeQuery();
-
+					String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
+					stmt = conn.prepareStatement(insert_tag_use_sql);
+					stmt.setString(1, tag_use_type);
+					stmt.setInt(2, tag_use_type_id);
+					stmt.setInt(3, tag_id);
+					stmt.executeQuery();
+				}
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
@@ -392,12 +396,12 @@ public class ProjectDao {
 		String[] tag_tool = req.getParameterValues("tag_tool");
 		for (int i = 0; i < tag_tool.length; i++) {
 			// 프로젝트 개발 언어에 입력된 내용 호출 및 분리
-			String tag_tool_search_sql = "SELECT TAG_NAME FROM TAG WHERE TAG_NAME =? AND TAG_TYPE='도구'";
+			String tag_tool_search_sql = "SELECT TAG_NAME FROM TAG WHERE TAG_NAME =? AND TAG_TYPE='tool'";
 			try {
 				stmt = conn.prepareStatement(tag_tool_search_sql);
 				stmt.setString(1, tag_tool[i]);
 				rs = stmt.executeQuery();
-				String tag_type = "도구";
+				String tag_type = "tool";
 				tag_name = tag_tool[i];
 				if (rs.next()) { // 등록된 테그는 패쓰하고, 등록되지 않은 태그만 검색결과로 테그 테이블에 등록
 					tag_name = rs.getString("TAG_NAME");
@@ -415,15 +419,17 @@ public class ProjectDao {
 				stmt.setString(1, tag_type);
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
-				rs.next();
-				tag_id = rs.getInt("tag_id");
-				System.out.println(tag_id);
-				String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
-				stmt = conn.prepareStatement(insert_tag_use_sql);
-				stmt.setString(1, tag_use_type);
-				stmt.setInt(2, tag_use_type_id);
-				stmt.setInt(3, tag_id);
-				stmt.executeQuery();
+				if (rs.next()) {
+
+					tag_id = rs.getInt("tag_id");
+					System.out.println(tag_id);
+					String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
+					stmt = conn.prepareStatement(insert_tag_use_sql);
+					stmt.setString(1, tag_use_type);
+					stmt.setInt(2, tag_use_type_id);
+					stmt.setInt(3, tag_id);
+					stmt.executeQuery();
+				}
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
@@ -433,11 +439,11 @@ public class ProjectDao {
 		String[] tag_fields = req.getParameterValues("proj_field"); // 다수의 모집분야
 		String[] tag_numofperson_arr = req.getParameterValues("proj_numofperson"); // 다수의모집인원배열호출,이후사용시정수형변환
 		for (int i = 0; i < tag_fields.length; i++) {
-			String tag_type = "분야";
+			String tag_type = "field";
 			tag_name = tag_fields[i].trim();
 			int proj_numofperson = Integer.parseInt(tag_numofperson_arr[i]); // 정수형
 			try {
-				String tag_field_search_sql = "SELECT TAG_NAME FROM TAG WHERE TAG_NAME =? AND TAG_TYPE='분야'";
+				String tag_field_search_sql = "SELECT TAG_NAME FROM TAG WHERE TAG_NAME =? AND TAG_TYPE='field'";
 				stmt = conn.prepareStatement(tag_field_search_sql);
 				stmt.setString(1, tag_fields[i]);
 				rs = stmt.executeQuery();
@@ -458,7 +464,8 @@ public class ProjectDao {
 				stmt.setString(1, tag_type);
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
-				rs.next();
+				if(rs.next()){
+					
 				tag_id = rs.getInt("tag_id");
 
 				String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID, PROJ_NUMOFPERSON) VALUES(seq_tag_use_id.nextVal, ?, ?, ?, ?)";
@@ -468,12 +475,13 @@ public class ProjectDao {
 				stmt.setInt(3, tag_id);
 				stmt.setInt(4, proj_numofperson);
 				rs = stmt.executeQuery();
+				}
 			} catch (Exception e) {
 				System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
 			}
 
 		}
-		
+
 		try {
 			String insert_my_proj = "INSERT INTO MEM_PROJ(MEM_PROJ_ID, PROJ_ID, MEM_ID) VALUES(seq_mem_proj_id.nextVal, ?, ?)";
 			stmt = conn.prepareStatement(insert_my_proj);
@@ -605,13 +613,12 @@ public class ProjectDao {
 		int proj_period = Integer.parseInt(req.getParameter("proj_period")); // 프로젝트
 		String proj_regenddate = req.getParameter("proj_regenddate"); // 프로젝트
 																		// 등록마감일
-		
+
 		int proj_to = 0;
 		String proj_tos[] = req.getParameterValues("proj_numofperson");
-		for(int i=0; i<proj_tos.length; i++){
+		for (int i = 0; i < proj_tos.length; i++) {
 			proj_to += Integer.parseInt(proj_tos[i]);
 		}
-		System.out.println(proj_to+">>>??");
 		try {
 			// 폼에 입력받은 데이터를 프로젝트 테이블에 입력
 			String sql = "UPDATE PROJECT SET PROJ_TITLE=?, PROJ_INTRO=?, PROJ_TO=?,"
@@ -690,15 +697,14 @@ public class ProjectDao {
 		} catch (SQLException e1) {
 			System.out.println("기존의 TAG_USE 모두 제거");
 		}
-		
-		
+
 		String tag_name = "";
 		String[] tag_lang = req.getParameterValues("tag_lang");
 		for (int i = 0; i < tag_lang.length; i++) {
 			// 프로젝트 개발 언어에 입력된 내용 호출 및 분리
 			String tag_lang_search_sql = "SELECT TAG_NAME FROM TAG WHERE TAG_NAME =?";
 			try {
-				String tag_type = "언어";
+				String tag_type = "language";
 				tag_name = tag_lang[i];
 				stmt = conn.prepareStatement(tag_lang_search_sql);
 				stmt.setString(1, tag_lang[i]);
@@ -720,16 +726,17 @@ public class ProjectDao {
 				stmt.setString(1, tag_type);
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
-				rs.next();
-				tag_id = rs.getInt("tag_id");
-				System.out.println(tag_id+"언어 입력전");
-				
-				String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
-				stmt = conn.prepareStatement(insert_tag_use_sql);
-				stmt.setString(1, tag_use_type);
-				stmt.setInt(2, tag_use_type_id);
-				stmt.setInt(3, tag_id);
-				stmt.executeQuery();
+				if (rs.next()) {
+					tag_id = rs.getInt("tag_id");
+					System.out.println(tag_id + "언어 입력전");
+
+					String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
+					stmt = conn.prepareStatement(insert_tag_use_sql);
+					stmt.setString(1, tag_use_type);
+					stmt.setInt(2, tag_use_type_id);
+					stmt.setInt(3, tag_id);
+					stmt.executeQuery();
+				}
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
@@ -745,7 +752,7 @@ public class ProjectDao {
 				stmt = conn.prepareStatement(tag_tool_search_sql);
 				stmt.setString(1, tag_tool[i]);
 				rs = stmt.executeQuery();
-				String tag_type = "도구";
+				String tag_type = "tool";
 				tag_name = tag_tool[i];
 				if (rs.next()) { // 등록된 테그는 패쓰하고, 등록되지 않은 태그만 검색결과로 테그 테이블에 등록
 					tag_name = rs.getString("TAG_NAME");
@@ -763,16 +770,18 @@ public class ProjectDao {
 				stmt.setString(1, tag_type);
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
-				rs.next();
-				tag_id = rs.getInt("tag_id");
-				System.out.println(tag_id);
-				
-				String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
-				stmt = conn.prepareStatement(insert_tag_use_sql);
-				stmt.setString(1, tag_use_type);
-				stmt.setInt(2, tag_use_type_id);
-				stmt.setInt(3, tag_id);
-				stmt.executeQuery();
+				if (rs.next()) {
+					tag_id = rs.getInt("tag_id");
+					System.out.println(tag_id);
+
+					String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID) VALUES(seq_tag_use_id.nextVal, ?, ?, ?)";
+					stmt = conn.prepareStatement(insert_tag_use_sql);
+					stmt.setString(1, tag_use_type);
+					stmt.setInt(2, tag_use_type_id);
+					stmt.setInt(3, tag_id);
+					stmt.executeQuery();
+				}
+
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
@@ -782,7 +791,7 @@ public class ProjectDao {
 		String[] tag_fields = req.getParameterValues("proj_field"); // 다수의 모집분야
 		String[] tag_numofperson_arr = req.getParameterValues("proj_numofperson"); // 다수의모집인원배열호출,이후사용시정수형변환
 		for (int i = 0; i < tag_fields.length; i++) {
-			String tag_type = "분야";
+			String tag_type = "field";
 			tag_name = tag_fields[i].trim();
 			int proj_numofperson = Integer.parseInt(tag_numofperson_arr[i]); // 정수형
 			try {
@@ -807,16 +816,17 @@ public class ProjectDao {
 				stmt.setString(1, tag_type);
 				stmt.setString(2, tag_name);
 				rs = stmt.executeQuery();
-				rs.next();
-				tag_id = rs.getInt("tag_id");
+				if (rs.next()) {
+					tag_id = rs.getInt("tag_id");
 
-				String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID, PROJ_NUMOFPERSON) VALUES(seq_tag_use_id.nextVal, ?, ?, ?, ?)";
-				stmt = conn.prepareStatement(insert_tag_use_sql);
-				stmt.setString(1, tag_use_type);
-				stmt.setInt(2, tag_use_type_id);
-				stmt.setInt(3, tag_id);
-				stmt.setInt(4, proj_numofperson);
-				rs = stmt.executeQuery();
+					String insert_tag_use_sql = "INSERT INTO TAG_USE(TAG_USE_ID, TAG_USE_TYPE, TAG_USE_TYPE_ID, TAG_ID, PROJ_NUMOFPERSON) VALUES(seq_tag_use_id.nextVal, ?, ?, ?, ?)";
+					stmt = conn.prepareStatement(insert_tag_use_sql);
+					stmt.setString(1, tag_use_type);
+					stmt.setInt(2, tag_use_type_id);
+					stmt.setInt(3, tag_id);
+					stmt.setInt(4, proj_numofperson);
+					rs = stmt.executeQuery();
+				}
 			} catch (Exception e) {
 				System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
 			}
