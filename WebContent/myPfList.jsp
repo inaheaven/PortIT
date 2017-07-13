@@ -29,9 +29,9 @@
 					<!-- BASIC FORM ELELEMNTS -->
 					<div class="pflist_top col-md-12 center clearfix">		
 						<span class="pull-left sorting">
-							<b>정렬</b>&nbsp; &nbsp;&nbsp;&nbsp;
+							<!-- <b>정렬</b>&nbsp; &nbsp;&nbsp;&nbsp;
 							<a href="">등록순</a>&nbsp;&nbsp;&nbsp;
-							<a href="">인기순</a>
+							<a href="">인기순</a>-->
 						</span>
 						<span class="pull-right">
 							<button type="button" class="btn common" onclick="location.href='/page?page=myPfRegister'">포트폴리오 등록하기</button>
@@ -45,8 +45,8 @@
 						<div class="col-md-4 mb"> <!-- 반복 -->
 							<div class="image-hover">
 								<div class="portfolio-simple">
-									<div class="pfImg">
-		            					<img src="assets/img/profile-02.jpg"/>   
+									<div class="pfImg" >
+		            					<img src="<%=portfo.getPf_prof_img() %>"/>   
 				         			</div>
 									<div class="pfInfo">
 										<div class="simple-content">
@@ -66,10 +66,10 @@
 									</div>
 									<div class="top-hover-right">
 										<div class="after-hover" >
-											<button type="button" class="btn btn-hover" id ="hover" >
+											<button type="button" class="btn btn-hover" >
 												<span class="glyphicon glyphicon-edit"></span>
 											</button>
-											<button type="button" class="btn btn-hover" onclick="location.href='/pfList?cmd=MYPORTFOLIODELETE&prof_pf_id=<%=portfo.getProf_pf_id() %>'">
+											<button type="button" class="btn btn-hover" id ="hover" onclick="location.href='/pfList?cmd=MYPORTFOLIODELETE&pf_id=<%=portfo.getPf_id() %>'">
 												<span class="glyphicon glyphicon-remove"></span>
 											</button>
 										</div>
