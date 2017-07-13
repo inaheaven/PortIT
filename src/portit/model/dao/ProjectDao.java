@@ -975,7 +975,7 @@ public class ProjectDao {
 		rsList = new ArrayList();
 		sql = "select  DISTINCT project.proj_title, project.proj_id, project.proj_regdate,  project.proj_regenddate-sysdate, project.proj_startDate, proj_app.proj_app_confirm "
 				+ "from project inner join proj_app on project.proj_id=proj_app.proj_id  "
-				+ "where project.proj_id in (select proj_id from proj_app where mem_id='" + login_id + "')";
+				+ "where project.proj_id in (select proj_id from proj_app where mem_id='" + login_id + "')and proj_app.mem_id='"+login_id+"'";
 
 		// 필요한 정보: proj_title, proj_id, PROJ_REGENDDATE, mem_id, prof_name,
 		// proj_app_confirm
