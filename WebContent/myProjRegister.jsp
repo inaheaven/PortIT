@@ -123,7 +123,7 @@
 			<div class="projregForm">
 				<h3 class="formTitle text-center">프로젝트 등록</h3>
 				<form class="form-horizontal style-form" method="post"
-					action="myproj?cmd=list&save=save&mem_id=<%=session.getAttribute("loginId")%>">
+					action="myproj?cmd=list&save=save">
 
 					<!-- mem_id값 알맞게 수정해야된다!! -->
 
