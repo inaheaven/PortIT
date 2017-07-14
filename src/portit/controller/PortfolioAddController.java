@@ -36,22 +36,25 @@ public class PortfolioAddController implements Controller {
 		List<Tag> fieldTagList = new ArrayList<Tag>();
 		List<Profile> coworkerList = new ArrayList<Profile>();
 		for (String key : formData.keySet()) {
-			if (key.equals("pf_tags_language")) {
+			System.out.println(key + " : " +formData.get(key));
+		}
+		/*for (String key : formData.keySet()) {
+			if (key.equals("pf_tags_language") && formData.get(key) != null) {
 				String[] pf_tags_language = (String[]) formData.get(key);
 				for (int i = 0; i < pf_tags_language.length; i++) {
 					languageTagList.add(new Tag().setTag_type("language").setTag_name(pf_tags_language[i]));
 				}
-			} else if (key.equals("pf_tags_tool")) {
+			} else if (key.equals("pf_tags_tool") && formData.get(key) != null) {
 				String[] pf_tags_tool = (String[]) formData.get(key);
 				for (int i = 0; i < pf_tags_tool.length; i++) {
 					toolTagList.add(new Tag().setTag_type("tool").setTag_name(pf_tags_tool[i]));
 				}
-			} else if (key.equals("pf_tags_field")) {
+			} else if (key.equals("pf_tags_field") && formData.get(key) != null) {
 				String[] pf_tags_field = (String[]) formData.get(key);
 				for (int i = 0; i < pf_tags_field.length; i++) {
 					fieldTagList.add(new Tag().setTag_type("field").setTag_name(pf_tags_field[i]));
 				}
-			} else if (key.equals("pf_coworkers")) {
+			} else if (key.equals("pf_coworkers") && formData.get(key) != null) {
 				String[] pf_coworker = (String[]) formData.get(key);
 				for (int i = 0; i < pf_coworker.length; i++) {
 					coworkerList.add(new Profile().setProf_nick(pf_coworker[i]));
@@ -78,11 +81,11 @@ public class PortfolioAddController implements Controller {
 					.setPf_tags_tool(toolTagList).setPf_tags_field(fieldTagList).setPf_mediaList(mediaList)
 					.setPf_coworkers(coworkerList);
 			// DAO의 추가 메서드 호출
-			portfolioDao.insert(portfolio);
+			//portfolioDao.insert(portfolio);
 		} catch (ParseException e) {
 			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
 			e.printStackTrace();
-		}
+		}*/
 		
 		// 뷰 URL 반환
 		String viewUrl = "rdr:/page?page=myPfList";

@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
 
 import portit.model.dto.Media;
 
@@ -66,19 +67,52 @@ public class FileUpload {
 		List<Media> fileList = new ArrayList<Media>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			List<FileItem> items = upload.parseRequest((RequestContext) req);			
-			for(FileItem item : items) {
+			List<FileItem> items = upload.parseRequest(req);
+			for(int i = 0; i < items.size(); i++) {
+				FileItem item = items.get(i);
+				Object value = new ArrayList<String>();
 				if (item.isFormField()) {
 					// isFormField()의 반환값이 true이면 일반 파라미터로 처리
-					map.put(
-							new String(item.getFieldName().getBytes("ISO-8859-1"), "UTF-8")
-							, new String(item.getString().getBytes("ISO-8859-1"), "UTF-8")
-							);
+					if (item.getString() != null || !item.getString().equals("")) {
+						String key = new String(item.getFieldName());
+						if ((i > 0) || key.equals(items.get(i-1).getFieldName())) {
+							((ArrayList<String>) value).add(item.getString("UTF-8"));
+						}
+						value = null;
+						value = item.getString("UTF-8");
+						
+						System.out.println(key + " : " + value);
+						map.put(key, value);
+					}
 				} else {
 					// isFormField()의 반환값이 false이면 파일로 처리
 					if (item != null && item.getSize() > 0) {
 						if (item.getContentType().startsWith("image/")) {
 							String path = saveDir + File.separator + getFileName(item);
+							System.out.println(path);
+							item.write(new File(path));
+							fileList.add(new Media().setMl_path(path));
+						} else {
+							throw new Exception("이미지파일만 업로드할 수 있습니다.");
+						}
+					}
+				}				
+			}
+			/*for(FileItem item : items) {
+				if (item.isFormField()) {
+					// isFormField()의 반환값이 true이면 일반 파라미터로 처리
+					if (item.getString() != null || !item.getString().equals("")) {
+						String key = new String(item.getFieldName());
+						Object value = Streams.asString(item.getInputStream(), "UTF-8");
+						System.out.println(key + " : " + value);
+						map.put(key, value);
+					}
+				} else {
+					// isFormField()의 반환값이 false이면 파일로 처리
+					if (item != null && item.getSize() > 0) {
+						if (item.getContentType().startsWith("image/")) {
+							String path = saveDir + File.separator + getFileName(item);
+							System.out.println(path);
 							item.write(new File(path));
 							fileList.add(new Media().setMl_path(path));
 						} else {
@@ -86,11 +120,8 @@ public class FileUpload {
 						}
 					}
 				}
-			}
+			}*/
 			map.put("fileList",  fileList);
-			for (String key : map.keySet()) {
-				System.out.println(key + " : " + map.get(key).toString());
-			}
 			return map;
 		} catch (FileUploadException e) {
 			e.printStackTrace();

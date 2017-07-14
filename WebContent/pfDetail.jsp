@@ -61,11 +61,12 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 				
 				<h4>
 					<i class="fa fa-heart"></i>
+					<span id="pfLike">${portfolio.pf_like}</span>
 				</h4>
 				<div class="actions">
 					<button type="button" class="btn common" id="likeToggle" value="like">
 						<i class="fa fa-heart-o"></i>
-					</button>	
+					</button>
 					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark">
 						<i class="fa fa-bookmark-o"></i>
 					</button>
@@ -383,10 +384,12 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					if (value == "like") {
 						$("#likeToggle").empty();						
 						$("#likeToggle").append("<i class=\"fa fa-heart\"></i>");
+						$("#pfLike").text(likes);
 						$("#likeToggle").attr("value", "dislike");
 					} else {
 						$("#likeToggle").empty();
 						$("#likeToggle").append("<i class=\"fa fa-heart-o\"></i>");
+						$("#pfLike").text(likes);
 						$("#likeToggle").attr("value", "like");
 					}
 				});

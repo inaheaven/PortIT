@@ -51,11 +51,11 @@ Profile profile = (Profile) request.getAttribute("profile");
 				<h1>${profile.prof_name}</h1>
 				<h3 class="username">${profile.prof_nick}</h3>
 				<h4 class="tags">
-					<c:if test="${!empty profile.pf_tags_language}">
-						<c:forEach var="pf_tag_language" items="${portfolio.prof_tags_language}">
-							<span> <a href="">${prof_tag_language.tag_name}</a> </span>
-						</c:forEach>
-					</c:if>
+					<span>
+						<a href="">${profile.prof_language}</a>
+						<a href="">${profile.prof_tool}</a>
+						<a href="">${profile.prof_field}</a>
+					</span>
 				</h4>
 				<h4>
 					<i class="fa fa-user"></i>
@@ -97,16 +97,14 @@ Profile profile = (Profile) request.getAttribute("profile");
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="skillset">
-							<%
-								for (String key : profile.getProf_skillset().keyset()) {
-							%>
+							<% for (int i = 0; i < profile.getTag_skill().size(); i++) { %>
 							<div class="skill clearfix">
 								<div class="col-xs-3 text-center">
-									<span class=""><%= key %></span>
+									<span class=""><%= profile.getTag_skill().get(i) %></span>
 								</div>
 								<div class="col-xs-9">
 									<div class="progress">
-										<div class="progress-bar" style="width: <%= 100 * (profile.getProf_skillset().get(key)/10) %>%;"></div>
+										<div class="progress-bar" style="width:<%=100 * ((Integer.parseInt(profile.getProf_skill_level().get(i).toString())) / 10)%>%;"></div>
 									</div>
 								</div>
 							</div>
@@ -126,29 +124,28 @@ Profile profile = (Profile) request.getAttribute("profile");
 				<div class="row recoList">
 					<c:choose>
 						<c:when test="${!empty profile.prof_myPf}">
-							<c:forEach var="mypf" items="profile.prof_myPf">
+							<c:forEach var="mypf" items="${profile.prof_myPf}">
 								<div class="col-md-3 mb">
 									<div class="portfolio-simple">
 										<div class="pfImg">
-											<a href="/view?type=portfolio&id=${mypf.pf_id}"><img src="" /></a>
+											<a href="/view?type=portfolio&id=${mypf.pf_id}"><img src="${mypf.mediaList[0].ml_path}" /></a>
 										</div>
 										<div class="pfInfo">
 											<div class="simple-content">
 												<div class="pfTag">
-													<%
-														for (Tag tag : mypf.getPf_tags_language()) {
-													%>
-													#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
-													<%
-														}
-													%>
+													<c:if test="${!empty mypf.pf_tags_language}">
+														<c:forEach var="pf_tag_language" items="${mypf.pf_tags_language}">
+															#<a href="">${pf_tag_language}</a>
+														</c:forEach>
+													</c:if>
+													#<a href="">&nbsp;</a>
 												</div>
 												<div class="pfTitle">
 													<a href="/view?type=portfolio&id=${mypf.pf_id}">${mypf.pf_title}</a>
 												</div>
 												<div class="pfBottom">
 													<span class="pfmemName"><a href="/view?type=profile&id=${mypf.pf_prof_nick}">${mypf.pf_prof_name}</a></span>
-													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;${mypf.pf_like}</span>
+													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;</span>
 												</div>
 											</div>
 										</div>
@@ -172,22 +169,9 @@ Profile profile = (Profile) request.getAttribute("profile");
 					<h2 class="text-center">Projects</h2>
 				</div>
 				<div class="row">
-					<ul class="sorting">
-						<li><a href="#" class="active">전체</a></li>
-						<li><a href="#">최신순</a></li>
-						<li><a href="#">인기순</a></li>
-					</ul>
-				</div>
-				<%
-					List<Project> myProj = profile.getProf_myProj();
-					if (myProj != null && myProj.size() > 0) {
-						for (int idx = 0; idx < myProj.size(); idx++) {
-							Project proj = myProj.get(idx);
-				%>
-				<div class="row">
 					<c:choose>
 						<c:when test="${!empty profile.prof_myProj}">
-							<c:forEach var="myproj" items="profile.prof_myProj">
+							<c:forEach var="myproj" items="${profile.prof_myProj}">
 								<div class="col-md-12 mb">
 									<div class="project-list">
 										<div class="pjInfoText">
@@ -197,29 +181,24 @@ Profile profile = (Profile) request.getAttribute("profile");
 											<div class="pjmemName">
 												<span class="fa fa-user"></span>&nbsp;&nbsp;<a href="/view?type=profile?id=${myproj.prof_name}">${myproj.prof_name}</a>
 											</div>
-											<div class="pjIntro"><%=proj.getProj_intro()%></div>
+											<div class="pjIntro">${myproj.proj_intro}</div>
 											<div class="pjTag">
-												<%
-													for (Tag tag : proj.getProj_tags_language()) {
-												%>
-												<span><a href=""><%=tag.getTag_name()%></a>&nbsp;</span>
-												<%
-													}
-												%>
+												<c:forEach var="tagLang" items="${myproj.proj_language}">
+													<span><a href="">${tagLang}</a>&nbsp;</span>
+												</c:forEach>
+												<c:forEach var="tagTool" items="${myproj.proj_tool}">
+													<span><a href="">${tagTool}</a>&nbsp;</span>
+												</c:forEach>
 											</div>
 										</div>
 										<div class="pjInfoTable">
 											<table class="table text-center">
-												<%
-													for (Tag tag : proj.getProj_tags_field()) {
-												%>
+												<% for (int i = 0; i < myproj.getProj_field().size(); i++) { %>
 												<tr>
-													<td><span><a href=""><%=tag.getTag_name()%></a>&nbsp;</span>
-														/ <%=proj.getProj_numofperson()%> 명</td>
+													<td><span><a href=""><%=myproj.getProj_field().get(i)%></a>&nbsp;</span>
+														/ <%=myproj.getProj_numofperson().get(i)%> 명</td>
 												</tr>
-												<%
-													}
-												%>
+												<% } %>
 												<tr>
 													<td>마감일</td>
 												</tr>
