@@ -66,7 +66,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					<button type="button" class="btn common" id="likeToggle" value="like">
 						<i class="fa fa-heart-o"></i>
 					</button>	
-					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark">
+					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark" onclick="location.href='/bmk?cmd=BOOKMARK&mem_id=${sessionScope.loginId}&pf_id= ${portfolio.pf_id}'">
 						<i class="fa fa-bookmark-o"></i>
 					</button>
 					<!-- <button type="button" class="btn common" onclick="location.href='#'">

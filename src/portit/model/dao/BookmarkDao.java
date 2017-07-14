@@ -170,7 +170,7 @@ public class BookmarkDao {
 			conn = pool.getConnection();
 
 			sql = "MERGE INTO BOOKMARK  USING DUAL ON (MEM_ID=? and PF_ID=? ) "
-					+ "WHEN MATCHED THEN UPDATE SET bm_ID=1  DELETE  WHERE MEM_ID=? and PF_ID=? "
+					+ "WHEN MATCHED THEN UPDATE SET bm_ID=2  DELETE  WHERE MEM_ID=? and PF_ID=? "
 					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE) "
 					+ "VALUES (SEQ_BM_ID.NEXTVAL,?,?,SYSDATE) ";
 					/*//CREATE SEQUENCE SEQ_BM_ID

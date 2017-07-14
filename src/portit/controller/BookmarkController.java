@@ -33,16 +33,23 @@ public class BookmarkController extends HttpServlet {
 		//상세페이지에서 PF_ID를 가져온다고하고 버튼 눌렀을때 기존 포트폴리오가 존재하면 DELETE 없으면 INSERT
 		if (cmd.equals("BOOKMARK")) {
 			req.setAttribute("onload", "S");
-			
+			//pf_id를 가져온다고 하고 진행
+
+			//존재하면 DELETE 없으면 INSERT
 			int pf_id = 0, mem_id = 0;
 			if (req.getParameter("pf_id") != null) {
-				pf_id = Integer.parseInt(req.getParameter("pf_id"));
+				pf_id =Integer.parseInt(req.getParameter("pf_id").trim());
 			}
 			if (req.getParameter("mem_id") != null) {
 				mem_id = Integer.parseInt(req.getParameter("mem_id"));
 			}
 			BookmarkDao bmDao = new BookmarkDao();
-			bmDao.addBookmark(pf_id, mem_id);
+			bmDao.addBookmark(pf_id, mem_id);	
+			
+			resp.sendRedirect("/pfDetail.jsp");
+		// 주소는 나중에 합쳐지면 수정이 되야할것 ..ㅠ_ㅠ같긴한데 지금은 잘 모르겠어서 일단 이렇게 해놨어요~!!
+			
+			
 			
 			//북마크 조회(MYPAGE에서)
 		} else if (cmd.equals("MYBOOKMARK")) {
