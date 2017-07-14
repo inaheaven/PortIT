@@ -192,6 +192,24 @@ public class BookmarkDao {
 			System.out.println("getList() : 여기 에러나지마라 " + err);
 		}
 	}
+	
+	public String getBookMark(int pf_id, int mem_id) {
+		try {
+			sql = "SELECT * FROM BOOKMARK WHERE MEM_ID=? and PF_ID=? ";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			stmt.setInt(2, pf_id);
+			rs3 = stmt.executeQuery();
+
+			while (rs3.next()) {
+				return "T";  //존재하면 T
+			}
+			
+		} catch (Exception e) {
+			System.out.println("TAG() : 여기 에러나지마라 " + e);
+		}
+		return "F"; //없으면 F
+	}
 
 	
 	

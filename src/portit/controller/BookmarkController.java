@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import portit.model.dao.BookmarkDao;
+import portit.model.dao.PortfolioDao;
 import portit.model.dto.Portfolio;
 
 @WebServlet("/bmk")
@@ -43,9 +44,22 @@ public class BookmarkController extends HttpServlet {
 				mem_id = Integer.parseInt(req.getParameter("mem_id"));
 			}
 			BookmarkDao bmDao = new BookmarkDao();
-			bmDao.addBookmark(pf_id, mem_id);	
+			bmDao.addBookmark(pf_id, mem_id);
 			
-			resp.sendRedirect("/pfDetail.jsp");
+			PortfolioDao portfolioDao = new PortfolioDao();
+			Portfolio portfolio = portfolioDao.selectOne(pf_id);
+			req.setAttribute("portfolio", portfolio);
+			
+			String  dataTF=bmDao.getBookMark(pf_id, mem_id);
+			req.setAttribute("dataTF", dataTF);
+			
+			
+			//resp.sendRedirect("/pfDetail.jsp");
+			url="pfDetail.jsp";
+			
+			req.setAttribute("pageName", url);
+			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+			view.forward(req, resp);
 			
 		} else if (cmd.equals("MYBOOKMARK")) {
 			BookmarkDao bmDao = new BookmarkDao();
