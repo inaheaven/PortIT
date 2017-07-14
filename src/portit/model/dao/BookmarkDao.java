@@ -195,6 +195,7 @@ public class BookmarkDao {
 	
 	public String getBookMark(int pf_id, int mem_id) {
 		try {
+			conn = pool.getConnection();
 			sql = "SELECT * FROM BOOKMARK WHERE MEM_ID=? and PF_ID=? ";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
