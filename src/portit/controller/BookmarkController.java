@@ -37,7 +37,7 @@ public class BookmarkController extends HttpServlet {
 			//존재하면 DELETE 없으면 INSERT
 			int pf_id = 0, mem_id = 0;
 			if (req.getParameter("pf_id") != null) {
-				pf_id = Integer.parseInt(req.getParameter("pf_id"));
+				pf_id =Integer.parseInt(req.getParameter("pf_id").trim());
 			}
 			if (req.getParameter("mem_id") != null) {
 				mem_id = Integer.parseInt(req.getParameter("mem_id"));
@@ -45,13 +45,7 @@ public class BookmarkController extends HttpServlet {
 			BookmarkDao bmDao = new BookmarkDao();
 			bmDao.addBookmark(pf_id, mem_id);	
 			
-			resp.sendRedirect("/bmk?cmd=MYBOOKMARK");
-			
-			//엑스버튼 누를때 dto에서 deletebookmark 실행page?page=myBookmark
-
-			//포트폴리오 상세페이지에서 북마큰 버튼 누르면 북마크되는 dao메소드 실행
-
-			//포트폴리오 상세페이지에서 북마크 버튼을 다시 눌러서 비활성화시 북마크 취
+			resp.sendRedirect("/pfDetail.jsp");
 			
 		} else if (cmd.equals("MYBOOKMARK")) {
 			BookmarkDao bmDao = new BookmarkDao();

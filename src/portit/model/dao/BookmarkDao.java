@@ -46,7 +46,7 @@ public class BookmarkDao {
 		ArrayList bmList = new ArrayList();
 		try {
 			conn = pool.getConnection();
-			sql = "SELECT BOOK.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH "
+			sql = "SELECT DISTINCT BOOK.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH "
 				+ " FROM BOOKMARK BOOK INNER JOIN PORTFOLIO PORT ON BOOK.PF_ID = PORT.PF_ID "
 		        + " JOIN MEDIA_LIBRARY MEDIA ON PORT.PF_ID = MEDIA.ML_TYPE_ID"
 		        + " JOIN MEMBER M ON M.MEM_ID = BOOK.MEM_ID JOIN PROFILE P ON M.MEM_ID = P.MEM_ID "
@@ -166,8 +166,8 @@ public class BookmarkDao {
 			// BOOKMARK에 MEM_ID=? AND PF_ID=? 조회해서 데이터가 존재하면 delete 없으면 insert
 			conn = pool.getConnection();
 
-			sql = "MERGE INTO BOOKMARK  USING DUAL ON (MEM_ID=? and PF_ID=? ) "
-					+ "WHEN MATCHED THEN UPDATE SET bm_ID=1  DELETE  WHERE MEM_ID=? and PF_ID=? "
+			sql = "MERGE INTO BOOKMARK USING DUAL ON (MEM_ID=? and PF_ID=? ) "
+					+ "WHEN MATCHED THEN UPDATE SET bm_ID=2  DELETE  WHERE MEM_ID=? and PF_ID=? "
 					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE) "
 					+ "VALUES (SEQ_TAG_ID.NEXTVAL,?,?,SYSDATE) ";
 					/*//CREATE SEQUENCE SEQ_TAG_ID
