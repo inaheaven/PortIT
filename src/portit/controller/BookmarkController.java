@@ -72,7 +72,7 @@ public class BookmarkController extends HttpServlet {
 			req.setAttribute("pageName", url);
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			view.forward(req, resp);
-			
+			  
 		}else if (cmd.equals("MYBOOKMARKDELETE")) {
 			BookmarkDao bmDao = new BookmarkDao();
 			int bm_id=0;

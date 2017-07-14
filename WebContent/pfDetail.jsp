@@ -395,7 +395,7 @@ String dataTF= (String)request.getAttribute("dataTF");
 				});
 			});
 			//북마크 버튼 실행부분
-			
+			 
 <%
 		if ("T".equals(dataTF)) {
 %>	

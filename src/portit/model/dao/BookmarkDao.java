@@ -197,7 +197,7 @@ public class BookmarkDao {
 	}
 	
 	// 북마크버튼 누르고 있는지 없는지  조회부분 
-	
+	  
 	public String getBookMark(int pf_id, int mem_id) {
 		try {
 			sql = "SELECT * FROM BOOKMARK WHERE MEM_ID=? and PF_ID=? ";
