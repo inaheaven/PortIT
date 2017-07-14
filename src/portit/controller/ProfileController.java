@@ -63,10 +63,8 @@ public class ProfileController extends HttpServlet {
 		//int mem_id = Integer.parseInt(req.getParameter("mem_id"));
 		//req.setAttribute("mem_id", mem_id);
 
-	
-
 		int prof_follower =0;
-		String prof_id = req.getParameter("prof_id");
+		//int prof_id = Integer.parseInt(req.getParameter("prof_id"));
 		String prof_img = req.getParameter("prof_img");
 		String prof_background = req.getParameter("prof_background");
 		String prof_name = req.getParameter("prof_name");
@@ -120,7 +118,12 @@ public class ProfileController extends HttpServlet {
 		
 		ProfileDao profileDao = new ProfileDao();
 		Profile prof_reg = new Profile();
-
+		
+		//프로필 아이디를 가지고 옴
+		int prof_id = profileDao.getProf_id(loginId);
+		//프로필 닉네임을 가지고 옴
+		String nickname = profileDao.idToNick(loginId);
+		
 		prof_reg.setProf_img(prof_img);
 		prof_reg.setProf_background(prof_background);
 		prof_reg.setProf_follower(prof_follower);
@@ -137,9 +140,7 @@ public class ProfileController extends HttpServlet {
 		prof_reg.setTag_skill(tag_skill);
 		prof_reg.setProf_skill_level(prof_skill_level);
 		
-		profileDao.addprofile(prof_reg, loginId);
-		req.setAttribute("prof_reg", prof_reg);
-
+		
 	/*
 		if (!ServletFileUpload.isMultipartContent(req)) {
 			try {
@@ -192,19 +193,36 @@ public class ProfileController extends HttpServlet {
 			e.printStackTrace();
 		}
 */
-
+		
+	/*이미 프로필이 있을경우(my메뉴에서 설정 해주기)
+	 * 
+	 * ProfileDao profileDao = new ProfileDao();
+		
+		//프로필 아이디를 가지고 옴
+		int prof_id = profileDao.getProf_id(loginId);
+		//프로필 닉네임을 가지고 옴
+		String nickname = profileDao.idToNick(loginId);
+		
+		if(prof_id == 0 || nickname.equals(null)){
+			url = "/page?page=myProfUpdate";
+		}
+		else{
+			url = "/page?page=myprof";
+		}
+	*/
 		
 		if (cmd.equals("REGISTER")) {
-			prof_reg= profileDao.getProfile(loginId);
-			req.setAttribute("prof", prof_reg);
+			profileDao.addprofile(prof_reg, loginId);
+			prof_reg = profileDao.getProfile(loginId);
+			req.setAttribute("prof", prof_reg);			
 			url = "/page?page=myProfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
-		//	ProfileDao dao = new ProfileDao();
-		//	Profile prof= dao.selectOne(loginId);
-		//	req.setAttribute("prof", prof);
-		//	url = "/page?page=myProfUpdate";
+			profileDao.updateProfile(prof_reg, loginId);
+			prof_reg= profileDao.getProfile(loginId);
+			req.setAttribute("prof", prof_reg);
+			url = "/page?page=myProfUpdate";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

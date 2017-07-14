@@ -289,13 +289,6 @@ function fnSelectSnsInfo(snsName){
 				<h3 class="formTitle text-center">프로필 수정</h3>
 				<form action="/profReg?cmd=REGISTER" method="post" class="form-horizontal style-form">
 
-					<!-- 프로필id hidden -->
-					<div class="form-group">
-						<label class="col-md-3 control-label"></label>
-						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="prof_id">
-						</div>
-					</div>
 					<!-- 등록일자  hidden -->
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
