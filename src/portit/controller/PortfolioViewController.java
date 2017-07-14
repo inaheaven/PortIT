@@ -5,7 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import portit.model.dao.BookmarkDao;
 import portit.model.dao.PortfolioDao;
 import portit.model.dto.Portfolio;
 
@@ -25,6 +27,16 @@ public class PortfolioViewController implements Controller {
 		Portfolio portfolio = portfolioDao.selectOne(articleId);
 		req.setAttribute("portfolio", portfolio);
 		
+		
+
+		//북마크 누르면 유지하는 session
+			HttpSession session = req.getSession();
+			int loginId = (int)session.getAttribute("loginId");
+			
+			BookmarkDao bmDao = new BookmarkDao();
+			String  dataTF = bmDao.getBookMark(portfolio.getPf_id(), loginId);
+			req.setAttribute("dataTF", dataTF);
+			
 		// 뷰 URL 반환
 		//String viewUrl = "fwd:/memDetail.jsp";
 		String viewUrl = "pfDetail.jsp";
