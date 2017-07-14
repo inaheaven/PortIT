@@ -396,21 +396,21 @@ String dataTF= (String)request.getAttribute("dataTF");
 			});
 			//북마크 버튼 실행부분
 			
-			<%
+<%
 		if ("T".equals(dataTF)) {
-		%>	
+%>	
 			$("#bookmarkToggle").empty();						
 			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
 			$("#bookmarkToggle").attr("value", "unbookmark");
-		<%
+<%
 		}else{
-		%>
+%>
 			$("#bookmarkToggle").empty();
 			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark-o\"></i>");
 			$("#bookmarkToggle").attr("value", "bookmark");
-		<%
+<%
 		}
-		%>
+%>
 			
 			
 			
