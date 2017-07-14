@@ -393,7 +393,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 			});
 			
 			// 북마크 토글
-			$("#bookmarkToggle").click(function() {
+			/* $("#bookmarkToggle").click(function() {
 				var value = $("#bookmarkToggle").attr("value");
 				var mem_id = ${sessionScope.loginId};
 				var pf_id = ${portfolio.pf_id}
@@ -419,8 +419,8 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					data : param,
 					dataType : "text"
 				});
-				
-				request.done(function(bookmark) {
+				 */
+							{
 					if (value == "bookmark") {
 						$("#bookmarkToggle").empty();						
 						$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
