@@ -37,9 +37,6 @@ var count = 0;
 		//itemList의 태그위치 저장
 		var itemList = document.getElementById("itemList");
 
-		//이게 왜 있는거지..?
-		//var sea = document.getElementById("sea");
-
 		//itemList에  생성된 span태그를 삽입한다.
 		//X버튼
 		itemList.appendChild(newSpan);
@@ -53,7 +50,8 @@ var count = 0;
 		//input에 값이 잘 전달되었는지 확인한다.
 		//inputTeg 삽입 확인...
 		var test = document.getElementById("param1").value;
-		alert(test + "파라미터 삽입");
+		var test2 = document.getElementById("param2").value;
+		var test3 = document.getElementById("param3").value;
 
 	}
 
@@ -66,16 +64,23 @@ var count = 0;
 
 	}
 
-	function fnAppendItem2() {
+	function fnAppendItem2(_param) {
 		count++;
 
 		var newSpan = document.createElement("span");
-
+		//INPUT생성
+		var newInput = document.createElement("input");
+		
 		newSpan.setAttribute("id", "item_" + count);
 		newSpan.setAttribute("class", "btn");
 		newSpan.className += " tagcondition";
 		
-		var choice = document.getElementById("language").value;
+		//속성
+		newInput.setAttribute("id", "param" + count);
+		newInput.setAttribute("name", "param" + count);
+		newInput.setAttribute("value", _param);
+		newInput.setAttribute("type", "hidden");
+		
 
 		newSpan.innerHTML = window.event.target.value
 				+ "<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("
@@ -83,4 +88,7 @@ var count = 0;
 
 		var itemList = document.getElementById("itemList");
 		itemList.appendChild(newSpan);
+		itemList.appendChild(newInput);
+		
+		var test = document.getElementById("param4").value;
 	}

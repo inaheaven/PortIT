@@ -21,9 +21,16 @@ public class Member {
 	private int prof_follower;
 	private Date prof_regdate;
 	private List<String> tags;
+	private String prof_nick;
 	
 	
 	
+	public String getProf_nick() {
+		return prof_nick;
+	}
+	public void setProf_nick(String prof_nick) {
+		this.prof_nick = prof_nick;
+	}
 	public List<String> getTags() {
 		return tags;
 	}

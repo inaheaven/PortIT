@@ -17,23 +17,18 @@ public class Timeline {
 	private String tag_name;
 	private String ml_path;
 	private int mem_id;
-	private int mem_id2;
+	private List prof_id2;
 	private List tags;
+	private List ml_path2;
 	
 	
 	
 	
 	
-	public int getMem_id2() {
-		return mem_id2;
-	}
 	public List getTags() {
 		return tags;
 	}
-	public Timeline setMem_id2(int mem_id2) {
-		this.mem_id2 = mem_id2;
-		return this;
-	}
+
 	public Timeline setTags(List tags) {
 		this.tags = tags;
 		return this;
@@ -129,6 +124,23 @@ public class Timeline {
 		this.mem_id = mem_id;
 		return this;
 	}
+
+	public List getProf_id2() {
+		return prof_id2;
+	}
+
+	public void setProf_id2(List prof_id2) {
+		this.prof_id2 = prof_id2;
+	}
+
+	public List getMl_path2() {
+		return ml_path2;
+	}
+
+	public void setMl_path2(List ml_path2) {
+		this.ml_path2 = ml_path2;
+	}
+
 	
 
 }

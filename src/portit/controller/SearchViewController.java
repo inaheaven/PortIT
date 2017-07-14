@@ -31,7 +31,8 @@ public class SearchViewController extends HttpServlet {
 		
 		String url = null;
 		HttpSession session = req.getSession();
-	
+		
+		
 		//검색어 결과 저장
 		String totalsearch = req.getParameter("totalsearch");	//통합 검색한 결과
 		String pfSearch = req.getParameter("pfSearch");	//포트폴리오 페이지 내에서 검색 결과 값
@@ -40,6 +41,9 @@ public class SearchViewController extends HttpServlet {
 		System.out.println(memSearch);
 		String projSearch = req.getParameter("projSearch");	 // 프로젝트 페이지 내에서 검색 결과 값
 		
+		session.setAttribute("pfSearch",pfSearch);
+		
+		String pfSearch2 = (String) session.getAttribute("pfSearch");
 		
 		//포트폴리오 Dao 호출
 		//Controller -> Model로 넘겨주기

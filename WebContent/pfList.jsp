@@ -37,8 +37,7 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="pfSearch"
-								value="${sessionScope.search}" />
+							<input type="text" class="form-control" name="pfSearch"value="${sessionScope.search}" />
 						</div>
 						<button type="submit" class="col-md-1 btn common" >
 							<i class="fa fa-search"></i>
@@ -56,7 +55,7 @@
 				<div class="searchSorting col-md-12 collapse" id="searchSorting">
 					<form class="" method="post" name="detailsearch"
 						action="/detailSearch?cmd=PFDETAIL">
-						<input type="hidden" name="list_value" />
+						<input type="hidden" name="list_value"  />
 						<div class="">
 							<div class="sortKey col-md-1">
 								<b>정렬</b>
@@ -73,17 +72,17 @@
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
 							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
-							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="OS" name="language"	onclick="fnAppendItem('OS')" /> 
 							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
 							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
+							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')'" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
 							<input type="text" class="form-control taginput" id="language"
 								name="language" placeholder="검색하고 싶은 태그를 입력하세요."
-								onchange="fnAppendItem2()" />
+								onchange="fnAppendItem2(text)" />
 						</div>
 						<br> <br>
 						<hr />
@@ -91,9 +90,6 @@
 						<!--  태그가 삽입되는 부분  -->
 						<!--  이부분에 input hidden이 삽입되어야한다. -->
 						<div id="itemList" class="col-md-9">
-							
-							<input type="hidden" id="test3" name="test3" value="확인중.ㅎ">
-						
 						</div>
 						<button type="submit" class="btn common col-md-2">조건 검색하기</button>
 					</form>
@@ -138,22 +134,25 @@
 
 			<!-- 첫번째 포트폴리오 -->
 			<div class="col-md-3 mb">
-				<div class="portfolio-simple">
-					<div class="pfImg">
-   						<img src="assets/img/profile-02.jpg"/>   
-         			</div>
-					<div class="pfInfo">
-						<div class="simple-content">
+  				<div class="portfolio-simple">
+
+ 					<div class="pfImg">
+   						<img src="<%=port.getMl_path()%>"/>    
+        			</div>
+  					<div class="pfInfo">
+  						<div class="simple-content">
 						
 							<div class="pfTag">
 							
 							<% for(int j=0; j<port.getTags().size(); j++) { %>
-							<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+							<a href="javascript:tag('<%=port.getTags().get(j)%>')">
+							#<%= port.getTags().get(j)%></a>&nbsp;
 							<%} %>
 							</div>
 
 							<div class="pfTitle">
-								<a href=""><%=port.getPf_title()%></a>
+								<a href="#" onclick="pf(<%=port.getPf_id()%>)">
+								<%=port.getPf_title()%></a>
 							</div>
 							<div class="pfBottom">
 
@@ -204,6 +203,7 @@
 
 <!-- detail search bar -->
 <script src="assets/js/search.js"></script>
+<script src="assets/js/paging.js"></script>
 <!--script for this page-->
 <script>
 		$(document).ready(
@@ -221,10 +221,24 @@
 								}
 							});
 				});
-		//list_value = 3 이면 최신순 정렬4이면 인기순
+		//list_value = 1 이면 최신순 정렬2이면 인기순
 		function detailSearch(list_value) {
 			document.detailsearch.list_value.value = list_value;
 			document.detailsearch.submit();
 		}
 	</script>
 	
+	
+<!-- 상세페이지로 이동하기 위한 폼 -->
+<form name="pf_info" method="post" action="/view">
+	<input type="hidden" name="id"  />							<!-- pf_id -->
+	<input type="hidden" name="type" value="portfolio" />
+</form>
+<form name="tag_info" method="post" action="/detailView">
+	<input type="hidden" name="tag_name" /> 
+	<input type="hidden" name="cmd" value="TAG" />
+</form>
+s
+<!-- 포트폴리오 정보 -->
+
+

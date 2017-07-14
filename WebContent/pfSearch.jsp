@@ -17,7 +17,7 @@
 					<form class="col-md-10 searchKeyword" method="post" 
 						action="/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-					<input type="text" class="form-control" name="pfSearch" value="${search	 }" />
+					<input type="text" class="form-control" name="pfSearch"  />
 				</div>
 						<button type="submit" class="col-md-1 btn common" id="pfsubmit">
 							<i class="fa fa-search"></i>
@@ -34,7 +34,7 @@
 				<!-- 조건 검색 box -->
 				<div class="searchSorting col-md-12 collapse" id="searchSorting">
 					<form class="" method="post" name="detailsearch" action="/detailSearch?cmd=PFDETAIL">
-						<input type="hidden" name="list_value" />
+						<input type="hidden" name="list_value" value=""/>
 						<div class="">
 							<div class="sortKey col-md-1">
 								<b>정렬</b>
@@ -51,11 +51,11 @@
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
 							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
-							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="OS" name="language"	onclick="fnAppendItem('OS')" /> 
 							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
 							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
+							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')'" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
@@ -116,12 +116,14 @@
 							<div class="pfTag">
 							
 							<% for(int j=0; j<port.getTags().size(); j++) { %>
-							<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+							<a href="javascript:tag('<%=port.getTags().get(j)%>')">
+							#<%= port.getTags().get(j)%></a>&nbsp;
 							<%} %>
 							</div>
 
 							<div class="pfTitle">
-								<a href=""><%=port.getPf_title()%></a>
+								<a href="#" onclick="pf(<%=port.getPf_id()%>)">
+								<%=port.getPf_title()%></a>
 							</div>
 							<div class="pfBottom">
 
@@ -171,6 +173,7 @@
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
+	<script src="assets/js/paging.js"></script>
 
 	<!--script for this page-->
 	<script>
@@ -204,3 +207,16 @@
 			document.detailsearch.submit();
 		}	
 	</script>
+	
+<!-- 상세페이지로 이동하기 위한 폼 -->
+<form name="pf_info" method="post" action="/view">
+	<input type="hidden" name="id"  />							<!-- pf_id -->
+	<input type="hidden" name="type" value="portfolio" />
+</form>
+<form name="tag_info" method="post" action="/detailView">
+	<input type="hidden" name="tag_name" /> 
+	<input type="hidden" name="cmd" value="TAG" />
+</form>
+
+<!-- 포트폴리오 정보 -->
+

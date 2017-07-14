@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -16,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -23,8 +28,12 @@ import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import portit.model.dao.PortfolioDao;
 import portit.model.dao.ProfileDao;
+import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
+import portit.model.dto.Tag;
+import portit.util.FileUpload;
 
 @WebServlet("/profReg")
 public class ProfileController extends HttpServlet {
@@ -39,83 +48,99 @@ public class ProfileController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
+		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
 
+		HttpSession session = req.getSession();
+		int loginId = (int)session.getAttribute("loginId");
+		System.out.println("login Id :" +loginId);
+		req.setAttribute("loginId", loginId);
+		
+		
 		String cmd = req.getParameter("cmd");
 		String url = "";
 
 		//int mem_id = Integer.parseInt(req.getParameter("mem_id"));
 		//req.setAttribute("mem_id", mem_id);
 
-		ProfileDao profileDao = new ProfileDao();
-		Profile prof_reg = new Profile();
+	
 
+		int prof_follower =0;
+		String prof_id = req.getParameter("prof_id");
 		String prof_img = req.getParameter("prof_img");
 		String prof_background = req.getParameter("prof_background");
 		String prof_name = req.getParameter("prof_name");
 		String prof_nick = req.getParameter("prof_nick");
 		String prof_intro = req.getParameter("prof_intro");
 		String prof_website = req.getParameter("prof_website");
-		String tag_name = req.getParameter("tag_name");
-		String tag_name2 = req.getParameter("tag_name2");
-		String tag_name3 = req.getParameter("tag_name3");
-		String tag_name4 = req.getParameter("tag_name4");
-		String tag_name5 = req.getParameter("tag_name5");
-		String tag_name6 = req.getParameter("tag_name6");
-
-		//null값이 넘어 오는 경우 오류 처리
-		int prof_skill_level = 0;
-		int prof_skill_level2 = 0;
-		int prof_skill_level3 = 0;
-
-		if (req.getParameter("prof_skill_level") == null || req.getParameter("prof_skill_level").equals("")) {
-			prof_skill_level = 0;
-		} else {
-			prof_skill_level = Integer.parseInt(req.getParameter("prof_skill_level"));
-		}
-
-		if (req.getParameter("prof_skill_level2") == null || req.getParameter("prof_skill_level").equals("")) {
-			prof_skill_level2 = 0;
-		} else {
-			prof_skill_level2 = Integer.parseInt(req.getParameter("prof_skill_level2"));
-		}
-
-		if (req.getParameter("prof_skill_level3") == null || req.getParameter("prof_skill_level").equals("")) {
-			prof_skill_level3 = 0;
-		} else {
-			prof_skill_level3 = Integer.parseInt(req.getParameter("prof_skill_level3"));
-		}
-
-//		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
-		int prof_follower =0;
 		String prof_facebook = req.getParameter("prof_facebook");
 		String prof_github = req.getParameter("prof_github");
+		String[] lang_list1 = req.getParameterValues("tag_lang");
+		String[] tool_list1 = req.getParameterValues("tag_tool");
+		String[] field_list1 = req.getParameterValues("tag_field");
+		String[] tag_skill1 = req.getParameterValues("tag_skill");
+		String[] prof_skill_level1 = req.getParameterValues("prof_skill_level");
+		
+		List<String> tag_lang = new ArrayList();
+		for(String tags : lang_list1){
+			tag_lang.add(tags);
+		}
+		
+		List<String> tag_tool = new ArrayList();
+		for(String tags : tool_list1){
+			tag_tool.add(tags);
+		}
+		
+		List<String> tag_field = new ArrayList();
+		for(String tags : field_list1){
+			tag_field.add(tags);
+		}
+		
+		List<String> tag_skill = new ArrayList();
+		for(String tags : tag_skill1){
+			tag_skill.add(tags);
+		}
+		
+		List<String> prof_skill_level = new ArrayList();
+		for(String tags : prof_skill_level1){
+			prof_skill_level.add(tags);
+		}
+		
+				
+		System.out.println(tag_lang);
+		System.out.println(tag_tool);
+		System.out.println(tag_field);
+		System.out.println("tag_skill: "+ tag_skill);
+		System.out.println("prof_skill_level: "+ prof_skill_level);
+		
+		System.out.println("name :" + prof_name);
+		
+
+//		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
+		
+		ProfileDao profileDao = new ProfileDao();
+		Profile prof_reg = new Profile();
 
 		prof_reg.setProf_img(prof_img);
 		prof_reg.setProf_background(prof_background);
+		prof_reg.setProf_follower(prof_follower);
 		prof_reg.setProf_name(prof_name);
 		prof_reg.setProf_nick(prof_nick);
 		prof_reg.setProf_intro(prof_intro);
 		prof_reg.setProf_website(prof_website);
-		prof_reg.setTag_name(tag_name);
-		prof_reg.setTag_name2(tag_name2);
-		prof_reg.setTag_name3(tag_name3);
-		prof_reg.setTag_name4(tag_name4);
-		prof_reg.setTag_name5(tag_name5);
-		prof_reg.setTag_name6(tag_name6);
-		prof_reg.setProf_skill_level(prof_skill_level);
-		prof_reg.setProf_skill_level2(prof_skill_level2);
-		prof_reg.setProf_skill_level3(prof_skill_level3);
-		prof_reg.setProf_follower(prof_follower);
 		prof_reg.setProf_facebook(prof_facebook);
 		prof_reg.setProf_github(prof_github);
-
-		////////////////////////////102 -> mem_id로///////////////////////////////
-		//INSERT
-		profileDao.addprofile(prof_reg, 103);
+	
+		prof_reg.setTag_lang(tag_lang);
+		prof_reg.setTag_tool(tag_tool);
+		prof_reg.setTag_field(tag_field);
+		prof_reg.setTag_skill(tag_skill);
+		prof_reg.setProf_skill_level(prof_skill_level);
+		
+		profileDao.addprofile(prof_reg, loginId);
 		req.setAttribute("prof_reg", prof_reg);
 
+	/*
 		if (!ServletFileUpload.isMultipartContent(req)) {
 			try {
 				throw new Exception("요청이 multipart/form-data로 인코딩되지 않았습니다.");
@@ -166,16 +191,20 @@ public class ProfileController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+*/
 
+		
 		if (cmd.equals("REGISTER")) {
-			//return  new RegisterCommand();
-			url = "/myPorfUpdate.jsp";
+			prof_reg= profileDao.getProfile(loginId);
+			req.setAttribute("prof", prof_reg);
+			url = "/page?page=myProfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
-			//UPDATE
-			profileDao.updateProfile(prof_reg, 103);
-			url = "/myPorfUpdate.jsp";
+		//	ProfileDao dao = new ProfileDao();
+		//	Profile prof= dao.selectOne(loginId);
+		//	req.setAttribute("prof", prof);
+		//	url = "/page?page=myProfUpdate";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);
@@ -223,5 +252,19 @@ public class ProfileController extends HttpServlet {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * 구분자가 있는 문자열을 문자열 배열로 변환
+	 * @param str 구분자가 있는 문자열
+	 * @return 문자열 배열
+	 */
+	private String[] toArray(Object data) {
+		StringTokenizer tkn = new StringTokenizer((String) data, ",");
+		String[] arr = new String[tkn.countTokens()];
+		for (int i = 0; tkn.hasMoreElements(); i++) {
+			arr[i] = tkn.nextToken().trim();
+		}
+		return arr;
 	}
 }

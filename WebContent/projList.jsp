@@ -125,13 +125,16 @@
           				<div class="project-list">
           					<div class="col-md-9 mb" >
 		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href=""><%=proj.getProj_title() %></a></div>
+		          					<div class="pjTitle">
+		          						<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+		          							<%=proj.getProj_title() %></a></div>
 		          					<div class="pjmemName"><span class="fa fa-user"><%=proj.getProf_name() %></span>
 		          						&nbsp;&nbsp;<a href=""></a></div>     		
 		          					<div class="pjIntro"><%=proj.getProj_intro() %></div><br><br><br>
 		          					<div class="pjTag">
 		          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
-								<a href="">#<%= proj.getTags().get(j)%></a>&nbsp;
+								<a href="javascript:tag('<%=proj.getTags().get(j)%>')">
+								#<%= proj.getTags().get(j)%></a>&nbsp;
 								<%} %>
 		          					</div>         					
 	          					</span>
@@ -139,7 +142,7 @@
 	          				<div class = "col-md-3">	
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
-	          							<tr><td>백엔드개발자</td></tr>
+	          							<tr><td><%=proj.getTags2() %></td></tr>
 	          							<tr><td><%=proj.getProj_to() %> 명</td></tr>
 	          							<tr><td>D-&nbsp;-&nbsp;<%=proj.getD_day() %></td></tr>
 	          							<tr><td></td></tr>
@@ -182,6 +185,7 @@
 
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
+	<script src="assets/js/paging.js"></script>
 	<!--script for this page-->
 	<script>
 		$(document).ready(
@@ -206,3 +210,22 @@
 			document.detailsearch.submit();
 		}	
 	</script>
+
+<!-- 상세페이지로 이동하기 위한 폼 -->
+<form name="pf_info" method="post" action="/detailView">
+	<input type="hidden" name="pf_id" /> 
+	<input type="hidden" name="cmd" value="PORTFOLIO" />
+</form>
+<form name="tag_info" method="post" action="/detailView">
+	<input type="hidden" name="tag_name" /> 
+	<input type="hidden" name="cmd" value="PROJTAG" />
+</form>
+<form name="prof_info" method="post" action="/detailView">
+	<input type="hidden" name="prof_id" /> 
+	<input type="hidden" name="cmd" value="PROJECT" />
+</form>
+<form name="proj_info" method="post" action="/detailView">
+	<input type="hidden" name="proj_id" /> 
+	<input type="hidden" name="cmd" value="MEMBER" />
+</form>
+	

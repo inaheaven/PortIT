@@ -145,14 +145,15 @@ public class SearchDao {
 	 * 포트폴리오 다중 검색 (오버로딩) (검색조건 태그 2개)
 	 */
 	public List searchAll_port(String keyword, String keyword2) {
-		String sql = "select distinct  portfolio.pf_id, prof_name, pf_title, pf_like ,  pf_regdate "
-				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
-				+ "where (UPPER(tag.tag_name) like '%"+keyword+"%') and (UPPER(tag.tag_name) like '%"+keyword2+"%')  "
-				+ "and prof_pf.PROF_ID = Profile.PROF_ID  "
-				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
-				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID "
-				+ "order by portfolio.PF_LIKE desc";
+		String sql ="select distinct portfolio.pf_id, prof_name, pf_title, pf_like , ml_path, pf_regdate "
+				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+				+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+				+ "join tag on tag.tag_id = tag_use.tag_id  "
+				+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
+				+ "where tag_use_type ='pf' and ml_type = 'pf' and "
+				+ " (UPPER(tag.tag_name) like '%"+keyword+"%') and (UPPER(tag.tag_name) like '%"+keyword2+"%')  "
+				+ "order by pf_regdate desc";
 		
 		
 		ArrayList list = new ArrayList();
@@ -165,10 +166,11 @@ public class SearchDao {
 				Portfolio portfolio = new Portfolio(); 
 				
 				portfolio.setPf_id(rs.getInt("pf_id"));
-				portfolio.setProf_name(rs.getString("prof_name"));
+				portfolio.setMl_path(rs.getString("ml_path"));
+				//portfolio.setTag_name(rs.getString("tag_name"));
 				portfolio.setPf_title(rs.getString("pf_title"));
-				//portfolio.setMl_path(rs.getString("ml_path"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
+				portfolio.setProf_name(rs.getString("prof_name"));
 				portfolio.setPf_regdate(rs.getDate("pf_regdate"));
 				int pf_id = rs.getInt("pf_id");
 				
@@ -192,14 +194,16 @@ public class SearchDao {
 	 * 포트폴리오 다중 검색 (오버로딩) (검색조건 태그 3개)
 	 */
 	public List searchAll_port(String keyword, String keyword2, String keyword3) {
-		String sql =  "select distinct  portfolio.pf_id, prof_name, pf_title, pf_like ,  pf_regdate "
-				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
-				+ "where (UPPER(tag.tag_name) like '%"+keyword+"%') and (UPPER(tag.tag_name) like '%"+keyword2+"%') and (UPPER(tag.tag_name) like '%"+keyword3+"%') "
-				+ "and prof_pf.PROF_ID = Profile.PROF_ID  "
-				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
-				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID "
-				+ "order by portfolio.PF_LIKE desc";
+		String sql =  "select distinct portfolio.pf_id, prof_name, pf_title, pf_like , ml_path, pf_regdate "
+				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
+				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
+				+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
+				+ "join tag on tag.tag_id = tag_use.tag_id  "
+				+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
+				+ "where tag_use_type ='pf' and ml_type = 'pf' and "
+				+ " (UPPER(tag.tag_name) like '%"+keyword+"%') and (UPPER(tag.tag_name) like '%"+keyword2+"%') and (UPPER(tag.tag_name) like '%"+keyword3+"%') "
+				+ "order by pf_regdate desc";
+		
 		
 		ArrayList list = new ArrayList();
 		try {
@@ -210,11 +214,13 @@ public class SearchDao {
 			while (rs.next()) {
 				Portfolio portfolio = new Portfolio(); 
 				
-			//	portfolio.setMl_path(rs.getString("ml_path"));
-				portfolio.setTag_name(rs.getString("tag_name"));
+				portfolio.setPf_id(rs.getInt("pf_id"));
+				portfolio.setMl_path(rs.getString("ml_path"));
+				//portfolio.setTag_name(rs.getString("tag_name"));
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));
+				portfolio.setPf_regdate(rs.getDate("pf_regdate"));
 				int pf_id = rs.getInt("pf_id");
 				
 				portfolio.setTags(portfolio_tag(pf_id));
@@ -320,7 +326,7 @@ public class SearchDao {
 	public List searchAll_proj(String keyword,boolean lineup) {
 		String sql = "";
 		if(lineup == true){
-			sql =  "select distinct project.proj_id, proj_title, prof_name, proj_intro, proj_to ,  proj_regenddate, trunc(proj_regenddate - sysdate) as d_day  "
+			sql =  "select distinct project.proj_id, proj_title, prof_name, proj_intro, proj_to ,proj_regdate , proj_regenddate, trunc(proj_regenddate - sysdate) as d_day  "
 					+ "from project join mem_proj on project.proj_id = mem_proj.proj_id "
 					+ "join member on member.mem_id = mem_proj.mem_id "
 					+ "join profile on profile.mem_id = member.mem_id  "
@@ -328,7 +334,8 @@ public class SearchDao {
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "join media_library on media_library.ml_type_id = project.proj_id "
 					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
-					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') ";
+					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') "
+					+ " order by proj_regdate desc";
 		}
 		else{
 			sql =  "select distinct project.proj_id, proj_title, prof_name, proj_intro, proj_to ,  proj_regenddate, trunc(proj_regenddate - sysdate) as d_day  "
@@ -339,7 +346,8 @@ public class SearchDao {
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "join media_library on media_library.ml_type_id = project.proj_id "
 					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
-					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') ";
+					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') "
+					+ "order by d_day ";
 
 		}
 		ArrayList list = new ArrayList();
@@ -350,18 +358,19 @@ public class SearchDao {
 			
 			while (rs.next()) {
 				Project project = new Project(); 
+				project.setProj_id(rs.getInt("proj_id"));
 				project.setProj_title(rs.getString("proj_title"));
 				project.setProf_name(rs.getString("prof_name"));
 				project.setProj_intro(rs.getString("proj_intro"));
 				project.setProj_to(rs.getInt("proj_to"));
-				//project.setProj_regdate(rs.getDate("proj_regdate"));
+				project.setProj_regdate(rs.getDate("proj_regdate"));
 				project.setProj_regenddate(rs.getDate("proj_regenddate")); 
 				//project.setMl_path(rs.getString("ml_path"));
 				project.setD_day(rs.getInt("d_day"));
 				
 				int proj_id = rs.getInt("proj_id");				
-				project.setTags(project_tag(proj_id));			
-				project.setTags(project_tag2(proj_id));			
+				project.setTags(project_tag(proj_id));
+				project.setTags2(project_tag2(proj_id));
 		
 				list.add(project);
 			}
@@ -385,7 +394,7 @@ public class SearchDao {
 	public List project_tag(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' AND tu.tag_use_type_id = ?) "
 					+ "  WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -410,7 +419,8 @@ public class SearchDao {
 	public List project_tag2(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' "
+					+ " AND tu.tag_use_type_id = ? AND t.tag_type = 'field' )" ;
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
@@ -424,7 +434,7 @@ public class SearchDao {
 			return tags;
 		} 
 		catch (Exception e) {
-			System.out.println("proj_tag 오류" + e);
+			System.out.println("proj_tag(필드) 오류" + e);
 		}
 		return null;
 	}

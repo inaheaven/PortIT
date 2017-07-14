@@ -237,7 +237,7 @@ public class ViewDao {
 	 */
 	public List member_info(int prof_id) {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct prof_id, prof_img, prof_name,  prof_follower, prof_regdate  "
+		String sql = "select distinct prof_id, prof_img, prof_name,  prof_follower, prof_nick, prof_regdate  "
 					+ "from profile join tag_use  "
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
@@ -255,6 +255,7 @@ public class ViewDao {
 				//member.setTag_name(rs.getString("tag_name"));
 				member.setProf_img(rs.getString("prof_img"));
 				member.setProf_name(rs.getString("prof_name"));
+				member.setProf_nick(rs.getString("prof_nick"));
 				member.setProf_follower(rs.getInt("prof_follower"));
 				member.setProf_id(rs.getInt("prof_id"));
 		
@@ -305,7 +306,6 @@ public class ViewDao {
 				int proj_id = rs.getInt("proj_id");				
 				project.setTags(project_tag(proj_id));
 				project.setTags2(project_tag2(proj_id));
-				project.setMedia_path(project_media(proj_id));
 			
 				list.add(project);
 			}
@@ -328,7 +328,7 @@ public class ViewDao {
 	public List project_tag(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' " + " AND tu.tag_use_type_id = ?) "
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' AND tu.tag_use_type_id = ?) "
 					+ "  WHERE rownum < 4 ";
 
 			ArrayList list = new ArrayList();
@@ -353,7 +353,8 @@ public class ViewDao {
 	public List project_tag2(int proj_id) {
 		try {
 			String sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj'  AND tu.tag_use_type_id = ? AND t.tag_type = '필드' )" ;
+					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'proj' "
+					+ " AND tu.tag_use_type_id = ? AND t.tag_type = 'field' )" ;
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);
@@ -371,31 +372,7 @@ public class ViewDao {
 		}
 		return null;
 	}
-	/**
-	 * 프로젝트 간략 정보 (미디어 라이브러리)
-	 */
-	public List project_media(int proj_id) {
-		try {
-			String sql = "SELECT ml_path FROM (SELECT * FROM project proj, media_library ml "
-					+ " WHERE proj.proj_id = ml.ml_type_id AND ml.ml_type = 'proj'  AND ml.ml_type_id = ? ) "
-					+ " WHERE rownum < 3 " ;
-			
-			ArrayList list = new ArrayList();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, proj_id);
-			rs4 = pstmt.executeQuery();
-			
-			List<String> media_path = new ArrayList<>();
-			while (rs4.next()) {
-				media_path.add(rs4.getString("ml_path"));
-			}
-			return media_path;
-		} 
-		catch (Exception e) {
-			System.out.println("ml_path(proj) 오류" + e);
-		}
-		return null;
-	}
+	
 	/**
 	 * 프로젝트 간략 정보 (하나의 프로젝트 조회)
 	 */
@@ -471,6 +448,8 @@ public class ViewDao {
 				int pf_id = rs.getInt("pf_id");
 				
 				timeline.setTags(timeline_info_tag(pf_id));
+				timeline.setProf_id2(timeline_info_like(pf_id));
+				timeline.setMl_path2(timeline_media(pf_id));
 				list.add(timeline);
 
 			}
@@ -508,6 +487,59 @@ public class ViewDao {
 		} 
 		catch (Exception e) {
 			System.out.println("timeline 태그 " + e);
+		}
+		return null;
+	}
+	
+	/**
+	 *	좋아요 
+	 */
+	public List timeline_info_like(int pf_id) {
+		try {
+			String sql = "select  prof_name, profile.prof_id, member.mem_id , portfolio.pf_id  "
+					+ "from member join pf_like on member.mem_id = pf_like.mem_id "
+					+ "join portfolio on portfolio.pf_id = pf_like.pf_id "
+					+ "join profile on profile.mem_id = member.mem_id "
+					+ "where portfolio.pf_id=?";
+			
+			ArrayList list = new ArrayList();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pf_id);
+			rs2 = pstmt.executeQuery();
+			
+			List<String> like = new ArrayList<>();
+			while (rs2.next()) {
+				like.add(rs2.getString("prof_name"));
+			}
+			return like;
+		} 
+		catch (Exception e) {
+			System.out.println("timeline like " + e);
+		}
+		return null;
+	}
+	/**
+	 * 타임라인 (미디어 라이브러리)
+	 */
+	public List timeline_media(int pf_id) {
+		try {
+			String sql = "SELECT ml_path FROM (SELECT * FROM portfolio pf, media_library ml "
+					+ " WHERE pf.pf_id = ml.ml_type_id AND ml.ml_type = 'pf' AND ml.ml_type_id = ? ) "
+					+ " WHERE rownum < 3 ";
+			
+			ArrayList list = new ArrayList();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pf_id);
+			rs4 = pstmt.executeQuery();
+			
+			List<String> media_path = new ArrayList<>();
+			while (rs4.next()) {
+				media_path.add(rs4.getString("ml_path"));
+			}
+			return media_path;
+		} 
+		catch (Exception e) {
+			System.out.println("ml_path(proj) 오류" + e);
 		}
 		return null;
 	}

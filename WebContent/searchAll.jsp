@@ -90,23 +90,24 @@
 
 
 					<div class="col-md-3 mb">
-						<div class="portfolio-simple">
-							<div class="pfImg">
-            					<img src="assets/img/profile-02.jpg"/>   
-		         			</div>
-							<div class="pfInfo">
-								<div class="simple-content">
-
+  						<div class="portfolio-simple">
+ 							
+ 							<div class="pfImg">
+           						<img src="<%=port.getMl_path()%>"/>   
+ 		         			</div>
+  							<div class="pfInfo">
+  								<div class="simple-content">
 									<div class="pfTag">
 										<% for(int j=0; j<port.getTags().size(); j++) { %>
-										<a href="javascript:tag(<%= port.getTags().get(j)%>)">
+										<a href="javascript:tag('<%=port.getTags().get(j)%>')">
 											#<%= port.getTags().get(j)%>
 										</a>&nbsp;
 										<%} %>
 									</div>
 
 									<div class="pfTitle">
-										<a href=""><%=port.getPf_title()%></a>
+										<a href="#" onclick="pf(<%=port.getPf_id()%>)">
+											<%=port.getPf_title()%></a>
 									</div>
 									<div class="pfBottom">
 
@@ -130,21 +131,24 @@
 
 
 					<div class="col-md-3 mb">
-						<div class="portfolio-simple">
-							<div class="pfImg">
-            					<img src="assets/img/profile-02.jpg"/>   
-		         			</div>
-							<div class="pfInfo">
-								<div class="simple-content">
+  						<div class="portfolio-simple">
+ 				
+ 							<div class="pfImg">
+            					<img src="<%=port.getMl_path()%>"/>   
+ 		         			</div>
+  							<div class="pfInfo">
+  								<div class="simple-content">
 
 									<div class="pfTag">
 										<% for(int j=0; j<port.getTags().size(); j++) { %>
-										<a href="">#<%= port.getTags().get(j)%></a>&nbsp;
+										<a href="javascript:tag('<%=port.getTags().get(j)%>')">
+											#<%= port.getTags().get(j)%></a>&nbsp;
 										<%} %>
 									</div>
 
 									<div class="pfTitle">
-										<a href=""><%=port.getPf_title()%></a>
+										<a href="#" onclick="pf(<%=port.getPf_id()%>)">
+										<%=port.getPf_title()%></a>
 									</div>
 									<div class="pfBottom">
 
@@ -197,10 +201,12 @@
 		          				<div class="simple-content text-center">	      
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
+			         					<div class="memName">
+			         					<a href="#" onclick="prof(<%=mem.getProf_id()%>)">
+			         						<%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
 			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
-										<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+										<a href="javascript:tag('<%=mem.getTags().get(j)%>')">#<%= mem.getTags().get(j)%></a>&nbsp;
 										<%} %>
 			         					</div>
 			         					<div class="memFollow">
@@ -224,10 +230,12 @@
 		          				<div class="simple-content text-center">	      
 			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> <%=mem.getProf_name()%></a></div>
+			         					<div class="memName">
+			         						<a href="#" onclick="prof(<%=mem.getProf_id()%>)">
+			         							<%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
 			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>
-										<a href="">#<%= mem.getTags().get(j)%></a>&nbsp;
+										<a href="javascript:tag('<%=mem.getTags().get(j)%>')">#<%= mem.getTags().get(j)%></a>&nbsp;
 										<%} %>
 			         					</div>
 			         					<div class="memFollow">
@@ -276,7 +284,8 @@
 							<div class="col-md-9 mb">
 								<span class="pjInfoText">
 									<div class="pjTitle">
-										<a href="javascript:proj('${proj_list[i].proj_id}')"><%=proj.getProj_title() %></a>
+										<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+										<%=proj.getProj_title() %></a>
 									</div>
 									<div class="pjmemName">
 										<a href=""> <span class="fa fa-user"><%=proj.getProf_name() %></span>&nbsp;&nbsp;
@@ -288,7 +297,8 @@
 								<br>
 									<div class="pjTag">
 			          					<% for(int j=0; j<proj.getTags().size(); j++) { %>
-									<a href="">#<%= proj.getTags().get(j)%></a>&nbsp;
+									<a href="javascript:tag('<%=proj.getTags().get(j)%>')">
+									#<%= proj.getTags().get(j)%></a>&nbsp;
 									<%} %>
 			          				</div>
 								</span>
@@ -330,7 +340,8 @@
 							<div class="col-md-9 mb">
 								<span class="pjInfoText">
 									<div class="pjTitle">
-										<a href="javascript:proj('${proj_list[i].proj_id}')"><%=proj.getProj_title() %></a>
+										<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+										<%=proj.getProj_title() %></a>
 									</div>
 									<div class="pjmemName">
 										<a href=""> <span class="fa fa-user"><%=proj.getProf_name() %></span>&nbsp;&nbsp;
@@ -351,7 +362,7 @@
 								<span class="pjInfoTable">
 									<table class="table text-center">
 										<tr>
-											<td>백엔드개발자</td>
+											<td><%=proj.getTags2() %></td>
 										</tr>
 										<tr>
 											<td><%=proj.getProj_to() %> 명</td>
@@ -388,42 +399,23 @@
 
 <!-- detail search bar -->
 <script src="assets/js/search.js"></script>
-
+<script src="assets/js/paging.js"></script>
 <!-- 상세페이지로 이동하기 위한 폼 -->
-<form name="pf_info" method="post" action="/detailView">
-	<input type="hidden" name="pf_id" /> 
-	<input type="hidden" name="cmd" value="PORTFOLIO" />
+<form name="pf_info" method="post" action="/view">
+	<input type="hidden" name="id"  />							<!-- pf_id -->
+	<input type="hidden" name="type" value="portfolio" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
 	<input type="hidden" name="cmd" value="TAG" />
 </form>
-<form name="prof_info" method="post" action="/detailView">
-	<input type="hidden" name="prof_id" /> 
-	<input type="hidden" name="cmd" value="PROJECT" />
+<form name="prof_info" method="post" action="/view">
+	<input type="hidden" name="id" />					<!-- prof_nick -->
+	<input type="hidden" name="type" value="profile" />
 </form>
-<form name="proj_info" method="post" action="/detailView">
-	<input type="hidden" name="proj_id" /> 
-	<input type="hidden" name="cmd" value="MEMBER" />
+<form name="proj_info" method="post" action="/view">
+	<input type="hidden" name="id" /> 					<!-- proj_id --> 
+	<input type="hidden" name="type" value="project" />
 </form>
-
 <!-- 포트폴리오 정보 -->
-<script>	
-	function pf(pf_id){
-		document.pf_info.pf_id.value = pf_id;
-		document.pf_info.submit();
-	}
-	function tag(tag_name){
-		document.tag_info.tag_name.value = tag_name;
-		document.tag_info.submit();	
-		alert(tag_name);
-	}
-	function prof(prof_id){
-		document.prof_info.prof_id.value = prof_id;
-		document.prof_info.submit();		
-	}
-	function proj(proj_id){
-		document.proj_info.proj_id.value = proj_id;
-		document.proj_info.submit();
-	}
-</script>
+

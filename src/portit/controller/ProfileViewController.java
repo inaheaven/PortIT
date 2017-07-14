@@ -3,6 +3,7 @@ package portit.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +31,8 @@ public class ProfileViewController implements Controller {
 		req.setAttribute("profile", profile);
 		
 		// 뷰 URL 반환
-		String viewUrl = "fwd:/memDetail.jsp";
+		//String viewUrl = "fwd:/memDetail.jsp";
+		String viewUrl = "memDetail.jsp";
 		return viewUrl;
 	}
 
