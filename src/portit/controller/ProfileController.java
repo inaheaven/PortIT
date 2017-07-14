@@ -194,13 +194,18 @@ public class ProfileController extends HttpServlet {
 		}
 */
 		
-	/*이미 프로필이 있을경우(my메뉴에서 설정 해주기)
+	/*이미 프로필이 있을경우(my메뉴에서 설정 해주기)////////////////////////
 	 * 
-	 * ProfileDao profileDao = new ProfileDao();
+		HttpSession session = req.getSession();
+		int loginId = (int)session.getAttribute("loginId");		
+		req.setAttribute("loginId", loginId);
+			
+		ProfileDao profileDao = new ProfileDao();
+	
 		
-		//프로필 아이디를 가지고 옴
+	//프로필 아이디를 가지고 옴
 		int prof_id = profileDao.getProf_id(loginId);
-		//프로필 닉네임을 가지고 옴
+	//프로필 닉네임을 가지고 옴
 		String nickname = profileDao.idToNick(loginId);
 		
 		if(prof_id == 0 || nickname.equals(null)){
@@ -209,6 +214,9 @@ public class ProfileController extends HttpServlet {
 		else{
 			url = "/page?page=myprof";
 		}
+		
+		RequestDispatcher view = req.getRequestDispatcher(url);
+		view.forward(req, resp);
 	*/
 		
 		if (cmd.equals("REGISTER")) {
