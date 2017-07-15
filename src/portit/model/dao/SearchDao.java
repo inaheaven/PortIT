@@ -137,6 +137,15 @@ public class SearchDao {
 		catch (Exception e) {
 			System.out.println("포트폴리오 태그 " + e);
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return null;
 	}
 	
@@ -436,6 +445,16 @@ public class SearchDao {
 		catch (Exception e) {
 			System.out.println("proj_tag(필드) 오류" + e);
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return null;
 	}
 }

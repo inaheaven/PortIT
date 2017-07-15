@@ -837,6 +837,13 @@ public class PortfolioDao {
 		} catch (Exception e) {
 			System.out.println("TAG() : 여기 에러나지마라 " + e);
 		}
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return null;
 	}
 	
@@ -857,6 +864,15 @@ public class PortfolioDao {
 		} catch (Exception err) {
 			System.out.println("DBCP  : " + err);
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 	}
 	/**
 	 * 포트폴리오에서 하나의 사진만 가져오기 
@@ -883,6 +899,16 @@ public class PortfolioDao {
 		catch (Exception e) {
 			System.out.println("ml_path(proj) 오류" + e);
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return null;
 	}
 }

@@ -46,6 +46,13 @@ public class MediaDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/* 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return mediaList;
 	}
 	
@@ -71,6 +78,14 @@ public class MediaDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return rows;
 	}
 	
@@ -107,6 +122,15 @@ public class MediaDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
+		
 		return rows;
 	}
 	
@@ -140,6 +164,15 @@ public class MediaDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return rows;
 	}
 	

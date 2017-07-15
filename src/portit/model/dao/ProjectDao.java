@@ -147,6 +147,14 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("project 테이블 쿼리 오류" + e);
 		}
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 
 		// 검색시 활용하기 위한 회원 아이디 번호
 		ArrayList<Integer> mem_id_list = new ArrayList<>();
@@ -162,6 +170,14 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("멤버 테이블에서 멤버 아이디 검색2" + e);
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 
 		try {
 			Iterator<Integer> iter = mem_id_list.iterator();
@@ -187,6 +203,14 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("profile 테이블 쿼리 오류");
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 
 		// Tag_USE 테이블에서 필요한 값 불러오기
 		try {
@@ -206,6 +230,15 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("TAG_USE테이블 쿼리 오류" + e);
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		Iterator<Integer> tag = tag_id_list.iterator();
 		try {
 			while (tag.hasNext()) {
@@ -294,6 +327,13 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("폼에 입력받은 데이터를 프로젝트 테이블에 입력" + e);
 		}
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 
 		// 폼에 입력받은 함께할 사람데이터를 proj_app 테이블에 입력
 		int mem_id = 0;
@@ -389,6 +429,15 @@ public class ProjectDao {
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
+			
+			/* 심봤다
+			 
+			  finally{
+				pool.freeConnection(con, pstmt);
+			}
+			  */
+			
+			
 		}
 
 		// 개발도구
@@ -433,6 +482,14 @@ public class ProjectDao {
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
+			
+			/* 심봤다
+			 
+			  finally{
+				pool.freeConnection(con, pstmt);
+			}
+			  */
+			
 		}
 
 		// 프로젝트 모집 분야 및 인원에 입력된 내용 호출 및 분리
@@ -479,6 +536,15 @@ public class ProjectDao {
 			} catch (Exception e) {
 				System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
 			}
+			
+			
+			/* 심봤다
+			 
+			  finally{
+				pool.freeConnection(con, pstmt);
+			}
+			  */
+			
 
 		}
 
@@ -491,6 +557,14 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("내가 등록한 프로젝트 테이블에 등록 오류 " + e);
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 
 		System.out.println("모든게 등록되었다.");
 
@@ -567,6 +641,14 @@ public class ProjectDao {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 
 		// TAG아이디 값 호출
 		String tag_sql = "SELECT TAG_ID FROM TAG_USE WHERE TAG_USE_TYPE='PROJ_REG' AND TAG_USE_TYPE_ID=?";
@@ -586,6 +668,13 @@ public class ProjectDao {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 
 		String proj_del_sql = "DELETE FROM PROJECT WHERE PROJ_ID = ?";
 		try {
@@ -596,6 +685,14 @@ public class ProjectDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
 
 	}
 
@@ -638,6 +735,14 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("폼에 입력받은 데이터를 프로젝트 테이블에 입력" + e);
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 
 		// 폼에 입력받은 함께할 사람데이터를 proj_app 테이블에 입력
 		int mem_id = 0;
@@ -657,6 +762,16 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("멤버 테이블에서 멤버 아이디 검색1" + e);
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		try {
 			String sql_proj_id = "SELECT PROJ_ID FROM PROJECT WHERE PROJ_INTRO=? AND PROJ_TITLE=?";
 			stmt = conn.prepareStatement(sql_proj_id);
@@ -682,6 +797,14 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("검색 내용PROJECT_APP에 입력 쿼리" + e);
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
 
 		// 개발 언어
 		// 폼에 입력받은 환경 데이터를 TAG_USE 테이블에 입력을 위한 변수 설정
@@ -740,6 +863,15 @@ public class ProjectDao {
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
+			
+			/* 심봤다
+			 
+			  finally{
+				pool.freeConnection(con, pstmt);
+			}
+			  */
+			
+			
 		}
 
 		// 개발도구
@@ -785,6 +917,15 @@ public class ProjectDao {
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
+			
+			/* 심봤다
+			 
+			  finally{
+				pool.freeConnection(con, pstmt);
+			}
+			  */
+			
+			
 		}
 
 		// 프로젝트 모집 분야 및 인원에 입력된 내용 호출 및 분리
@@ -831,6 +972,15 @@ public class ProjectDao {
 				System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
 			}
 
+			
+			/* 심봤다
+			 
+			  finally{
+				pool.freeConnection(con, pstmt);
+			}
+			  */
+			
+			
 		}
 
 	}

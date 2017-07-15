@@ -91,6 +91,14 @@ public class FollowDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 	}
 	
 	/**
@@ -115,6 +123,13 @@ public class FollowDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
 	}
 	
 	

@@ -33,8 +33,6 @@
 					
 					if(null!=chatroom){
 					 firstMsg= (MessageDto) chatroom.get(0);//첫번째 메세지
-				
-					
 					
 					//Request값 수신.
 					
@@ -48,20 +46,36 @@
 					String mem_nick=(String) request.getAttribute("mem_nick"); 
 				
 					//int log_id=Integer.parseInt(loginId);
-					System.out.println("JSP2222="+loginId);
-					
-					
-					
 					
 				
-					System.out.println("JSP333="+loginId);
 					
 					//대화방 첫번째 메세지의 발신자 ID,이름.
 					int mem_id=firstMsg.getMem_id_sender();
 					String name= firstMsg.getSender_Name();	
 				
-					
 
+					System.out.println("JSP_S="+firstMsg.getMem_id_sender());
+					
+					
+					System.out.println("JSP444="+loginId);
+					//내가 첫번째 발산지라면 수신자를 기록.
+					if(firstMsg.getMem_id_sender()==loginId){	
+						
+						System.out.println("JSP_S="+firstMsg.getMem_id_sender());
+						
+						//수신자의 mem_id_recever저장.
+						mem_id=firstMsg.getMem_id_receiver();
+						//한글화 convert
+						name=dao.convertToName(String.valueOf(mem_id));
+						
+						System.out.println("JSP_R="+firstMsg.getMem_id_receiver());
+					}
+					%>
+					
+					
+					
+					
+					<%
 					// 페이징 기능 추가
 					int totalRecord = chatroom.size();		//총 대화방의 수.
 					int numPerPage = 5;						//한  대화방/대화방
@@ -86,19 +100,6 @@
 					//시작페이지= 현재페이지*페이지당 대화방
 					beginPerPage = nowPage * numPerPage;
 				
-				
-					
-					System.out.println("JSP444="+loginId);
-					//내가 첫번째 발산지라면 수신자를 기록.
-					if(String.valueOf(firstMsg.getMem_id_sender()).equals(loginId)){	
-						System.out.println("JSP555="+loginId);
-						
-						//수신자의 mem_id_recever저장.
-						mem_id=firstMsg.getMem_id_receiver();
-						//한글화 convert
-						name=dao.convertToName(String.valueOf(mem_id));
-					}
-					
 					%>
 						<div class="panel panel-default msgBox">
 							<div class="panel-heading">

@@ -153,6 +153,15 @@ public class BookmarkDao {
 		} catch (Exception e) {
 			System.out.println("TAG() : 여기 에러나지마라 " + e);
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return null;
 	}
 
@@ -194,6 +203,13 @@ public class BookmarkDao {
 		} catch (Exception err) {
 			System.out.println("getList() : 여기 에러나지마라 " + err);
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
 	}
 
 	
@@ -235,6 +251,14 @@ public class BookmarkDao {
 		catch (Exception e) {
 			System.out.println("ml_path(proj) 오류" + e);
 		}
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return null;
 	}
 }

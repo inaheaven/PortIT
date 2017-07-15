@@ -46,6 +46,11 @@ public class ProfileDao {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		
 	}
 
 	/**
@@ -61,6 +66,15 @@ public class ProfileDao {
 			System.out.println("DB 접속해제 오류 :");
 			e.printStackTrace();
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 	}
 	
 
@@ -440,6 +454,15 @@ public class ProfileDao {
 		catch (Exception e) {
 			System.out.println("member_tag 오류 " + e);
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return null;
 	}
 
@@ -551,6 +574,14 @@ public class ProfileDao {
 			System.out.println("tags_lang 오류 " + e);
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return null;
 	}
 	/**
@@ -577,6 +608,15 @@ public class ProfileDao {
 			System.out.println("tags_tool 오류 " + e);
 			e.printStackTrace();
 		}
+		
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return null;
 	}
 	/**
@@ -603,6 +643,15 @@ public class ProfileDao {
 			System.out.println("tags_field 오류 " + e);
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return null;
 	}
 	/**
@@ -629,6 +678,15 @@ public class ProfileDao {
 			System.out.println("tags_skill 오류 " + e);
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return null;
 	}
 	/**
@@ -655,6 +713,14 @@ public class ProfileDao {
 			System.out.println("prof_skill_levels 오류 " + e);
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return null;
 	}
 	
@@ -680,6 +746,15 @@ public class ProfileDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return result;
 	}
 	
@@ -706,6 +781,15 @@ public class ProfileDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return flag;
 	}
 	
@@ -752,6 +836,15 @@ public class ProfileDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return prof_id;
 	}
 	

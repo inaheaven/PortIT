@@ -50,6 +50,15 @@ public class TagDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return tagList;
 	}
 	
@@ -74,6 +83,15 @@ public class TagDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return rows;
 	}
 	
@@ -94,6 +112,14 @@ public class TagDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return rows;
 	}
 	
@@ -124,6 +150,15 @@ public class TagDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		return rows;
 	}
 	
@@ -169,6 +204,15 @@ public class TagDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
+		
 		deleteTagUse(conn, articleType, articleId);
 		rows += insertTagUse(conn, articleType, articleId, tag);
 		return rows;
@@ -186,6 +230,14 @@ public class TagDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/* 심봤다
+		 
+		  finally{
+			pool.freeConnection(con, pstmt);
+		}
+		  */
+		
 		return rows;
 	}
 }
