@@ -26,7 +26,6 @@ public class PortfolioViewController implements Controller {
 		req.setAttribute("portfolio", portfolio);
 		
 		// 뷰 URL 반환
-		//String viewUrl = "fwd:/memDetail.jsp";
 		String viewUrl = "fwd:/pfDetail.jsp";
 		return viewUrl;
 	}

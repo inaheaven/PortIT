@@ -748,6 +748,7 @@ public class ProfileDao {
 		try {
 			String sql = "SELECT prof_id FROM profile WHERE prof_nick=?";
 			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, nick);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
 				prof_id = rs.getInt("prof_id");

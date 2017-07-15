@@ -55,7 +55,7 @@ public class ViewDetailServlet extends HttpServlet {
 			viewUrl = projectViewController.execute(req, resp);
 			req.setAttribute("project", req.getAttribute("project"));
 		}
-		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
+		System.out.println("viewUrl: " + viewUrl.substring(4));
 		
 		// viewUrl로 포워딩
 		RequestDispatcher rd = req.getRequestDispatcher(viewUrl.substring(4));

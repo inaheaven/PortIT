@@ -2,7 +2,6 @@ package portit.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import portit.model.dao.PortfolioDao;
 import portit.model.dao.ProfileDao;
 import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
-import portit.model.dto.Profile;
 import portit.model.dto.Tag;
 
 /**
