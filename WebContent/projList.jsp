@@ -144,7 +144,7 @@
 	          						<table class="table text-center">
 	          							<tr><td><%=proj.getTags2() %></td></tr>
 	          							<tr><td><%=proj.getProj_to() %> 명</td></tr>
-	          							<tr><td>D-&nbsp;-&nbsp;<%=proj.getD_day() %></td></tr>
+	          							<tr><td>D-&nbsp;&nbsp;<%=proj.getD_day() %></td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
 	          					</span>

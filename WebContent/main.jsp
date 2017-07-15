@@ -47,7 +47,10 @@
 											<div class="portfolio-simple">
 										
 											<div class="pfImg">
-				            					<img src="<%=port.getMl_path()%>"/>     
+											<% if(port.getMl_path2() != null){
+													for(int j=0; j<1; j++) { %>
+					            					<img src="${pageContext.request.contextPath}<%=port.getMl_path2().get(j)%>"/> 
+				            				<%}} %>    
 						         			</div>
 												<div class="pfInfo">
 													<div class="simple-content">
@@ -196,9 +199,10 @@
 				<div class="col-md-12 mt">
 					<div class="portfolio-timeline">
 						<div class="pfTlType">
-							<span class="glyphicon glyphicon-heart"></span> <span
-								class="pfTypeText"><%=time.getProf_id2()%>님이 내 포트폴리오를
-								좋아합니다. </span>
+							<span class="glyphicon glyphicon-heart"></span> 
+							<span class="pfTypeText">
+								<%=time.getProf_id2().get(0)%>님 외 <%=time.getProf_id2().size()-1%>명이 이 포트폴리오를 좋아합니다. 
+							</span>
 						</div>
 						<span class="pfInfo">
 							<div>
@@ -222,11 +226,26 @@
 								<%} %>
 							</div>
 							
-						 	</span> <span class="pfImage"> <span><img
-											src="" /></span> <span><img
-											src="assets/img/instagram.jpg" /></span> <span><img
-											src="assets/img/instagram.jpg" /></span>
-									</span>
+						 	
+						 	
+						 	</span> 
+						 	<span class="pfImage"> 
+							 	<% if(time.getMl_path2().get(0) != null){ %>
+						 			<span><img src="${pageContext.request.contextPath}<%=time.getMl_path2().get(0)%>" /></span>
+						 		<%}else{ %> 
+						 			<span><img src="#" /></span>
+						 		<%} %>
+							 	<% if(time.getMl_path2().get(1) != null){ %>
+						 			<span><img src="${pageContext.request.contextPath}<%=time.getMl_path2().get(1)%>" /></span>
+						 		<%}else{ %> 
+					 				<span><img src="#" /></span>
+					 			<%} %>
+							 	<% if(time.getMl_path2().get(2) != null){ %>
+						 			<span><img src="${pageContext.request.contextPath}<%=time.getMl_path2().get(2)%>" /></span>
+						 		<%}else{ %> 
+				 					<span><img src="#" /></span>	
+				 				<%} %>	
+							</span>
 						</span>
 					</div>
 				</div>

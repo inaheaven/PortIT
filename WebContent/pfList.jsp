@@ -135,7 +135,10 @@
   				<div class="portfolio-simple">
 
  					<div class="pfImg">
-   						<img src="<%=port.getMl_path()%>"/>    
+   						<% if(port.getMl_path2() != null){
+							for(int j=0; j<1; j++) { %>
+           					<img src="${pageContext.request.contextPath}<%=port.getMl_path2().get(j)%>"/> 
+          				<%}} %>  
         			</div>
   					<div class="pfInfo">
   						<div class="simple-content">
@@ -234,7 +237,7 @@
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
-	<input type="hidden" name="cmd" value="TAG" />
+	<input type="hidden" name="cmd" value="PFTAG" />
 </form>
 s
 <!-- 포트폴리오 정보 -->
