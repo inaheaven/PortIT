@@ -242,10 +242,11 @@ body.index {
 	font-weight: 700;
 	margin-bottom: 8px;
 	
-	width:260px; 
+	width:210px; 
 	overflow:hidden;
 	white-space:nowrap; 
 	text-overflow:ellipsis; 
+	
 }
 .portfolio-simple .pfmemName {
 	font-size: 18px;
@@ -340,6 +341,11 @@ body.index {
 }
 .project-list .pjIntro {
 	font-size: 14px;
+	
+	width: 700dpx; 
+	overflow:hidden;
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
 }
 .project-list .pjTag {
 	position: absolute;
