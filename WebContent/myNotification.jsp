@@ -88,7 +88,7 @@
 	                  					</c:if>
 	                  					<c:if test="${ntList[i].nt_type eq 'message'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-envelope"></span></td>
-	                      			    	<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/msg?cmd=ntdetail&sender=${ntList[i].mem_id_sender}');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 메세지를 보냈습니다.</a></td>
+	                      			    	<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/msg?cmd=detail&mem_id_sender=${ntList[i].mem_id_sender}');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 메세지를 보냈습니다.</a></td>
 	                  					</c:if>
 	                  					<c:if test="${ntList[i].nt_type eq 'project'}">
 	                  					    <td class="sort"><span class="glyphicon glyphicon-ok-sign"></span></td>

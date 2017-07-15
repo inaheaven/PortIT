@@ -238,4 +238,32 @@ public class NotificationDao {
 		return isread;
 	}
 	
+	/**
+	 * nt_id 값 반환
+	 */
+	public int getNt_id(Notification nt) {
+		int nt_id = 0;
+		
+		try {
+			conn = pool.getConnection();
+			sql = "SELECT nt_id FROM NOTIFICATION "
+					+ "WHERE mem_id_sender = ? and mem_id_receiver = ? and nt_type = ? and nt_type_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, nt.getMem_id_sender());
+			stmt.setInt(2, nt.getMem_id_receiver());
+			stmt.setString(3, nt.getNt_type());
+			stmt.setInt(4, nt.getNt_type_id());
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				nt_id = rs.getInt("nt_id");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, stmt, rs);
+		}
+		
+		return nt_id;
+	}
 }

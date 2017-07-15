@@ -885,4 +885,30 @@ public class PortfolioDao {
 		}
 		return null;
 	}
+	
+	
+	
+	
+	/**
+	 * 포트폴리오 id로 작성자 mem_id 가져오기
+	 */
+	public int pfidTomemid(int pf_id) {
+		int mem_id = 0;
+		
+		try {
+			String sql = "SELECT prof.mem_id FROM prof_pf profpf, profile prof "
+					+ "WHERE profpf.prof_id = prof.prof_id "
+					+ "AND profpf.pf_id = " + pf_id;
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()){
+				mem_id = rs.getInt("prof.mem_id");
+			}
+			
+		}catch (Exception e) {
+			System.out.println("pfidTomemid(pf_id) 오류" + e);
+		}
+		return mem_id;
+	}
 }
