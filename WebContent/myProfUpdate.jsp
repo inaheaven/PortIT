@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="portit.model.dto.Profile"%>
 <%@page import="portit.model.dao.ProfileDao"%>
 <%@page import="java.sql.DriverManager"%>
@@ -10,7 +11,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-
+<%
+	int loginId = (int)session.getAttribute("loginId");
+	ProfileDao profileDao = new ProfileDao();
+	
+	//프로필 닉네임을 가지고 옴(닉네임이 없으면 등록페이지로 있으면 수정페이지로 이동)
+	String nickname = profileDao.idToNick(loginId);
+	
+%>
 <script src="assets/js/search.js"></script>
 <script language="javascript">
 
@@ -19,26 +27,14 @@
 // window.onload = function() { location.href="/register"; };
 
 function profRegister(){
-	var prof_name = document.getElementById('prof_name').value;
-	var prof_nick = document.getElementById('prof_nick').value;
 	
-	if(prof_name==""){
-		alert("이름을 입력해주세요.");
-	}
-	else if(prof_nick==""){
-		alert("닉네임을 입력해주세요.");
-	}
-	else{
-		document.frof_reg.submit();
-		alert("프로필이 정상적으로 등록 되었습니다.");
-	}
+	alert("프로필이 정상적으로 등록 되었습니다.");
 }
 
 function profalter(){
-	location.href="/register?cmd=UPDATE"
+	
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
-
 
 //skill 추가
 var addSkillIndex = 1;
@@ -96,11 +92,11 @@ function addSkill() {
 }
 //상태바 삭제 
 function fnDeleteItem(idx){
-   var item = document.getElementById("item_" + idx);
-   
-   if(item != null){
-      item.parentNode.removeChild(item);
-   }
+ var item = document.getElementById("item_" + idx);
+ 
+ if(item != null){
+    item.parentNode.removeChild(item);
+ }
 }
 
 
@@ -162,12 +158,12 @@ function addSkill2() {
 }
 //상태바 삭제 
 function fnDeleteItem(idx){
-   var item = document.getElementById("item_" + idx);
-   
-   if(item != null){
-      item.parentNode.removeChild(item);
-   }
-   
+ var item = document.getElementById("item_" + idx);
+ 
+ if(item != null){
+    item.parentNode.removeChild(item);
+ }
+ 
 }
 //skill 추가
 var addSkillIndex3 = 1;
@@ -225,27 +221,13 @@ function addSkill3() {
 }
 //상태바 삭제 
 function fnDeleteItem(idx){
-   var item = document.getElementById("item_" + idx);
-   
-   if(item != null){
-      item.parentNode.removeChild(item);
-   }
-   
-}
-function frmCheck(){
-  var frm = document.form;
-  
-  for( var i = 0; i <= frm.elements.length - 1; i++ ){
-     if( frm.elements[i].name == "addText" )
-     {
-         if( !frm.elements[i].value ){
-             alert("텍스트박스에 값을 입력하세요!");
-                 frm.elements[i].focus();
-	 return;
-          }
-      }
-   }
+ var item = document.getElementById("item_" + idx);
+ 
+ if(item != null){
+    item.parentNode.removeChild(item);
  }
+ 
+}
  
 // sns url 붙이기
 function fnSelectSnsInfo(snsName){
@@ -280,17 +262,17 @@ function fnSelectSnsInfo(snsName){
 </script>
 
 <%--sidenavbar start--%>
-
-<%--sidenavbar start--%>
 <jsp:include page="my.jsp"></jsp:include>
 <%--sidenavbar end--%>
 <section id="main-content">
 	<section class="wrapper site-min-height">
 		<div class="col-md-12 mt profreg">
 			<div class="profregForm">
-				<h3 class="formTitle text-center">프로필 등록</h3>
-				<form action="/profReg?cmd=REGISTER" method="post" class="form-horizontal style-form">
-
+				<h3 class="formTitle text-center">프로필 수정</h3>
+				<form action="/profReg?cmd=UPDATE" method="post"
+					class="form-horizontal style-form">
+				
+					
 					<!-- 등록일자  hidden -->
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
@@ -372,64 +354,68 @@ function fnSelectSnsInfo(snsName){
 							<br><br>* 태그로 작성됩니다. ( 예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )
 						</div>
 					</div>
-				
 					<div class="form-group">
 						<label class="col-md-3 control-label">Facebook</label>
 						<div class="col-md-9">
 							<input class="form-control" id="disabledInput" type="text"
-								name="prof_facebook" />
+								name="prof_facebook" value="${prof.prof_facebook}" />
 						</div>
-						<div id="theRemote" class="collapse">
+						<div id="theRemote" class="collapse in">
 							<label class="col-md-3 control-label">Github</label>
 							<div class="col-md-9">
 								<input class="form-control" id="disabledInput" type="text"
-									name="prof_github" />
+									name="prof_github"  value="${prof.prof_github}" />
 							</div>
 							<label class="col-md-3 control-label">기타 내 홈페이지</label>
 							<div class="col-md-9">
 								<input class="form-control" id="disabledInput" type="text"
-									name="prof_website" />
+									name="prof_website"  value="${prof.prof_website}" />
 							</div>
-						</div><br><br><br>
+						</div>
 						<div class="col-md-12" align="right">
-							<button type="button" class="btn common" data-toggle="collapse" data-target="#theRemote" >더보기</button>
+							<input type="button" value="더 보기" class="btn btn-info common"
+								data-toggle="collapse" data-target="#theRemote" />
 						</div>
 					</div>
+					
+						<div class="form-group">
+							<label class="col-md-3 control-label">Skill</label>
+							<div class="col-md-9">
+								<div class="col-md-3"><input class="form-control" id="skill" type="text" 
+										name = "tag_skill" placeholder="기술명" value="${prof.tag_skill[0]}" ></div>
+								<div class="col-md-7"><input class="form-control" id="score" type="text" 
+										name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요"  value="${prof.prof_skill_level[0]}" ></div>
+								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">추가</button></div>
+							</div>
+							
+							<label class="col-md-3 control-label"></label>							
+							<div class="col-md-9">
+								<div class="col-md-3"><input class="form-control" id="skill2" type="text" 
+											name = "tag_skill" placeholder="기술명" value="${prof.tag_skill[1]}" ></div>
+								<div class="col-md-7"><input class="form-control" id="score2" type="text" 
+											name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" value="${prof.prof_skill_level[1]}" ></div>
+								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill2()">추가</button></div>
+							</div>
+							
+							<label class="col-md-3 control-label"></label>							
+							<div class="col-md-9">
+								<div class="col-md-3"><input class="form-control" id="skill3" type="text" 
+											name = "tag_skill" placeholder="기술명" value="${prof.tag_skill[2]}" ></div>
+								<div class="col-md-7"><input class="form-control" id="score3" type="text" 
+											name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" value="${prof.prof_skill_level[2]}" ></div>
+								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill3()">추가</button></div>
+							</div>
+			
 				
-					<div class="form-group">
-						<label class="col-md-3 control-label">Skill</label>
-						<div class="col-md-9">
-							<div class="col-md-3"><input class="form-control" id="skill" type="text" name = "tag_skill" placeholder="기술명" ></div>
-							<div class="col-md-7"><input class="form-control" id="score" type="text" name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" ></div>
-							<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill()">등록</button></div>
-						</div>
-						<div id="Skill" class="collapse">
-							<label class="col-md-3 control-label"></label>
-							<div class="col-md-9">
-								<div class="col-md-3"><input class="form-control" id="skill2" type="text" name = "tag_skill" placeholder="기술명" ></div>
-								<div class="col-md-7"><input class="form-control" id="score2" type="text" name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" ></div>
-								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill2()">등록</button></div>
-							</div>
-							<label class="col-md-3 control-label"></label>
-							<div class="col-md-9">
-								<div class="col-md-3"><input class="form-control" id="skill3" type="text" name = "tag_skill" placeholder="기술명" ></div>
-								<div class="col-md-7"><input class="form-control" id="score3" type="text" name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" ></div>
-								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill3()">등록</button></div>
-							</div>
-						</div>
 							<br><br>
 							<label class="col-md-3 control-label"></label>
-								<div class="col-md-9" id="skillList"></div>
-								
-						<div class="col-md-12" align="right">
-							<button type="button" class="btn common" data-toggle="collapse" data-target="#Skill">목록 추가</button>
-						</div>
+								<div class="col-md-9" id="skillList"></div>								
+							
 					</div>
+					
 					<div class="form-group text-center buttonDiv">
-						<button type="submit" class="btn common" >등록하기</button>
+						<button type="submit" class="btn common" >수정하기</button>
 						&nbsp;&nbsp;&nbsp;
-						<button type="reset" class="btn cancel">다시 쓰기</button>
-
 
 					</div>
 				</form>
@@ -439,5 +425,4 @@ function fnSelectSnsInfo(snsName){
 	<!--/wrapper -->
 </section>
 <!-- /MAIN CONTENT -->
-
 

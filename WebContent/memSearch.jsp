@@ -16,7 +16,7 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=MEMSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="memSearch" value="${sessionScope.search}"/>
+							<input type="text" class="form-control" name="memSearch" />
 						</div>
 						<button type="submit" class="col-md-1 btn common" id="memsubmit">
 							<i class="fa fa-search"></i>
@@ -32,7 +32,8 @@
 				</div>
 				<!-- 조건 검색 box -->
 				<div class="searchSorting col-md-12 collapse" id="searchSorting">
-					<form class="" method="post" name="detailsearch" action="/detailSearch?cmd=MEMDETAIL">
+					<form class="" method="post" name="detailsearch" 
+						action="/detailSearch?cmd=MEMDETAIL">
 						<input type="hidden" name="list_value" />
 						<div class="">
 							<div class="sortKey col-md-1">
@@ -41,7 +42,6 @@
 							<div class="col-md-11">
 								<a href="javascript:detailSearch(3)">최신순</a> 
 								<a href="javascript:detailSearch(4)">인기순</a> 
-								<a href="#">랜덤</a>
 							</div>
 						</div>
 						<br> <br>

@@ -3,7 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="portit.model.dto.Profile"%>
 <%@page import="portit.model.dao.MemberDao"%>
-      
+<%@page import="portit.model.dao.ProfileDao"%>
+<%@page import="portit.model.dao.PortfolioDao"%>      
 <!-- **********************************************************************************************************************************************************
  			My Page Sidebar Navigation
  *********************************************************************************************************************************************************** -->
@@ -38,6 +39,11 @@
 
 			//String pageName = (String)session.getAttribute("pageName");
 			String pageName = (String)request.getAttribute("pageName");			
+
+			ProfileDao profileDao = new ProfileDao();
+				
+			String nickname = profileDao.idToNick(mem_id);
+
 %>
 	<div id="sidebar" >
 		<!-- sidebar menu start-->
@@ -48,9 +54,11 @@
 			</div>       
 			<hr class="line" />
 			<li class="">
-				<a href="/page?page=myProf" id="myProf">
-				    <span>My Profile</span>
-				</a>
+			<%if(null==nickname){ %>
+				<li><a href="/page?page=myProf" id="myProf"><span>My Profile</span></a></li>
+			<%}else{ %>
+				<li><a href="/profReg?cmd=READ"><span>My Profile</span></a></li>
+			<% } %>	
 			</li>
 			<li class="">
 				<a href="/pfList?cmd=MYPORTFOLIO" id="myPfList">
