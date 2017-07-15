@@ -11,7 +11,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
-
+<%
+	int loginId = (int)session.getAttribute("loginId");
+	ProfileDao profileDao = new ProfileDao();
+	
+	//프로필 닉네임을 가지고 옴(닉네임이 없으면 등록페이지로 있으면 수정페이지로 이동)
+	String nickname = profileDao.idToNick(loginId);
+	
+%>
 <script src="assets/js/search.js"></script>
 <script language="javascript">
 

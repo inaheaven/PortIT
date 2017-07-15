@@ -1,3 +1,4 @@
+<%@page import="portit.model.dao.ProfileDao"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -7,6 +8,11 @@
 	String loginEmail = (String)session.getAttribute("loginEmail");
 	Profile prof = new Profile();
 	int loginId = (int)session.getAttribute("loginId");
+	ProfileDao profileDao = new ProfileDao();
+	
+	//프로필 닉네임을 가지고 옴(닉네임이 없으면 등록페이지로 있으면 수정페이지로 이동)
+	String nickname = profileDao.idToNick(loginId);
+	
 %>
 <c:set var="ntList" value="<%= dao.headerNoti(loginId) %>" />
 <header class="header black-bg">
@@ -103,8 +109,12 @@
 					<li>
 						<p class="yellow"><%=loginEmail %> 님</p> <!-- 로그인한 -->
 					</li>
-					<li><a href="/page?page=myProf">내 프로필</a></li>
-					<li><a href="/page?page=myPfList">내 포트폴리오</a></li>
+					<%if(null==nickname){ %>
+						<li><a href="/page?page=myProf">내 프로필</a></li>
+					<%}else{ %>
+						<li><a href="/profReg?cmd=READ">내 프로필</a></li>
+					<% } %>	
+					<li><a href="/page?page=read">내 포트폴리오</a></li>
 					<li><a href="/myproj?cmd=list">내 프로젝트</a></li>
 					<li><a href="/bmk?cmd=MYBOOKMARK">북마크</a></li>
 					<li><a href="/page?page=myFollowing">팔로잉</a></li>

@@ -1,3 +1,4 @@
+<%@page import="portit.model.dao.ProfileDao"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -37,7 +38,12 @@
 			}
 
 			//String pageName = (String)session.getAttribute("pageName");
-			String pageName = (String)request.getAttribute("pageName");			
+			String pageName = (String)request.getAttribute("pageName");	
+			
+			
+			ProfileDao profileDao = new ProfileDao();
+			
+			String nickname = profileDao.idToNick(mem_id);
 %>
 	<div id="sidebar" >
 		<!-- sidebar menu start-->
@@ -48,9 +54,14 @@
 			</div>       
 			<hr class="line" />
 			<li class="">
-				<a href="/page?page=myProf" id="myProf">
-				    <span>My Profile</span>
-				</a>
+			<%if(null==nickname){ %>
+				<li><a href="/page?page=myProf" id="myProf"><span>My Profile</span></a></li>
+			<%}else{ %>
+				<li><a href="/profReg?cmd=READ"><span>My Profile</span></a></li>
+			<% } %>	
+				
+				    
+				
 			</li>
 			<li class="">
 				<a href="/page?page=myPfList" id="myPfList">

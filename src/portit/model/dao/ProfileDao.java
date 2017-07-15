@@ -798,19 +798,19 @@ public class ProfileDao {
 	 */
 	public Profile getProfile(int mem_id) {
 		Profile dto = new Profile();
-		sql = "select distinct mem_id,prof_id, prof_name, prof_nick, prof_website, prof_github, profile.prof_regdate, "
-				+ " prof_facebook, prof_regdate, prof_follower,prof_img,prof_background,prof_intro "
-				+ " from tag join tag_use on tag.tag_id = tag_use.tag_id "
-				+ " join profile on tag_use_type_id = profile.prof_id  where mem_id=" + mem_id + ""
-				+ " order by profile.prof_regdate desc";
-
+		sql = "select mem_id, prof_id, prof_name, prof_nick, prof_website, prof_github, prof_regdate, prof_facebook, prof_regdate, prof_follower, prof_img, prof_background, prof_intro "
+				+ "from profile "
+				+ "where mem_id = ?";
+		int prof_id =0;
+		
 		try {
 			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-
-				dto.setProf_id(rs.getInt("prof_id"));
+				prof_id = rs.getInt("prof_id");
+				dto.setProf_id(prof_id);
 				dto.setProf_nick(rs.getString("prof_nick"));
 				dto.setProf_name(rs.getString("prof_name"));
 				dto.setProf_intro(rs.getString("prof_intro"));
@@ -820,15 +820,13 @@ public class ProfileDao {
 				dto.setProf_github(rs.getString("prof_github"));
 				dto.setProf_facebook(rs.getString("prof_facebook"));
 				dto.setProf_regdate(rs.getDate("prof_regdate"));
-
-				int prof_id = rs.getInt("prof_id");
-
-				dto.setTag_lang(tags_lang(prof_id));
-				dto.setTag_tool(tags_tool(prof_id));
-				dto.setTag_field(tags_field(prof_id));
-				dto.setTag_skill(tags_skill(prof_id));
-				dto.setProf_skill_level(prof_skill_levels(prof_id));
 			}
+			dto.setTag_lang(tags_lang(prof_id));
+			dto.setTag_tool(tags_tool(prof_id));
+			dto.setTag_field(tags_field(prof_id));
+			dto.setTag_skill(tags_skill(prof_id));
+			dto.setProf_skill_level(prof_skill_levels(prof_id));
+			System.out.println("이름:"+dto.getProf_name());
 
 		} catch (Exception err) {
 			System.out.println("getProfile 오류: " + err);
@@ -836,7 +834,9 @@ public class ProfileDao {
 		} finally {
 			freeConnection();
 		}
-
+		
+		
+		
 		return dto;
 	}
 
