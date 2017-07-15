@@ -96,7 +96,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="skillset">
-							<% for (int i = 0; i < profile.getTag_skill().size(); i++) { %>
+							<% for (int i = 0; profile.getTag_skill() != null && i < profile.getTag_skill().size(); i++) { %>
 							<div class="skill clearfix">
 								<div class="col-xs-3 text-center">
 									<span class=""><%= profile.getTag_skill().get(i) %></span>

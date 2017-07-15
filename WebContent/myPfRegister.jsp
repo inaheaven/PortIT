@@ -5,6 +5,84 @@
 <%--sidenavbar start--%>
 <jsp:include page="my.jsp"></jsp:include>
 <%--sidenavbar end--%>
+<script>
+	$(document).ready(function() {
+
+		$('#btnSave').click(function() {
+			document.getElementById("final_result").value = prof_arr;
+			document.getElementById("final_result_id").value = prof_id_arr;
+		})
+
+	});
+
+	var prof_arr = [];
+	var prof_id_arr = [];
+	function append_result(btn, name, nick, id) {
+		prof_name = name;
+		prof_nick = nick;
+		prof_id = id;
+
+		var table_row = btn.parentNode.parentNode;
+		var final_table = document.getElementById("final_table");
+		var row = final_table.insertRow(1);
+		row.setAttribute("align", "center");
+		row.setAttribute("id", "under" + prof_id);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+
+		cell1.append(prof_name);
+		cell2.append(prof_nick);
+
+		var delete_button = document.createElement("button");
+		delete_button.setAttribute("class", "btn btn-danger btn-xs");
+		delete_button.setAttribute("id", "delete_search");
+		delete_button.setAttribute("onclick",
+				"delete_result(this, this.prof_id, this.prof_name)");
+		delete_button.innerHTML = "삭제";
+
+		var new_table_cell3 = delete_button.cloneNode(true);
+		cell3.appendChild(new_table_cell3);
+
+		prof_arr.push(this.prof_name + "(" + this.prof_nick + ")");
+		prof_id_arr.push(this.prof_id);
+
+		table_row.parentNode.removeChild(table_row);
+	}
+
+	function delete_result(btn, prof_id, prof_name) {
+		var row = btn.parentNode.parentNode;
+		row.parentNode.removeChild(row);
+		prof_arr.pop(prof_name + "(" + prof_nick + ")");
+		prof_id_arr.pop(prof_id);
+	}
+
+	var httpRequest = null;
+
+	function coworker_Search() {
+		httpRequest = new XMLHttpRequest();
+		var name = document.getElementById("coworker_search").value;
+		var url = "coworker_search";
+		var param = "name=" + name;
+
+		httpRequest.open("POST", url, true);
+		httpRequest.onreadystatechange = callback; //null값 일단 제외시켜놓음
+		httpRequest.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded; charset=utf-8");
+		httpRequest.send(param);
+	}
+
+	function callback() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status = 200) {
+				var div = document.getElementById("searchResult");
+				div.innerHTML = httpRequest.responseText;
+			} else {
+				alert(httpRequest.status);
+			}
+		}
+	}
+</script>
 
 <section id="main-content">
 	<section class="wrapper site-min-height">
@@ -82,7 +160,8 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">수행 인원</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="pf_numofperson" value="1">
+							<input type="text" class="form-control" name="pf_numofperson"
+								value="1">
 						</div>
 					</div>
 					<div class="form-group">
@@ -104,15 +183,18 @@
 								placeholder="ex) github URL">
 						</div>
 					</div>
+
 					<div class="form-group">
 						<label class="col-md-3 control-label">함께한 사람</label>
-						<div class="col-md-7">
-							<input type="text" name="pf_coworker" class="form-control"
-								value="" readonly="readonly">
+						<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly"
+								id="final_result"> <input type="hidden"
+								class="form-control" name="final_result_id" id="final_result_id"
+								readonly="readonly">
 						</div>
 						<div class="col-sm-2">
 							<button type="button" class="btn btn-default" data-toggle="modal"
-								data-target="#coworkers">검색</button>
+								data-target="#searchModal">추가 및 수정</button>
 						</div>
 					</div>
 					<div class="form-group">
@@ -136,40 +218,61 @@
 			<!-- /row -->
 
 
-			<!-- modal for searching coworkers -->
-			<div class="modal fade" id="coworkers" tabindex="-1" role="dialog">
+			<!-- Modal for search -->
+			<div class="modal fade" id="searchModal" data-backdrop="static">
+				<!--  fade효과 및 data-backdrop 으로 닫기버튼시만 닫히도록 적용 -->
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title">함께한 사람 찾기</h4>
+							<h3>&nbsp;&nbsp;&nbsp;함께한 사람</h3>
 						</div>
+
+						<!-- custom.css 를 이용하여 아이콘 내부에 입력하도록 설정함 -->
 						<div class="modal-body">
-							<form class="form-horizontal style-form" id="findUser">
-								<div class="form-group">
-									<label class="col-xs-3 control-label">사용자 찾기</label>
-									<div class="col-xs-7">
-										<input type="text" class="form-control" name="coworker_search" />
-										<span class="help-block">이 작업을 함께한 PortIT 사용자를 찾아보세요.</span>
-									</div>
-									<div class="col-xs-2">
-										<button type="button" class="btn common">검색</button>
-									</div>
-								</div>
-							</form>
-							<ul id="findList"></ul>
+							<div class="inner-addon left-addon col-sm-10">
+								<span class="glyphicon glyphicon-search"></span> <input
+									type="text" class="form-control" name="coworker"
+									id="coworker_search" placeholder="프로젝트를 함께할 PortIT 사용자를 검색하세요." />
+							</div>
+							<button type="button" class="btn btn-default"
+								onclick="coworker_Search();">검색</button>
+							<p>&nbsp;&nbsp;&nbsp;</p>
+
+							<div id="searchResult"></div>
+
+							<div id="finalResult">
+								<table class="table table-striped table-advance table-hover"
+									id="final_table" style="text-align: center">
+									<hr>
+									<h4>
+										<i class="fa fa-angle-right"></i> 함께한 사람
+									</h4>
+									<thead>
+										<tr>
+											<th style="text-align: center"><i class="fa fa-bullhorn"></i>
+												이름</th>
+											<th style="text-align: center" class="hidden-phone"><i
+												class="fa fa-question-circle"></i> 닉네임</th>
+											<th style="text-align: center"><i class="fa fa-bookmark"></i>
+												사용자 삭제</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn cancel" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn common" id="coworkerConfirm">확인</button>
+							<button type="button" class="btn btn-success" id="btnSave"
+								data-dismiss="modal">저장</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 						</div>
+
 					</div>
 				</div>
 			</div>
-			<!-- /modal -->
+		</div>
+		<!-- /modal -->
 
 		</div>
 	</section>

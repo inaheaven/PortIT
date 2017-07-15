@@ -110,7 +110,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 						</div>
 						<div class="col-xs-6">
 							<h3 class="uploaderName">
-								<a href="">${portfolio.pf_prof_name}</a>
+								<a href="/view?type=profile&id=${portfolio.pf_prof_nick}">${portfolio.pf_prof_name}</a>
 							</h3>
 							<div class="tags">
 							

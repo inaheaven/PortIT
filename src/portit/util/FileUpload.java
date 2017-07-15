@@ -40,7 +40,7 @@ public class FileUpload {
 	 */
 	public Map<String, Object> fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 파일 저장 디렉토리 설정
-		String saveDir = req.getServletContext().getRealPath("") + UPLOAD_DIR;
+		String saveDir = req.getServletContext().getRealPath("");
 		
 		// 저장할 디렉토리가 없으면 생성
 		File fileSaveDir = new File(saveDir);
@@ -94,10 +94,9 @@ public class FileUpload {
 					// isFormField()의 반환값이 false이면 파일로 처리
 					if (item != null && item.getSize() > 0) {
 						if (item.getContentType().startsWith("image/")) {
-							String path = saveDir + File.separator + getFileName(item);
-							System.out.println(path);
-							item.write(new File(path));
-							fileList.add(new Media().setMl_path(path));
+							System.out.println(saveDir + File.separator + UPLOAD_DIR + File.separator + getFileName(item));
+							item.write(new File(saveDir + File.separator + UPLOAD_DIR + File.separator + getFileName(item)));
+							fileList.add(new Media().setMl_path(UPLOAD_DIR + File.separator + getFileName(item)));
 						} else {
 							throw new Exception("이미지파일만 업로드할 수 있습니다.");
 						}

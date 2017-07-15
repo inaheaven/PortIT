@@ -1,7 +1,6 @@
 package portit.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import portit.model.dao.PortfolioDao;
+import portit.model.dao.ProfileDao;
 import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
@@ -26,6 +26,9 @@ public class PortfolioAddController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PortfolioDao portfolioDao = new PortfolioDao();
+		ProfileDao profileDao = new ProfileDao();
+		
 		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, Object> formData = (Map<String, Object>) req.getAttribute("formData");
 
@@ -42,7 +45,16 @@ public class PortfolioAddController implements Controller {
 		for (Tag tag : fieldTagList) {
 			tag.setTag_use_type("portfolio");
 		}
-		List<Profile> coworkerList = (List<Profile>) formData.get("coworker");
+		String[] findUser = (String[]) formData.get("final_result_id").toString().split(",");
+		int[] findUser2 = new int[findUser.length];
+		for (int i = 0; i < findUser.length; i++) {
+			findUser2[i] = Integer.parseInt(findUser[i]);
+		}
+		List<Profile> coworkerList = new ArrayList<Profile>();
+		for (int i = 0; i < findUser.length; i++) {
+			coworkerList.add(profileDao.getProfile(findUser2[i]));
+		}
+		
 		for (String key : formData.keySet()) {
 			if (formData.get(key) != null) {
 				System.out.println(key + " : " + formData.get(key));
@@ -59,7 +71,7 @@ public class PortfolioAddController implements Controller {
 
 		// DTO에 추가
 		String viewUrl = "";
-		PortfolioDao portfolioDao = new PortfolioDao();
+		
 		Portfolio portfolio = new Portfolio();
 		try {
 			portfolio.setMem_id(Integer.parseInt(formData.get("mem_id").toString()))

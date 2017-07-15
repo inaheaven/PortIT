@@ -673,12 +673,13 @@ public class ProfileDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, prof_id);
 			rs = stmt.executeQuery();
-			rs.next();
-			if (prof_id == rs.getInt(1)) {
-				result = rs.getInt(1);
-			} else {
-				result = 0;
-			}
+			if (rs.next()) {
+				if (prof_id == rs.getInt(1)) {
+					result = rs.getInt(1);
+				} else {
+					result = 0;
+				}
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -699,12 +700,13 @@ public class ProfileDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, prof_id);
 			rs = stmt.executeQuery();
-			rs.next();
-			if(mem_id == rs.getInt(1)) {
-				flag = true;
-			} else {
-				flag = false;
-			}
+			if(rs.next()) {
+				if(mem_id == rs.getInt(1)) {
+					flag = true;
+				} else {
+					flag = false;
+				}
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -748,8 +750,9 @@ public class ProfileDao {
 			String sql = "SELECT prof_id FROM profile WHERE prof_nick=?";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			rs.next();
-			prof_id = rs.getInt("prof_id");
+			if (rs.next()) {
+				prof_id = rs.getInt("prof_id");
+			}			
 			return prof_id;
 		} catch (Exception e) {
 			e.printStackTrace();
