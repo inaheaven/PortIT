@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <script>
-<%
+<%  
 	List<Portfolio> myport = (List)request.getAttribute("portfolio");
 	if(myport.isEmpty()){
 		myport= new ArrayList();

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import portit.model.dao.BookmarkDao;
+import portit.model.dao.PortfolioDao;
 import portit.model.dto.Portfolio;
 
 @WebServlet("/bmk")
@@ -27,16 +28,17 @@ public class BookmarkController extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		int loginId = (int)session.getAttribute("loginId");
+		
 		String cmd = req.getParameter("cmd");
 		String url = null;
-		
-		//상세페이지에서 PF_ID를 가져온다고하고 버튼 눌렀을때 기존 포트폴리오가 존재하면 DELETE 없으면 INSERT
 		if (cmd.equals("BOOKMARK")) {
 			req.setAttribute("onload", "S");
-			
+			//pf_id를 가져온다고 하고 진행
+
+			//존재하면 DELETE 없으면 INSERT
 			int pf_id = 0, mem_id = 0;
 			if (req.getParameter("pf_id") != null) {
-				pf_id = Integer.parseInt(req.getParameter("pf_id"));
+				pf_id =Integer.parseInt(req.getParameter("pf_id").trim());
 			}
 			if (req.getParameter("mem_id") != null) {
 				mem_id = Integer.parseInt(req.getParameter("mem_id"));
@@ -44,7 +46,22 @@ public class BookmarkController extends HttpServlet {
 			BookmarkDao bmDao = new BookmarkDao();
 			bmDao.addBookmark(pf_id, mem_id);
 			
-			//북마크 조회(MYPAGE에서)
+			PortfolioDao portfolioDao = new PortfolioDao();
+			Portfolio portfolio = portfolioDao.selectOne(pf_id);
+			req.setAttribute("portfolio", portfolio);
+			
+			String  dataTF=bmDao.getBookMark(pf_id, mem_id);
+			req.setAttribute("dataTF", dataTF);
+			
+			
+			//resp.sendRedirect("/pfDetail.jsp");
+			//url 아마 view=이런거로 수정해야할거에용.....ㅠ정확히어케될지몰라서 일단 이거로해놨어요
+			url="pfDetail.jsp";
+			
+			req.setAttribute("pageName", url);
+			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+			view.forward(req, resp);
+			
 		} else if (cmd.equals("MYBOOKMARK")) {
 			BookmarkDao bmDao = new BookmarkDao();
 			List<Portfolio> resultPortfolio = bmDao.myBookmark(loginId);
@@ -55,7 +72,7 @@ public class BookmarkController extends HttpServlet {
 			req.setAttribute("pageName", url);
 			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
 			view.forward(req, resp);
-			//북마크 삭제(MYPAGE에서)
+			  
 		}else if (cmd.equals("MYBOOKMARKDELETE")) {
 			BookmarkDao bmDao = new BookmarkDao();
 			int bm_id=0;
@@ -67,8 +84,15 @@ public class BookmarkController extends HttpServlet {
 					resultPortfolio = new ArrayList<>();
 				}
 				req.setAttribute("portfolio", resultPortfolio);
+				
 				resp.sendRedirect("/bmk?cmd=MYBOOKMARK");
 			}
+/*			url="myBookmark.jsp";
+			
+			req.setAttribute("pageName", url);
+			RequestDispatcher view = req.getRequestDispatcher("/template.jsp");
+			view.forward(req, resp);
+*/			
 		}
 	}
 

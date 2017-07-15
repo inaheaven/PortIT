@@ -8,7 +8,10 @@
 <%
 request.setCharacterEncoding("UTF-8");
 Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
+String dataTF= (String)request.getAttribute("dataTF");
+
 %>
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +69,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					<button type="button" class="btn common" id="likeToggle" value="like">
 						<i class="fa fa-heart-o"></i>
 					</button>	
-					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark">
+					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark" onclick="location.href='/bmk?cmd=BOOKMARK&mem_id=${sessionScope.loginId}&pf_id= ${portfolio.pf_id}'">
 						<i class="fa fa-bookmark-o"></i>
 					</button>
 					<!-- <button type="button" class="btn common" onclick="location.href='#'">
@@ -391,9 +394,30 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					}
 				});
 			});
+			//북마크 버튼 실행부분
+			 
+<%
+		if ("T".equals(dataTF)) {
+%>	
+			$("#bookmarkToggle").empty();						
+			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
+			$("#bookmarkToggle").attr("value", "unbookmark");
+<%
+		}else{
+%>
+			$("#bookmarkToggle").empty();
+			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark-o\"></i>");
+			$("#bookmarkToggle").attr("value", "bookmark");
+<%
+		}
+%>
+			
+			
+			
+			
 			
 			// 북마크 토글
-			$("#bookmarkToggle").click(function() {
+			/*  $("#bookmarkToggle").click(function() {
 				var value = $("#bookmarkToggle").attr("value");
 				var mem_id = ${sessionScope.loginId};
 				var pf_id = ${portfolio.pf_id}
@@ -419,8 +443,8 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					data : param,
 					dataType : "text"
 				});
-				
-				request.done(function(bookmark) {
+				 
+							{
 					if (value == "bookmark") {
 						$("#bookmarkToggle").empty();						
 						$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
@@ -431,7 +455,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 						$("#bookmarkToggle").attr("value", "bookmark");
 					}
 				});
-			});
+			}); */
 		});		
 	</script>
 

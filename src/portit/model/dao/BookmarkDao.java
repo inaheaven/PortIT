@@ -170,9 +170,9 @@ public class BookmarkDao {
 			conn = pool.getConnection();
 
 			sql = "MERGE INTO BOOKMARK  USING DUAL ON (MEM_ID=? and PF_ID=? ) "
-					+ "WHEN MATCHED THEN UPDATE SET bm_ID=1  DELETE  WHERE MEM_ID=? and PF_ID=? "
+					+ "WHEN MATCHED THEN UPDATE SET bm_ID=2  DELETE  WHERE MEM_ID=? and PF_ID=? "
 					+ "WHEN NOT MATCHED THEN INSERT (BM_ID, MEM_ID, PF_ID, BM_DATE) "
-					+ "VALUES (SEQ_BM_ID.NEXTVAL,?,?,SYSDATE) ";
+					+ "VALUES (SEQ_BM_ID.NEXTVAL,?,?,SYSDATE)";
 					/*//CREATE SEQUENCE SEQ_BM_ID
 						           INCREMENT BY 1
 						           START WITH   1
@@ -195,6 +195,27 @@ public class BookmarkDao {
 			System.out.println("getList() : 여기 에러나지마라 " + err);
 		}
 	}
+	
+	// 북마크버튼 누르고 있는지 없는지  조회부분 
+	  
+	public String getBookMark(int pf_id, int mem_id) {
+		try {
+			sql = "SELECT * FROM BOOKMARK WHERE MEM_ID=? and PF_ID=? ";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			stmt.setInt(2, pf_id);
+			rs3 = stmt.executeQuery();
+
+			while (rs3.next()) {
+				return "T";  //존재하면 T
+			}
+			
+		} catch (Exception e) {
+			System.out.println("TAG() : 여기 에러나지마라 " + e);
+		}
+		return "F"; //없으면 F
+	}
+
 
 	
 	
