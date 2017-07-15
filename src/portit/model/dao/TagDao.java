@@ -29,22 +29,22 @@ public class TagDao {
 		List<Tag> tagList = new ArrayList<Tag>();
 		Tag tag = null;
 		try {
-			sql = "SELECT t.tag_id, t.tag_type, t.tag_name, tu.prof_skill_level, tu.proj_numofperson "
-					+ "FROM tag_use tu "
-					+ "INNER JOIN tag t "
-					+ "ON tu.tag_id=t.tag_id "
-					+ "WHERE t.tag_type=? AND tu.tag_use_type_id=?";
+			sql = "SELECT * FROM tag t INNER JOIN tag_use tu ON tu.tag_id=t.tag_id "
+					+ "WHERE t.tag_type=? AND tu.tag_use_type=? AND tu.tag_use_type_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tagType);
-			stmt.setInt(2, articleId);
+			stmt.setString(2, articleType);
+			stmt.setInt(3, articleId);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				tag = new Tag()
 						.setTag_id(rs.getInt(1))
 						.setTag_type(rs.getString(2))
 						.setTag_name(rs.getString(3))
-						.setProf_skill_level(rs.getInt(4))
-						.setProj_numofperson(rs.getInt(5));
+						.setTag_use_id(rs.getInt(4))
+						.setTag_use_type(rs.getString(5))
+						.setProf_skill_level(rs.getInt(7))
+						.setProj_numofperson(rs.getInt(8));
 				tagList.add(tag);
 			}
 		} catch (Exception e) {
@@ -57,24 +57,34 @@ public class TagDao {
 	 * 태그 정보 등록
 	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param tag 태그
-	 * @return 작업된 행 갯수
+	 * @return 등록한 태그 ID
 	 */
-	public int insertTag(Connection conn, Tag tag) {
-		int rows = 0;
+	public void insertTag(Connection conn, Tag tag) {
+		int tag_id = 0;
 		try {
 			sql = "INSERT INTO tag"
 					+ "(tag_id, tag_type, tag_name) "
-					+ "VALUES(LPAD(seq_tag_id.nextval, 4, '0'),?,?) "
-					+ "WHERE tag_name NOT IN (SELECT tag_name FROM tag)";
+					+ "VALUES(seq_tag_id.nextval,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag.getTag_type());
 			stmt.setString(2, tag.getTag_name());
-			rows = stmt.executeUpdate();
-			return rows;
+			stmt.executeUpdate();
+			System.out.println("태그 정보 DB에 저장");
+			
+			sql = "SELECT seq_tag_id.currVal FROM DUAL";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				tag_id = rs.getInt(1);
+			}
+			tag.setTag_id(tag_id);
+			System.out.println("태그ID 획득하여 DTO에 저장 : "+tag_id);
+			
+			insertTagUse(conn, tag);
+			System.out.println("태그사용 정보 저장");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return rows;
 	}
 	
 	
@@ -87,6 +97,7 @@ public class TagDao {
 	public int deleteTag(Connection conn, Tag tag) {
 		int rows = 0;
 		try {
+			deleteTagUse(conn, tag.getTag_use_type(), tag.getTag_use_type_id());
 			sql = "DELETE tag WHERE tag_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, tag.getTag_id());
@@ -101,30 +112,28 @@ public class TagDao {
 	
 	/**
 	 * 태그 사용 정보 등록
+	 * (insertTag()가 호출)
 	 * @param conn
 	 * @param articleType
 	 * @param articleId
 	 * @param tag_id
 	 * @return
 	 */
-	public int insertTagUse(Connection conn, String articleType, int articleId, Tag tag) {
-		int rows = 0;
+	public void insertTagUse(Connection conn, Tag tag) {
 		try {
 			sql = "INSERT INTO tag_use"
 					+ "(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level, proj_numofperson) "
-					+ "VALUES(seq_tag_use_id.nextVal,?,?,?)";
+					+ "VALUES(seq_tag_use_id.nextVal,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, articleType);
-			stmt.setInt(2, articleId);
+			stmt.setString(1, tag.getTag_use_type());
+			stmt.setInt(2, tag.getTag_use_type_id());
 			stmt.setInt(3, tag.getTag_id());
 			stmt.setInt(4, tag.getProf_skill_level());
 			stmt.setInt(5, tag.getProj_numofperson());
-			rows = stmt.executeUpdate();
-			return rows;
+			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return rows;
 	}
 	
 	
@@ -169,8 +178,6 @@ public class TagDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		deleteTagUse(conn, articleType, articleId);
-		rows += insertTagUse(conn, articleType, articleId, tag);
 		return rows;
 	}
 	

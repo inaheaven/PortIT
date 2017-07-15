@@ -8,10 +8,7 @@
 <%
 request.setCharacterEncoding("UTF-8");
 Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
-String dataTF= (String)request.getAttribute("dataTF");
-
 %>
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,19 +54,20 @@ String dataTF= (String)request.getAttribute("dataTF");
 				<h4 class="tags">
 					<c:if test="${!empty portfolio.pf_tags_language}">
 						<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-							<span> <a href="">${pf_tag_language.tag_name}</a> </span>
+							<span> <a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a> </span>
 						</c:forEach>
 					</c:if>
 				</h4>
 				
 				<h4>
 					<i class="fa fa-heart"></i>
+					<span id="pfLike">${portfolio.pf_like}</span>
 				</h4>
 				<div class="actions">
 					<button type="button" class="btn common" id="likeToggle" value="like">
 						<i class="fa fa-heart-o"></i>
-					</button>	
-					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark" onclick="location.href='/bmk?cmd=BOOKMARK&mem_id=${sessionScope.loginId}&pf_id= ${portfolio.pf_id}'">
+					</button>
+					<button type="button" class="btn common" id="bookmarkToggle" value="bookmark">
 						<i class="fa fa-bookmark-o"></i>
 					</button>
 					<!-- <button type="button" class="btn common" onclick="location.href='#'">
@@ -112,7 +110,7 @@ String dataTF= (String)request.getAttribute("dataTF");
 						</div>
 						<div class="col-xs-6">
 							<h3 class="uploaderName">
-								<a href="">${portfolio.pf_prof_name}</a>
+								<a href="/view?type=profile&id=${portfolio.pf_prof_nick}">${portfolio.pf_prof_name}</a>
 							</h3>
 							<div class="tags">
 							
@@ -143,26 +141,22 @@ String dataTF= (String)request.getAttribute("dataTF");
 							<table class="table">
 								<tr>
 									<th>기간</th>
-									<td></td>
+									<td>${portfolio.pf_startdate} ~ ${portfolio.pf_enddate}</td>
 								</tr>
 								<tr>
 									<th>사용언어</th>
 									<td>
-										<c:if test="${!empty portfolio.pf_tags_language}">
-											<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-												<span> <a href="">${pf_tag_language.tag_name}</a> </span>
-											</c:forEach>
-										</c:if>
+										<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
+											<span> <a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a> </span>
+										</c:forEach>
 									</td>
 								</tr>
 								<tr>
 									<th>사용도구</th>
 									<td>
-										<c:if test="${!empty portfolio.pf_tags_tool}">
-											<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
-												<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
-											</c:forEach>
-										</c:if>
+										<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
+											<span> <a href="javascript:tag('${pf_tag_tool.tag_name}')">${pf_tag_tool.tag_name}</a> </span>
+										</c:forEach>
 									</td>
 								</tr>
 								<tr>
@@ -172,15 +166,13 @@ String dataTF= (String)request.getAttribute("dataTF");
 								<tr>
 									<th>담당분야</th>
 									<td>
-										<c:if test="${!empty portfolio.pf_tags_field}">
-											<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
-												<span> <a href="">${pf_tag_field.tag_name}</a> </span>
-											</c:forEach>
-										</c:if>
+										<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
+											<span> <a href="javascript:tag('${pf_tag_field.tag_name}')">${pf_tag_field.tag_name}</a> </span>
+										</c:forEach>
 									</td>
 								</tr>
 								<tr>
-									<th>저장소</th>
+									<th>URL</th>
 									<td><a href="${portfolio.pf_url}">${portfolio.pf_url}</a></td>
 								</tr>
 							</table>
@@ -188,35 +180,33 @@ String dataTF= (String)request.getAttribute("dataTF");
 					</div>
 				</div>
 				<div class="row">
-					<c:if test="${!empty portfolio.pf_mediaList}">
-						<div class="col-md-offset-2 col-md-8 pfMedia">
-							<div id="Screenshots" class="carousel slide" data-ride="carousel">
-								<!-- Indicators -->
-								<ol class="carousel-indicators">
-									<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
-										<li data-target="#Screenshots" data-slide-to="${status.index}">
-									</c:forEach>	
-								</ol>
-								<!-- Wrapper for slides -->
-								<div class="carousel-inner">
-									<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
-										<div class="item">
-											<img src="${pf_media.ml_path}" />
-										</div>
-									</c:forEach>				
-								</div>
-								<!-- Controls -->
-								<a class="left carousel-control" href="#Screenshots" data-slide="prev">
-									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-									<span class="sr-only">Previous</span>
-								</a>
-								<a class="right carousel-control" href="#Screenshots" data-slide="next">
-									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-									<span class="sr-only">Next</span>
-								</a>
+					<div class="col-md-offset-2 col-md-8 pfMedia">
+						<div id="Screenshots" class="carousel slide" data-ride="carousel">
+							<!-- Indicators -->
+							<ol class="carousel-indicators">
+								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+									<li <c:if test="${status.first}">class="active" </c:if>data-target="#Screenshots" data-slide-to="${status.index}">
+								</c:forEach>
+							</ol>
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner">
+								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+									<div class="item<c:if test="${status.first}"> active</c:if>">
+										<img src="${pf_media.ml_path}" />
+									</div>
+								</c:forEach>				
 							</div>
+							<!-- Controls -->
+							<a class="left carousel-control" href="#Screenshots" data-slide="prev">
+								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="right carousel-control" href="#Screenshots" data-slide="next">
+								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
 						</div>
-					</c:if>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -386,38 +376,19 @@ String dataTF= (String)request.getAttribute("dataTF");
 					if (value == "like") {
 						$("#likeToggle").empty();						
 						$("#likeToggle").append("<i class=\"fa fa-heart\"></i>");
+						$("#pfLike").text(likes);
 						$("#likeToggle").attr("value", "dislike");
 					} else {
 						$("#likeToggle").empty();
 						$("#likeToggle").append("<i class=\"fa fa-heart-o\"></i>");
+						$("#pfLike").text(likes);
 						$("#likeToggle").attr("value", "like");
 					}
 				});
 			});
-			//북마크 버튼 실행부분
-			 
-<%
-		if ("T".equals(dataTF)) {
-%>	
-			$("#bookmarkToggle").empty();						
-			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
-			$("#bookmarkToggle").attr("value", "unbookmark");
-<%
-		}else{
-%>
-			$("#bookmarkToggle").empty();
-			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark-o\"></i>");
-			$("#bookmarkToggle").attr("value", "bookmark");
-<%
-		}
-%>
-			
-			
-			
-			
 			
 			// 북마크 토글
-			/*  $("#bookmarkToggle").click(function() {
+			$("#bookmarkToggle").click(function() {
 				var value = $("#bookmarkToggle").attr("value");
 				var mem_id = ${sessionScope.loginId};
 				var pf_id = ${portfolio.pf_id}
@@ -443,8 +414,8 @@ String dataTF= (String)request.getAttribute("dataTF");
 					data : param,
 					dataType : "text"
 				});
-				 
-							{
+				
+				request.done(function(bookmark) {
 					if (value == "bookmark") {
 						$("#bookmarkToggle").empty();						
 						$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
@@ -455,7 +426,7 @@ String dataTF= (String)request.getAttribute("dataTF");
 						$("#bookmarkToggle").attr("value", "bookmark");
 					}
 				});
-			}); */
+			});
 		});		
 	</script>
 

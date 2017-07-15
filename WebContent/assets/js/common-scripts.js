@@ -116,7 +116,8 @@ var Script = function () {
             }, 2000)
         })
     }
-    
+
+/*
  // datepicker
     $(function() {
     	var start_date_input = $('input[name="pf_startdate"]'); //our date input has the name "date"
@@ -138,7 +139,7 @@ var Script = function () {
     		$(this).siblings('#fileName').val($(this)[0].files[0].name);
     	});
     });
-    
+*/
 
  // 업로드할 파일 삭제
     $(function() {
@@ -159,6 +160,41 @@ var Script = function () {
     	});
     });
     
-    
+ // 공동 작업자 찾기
+    $(function() {
+    	var userList = new Array();
+    	var prof_name;
+    	var prof_nick;
+    	
+    	$("#findUser button").on("click", function() {
+    		var input = $("#findUser input").text();
+    		var request = $.ajax({
+				type : "POST",
+				url : "/coworker_search",
+				data : {name : input},
+				dataType : "xml"
+			});
+			
+			request.done(function(xml) {
+				if ($(xml).find("user").length > 0) {
+					var findList = $("#findList");
+					$(xml).find("user").each(function(i) {
+						prof_name = $(this).find("name").text();
+						prof_nick = $(this).find("nick").text();
+						findList.append("<li><a href=\"#\">"+prof_name+"("+prof_nick+")</a></li>");
+					});
+					findList.find("a").on("click", function() {
+						userList.push(prof_nick);
+					});					
+				} else {
+					$("#findList").append("<li>검색 결과가 없습니다.</li>");
+				}
+			});
+    	});
+    	
+    	$("#coworkerConfirm").on("click", function() {
+    		$("pf_coworker").text(userList);
+    	});
+    });    
 
 }();

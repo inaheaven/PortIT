@@ -16,11 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import portit.model.dto.Media;
+import portit.model.dto.Profile;
+import portit.model.dto.Tag;
 
 public class FileUpload {
 	
@@ -39,7 +40,7 @@ public class FileUpload {
 	 */
 	public Map<String, Object> fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 파일 저장 디렉토리 설정
-		String saveDir = req.getServletContext().getRealPath("") + UPLOAD_DIR;
+		String saveDir = req.getServletContext().getRealPath("");
 		
 		// 저장할 디렉토리가 없으면 생성
 		File fileSaveDir = new File(saveDir);
@@ -65,32 +66,49 @@ public class FileUpload {
 				
 		List<Media> fileList = new ArrayList<Media>();
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<Tag> tagLang = new ArrayList<Tag>();
+		List<Tag> tagTool = new ArrayList<Tag>();
+		List<Tag> tagField = new ArrayList<Tag>();
+		List<Profile> coworker = new ArrayList<Profile>();
 		try {
-			List<FileItem> items = upload.parseRequest((RequestContext) req);			
+			List<FileItem> items = upload.parseRequest(req);
+			String key = null;
+			String value = null;
 			for(FileItem item : items) {
 				if (item.isFormField()) {
 					// isFormField()의 반환값이 true이면 일반 파라미터로 처리
-					map.put(
-							new String(item.getFieldName().getBytes("ISO-8859-1"), "UTF-8")
-							, new String(item.getString().getBytes("ISO-8859-1"), "UTF-8")
-							);
+					key = item.getFieldName();
+					value = item.getString("UTF-8");
+					if (value != null || !"".equals(value)) {
+						if (key.matches(".*[Ll]ang.*")) {
+							tagLang.add(new Tag().setTag_type("language").setTag_name(value));
+						} else if (key.matches(".*[Tt]ool.*")) {
+							tagTool.add(new Tag().setTag_type("tool").setTag_name(value));
+						} else if (key.matches(".*[Ff]ield.*")) {
+							tagField.add(new Tag().setTag_type("field").setTag_name(value));
+						} else if (key.matches(".*[Cc]oworker.*")) {
+							coworker.add(new Profile().setProf_name(value));
+						}
+					}
 				} else {
 					// isFormField()의 반환값이 false이면 파일로 처리
 					if (item != null && item.getSize() > 0) {
 						if (item.getContentType().startsWith("image/")) {
-							String path = saveDir + File.separator + getFileName(item);
-							item.write(new File(path));
-							fileList.add(new Media().setMl_path(path));
+							System.out.println(saveDir + File.separator + UPLOAD_DIR + File.separator + getFileName(item));
+							item.write(new File(saveDir + File.separator + UPLOAD_DIR + File.separator + getFileName(item)));
+							fileList.add(new Media().setMl_path(UPLOAD_DIR + File.separator + getFileName(item)));
 						} else {
 							throw new Exception("이미지파일만 업로드할 수 있습니다.");
 						}
 					}
 				}
+				System.out.println(key + " : " + value);
+				map.put(key, value);
 			}
+			map.put("tagLang", tagLang);
+			map.put("tagTool", tagTool);
+			map.put("tagField", tagField);
 			map.put("fileList",  fileList);
-			for (String key : map.keySet()) {
-				System.out.println(key + " : " + map.get(key).toString());
-			}
 			return map;
 		} catch (FileUploadException e) {
 			e.printStackTrace();

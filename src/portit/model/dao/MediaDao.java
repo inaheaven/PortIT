@@ -42,10 +42,12 @@ public class MediaDao {
 						.setMl_type_id(rs.getInt("ml_type_id"))
 						.setMl_path(rs.getString("ml_path"));
 				mediaList.add(media);
+				System.out.println("미디어 정보 DTO에 저장 : "+media.getMl_type()+"/"+media.getMl_type_id());
+				System.out.println(media.getMl_path());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		return mediaList;
 	}
 	
@@ -62,15 +64,16 @@ public class MediaDao {
 					+ "(ml_id, ml_type, ml_type_id, ml_path) "
 					+ "VALUES(LPAD(seq_ml_id.nextval, 4, '0'),?,?,?)";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, media.getMl_id());
-			stmt.setString(2, media.getMl_type());
-			stmt.setInt(3, media.getMl_type_id());
-			stmt.setString(4, media.getMl_path());
+			stmt.setString(1, media.getMl_type());
+			stmt.setInt(2, media.getMl_type_id());
+			stmt.setString(3, media.getMl_path());
 			rows = stmt.executeUpdate();
+			System.out.println("미디어 정보 DB에 저장 : "+media.getMl_type()+"/"+media.getMl_type_id());
+			System.out.println(media.getMl_path());
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
-		}  
+		}
 		return rows;
 	}
 	
@@ -106,7 +109,7 @@ public class MediaDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		return rows;
 	}
 	

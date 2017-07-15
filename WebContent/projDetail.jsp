@@ -14,7 +14,7 @@ Project project = (Project) request.getAttribute("project");
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><%= project.getProj_title() %></title>
+<title>${project.proj_title}</title>
 
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -41,83 +41,8 @@ Project project = (Project) request.getAttribute("project");
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
 		<!--header start-->
-      <header class="header black-bg">
-            <!--logo start-->
-            <a href="index.html" class="logo"><b>Port IT</b></a>
-            <!--logo end-->
-           	<div class="nav notify-row" id="top_menu">
-                <!--  menu start -->
-                <ul class="nav top-menu">
-                    <!-- settings start -->
-                    <li><a href="">Member</a></li>
-                    <li><a href="">Portfolio</a></li>
-                    <li><a href="">Project</a><li>
-                    <li><a href="">Community</a></li>
-                </ul>
-                <!--  menu end -->
-            </div>
-            <div class="top-menu-right">
-            	<ul class="nav pull-right top-menu">
-            		<li>
-            			<form class="form-inline top-menu-search" method="post" action="">
-            				<div class="input-group">
-            					<input type="text" class="form-control round-form" name="search" size="20" placeholder="통합 검색"/>
-            					<span class="input-group-btn">
-            						<button type="submit" class="btn btn-default round-form"><span class="glyphicon glyphicon-search" ></span></button>
-            					</span>
-            				</div>
-            			</form>
-            		</li>
-            		<li id="header_inbox_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                            <i class="fa fa-bell"></i>
-                            <span class="badge bg-theme"></span>
-                        </a>
-                        <ul class="dropdown-menu extended inbox">
-                            <div class="notify-arrow notify-arrow-yellow"></div>
-                            <li>
-                                <p class="yellow">Notification</p>
-                            </li>
-                            <li>
-                                <a href="">                
-                                	<span>구분</span>&nbsp;/&nbsp;
-                                	<span class="time">Just now</span>
-                                	<span class="message">[누구누구]님이 내 포트포리오를 좋아합니다.</span>      
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">더보기</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="header_inbox_bar" class="dropdown mypage">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                            <img alt="avatar" src="assets/img/ui-danro.jpg" class="img-circle">
-                        </a>
-                        <ul class="dropdown-menu extended inbox">
-                            <div class="notify-arrow notify-arrow-yellow"></div>
-                            <li>
-                                <p class="yellow">김수연 님</p>
-                            </li>
-                            <li>
-                                <a href="">내 프로필</a>
-                            </li>
-                            <li>
-                                <a href="">팔로잉한 멤버</a>
-                                <a href="">북마크한 포트폴리오</a>                             
-                            </li>
-                            <li>
-                            	<a href="">개인정보 설정</a>
-                            </li>
-                            <li>
-                            	<a class="logout" href="login.html">로그아웃</a>
-                            </li>
-                        </ul>
-                    </li>
-            	</ul>
-            </div>
-        </header>
-      <!--header end-->
+		<jsp:include page="header.jsp"></jsp:include>
+		<!--header end-->
 
 		
 		<!-- **********************************************************************************************************************************************************
@@ -127,14 +52,12 @@ Project project = (Project) request.getAttribute("project");
 		<section id="projHeader">
 			<div class="container">
 				<h4 class="tags">
-					<% for (Tag tag : project.getProj_tags_language()) { %>
-					<span><a href=""><%=tag.getTag_name()%></a>&nbsp;</span>
-					<% } %>
+					
 				</h4>
-				<h1><%= project.getProj_title() %></h1>
-				<h3 class="username"><a href=""><%= project.getProj_authorName() %></a></h3>
+				<h1>${project.proj_title}</h1>
+				<h3 class="username"><a href="/view?type=portfolio&id=${project.prof_name}">${project.prof_name}</a></h3>
 				<h4 class="field">
-					모집 분야 / <%= project.getProj_numofperson() %>명
+					모집 분야 / ${project.proj_to}명
 				</h4>
 				<h3 class="dday">D-<%= %></h3>
 			</div>
@@ -162,66 +85,42 @@ Project project = (Project) request.getAttribute("project");
 					<div class="col-md-12">
 						<h2 class="text-center">About</h2>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
-						<div class="intro">
-							<%= project.getProj_intro() %>
-						</div>
+						<div class="intro">${project.proj_intro}</div>
 					</div>
-					<div class="col-md-offset-2 col-md-8 projMedia">
-						<div id="Screenshots" class="carousel slide" data-ride="carousel">
-							<%
-							List<Media> mediae = project.getProj_mediae();
-							for (int idx = 0; idx < mediae.size(); idx++) {
-								Media media = mediae.get(idx);
-
-								if (idx == 0) {
-							%>
-							<!-- Indicators -->
-							<ol class="carousel-indicators">
-								<%
-									}
-								%>
-								<li data-target="#Screenshots" data-slide-to="<%=idx%>"
-									<%if (idx == 0) {%> class="active" <%}%>></li>
-								<%
-									if (idx == 0) {
-								%>
-							</ol>
-							<%
-								}
-									if (idx == 0) {
-							%>
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner">
-								<%
-									}
-								%>
-								<div class="item<%if (idx == 0) {%> active<%}%>">
-									<img src="<%=media.getMl_path()%>" />
+				</div>
+				<div class="row">					
+					<c:if test="${!empty project.media_path}">
+						<div class="col-md-offset-2 col-md-8 projMedia">
+							<div id="Screenshots" class="carousel slide" data-ride="carousel">
+								<!-- Indicators -->
+								<ol class="carousel-indicators">
+									<c:forEach var="pf_media" items="${project.media_path}" varStatus="status">
+										<li data-target="#Screenshots" data-slide-to="${status.index}">
+									</c:forEach>	
+								</ol>
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner">
+									<c:forEach var="path" items="${project.media_path}" varStatus="status">
+										<div class="item">
+											<img src="${path}" />
+										</div>
+									</c:forEach>				
 								</div>
-								<%
-									if (idx == 0) {
-								%>
+								<!-- Controls -->
+								<a class="left carousel-control" href="#Screenshots" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="right carousel-control" href="#Screenshots" data-slide="next">
+									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
 							</div>
-							<%
-								}
-							%>
-							<%
-								}
-							%>
-		
-							<!-- Controls -->
-							<a class="left carousel-control" href="#Screenshots"
-								data-slide="prev"> <span
-								class="glyphicon glyphicon-chevron-left"></span>
-								<span class="sr-only">Previous</span>
-							</a> <a class="right carousel-control" href="#Screenshots"
-								data-slide="next"> <span
-								class="glyphicon glyphicon-chevron-right"></span>
-								<span class="sr-only">Next</span>
-							</a>
 						</div>
-					</div>
+					</c:if>
 				</div>
 			</div>
 		</section><!-- /About -->
@@ -237,41 +136,41 @@ Project project = (Project) request.getAttribute("project");
 						<table class="table">
 							<tr>
 								<th>개설자</th>
-								<td><%= project.getProj_authorName() %></td>
+								<td>${project.prof_name}</td>
 							</tr>
 							<tr>
 								<th>등록일</th>
 								<td>
-									<%= project.getProj_regdate() %><br />
-									마감일까지 D-<%= %>
+									<fmt:formatDate value="${project.proj_regdate}" pattern="yyyy-MM-dd HH:mm:ss" var="proj_regdate" />
+									<fmt:formatDate value="${project.proj_regenddate}" pattern="yyyy-MM-dd HH:mm:ss" var="proj_regenddate" />
+									<c:out value="${proj_regdate}" /><br />
+									<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="now" />
+									마감일까지 D-<c:out value="${proj_regenddate - now}" />
 								</td>
 							</tr>
 							<tr>
 								<th>모집분야</th>
 								<td>
-									<% for (Tag tag : project.getProj_tags_field()) { %>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
+									<% for (int i = 0; i < project.getProj_field().size(); i++) { %>
+									<p><span><a href=""><%= project.getProj_field().get(i) %></a>&nbsp;</span>
+									/ <%= project.getProj_numofperson().get(i) %>명</p>
 									<% } %>
 								</td>
-							</tr>
-							<tr>
-								<th>모집인원</th>
-								<td><%= project.getProj_numofperson() %>명</td>
 							</tr>
 							<tr>
 								<th>요구기술</th>
 								<td>
-									<% for (Tag tag : project.getProj_tags_language()) { %>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
-									<% for (Tag tag : project.getProj_tags_tool()) { %>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
+									<c:forEach var="lang" items="${project.proj_language}" varStatus="status">
+									<span><a href="">${lang}</a>&nbsp;</span>
+									</c:forEach>
+									<c:forEach var="tool" items="${project.proj_tool}" varStatus="status">
+									<span><a href="">${tool}</a>&nbsp;</span>
+									</c:forEach>
 								</td>
 							</tr>							
 							<tr>
 								<th>예상작업기간</th>
-								<td><%= project.getProj_period() %>일</td>
+								<td>${project.proj_period}일</td>
 							</tr>
 						</table>
 					</div>
@@ -291,76 +190,44 @@ Project project = (Project) request.getAttribute("project");
 				<div class="row">					
 					<h2 class="text-center">Collaborators</h2>
 				</div>
-				<%
-					List<Profile> coworkers = project.getProj_coworkers();
-					if (coworkers != null && coworkers.size() > 0) {
-						for (int idx = 0; idx < coworkers.size(); idx++) {
-							Profile profile = coworkers.get(idx);
-							if (idx == 0 || idx % 4 == 0) {
-				%>
 				<div class="row collaboList">
-					<%
-							}
-					%>
-					<div class="col-md-3 mb">
-						<div class="member-simple">
-							<div class="simple-content text-center">
-								<img class="memImg img-circle" alt="avatar"
-									src="<%=profile.getProf_img()%>" />
-								<div>
-									<div class="memName">
-										<a href=""><%=profile.getProf_name()%></a>
-									</div>
-									<div class="memTag">
-										<%
-											for (Tag tag : profile.getProf_tags_language()) {
-										%>
-										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
-										<%
-											}
-										%>
-									</div>
-									<div class="memFollow">
-										<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-											class="memFollowCount"><%=profile.getProf_follower()%></span>
+					<c:choose>
+						<c:when test="${!empty project.pf_coworkers}">						
+							<c:forEach var="proj_applicant" items="${project.proj_applicants}">
+								<div class="col-md-3 mb">
+									<div class="member-simple">
+										<div class="simple-content text-center">
+											<a href="/view?type=profile&id=${proj_applicant.prof_nick}"><img class="memImg img-circle" alt="avatar" src="${pf_coworker.prof_img}" /></a>
+											<div>
+												<div class="memName">
+													<a href="/view?type=profile&id=${proj_applicant.prof_nick}">${proj_applicant.prof_name}</a>
+												</div>
+												<div class="memTag">
+													<span>#<a href="">${proj_applicant.prof_language}</a></span>
+													<span>#<a href="">${proj_applicant.prof_tool}</a></span>
+													<span>#<a href="">${proj_applicant.prof_field}</a></span>
+												</div>
+												<div class="memFollow">
+													<span class="fa fa-user"></span>&nbsp;&nbsp; <span
+														class="memFollowCount">${proj_applicant.prof_follower}</span>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<!-- member-simple end -->
-					<%
-							if (idx == 0 || idx % 4 == 0) {
-					%>
+								<!-- member-simple end -->
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p class="text-center">이 작업을 같이 수행할 사용자가 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</div>
-				<%
-							}
-						}
-					} else {
-				%>
-				<div class="row collaboList">
-					<p class="text-center">아직 이 프로젝트에 지원한 사람이 없습니다.</p>
-				</div>
-				<%
-					}
-				%>
 			</div>
 		</section><!-- /Collaborators -->		
 		
 		<!--footer start-->
-		<footer class="footer site-footer">
-		    <div class="col-md-3 footer-logo">
-		        (c) Port IT 2017 / All right reserved.
-		    </div>
-		    <div class="col-md-3 footer-menu">
-		    	<a href="">사이트 소개</a>
-		    	<a href="">도움말</a>
-		    	<a href="">문의하기</a>
-		    	<a href="main.html#" class="go-top">
-		    		<i class="fa fa-angle-up"></i>
-		      </a>
-		    </div>
-		</footer>
+		<jsp:include page="footer.jsp"></jsp:include>
 		<!--footer end-->
 	</section>
 

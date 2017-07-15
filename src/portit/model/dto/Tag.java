@@ -10,6 +10,13 @@ public class Tag {
 	private String tag_type;
 	/** 태그 이름 */
 	private String tag_name;
+	/** 태그 사용 번호 */
+	private int tag_use_id;
+	/** 태그 사용 분류 */
+	private String tag_use_type;
+	/** 태그가 사용되는 글번호 */
+	private int tag_use_type_id;
+	
 	/** 프로필 스킬레벨 */
 	private int prof_skill_level;
 	/** 프로젝트 모집인원수 */
@@ -19,6 +26,30 @@ public class Tag {
 	private ArrayList<String> proj_field_list = new ArrayList<>();
 	private ArrayList<String> proj_lang_list  = new ArrayList<>();
 
+	
+	
+	
+	public int getTag_use_id() {
+		return tag_use_id;
+	}
+	public String getTag_use_type() {
+		return tag_use_type;
+	}
+	public int getTag_use_type_id() {
+		return tag_use_type_id;
+	}
+	public Tag setTag_use_id(int tag_use_id) {
+		this.tag_use_id = tag_use_id;
+		return this;
+	}
+	public Tag setTag_use_type(String tag_use_type) {
+		this.tag_use_type = tag_use_type;
+		return this;
+	}
+	public Tag setTag_use_type_id(int tag_use_type_id) {
+		this.tag_use_type_id = tag_use_type_id;
+		return this;
+	}
 	public int getTag_id() {
 		return tag_id;
 	}

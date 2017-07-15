@@ -30,15 +30,13 @@ public class EditServlet extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		String articleType = req.getParameter("type");
-		RequestDispatcher rd = null;
 		if ("profile".equals(articleType)) {
-			rd = req.getRequestDispatcher("/MyProfUpdate.jsp");
+			resp.sendRedirect("/page?page=MyProfUpdate");
 		} else if ("portfolio".equals(articleType)) {
-			rd = req.getRequestDispatcher("/MyPfUpdate.jsp");
+			resp.sendRedirect("/page?page=MyPfUpdate");
 		} else if ("project".equals(articleType)) {
-			rd = req.getRequestDispatcher("/MyProjRegisterUpdate.jsp");
+			resp.sendRedirect("/page?page=MyProjRegisterUpdate");
 		}
-		rd.forward(req, resp);
 	}
 	
 	@Override
@@ -69,7 +67,7 @@ public class EditServlet extends HttpServlet {
 			Controller projectEditController = factory.newController("projectEdit");
 			viewUrl = projectEditController.execute(req, resp);
 		}
-		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
+		System.out.println("viewUrl: " + viewUrl.substring(4));
 		
 		// viewUrl의 시작부분에 따라 인클루딩/포워딩/리다이렉트 분리
 		RequestDispatcher rd = null;
