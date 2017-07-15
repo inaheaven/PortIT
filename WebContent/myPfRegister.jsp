@@ -27,13 +27,15 @@
 							class="col-md-1 control-label" for="date">시작일</label>
 						<div class="col-md-3">
 							<input class="form-control" id="start_date" name="pf_startdate"
-								type="date" />
+								required="required" type="date" /> <span class="help-block">반드시
+								입력하여야 합니다.</span>
 						</div>
 						<div class="col-md-1"></div>
 						<label class="col-md-1 control-label" for="date">마감일</label>
 						<div class="col-md-3">
 							<input class="form-control" id="end_date" name="pf_enddate"
-								type="date" />
+								required="required" type="date" /> <span class="help-block">반드시
+								입력하여야 합니다.</span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -47,16 +49,16 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">개발 언어</label>
 						<div class="col-md-9">
-							<input class="form-control tagInput" id="pf_language1"
+							<input class="form-control tagInput" id="pf_language1" value=""
 								type="text" name="pf_tags_lang">&nbsp;,&nbsp; <input
 								class="form-control tagInput" id="pf_language2" type="text"
-								name="pf_tags_lang">&nbsp;,&nbsp; <input
+								value="" name="pf_tags_lang">&nbsp;,&nbsp; <input
 								class="form-control tagInput" id="pf_language3" type="text"
-								name="pf_tags_lang">&nbsp;,&nbsp; <input
+								value="" name="pf_tags_lang">&nbsp;,&nbsp; <input
 								class="form-control tagInput" id="pf_language4" type="text"
-								name="pf_tags_lang">&nbsp;,&nbsp; <input
+								value="" name="pf_tags_lang">&nbsp;,&nbsp; <input
 								class="form-control tagInput" id="pf_language5" type="text"
-								name="pf_tags_lang"> <span class="help-block">*
+								value="" name="pf_tags_lang"> <span class="help-block">*
 								태그로 작성됩니다. (예시 : C, JAVA, Python 등 )</span>
 						</div>
 					</div>
@@ -64,14 +66,14 @@
 						<label class="col-md-3 control-label">개발 도구</label>
 						<div class="col-md-9">
 							<input class="form-control tagInput" id="pf_tool1" type="text"
+								value="" name="pf_tags_tool">&nbsp;,&nbsp; <input
+								class="form-control tagInput" id="pf_tool2" type="text" value=""
 								name="pf_tags_tool">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="pf_tool2" type="text"
+								class="form-control tagInput" id="pf_tool3" type="text" value=""
 								name="pf_tags_tool">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="pf_tool3" type="text"
+								class="form-control tagInput" id="pf_tool4" type="text" value=""
 								name="pf_tags_tool">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="pf_tool4" type="text"
-								name="pf_tags_tool">&nbsp;,&nbsp; <input
-								class="form-control tagInput" id="pf_tool5" type="text"
+								class="form-control tagInput" id="pf_tool5" type="text" value=""
 								name="pf_tags_tool"> <span class="help-block">*
 								태그로 작성됩니다. (예시 : Window7, OracleDB, Eclipse, Visual Studio2013 등
 								)</span>
@@ -80,32 +82,33 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">수행 인원</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="pf_numofperson">
+							<input type="text" class="form-control" name="pf_numofperson" value="1">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">담당 업무</label>
 						<div class="col-md-9">
 							<input class="form-control tagInput" id="pf_field1" type="text"
-								name="pf_tags_field">&nbsp;,&nbsp; <input
+								value="" name="pf_tags_field">&nbsp;,&nbsp; <input
 								class="form-control tagInput" id="pf_field2" type="text"
-								name="pf_tags_field">&nbsp;,&nbsp; <input
+								value="" name="pf_tags_field">&nbsp;,&nbsp; <input
 								class="form-control tagInput" id="pf_field3" type="text"
-								name="pf_tags_field"> <span class="help-block">*
+								value="" name="pf_tags_field"> <span class="help-block">*
 								태그로 작성됩니다. (예시 : 백엔드 개발, 프론트엔드 개발, 서버 개발, 디자이너, 기획 등 )</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">URL</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="pf_url"
+							<input type="text" class="form-control" name="pf_url" value=""
 								placeholder="ex) github URL">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">함께한 사람</label>
 						<div class="col-md-7">
-							<input type="text" name="pf_coworker" class="form-control" readonly="readonly">
+							<input type="text" name="pf_coworker" class="form-control"
+								value="" readonly="readonly">
 						</div>
 						<div class="col-sm-2">
 							<button type="button" class="btn btn-default" data-toggle="modal"
@@ -153,7 +156,7 @@
 										<span class="help-block">이 작업을 함께한 PortIT 사용자를 찾아보세요.</span>
 									</div>
 									<div class="col-xs-2">
-									<button type="button" class="btn common">검색</button>									
+										<button type="button" class="btn common">검색</button>
 									</div>
 								</div>
 							</form>

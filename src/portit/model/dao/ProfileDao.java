@@ -517,6 +517,8 @@ public class ProfileDao {
 			dto.setTag_field(tags_field(prof_id));
 			dto.setTag_skill(tags_skill(prof_id));
 			dto.setProf_skill_level(prof_skill_levels(prof_id));
+			
+			dto.setProf_myPf(new PortfolioDao().selectListByMemId(mem_id));
 
 		} 
 		catch (Exception err) {

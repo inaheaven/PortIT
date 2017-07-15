@@ -116,7 +116,8 @@ var Script = function () {
             }, 2000)
         })
     }
-    
+
+/*
  // datepicker
     $(function() {
     	var start_date_input = $('input[name="pf_startdate"]'); //our date input has the name "date"
@@ -138,7 +139,7 @@ var Script = function () {
     		$(this).siblings('#fileName').val($(this)[0].files[0].name);
     	});
     });
-    
+*/
 
  // 업로드할 파일 삭제
     $(function() {

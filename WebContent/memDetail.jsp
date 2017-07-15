@@ -74,7 +74,6 @@ Profile profile = (Profile) request.getAttribute("profile");
 					<ul class="nav navbar-nav">
 						<li><a href="#About">About</a></li>
 						<li><a href="#Portfolios">Portfolios</a></li>
-						<li><a href="#Projects">Projects</a></li>
 						<li><a href="#Contact">Contact</a></li>
 						<li><a href="#" id="BackToTop"><i class="fa fa-angle-double-up" aria-hidden="true"></i></a>
 					</ul>
@@ -161,64 +160,6 @@ Profile profile = (Profile) request.getAttribute("profile");
 				</div>
 			</div>
 		</section><!-- /Portfolios -->
-		<hr />
-		<!-- Projects -->
-		<section id="Projects">
-			<div class="container">
-				<div class="row">					
-					<h2 class="text-center">Projects</h2>
-				</div>
-				<div class="row">
-					<c:choose>
-						<c:when test="${!empty profile.prof_myProj}">
-							<c:forEach var="myproj" items="${profile.prof_myProj}">
-								<div class="col-md-12 mb">
-									<div class="project-list">
-										<div class="pjInfoText">
-											<div class="pjTitle">
-												<a href="/view?type=project&id=${myproj.proj_id}">${myproj.proj_title}</a>
-											</div>
-											<div class="pjmemName">
-												<span class="fa fa-user"></span>&nbsp;&nbsp;<a href="/view?type=profile?id=${myproj.prof_name}">${myproj.prof_name}</a>
-											</div>
-											<div class="pjIntro">${myproj.proj_intro}</div>
-											<div class="pjTag">
-												<c:forEach var="tagLang" items="${myproj.proj_language}">
-													<span><a href="">${tagLang}</a>&nbsp;</span>
-												</c:forEach>
-												<c:forEach var="tagTool" items="${myproj.proj_tool}">
-													<span><a href="">${tagTool}</a>&nbsp;</span>
-												</c:forEach>
-											</div>
-										</div>
-										<div class="pjInfoTable">
-											<table class="table text-center">
-												<% for (int i = 0; i < myproj.getProj_field().size(); i++) { %>
-												<tr>
-													<td><span><a href=""><%=myproj.getProj_field().get(i)%></a>&nbsp;</span>
-														/ <%=myproj.getProj_numofperson().get(i)%> 명</td>
-												</tr>
-												<% } %>
-												<tr>
-													<td>마감일</td>
-												</tr>
-												<tr>
-													<td><fmt:formatDate value="${myproj.proj_period}" pattern="yyyy-MM-dd" /></td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<p class="text-center">아직 등록한 프로젝트가 없습니다.</p>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<!-- project-list end -->
-			</div>
-		</section><!-- /Projects -->
 		<hr />
 		<!-- Contact -->
 		<section id="Contact">

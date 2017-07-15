@@ -69,7 +69,7 @@ public class PostServlet extends HttpServlet {
 			Controller projectAddController = factory.newController("projectAdd");
 			viewUrl = projectAddController.execute(req, resp);
 		}
-		System.out.println("viewUrl: " + viewUrl.substring(0, 3) + "/" + viewUrl.substring(4));
+		System.out.println("viewUrl: " + viewUrl.substring(4));
 		
 		// viewUrl의 시작부분에 따라 인클루딩/포워딩/리다이렉트 분리
 		RequestDispatcher rd = null;

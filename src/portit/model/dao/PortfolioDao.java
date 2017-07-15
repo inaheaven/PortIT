@@ -312,6 +312,25 @@ public class PortfolioDao {
 		}
 		return portfolios;
 	}
+	
+	public List<Portfolio> selectListByMemId(int mem_id) {
+		List<Portfolio> portfolioList = new ArrayList<Portfolio>();
+		getConnection();
+		try {
+			String sql = "SELECT pf_id FROM prof_pf WHERE mem_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs = stmt.executeQuery();			
+			while (rs.next()) {
+				portfolioList.add(selectOne(rs.getInt("pf_id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}		
+		return portfolioList;
+	}
 
 	public List<Portfolio> selectListByNick(String prof_nick) {
 		List<Portfolio> portfolioList = new ArrayList<Portfolio>();
