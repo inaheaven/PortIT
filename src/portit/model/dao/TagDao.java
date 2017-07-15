@@ -69,6 +69,7 @@ public class TagDao {
 			stmt.setString(1, tag.getTag_type());
 			stmt.setString(2, tag.getTag_name());
 			stmt.executeUpdate();
+			System.out.println("태그 정보 DB에 저장");
 			
 			sql = "DELETE FROM tag a "
 					+ "WHERE a.rowid > (SELECT min(b.rowid) FROM tag b WHERE a.tag_name=b.tag_name)";
@@ -82,8 +83,10 @@ public class TagDao {
 				tag_id = rs.getInt(1);
 			}
 			tag.setTag_id(tag_id);
+			System.out.println("태그ID 획득하여 DTO에 저장 : "+tag_id);
 			
 			insertTagUse(conn, tag);
+			System.out.println("태그사용 정보 저장");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

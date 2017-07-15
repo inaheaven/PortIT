@@ -180,35 +180,33 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					</div>
 				</div>
 				<div class="row">
-					<c:if test="${!empty portfolio.pf_mediaList}">
-						<div class="col-md-offset-2 col-md-8 pfMedia">
-							<div id="Screenshots" class="carousel slide" data-ride="carousel">
-								<!-- Indicators -->
-								<ol class="carousel-indicators">
-									<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
-										<li data-target="#Screenshots" data-slide-to="${status.index}">
-									</c:forEach>	
-								</ol>
-								<!-- Wrapper for slides -->
-								<div class="carousel-inner">
-									<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
-										<div class="item">
-											<img src="${pf_media.ml_path}" />
-										</div>
-									</c:forEach>				
-								</div>
-								<!-- Controls -->
-								<a class="left carousel-control" href="#Screenshots" data-slide="prev">
-									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-									<span class="sr-only">Previous</span>
-								</a>
-								<a class="right carousel-control" href="#Screenshots" data-slide="next">
-									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-									<span class="sr-only">Next</span>
-								</a>
+					<div class="col-md-offset-2 col-md-8 pfMedia">
+						<div id="Screenshots" class="carousel slide" data-ride="carousel">
+							<!-- Indicators -->
+							<ol class="carousel-indicators">
+								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+									<li data-target="#Screenshots" data-slide-to="${status.index}">
+								</c:forEach>
+							</ol>
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner">
+								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
+									<div class="item<c:if test="${status.first}"> active</c:if>">
+										<img src="${pf_media.ml_path}" />
+									</div>
+								</c:forEach>				
 							</div>
+							<!-- Controls -->
+							<a class="left carousel-control" href="#Screenshots" data-slide="prev">
+								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="right carousel-control" href="#Screenshots" data-slide="next">
+								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
 						</div>
-					</c:if>
+					</div>
 				</div>
 			</div>
 		</section>

@@ -42,6 +42,8 @@ public class MediaDao {
 						.setMl_type_id(rs.getInt("ml_type_id"))
 						.setMl_path(rs.getString("ml_path"));
 				mediaList.add(media);
+				System.out.println("미디어 정보 DTO에 저장 : "+media.getMl_type()+"/"+media.getMl_type_id());
+				System.out.println(media.getMl_path());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,6 +68,8 @@ public class MediaDao {
 			stmt.setInt(2, media.getMl_type_id());
 			stmt.setString(3, media.getMl_path());
 			rows = stmt.executeUpdate();
+			System.out.println("미디어 정보 DB에 저장 : "+media.getMl_type()+"/"+media.getMl_type_id());
+			System.out.println(media.getMl_path());
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
