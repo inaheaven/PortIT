@@ -38,6 +38,8 @@ function profalter(){
 	location.href="/register?cmd=UPDATE"
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
+
+
 //skill 추가
 var addSkillIndex = 1;
 function addSkill() {

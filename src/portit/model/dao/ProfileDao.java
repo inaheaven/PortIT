@@ -446,12 +446,7 @@ public class ProfileDao {
 				List tag_field = dto.getTag_field();
 				List tag_skill = dto.getTag_skill();
 				List prof_skill_level = dto.getProf_skill_level();
-				//////////////////////////////////////////////////////////
-				System.out.println("tool1 : " + tag_tool.get(0).toString());
-				System.out.println("1st : " + tag_field.get(0).toString());
-				System.out.println("2nd : " + tag_field.get(1).toString());
-				// System.out.println("3nd : " + tag_lang.get(2).toString());
-				//////////////////////////////////////////////////////////
+				
 				List tag_lang2 = new ArrayList();
 				List tag_tool2 = new ArrayList();
 				List tag_field2 = new ArrayList();
@@ -485,9 +480,10 @@ public class ProfileDao {
 					else{
 						tag_lang3.add(tag_lang.get(i).toString());		//tag_lang3에 데이터(태그명) 입력 / update 해야 할 부분
 						tag_lang4.add(tagNameToId(tag_lang.get(i).toString()));		//tag_lnag4에 수정할 데이터의 tag_id를 가져옴
+						System.out.print("업뎃 태그명 :" +tag_lang.get(i).toString());
+						System.out.println("\t업뎃 태그번호 :" +tagNameToId(tag_lang.get(i).toString()));
 					}
 				}
-		
 				
 				//태그 테이블 insert(tag_lang2일때만 insert)
 				for (int i = 0; i < tag_lang2.size(); i++) {
@@ -505,14 +501,14 @@ public class ProfileDao {
 					sql = "update tag set tag_name=? where tag_id = ? and tag_type= 'language' ";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, tag_lang3.get(i).toString());
-					System.out.println("tag_lang3.get(i).toString() " + tag_lang3.get(i).toString());
 					stmt.setInt(2, (int) tag_lang4.get(i));
+					System.out.println("tag_lang3.get(i).toString() " + tag_lang3.get(i).toString());
 					System.out.println("tag_lang4.get(i) " + tag_lang4.get(i));
 					stmt.executeUpdate();
 					
 				}
 			}
-			/*			
+					
 			///////////////////
 			// 태그 툴 입력
 			if (tag_tool != null) {			
@@ -522,11 +518,11 @@ public class ProfileDao {
 					check = tagNameCheck(tag_tool.get(i).toString());	//tag_lang에 입력된 데이터가 태그 테이블에 있는지 체크
 
 					if (!check) {										//false(테이블에 없는 경우)
-						tag_tool2.add(tag_tool.get(i).toString());		//tag_lang2에 데이터(태그명) 입력 / insert 해야 할 부분
+						tag_tool2.add(tag_tool.get(i).toString());		//tag_tool2에 데이터(태그명) 입력 / insert 해야 할 부분
 					}
 					else{
-						tag_tool3.add(tag_tool.get(i).toString());		//tag_lang3에 데이터(태그명) 입력 / update 해야 할 부분
-						tag_tool4.add(tagNameToId(tag_tool.get(i).toString()));		//tag_lnag4에 수정할 데이터의 tag_id를 가져옴
+						tag_tool3.add(tag_tool.get(i).toString());		//tag_tool3에 데이터(태그명) 입력 / update 해야 할 부분
+						tag_tool4.add(tagNameToId(tag_tool.get(i).toString()));		//tag_tool4에 수정할 데이터의 tag_id를 가져옴
 					}
 				}
 		
@@ -547,8 +543,8 @@ public class ProfileDao {
 					sql = "update tag set tag_name=? where tag_id = ? and tag_type= 'tool' ";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, tag_tool3.get(i).toString());
-					System.out.println("tag_tool3.get(i).toString() " + tag_tool3.get(i).toString());
 					stmt.setInt(2, (int) tag_tool4.get(i));
+					System.out.println("tag_tool3.get(i).toString() " + tag_tool3.get(i).toString());
 					System.out.println("tag_tool4.get(i) " + tag_tool4.get(i));
 					stmt.executeUpdate();
 					
@@ -587,11 +583,11 @@ public class ProfileDao {
 				
 				//태그 테이블 update(tag_field4일때만 update)
 				for (int i = 0; i < tag_field3.size(); i++) {
-					sql = "update tag set tag_name=? where tag_id = ? and tag_type= 'language' ";
+					sql = "update tag set tag_name=? where tag_id = ? and tag_type= 'field' ";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, tag_field3.get(i).toString());
-					System.out.println("tag_field4.get(i).toString() " + tag_field3.get(i).toString());
 					stmt.setInt(2, (int) tag_field4.get(i));
+					System.out.println("tag_field4.get(i).toString() " + tag_field3.get(i).toString());
 					System.out.println("tag_field4.get(i) " + tag_field4.get(i));
 					stmt.executeUpdate();
 					
@@ -629,18 +625,18 @@ public class ProfileDao {
 				
 				//태그 테이블 update(tag_skill4일때만 update)
 				for (int i = 0; i < tag_skill3.size(); i++) {
-					sql = "update tag set tag_name=? where tag_id = ? and tag_type= 'language' ";
+					sql = "update tag set tag_name=? where tag_id = ? and tag_type= 'skill_level' ";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, tag_skill3.get(i).toString());
-					System.out.println("tag_field4.get(i).toString() " + tag_field3.get(i).toString());
-					stmt.setInt(2, (int) tag_field4.get(i));
-					System.out.println("tag_field4.get(i) " + tag_field4.get(i));
+					stmt.setInt(2, (int) tag_skill4.get(i));
+					System.out.println("tag_field4.get(i).toString() " + tag_skill3.get(i).toString());
+					System.out.println("tag_field4.get(i) " + tag_skill4.get(i));
 					stmt.executeUpdate();
 					
 				}
 			}
-
-	*/
+			
+	
 			List tag_lang5 = new ArrayList();
 			List tag_tool5 = new ArrayList();
 			List tag_field5 = new ArrayList();
@@ -666,8 +662,7 @@ public class ProfileDao {
 				} 
 				else {
 					tag_lang5.add(tagNameToId(tag_lang.get(i).toString()));
-				}
-				System.out.println("랭 크기 : " +tag_lang5);
+				}				
 			}				
 			
 			
@@ -682,7 +677,7 @@ public class ProfileDao {
 					stmt.executeUpdate();
 				}
 			}
-			/*		
+				
 		/////////////////////////////////
 			// 태그 유즈에 tool 입력
 			for (int i = 0; i < tag_tool.size(); i++) {
@@ -700,7 +695,7 @@ public class ProfileDao {
 			if (tag_tool != null) {					
 				sql = "INSERT INTO tag_use( tag_use_id, tag_use_type, tag_use_type_id, tag_id )"
 						+ " VALUES(seq_tag_use_id.nextVal,?,?,?)";
-				for (int i = 0; i < tag_lang5.size(); i++) {
+				for (int i = 0; i < tag_tool5.size(); i++) {
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "prof");
 					stmt.setInt(2, req_prof_id);
@@ -717,19 +712,19 @@ public class ProfileDao {
 						|| null == tag_field.get(i).toString()) {
 					continue;
 				} else {
-					tag_field3.add(tagNameToId(tag_field.get(i).toString()));
+					tag_field5.add(tagNameToId(tag_field.get(i).toString()));
 				}
 			}
 
 			// 분야(필드) 유즈
 			if (tag_field != null) {
-				for (int i = 0; i < tag_field3.size(); i++) {
+				for (int i = 0; i < tag_field5.size(); i++) {
 					sql = "INSERT INTO tag_use(" + "tag_use_id, tag_use_type, tag_use_type_id, tag_id"
 							+ ") VALUES(seq_tag_use_id.nextVal,?,?,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "prof");
 					stmt.setInt(2, req_prof_id);
-					stmt.setInt(3, (int) tag_field3.get(i));
+					stmt.setInt(3, (int) tag_field5.get(i));
 					stmt.executeUpdate();
 				}
 			}
@@ -740,7 +735,7 @@ public class ProfileDao {
 						|| null == tag_skill.get(i).toString()) {
 					continue;
 				} else {
-					tag_skill3.add(tagNameToId(tag_skill.get(i).toString()));
+					tag_skill5.add(tagNameToId(tag_skill.get(i).toString()));
 				}
 			}
 
@@ -749,24 +744,46 @@ public class ProfileDao {
 						|| null == prof_skill_level.get(i).toString()) {
 					continue;
 				} else {
-					prof_skill_level3.add((prof_skill_level.get(i).toString()));
+					prof_skill_level5.add((prof_skill_level.get(i).toString()));
 				}
 			}
 
 			// 분야(필드) 유즈
 			if (tag_field != null) {
-				for (int i = 0; i < tag_skill3.size(); i++) {
+				for (int i = 0; i < tag_skill5.size(); i++) {
 					sql = "INSERT INTO tag_use(" + "tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level"
 							+ ") VALUES(seq_tag_use_id.nextVal,?,?,?,?)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "prof");
 					stmt.setInt(2, req_prof_id);
-					stmt.setInt(3, (int) tag_skill3.get(i));
-					stmt.setString(4, prof_skill_level3.get(i).toString());
+					stmt.setInt(3, (int) tag_skill5.get(i));
+					stmt.setString(4, prof_skill_level5.get(i).toString());
 					stmt.executeUpdate();
 				}
 			}
-*/			
+			
+			//업데이트간에 변경된 값을 tag_lang에 저장(dto이름과 맞춰주어 결과 출력에 오류가 없도록 하기위함)
+			tag_lang.clear();
+			tag_lang.add(tag_lang2);
+			tag_lang.add(tag_lang3);
+			
+			tag_tool.clear();
+			tag_tool.add(tag_tool2);
+			tag_tool.add(tag_tool3);
+			
+			tag_field.clear();
+			tag_field.add(tag_field2);
+			tag_field.add(tag_field3);
+			
+			tag_skill.clear();
+			tag_skill.add(tag_skill2);
+			tag_skill.add(tag_skill3);
+			
+			
+			prof_skill_level.clear();
+			prof_skill_level.add(prof_skill_level5);
+			
+			
 		} catch (Exception e) {
 			System.out.println("insert 오류 " + e);
 			e.printStackTrace();

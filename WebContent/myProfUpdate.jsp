@@ -28,6 +28,7 @@ function profalter(){
 	
 	alert("프로필이 정상적으로 수정되었습니다.");
 }
+
 //skill 추가
 var addSkillIndex = 1;
 function addSkill() {
@@ -84,11 +85,141 @@ function addSkill() {
 }
 //상태바 삭제 
 function fnDeleteItem(idx){
-   var item = document.getElementById("item_" + idx);
-   
-   if(item != null){
-      item.parentNode.removeChild(item);
-   }
+ var item = document.getElementById("item_" + idx);
+ 
+ if(item != null){
+    item.parentNode.removeChild(item);
+ }
+}
+
+
+
+
+//skill 추가
+var addSkillIndex2 = 1;
+function addSkill2() {
+	var skill2 = document.getElementById('skill2').value;
+	var score2 = document.getElementById('score2').value;
+	
+	if(Number(score)>Number("5")){
+		alert("숫자의 범위를 확인해주세요.");
+		document.getElementById('score2').focus();
+		return;
+	}
+	
+	addSkillIndex2++;
+	
+	var newSpan = document.createElement("span"); 
+	
+	newSpan.setAttribute("id","item_" + addSkillIndex2);
+
+	//상태바 길이 조정.
+	var barSize =0;
+	if(Number(score2)==Number("1")){
+		barSize=20;
+	}else if(Number(score2)==Number("2")){
+		barSize=40;
+	}else if(Number(score2)==Number("3")){
+		barSize=60;
+	}else if(Number(score2)==Number("4")){
+		barSize=80;
+	}else if(Number(score2)==Number("5")){
+		barSize=100;
+	}
+
+	//상태바 추가
+	var idx ="";
+		
+	idx+="<div class='col-md-3 skill'>"+skill2+"</div>";
+	   idx+="<div class='col-md-7'>";
+	      idx+="<div class='progress'>";
+	         idx+="<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100' style='width:"+ barSize+"%''>";
+	            idx+="<span class='sr-only'>45% Complete</span>";
+	            idx+="<span class='sr-only'>45% Complete</span>";
+	         idx+="</div>";         
+	      idx+="</div>";
+	   idx+="</div>";
+	   idx+="<div class='col-md-2'>";
+	      idx+="<button class='btn common' type='button' onclick='fnDeleteItem("+ addSkillIndex2 +")'>삭제</button>";
+	   idx+="</div>";
+	   idx+="</br>";
+	
+	newSpan.innerHTML = idx;
+	
+	var itemList = document.getElementById("skillList");
+	itemList.appendChild(newSpan);			
+}
+//상태바 삭제 
+function fnDeleteItem(idx){
+ var item = document.getElementById("item_" + idx);
+ 
+ if(item != null){
+    item.parentNode.removeChild(item);
+ }
+ 
+}
+//skill 추가
+var addSkillIndex3 = 1;
+function addSkill3() {
+	var skill3 = document.getElementById('skill3').value;
+	var score3 = document.getElementById('score3').value;
+	
+	if(Number(score)>Number("5")){
+		alert("숫자의 범위를 확인해주세요.");
+		document.getElementById('score3').focus();
+		return;
+	}
+	
+	addSkillIndex3++;
+	
+	var newSpan = document.createElement("span"); 
+	
+	newSpan.setAttribute("id","item_" + addSkillIndex3);
+
+	//상태바 길이 조정.
+	var barSize =0;
+	if(Number(score3)==Number("1")){
+		barSize=20;
+	}else if(Number(score3)==Number("2")){
+		barSize=40;
+	}else if(Number(score3)==Number("3")){
+		barSize=60;
+	}else if(Number(score3)==Number("4")){
+		barSize=80;
+	}else if(Number(score3)==Number("5")){
+		barSize=100;
+	}
+
+	//상태바 추가
+	var idx ="";
+		
+	idx+="<div class='col-md-3 skill'>"+skill3+"</div>";
+	   idx+="<div class='col-md-7'>";
+	      idx+="<div class='progress'>";
+	         idx+="<div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100' style='width:"+ barSize+"%''>";
+	            idx+="<span class='sr-only'>45% Complete</span>";
+	            idx+="<span class='sr-only'>45% Complete</span>";
+	         idx+="</div>";         
+	      idx+="</div>";
+	   idx+="</div>";
+	   idx+="<div class='col-md-2'>";
+	      idx+="<button class='btn common' type='button' onclick='fnDeleteItem("+ addSkillIndex3 +")'>삭제</button>";
+	   idx+="</div>";
+	   idx+="</br>";
+	
+	newSpan.innerHTML = idx;
+	
+	var itemList = document.getElementById("skillList");
+	itemList.appendChild(newSpan);			
+}
+//상태바 삭제 
+function fnDeleteItem(idx){
+ var item = document.getElementById("item_" + idx);
+ 
+ if(item != null){
+    item.parentNode.removeChild(item);
+ }
+ 
 }
  
 // sns url 붙이기
@@ -261,9 +392,9 @@ function fnSelectSnsInfo(snsName){
 							
 							<label class="col-md-3 control-label"></label>							
 							<div class="col-md-9">
-								<div class="col-md-3"><input class="form-control" id="skill2" type="text" 
+								<div class="col-md-3"><input class="form-control" id="skill3" type="text" 
 											name = "tag_skill" placeholder="기술명" value="${prof.tag_skill[2]}" ></div>
-								<div class="col-md-7"><input class="form-control" id="score2" type="text" 
+								<div class="col-md-7"><input class="form-control" id="score3" type="text" 
 											name = "prof_skill_level" placeholder="숫자 1~5까지 입력하세요" value="${prof.prof_skill_level[2]}" ></div>
 								<div class="col-md-2"><button type="button" class="btn common" onclick="addSkill3()">추가</button></div>
 							</div>
