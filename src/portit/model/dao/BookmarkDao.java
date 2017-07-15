@@ -193,6 +193,8 @@ public class BookmarkDao {
 
 		} catch (Exception err) {
 			System.out.println("getList() : 여기 에러나지마라 " + err);
+		}  finally{
+			pool.freeConnection(conn, stmt);
 		}
 	}
 	
@@ -212,6 +214,8 @@ public class BookmarkDao {
 			
 		} catch (Exception e) {
 			System.out.println("TAG() : 여기 에러나지마라 " + e);
+		}  finally{
+			pool.freeConnection(conn,stmt);
 		}
 		return "F"; //없으면 F
 	}
@@ -233,6 +237,8 @@ public class BookmarkDao {
 			stmt.executeUpdate();
 		} catch (Exception err) {
 			System.out.println("DBCP  : " + err);
+		}  finally{
+			pool.freeConnection(conn, stmt);
 		}
 	}
 	
@@ -255,6 +261,8 @@ public class BookmarkDao {
 		} 
 		catch (Exception e) {
 			System.out.println("ml_path(proj) 오류" + e);
+		}  finally{
+			pool.freeConnection(conn, stmt, rs4);
 		}
 		return null;
 	}

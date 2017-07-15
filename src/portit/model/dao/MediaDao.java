@@ -45,7 +45,7 @@ public class MediaDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		return mediaList;
 	}
 	
@@ -70,7 +70,7 @@ public class MediaDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}  
 		return rows;
 	}
 	
@@ -106,7 +106,7 @@ public class MediaDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		return rows;
 	}
 	
