@@ -179,6 +179,7 @@ body.index {
 }
 .member-simple .memImg {
 	width: 130px;
+	height: 130px;
 	margin-bottom: 20px;
 }
 .member-simple .memName a {
@@ -240,6 +241,11 @@ body.index {
 	font-size: 24px;
 	font-weight: 700;
 	margin-bottom: 8px;
+	
+	width:260px; 
+	overflow:hidden;
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
 }
 .portfolio-simple .pfmemName {
 	font-size: 18px;

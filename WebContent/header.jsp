@@ -11,7 +11,7 @@
 <c:set var="ntList" value="<%= dao.headerNoti(loginId) %>" />
 <header class="header black-bg">
 	<!--logo start-->
-	<a href="/page?page=main" class="logo"><b>Port IT</b></a>
+	<a href="/login?cmd=MAIN" class="logo"><b>Port IT</b></a>
 	<!--logo end-->
 	<div class="nav notify-row" id="top_menu">
 		<!--  menu start -->

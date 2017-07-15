@@ -32,7 +32,7 @@
 											src="${fwList[i].prof_img}" />
 										<div>
 											<div class="memName">			
-												<a href="/detail?for=mem&id=${fwList[i].mem_id_receiver}">${fwList[i].prof_nick}</a>
+												<a href="" onclick="window.open('/view?type=profile&id=${fwList[i].prof_nick}');">${fwList[i].prof_nick}</a>
 											</div>
 											<div class="memTag">
 												<c:if test="${fwList[i].tags.size() != 0}" >
