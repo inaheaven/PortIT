@@ -129,7 +129,7 @@
 			          					height="140" width="70"/>   
 			         				<div>
 			         					<div class="memName">
-			         						<a href="#" onclick="prof(<%=mem.getProf_id()%>)">
+			         						<a href="/detailView?yame=<%=mem.getProf_id()%>">
 			         							<%=mem.getProf_name()%></a></div>
 			         					<div class="memTag">
 			         					<% for(int j=0; j<mem.getTags().size(); j++) { %>

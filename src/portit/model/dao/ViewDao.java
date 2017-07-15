@@ -120,12 +120,10 @@ public class ViewDao {
 			System.out.println("포트폴리오 태그 " + e);
 		}
 		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
 		
 		
 		return null;
@@ -154,12 +152,10 @@ public class ViewDao {
 			System.out.println("ml_path(proj) 오류" + e);
 		}
 		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
 		
 		return null;
 	}
@@ -272,13 +268,10 @@ public class ViewDao {
 			System.out.println("member_tag 오류 " + e);
 		}
 		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
-		
 		
 		return null;
 	}
@@ -397,13 +390,10 @@ public class ViewDao {
 			System.out.println("proj_tag 오류" + e);
 		}
 		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
-		
 		
 		return null;
 	}
@@ -431,12 +421,10 @@ public class ViewDao {
 			System.out.println("proj_tag(필드) 오류" + e);
 		}
 		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
 		
 		
 		return null;
@@ -559,12 +547,10 @@ public class ViewDao {
 		}
 		
 		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
 		
 		return null;
 	}
@@ -595,13 +581,10 @@ public class ViewDao {
 			System.out.println("timeline like " + e);
 		}
 		
-		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
 		
 		return null;
 	}
@@ -628,14 +611,10 @@ public class ViewDao {
 		catch (Exception e) {
 			System.out.println("ml_path(proj) 오류" + e);
 		}
-		
-		/* 심봤다
 		 
 		  finally{
 			pool.freeConnection(con, pstmt);
 		}
-		  */
-		
 		return null;
 	}
 }

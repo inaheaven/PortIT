@@ -68,12 +68,10 @@ public class ProfileDao {
 		}
 		
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 	}
 	
@@ -456,12 +454,10 @@ public class ProfileDao {
 		}
 		
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		return null;
 	}
@@ -575,12 +571,10 @@ public class ProfileDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		return null;
 	}
@@ -610,12 +604,10 @@ public class ProfileDao {
 		}
 		
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		return null;
 	}
@@ -644,12 +636,10 @@ public class ProfileDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		
 		return null;
@@ -679,12 +669,10 @@ public class ProfileDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		
 		return null;
@@ -714,12 +702,10 @@ public class ProfileDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		return null;
 	}
@@ -747,12 +733,10 @@ public class ProfileDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		
 		return result;
@@ -782,12 +766,10 @@ public class ProfileDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		
 		return flag;
@@ -837,12 +819,10 @@ public class ProfileDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		
 		return prof_id;

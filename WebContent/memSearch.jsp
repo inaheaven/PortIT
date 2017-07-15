@@ -115,7 +115,7 @@
 		          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
 		         				<div>
 		         					<div class="memName">
-		         						<a href="#" onclick="prof(<%=mem.getProf_id()%>)"> 
+		         						<a href="/detailView?yame=<%=mem.getProf_id()%>">
 		         							<%=mem.getProf_name()%></a></div>
 		         					<div class="memTag">
 		         					<% for(int j=0; j<mem.getTags().size(); j++) { %>

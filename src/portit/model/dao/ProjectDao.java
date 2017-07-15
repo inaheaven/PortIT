@@ -147,12 +147,10 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("project 테이블 쿼리 오류" + e);
 		}
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		
 
@@ -171,12 +169,10 @@ public class ProjectDao {
 			System.out.println("멤버 테이블에서 멤버 아이디 검색2" + e);
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 
 		try {
@@ -204,12 +200,10 @@ public class ProjectDao {
 			System.out.println("profile 테이블 쿼리 오류");
 		}
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 
 		// Tag_USE 테이블에서 필요한 값 불러오기
@@ -232,12 +226,10 @@ public class ProjectDao {
 		}
 		
 		
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 		Iterator<Integer> tag = tag_id_list.iterator();
 		try {
@@ -327,12 +319,10 @@ public class ProjectDao {
 		} catch (Exception e) {
 			System.out.println("폼에 입력받은 데이터를 프로젝트 테이블에 입력" + e);
 		}
-		/* 심봤다
 		 
 		  finally{
-			pool.freeConnection(con, pstmt);
+			pool.freeConnection(conn, stmt);
 		}
-		  */
 		
 
 		// 폼에 입력받은 함께할 사람데이터를 proj_app 테이블에 입력
@@ -430,12 +420,10 @@ public class ProjectDao {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
 			
-			/* 심봤다
 			 
 			  finally{
-				pool.freeConnection(con, pstmt);
+				pool.freeConnection(conn, stmt);
 			}
-			  */
 			
 			
 		}
@@ -483,12 +471,10 @@ public class ProjectDao {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
 			
-			/* 심봤다
-			 
 			  finally{
-				pool.freeConnection(con, pstmt);
-			}
-			  */
+					pool.freeConnection(conn, stmt);
+				}
+				
 			
 		}
 
@@ -538,12 +524,10 @@ public class ProjectDao {
 			}
 			
 			
-			/* 심봤다
-			 
 			  finally{
-				pool.freeConnection(con, pstmt);
-			}
-			  */
+					pool.freeConnection(conn, stmt);
+				}
+				
 			
 
 		}
@@ -558,12 +542,10 @@ public class ProjectDao {
 			System.out.println("내가 등록한 프로젝트 테이블에 등록 오류 " + e);
 		}
 		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
+				pool.freeConnection(conn, stmt);
+			}
+			
 		
 
 		System.out.println("모든게 등록되었다.");
@@ -641,14 +623,10 @@ public class ProjectDao {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
-		
+				pool.freeConnection(conn, stmt);
+			}
+			
 
 		// TAG아이디 값 호출
 		String tag_sql = "SELECT TAG_ID FROM TAG_USE WHERE TAG_USE_TYPE='PROJ_REG' AND TAG_USE_TYPE_ID=?";
@@ -668,12 +646,10 @@ public class ProjectDao {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
+				pool.freeConnection(conn, stmt);
+			}
+			
 		
 
 		String proj_del_sql = "DELETE FROM PROJECT WHERE PROJ_ID = ?";
@@ -687,13 +663,10 @@ public class ProjectDao {
 		}
 		
 		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
-
+				pool.freeConnection(conn, stmt);
+			}
+			
 	}
 
 	/**
@@ -736,12 +709,10 @@ public class ProjectDao {
 			System.out.println("폼에 입력받은 데이터를 프로젝트 테이블에 입력" + e);
 		}
 		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
+				pool.freeConnection(conn, stmt);
+			}
+			
 		
 
 		// 폼에 입력받은 함께할 사람데이터를 proj_app 테이블에 입력
@@ -764,12 +735,10 @@ public class ProjectDao {
 		}
 		
 		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
+				pool.freeConnection(conn, stmt);
+			}
+			
 		
 		
 		try {
@@ -799,12 +768,10 @@ public class ProjectDao {
 		}
 		
 		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
+				pool.freeConnection(conn, stmt);
+			}
+			
 
 		// 개발 언어
 		// 폼에 입력받은 환경 데이터를 TAG_USE 테이블에 입력을 위한 변수 설정
@@ -864,13 +831,10 @@ public class ProjectDao {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
 			
-			/* 심봤다
-			 
 			  finally{
-				pool.freeConnection(con, pstmt);
-			}
-			  */
-			
+					pool.freeConnection(conn, stmt);
+				}
+				
 			
 		}
 
@@ -918,13 +882,10 @@ public class ProjectDao {
 				System.out.println("개발 언어 입력 문제" + e);
 			}
 			
-			/* 심봤다
-			 
 			  finally{
-				pool.freeConnection(con, pstmt);
-			}
-			  */
-			
+					pool.freeConnection(conn, stmt);
+				}
+				
 			
 		}
 
@@ -973,12 +934,10 @@ public class ProjectDao {
 			}
 
 			
-			/* 심봤다
-			 
 			  finally{
-				pool.freeConnection(con, pstmt);
-			}
-			  */
+					pool.freeConnection(conn, stmt);
+				}
+				
 			
 			
 		}

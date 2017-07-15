@@ -51,12 +51,7 @@ public class TagDao {
 			e.printStackTrace();
 		}
 		
-		/* 심봤다
 		 
-		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
 		
 		
 		return tagList;

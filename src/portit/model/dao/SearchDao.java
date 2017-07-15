@@ -138,13 +138,10 @@ public class SearchDao {
 			System.out.println("포트폴리오 태그 " + e);
 		}
 		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
-		
+				pool.freeConnection(con, pstmt);
+			}
+			
 		
 		return null;
 	}
@@ -447,12 +444,10 @@ public class SearchDao {
 		}
 		
 		
-		/* 심봤다
-		 
 		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
+				pool.freeConnection(con, pstmt);
+			}
+			
 		
 		
 		return null;

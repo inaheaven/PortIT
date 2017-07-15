@@ -166,12 +166,7 @@ public class MediaDao {
 		}
 		
 		
-		/* 심봤다
 		 
-		  finally{
-			pool.freeConnection(con, pstmt);
-		}
-		  */
 		
 		return rows;
 	}

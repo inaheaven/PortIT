@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import portit.model.dao.SearchDao;
+import portit.model.dao.ViewDao;
 
 @WebServlet("/detailView")
 public class DetailViewController extends HttpServlet {
@@ -25,17 +26,56 @@ public class DetailViewController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		
+		int yame=Integer.parseInt((String) req.getParameter("yame"));
+		int yame_pj=Integer.parseInt((String) req.getParameter("yamepj"));
+		
+		
 		String cmd = req.getParameter("cmd");
 	
 		String url = null;
 		
 		SearchDao searchDao = new SearchDao();		
 	
-		if(cmd.equals("PORTFOLIO")){
-			//int pf_id = Integer.parseInt(req.getParameter("pf_id"));
-			//req.setAttribute("pf_view", viewdao.portfolio_info(pf_id));	//이름만 바꿔주면 됨.
+		ViewDao viewdao=new ViewDao();
+		
+	
+		//야매  프로필 페이지.
+		
+		if(yame==2){
+			
+			System.out.println("view접근"+yame);
+			url="profile_sample1.html";
+		}else if(yame==7){//상민
+			
+			url="profile_sample2.html";
+		}else if(yame==9){//권상우
+			
+			url="profile_sample1.html";
+		}
+		
+		//야매  프로젝트페이지
+		if(yame_pj==2){
+			
+			System.out.println("view접근"+yame);
+			url="profile_sample1.html";
+		}else if(yame_pj==2){
+			
+			url="profile_sample1.html";
+		}else if(yame_pj==2){
+			url="profile_sample1.html";
+		}
+		
+		
+		
+		
+		if("PORTFOLIO".equals(cmd)){
+			int pf_id = Integer.parseInt(req.getParameter("pf_id"));
+			req.setAttribute("pf_view", viewdao.portfolio_info(pf_id));	//이름만 바꿔주면 됨.
 			url="/page?page=searchAll";
 		}
+		
+		/*
+		
 		else if(cmd.equals("MEMBER")){
 			//int prof_id = Integer.parseInt(req.getParameter("prof_id"));
 			//req.setAttribute("prof_view",viewdao.member_info(prof_id));
@@ -93,9 +133,11 @@ public class DetailViewController extends HttpServlet {
 			req.setAttribute("proj_list", proj_list);			
 			
 			url="/page?page=projSearch";
-		}
+		}*/
 		
-
+		
+		
+		
 		RequestDispatcher view = req.getRequestDispatcher(url);
 		view.forward(req,resp);
 	}
