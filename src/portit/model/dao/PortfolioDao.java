@@ -162,7 +162,7 @@ public class PortfolioDao {
 		List<Portfolio> portfolioList = new ArrayList<Portfolio>();
 		getConnection();
 		try {
-			String sql = "SELECT pf_id FROM prof_pf WHERE mem_id=?";
+			String sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, memToProf(mem_id));
 			rs = stmt.executeQuery();
