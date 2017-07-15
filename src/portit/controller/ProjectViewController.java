@@ -22,7 +22,7 @@ public class ProjectViewController implements Controller {
 		
 		int articleId = Integer.parseInt(req.getParameter("id"));
 		ProjectDao projectDao = new ProjectDao();
-		Project project = projectDao.read_proj(req, resp);
+		Project project = projectDao.getProjectById(articleId);
 		req.setAttribute("project", project);
 		
 		// 뷰 URL 반환

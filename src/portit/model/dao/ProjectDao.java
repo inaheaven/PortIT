@@ -31,10 +31,13 @@ public class ProjectDao {
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
+	
+	private TagDao tagDao;
 
 	public ProjectDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
+			TagDao tagDao = new TagDao();
 		} catch (Exception e) {
 			System.out.println("Connection Pool 오류" + e);
 		}
@@ -1021,6 +1024,59 @@ public class ProjectDao {
 			freeConnection();
 		}
 		return rsList;
+	}
+
+	public Project getProjectById(int articleId) {
+		Project project = new Project();
+		getConnection();
+		try {
+			// project 테이블에서 필요한 값 불러오기
+			String sql = "SELECT PROJ_TITLE, PROJ_INTRO, PROJ_REGDATE, PROJ_STARTDATE, PROJ_PERIOD, PROJ_REGENDDATE FROM PROJECT WHERE PROJ_ID = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, articleId); // 프로젝트 아이디 입력을 통한 데이터 읽어오기
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				project.setProj_title(rs.getString("proj_title"));
+				project.setProj_intro(rs.getString("proj_intro"));
+				project.setProj_regdate(rs.getDate("proj_regdate"));
+				project.setProj_startdate(rs.getDate("proj_startdate"));
+				project.setProj_period(rs.getInt("proj_period"));
+				project.setProj_regenddate(rs.getDate("proj_regenddate"));
+				
+				List<Tag> proj_tags_language = tagDao.selectList(conn, "language", "project", articleId);
+				ArrayList<String> proj_language = new ArrayList<String>();
+				for (Tag tag : proj_tags_language) {
+					proj_language.add(tag.getTag_name());
+				}
+				project.setProj_language(proj_language);
+				List<Tag> proj_tags_tool = tagDao.selectList(conn, "tool", "project", articleId);
+				ArrayList<String> proj_tool = new ArrayList<String>();
+				for (Tag tag : proj_tags_tool) {
+					proj_tool.add(tag.getTag_name());
+				}
+				project.setProj_tool(proj_tool);
+				List<Tag> proj_tags_field = tagDao.selectList(conn, "field", "project", articleId);
+				ArrayList<String> proj_field = new ArrayList<String>();
+				for (Tag tag : proj_tags_field) {
+					proj_field.add(tag.getTag_name());
+				}
+				project.setProj_field(proj_field);
+
+				ArrayList<Integer> proj_numofperson = new ArrayList<Integer>();
+				sql = "SELECT * FROM proj_app WHERE proj_id=?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, articleId);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					proj_numofperson.add(new Integer(rs.getInt("mem_id")));
+				}
+				project.setProj_numofperson(proj_numofperson);
+				project.setProj_to(proj_numofperson.size());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return project;
 	}
 
 }

@@ -71,11 +71,6 @@ public class TagDao {
 			stmt.executeUpdate();
 			System.out.println("태그 정보 DB에 저장");
 			
-			sql = "DELETE FROM tag a "
-					+ "WHERE a.rowid > (SELECT min(b.rowid) FROM tag b WHERE a.tag_name=b.tag_name)";
-			stmt = conn.prepareStatement(sql);
-			stmt.executeUpdate();
-			
 			sql = "SELECT seq_tag_id.currVal FROM DUAL";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();

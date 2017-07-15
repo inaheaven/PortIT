@@ -227,6 +227,7 @@ public class PortfolioDao {
 			if (rs.next()) {
 				pf_id = rs.getInt(1);
 			}
+			portfolio.setPf_id(pf_id);
 			System.out.println("게시물 번호 획득 : "+pf_id);
 
 			// 태그 추가

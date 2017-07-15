@@ -497,29 +497,28 @@ public class ProfileDao {
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			
-			rs.next();
+			while(rs.next()) {
+				dto.setMem_id(rs.getInt("mem_id"));
+				dto.setProf_id(rs.getInt("prof_id"));
+				dto.setProf_nick(rs.getString("prof_nick"));
+				dto.setProf_name(rs.getString("prof_name"));
+				dto.setProf_intro(rs.getString("prof_intro"));
+				dto.setProf_img(rs.getString("prof_img"));
+				dto.setProf_background(rs.getString("prof_background"));
+				dto.setProf_website(rs.getString("prof_website"));
+				dto.setProf_github(rs.getString("prof_github"));
+				dto.setProf_facebook(rs.getString("prof_facebook"));
 				
-			dto.setMem_id(rs.getInt("mem_id"));
-			dto.setProf_id(rs.getInt("prof_id"));
-			dto.setProf_nick(rs.getString("prof_nick"));
-			dto.setProf_name(rs.getString("prof_name"));
-			dto.setProf_intro(rs.getString("prof_intro"));
-			dto.setProf_img(rs.getString("prof_img"));
-			dto.setProf_background(rs.getString("prof_background"));
-			dto.setProf_website(rs.getString("prof_website"));
-			dto.setProf_github(rs.getString("prof_github"));
-			dto.setProf_facebook(rs.getString("prof_facebook"));
-			
-			int prof_id = rs.getInt("prof_id");
-			
-			dto.setTag_lang(tags_lang(prof_id));
-			dto.setTag_tool(tags_tool(prof_id));
-			dto.setTag_field(tags_field(prof_id));
-			dto.setTag_skill(tags_skill(prof_id));
-			dto.setProf_skill_level(prof_skill_levels(prof_id));
-			
-			dto.setProf_myPf(new PortfolioDao().selectListByMemId(mem_id));
-
+				int prof_id = rs.getInt("prof_id");
+				
+				dto.setTag_lang(tags_lang(prof_id));
+				dto.setTag_tool(tags_tool(prof_id));
+				dto.setTag_field(tags_field(prof_id));
+				dto.setTag_skill(tags_skill(prof_id));
+				dto.setProf_skill_level(prof_skill_levels(prof_id));
+				
+				dto.setProf_myPf(new PortfolioDao().selectListByMemId(mem_id));
+			}
 		} 
 		catch (Exception err) {
 			System.out.println("getProfile 오류: " + err);

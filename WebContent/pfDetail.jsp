@@ -54,7 +54,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 				<h4 class="tags">
 					<c:if test="${!empty portfolio.pf_tags_language}">
 						<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-							<span> <a href="">${pf_tag_language.tag_name}</a> </span>
+							<span> <a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a> </span>
 						</c:forEach>
 					</c:if>
 				</h4>
@@ -147,7 +147,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 									<th>사용언어</th>
 									<td>
 										<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-											<span> <a href="">${pf_tag_language.tag_name}</a> </span>
+											<span> <a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a> </span>
 										</c:forEach>
 									</td>
 								</tr>
@@ -155,7 +155,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 									<th>사용도구</th>
 									<td>
 										<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
-											<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
+											<span> <a href="javascript:tag('${pf_tag_tool.tag_name}')">${pf_tag_tool.tag_name}</a> </span>
 										</c:forEach>
 									</td>
 								</tr>
@@ -167,7 +167,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 									<th>담당분야</th>
 									<td>
 										<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
-											<span> <a href="">${pf_tag_field.tag_name}</a> </span>
+											<span> <a href="javascript:tag('${pf_tag_field.tag_name}')">${pf_tag_field.tag_name}</a> </span>
 										</c:forEach>
 									</td>
 								</tr>
@@ -185,7 +185,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 							<!-- Indicators -->
 							<ol class="carousel-indicators">
 								<c:forEach var="pf_media" items="${portfolio.pf_mediaList}" varStatus="status">
-									<li data-target="#Screenshots" data-slide-to="${status.index}">
+									<li <c:if test="${status.first}">class="active" </c:if>data-target="#Screenshots" data-slide-to="${status.index}">
 								</c:forEach>
 							</ol>
 							<!-- Wrapper for slides -->
