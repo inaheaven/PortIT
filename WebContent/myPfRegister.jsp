@@ -26,13 +26,13 @@
 						<label class="col-md-3 control-label">포트폴리오 제작 기간</label> <label
 							class="col-md-1 control-label" for="date">시작일</label>
 						<div class="col-md-3">
-							<input class="form-control" id="start_date" name="pf_start_date"
+							<input class="form-control" id="start_date" name="pf_startdate"
 								type="date" />
 						</div>
 						<div class="col-md-1"></div>
 						<label class="col-md-1 control-label" for="date">마감일</label>
 						<div class="col-md-3">
-							<input class="form-control" id="end_date" name="pf_end_date"
+							<input class="form-control" id="end_date" name="pf_enddate"
 								type="date" />
 						</div>
 					</div>
@@ -105,7 +105,7 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">함께한 사람</label>
 						<div class="col-md-7">
-							<input type="text" class="form-control" readonly="readonly">
+							<input type="text" name="pf_coworker" class="form-control" readonly="readonly">
 						</div>
 						<div class="col-sm-2">
 							<button type="button" class="btn btn-default" data-toggle="modal"
@@ -145,7 +145,7 @@
 							<h4 class="modal-title">함께한 사람 찾기</h4>
 						</div>
 						<div class="modal-body">
-							<form class="form-horizontal style-form">
+							<form class="form-horizontal style-form" id="findUser">
 								<div class="form-group">
 									<label class="col-xs-3 control-label">사용자 찾기</label>
 									<div class="col-xs-7">
@@ -157,11 +157,11 @@
 									</div>
 								</div>
 							</form>
-							<div id="findList"></div>
+							<ul id="findList"></ul>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn cancel" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn common">확인</button>
+							<button type="submit" class="btn common" id="coworkerConfirm">확인</button>
 						</div>
 					</div>
 				</div>

@@ -161,31 +161,38 @@ var Script = function () {
     
  // 공동 작업자 찾기
     $(function() {
-    	var saveUsers = new Array();
+    	var userList = new Array();
+    	var prof_name;
+    	var prof_nick;
     	
     	$("#findUser button").on("click", function() {
     		var input = $("#findUser input").text();
     		var request = $.ajax({
 				type : "POST",
 				url : "/coworker_search",
-				data : input,
+				data : {name : input},
 				dataType : "xml"
 			});
 			
 			request.done(function(xml) {
 				if ($(xml).find("user").length > 0) {
-					var userList = "<ul>";
-					for (var i = 0; i < $(xml).find("user").length; i++) {
-						var prof_nick = $(this).find("nick").text();
-						var prof_name = $(this).find("name").text();
-						userList += "<li>"+prof_name+"("+prof_nick+")</li>";
-					}
-					userList += "</ul>";
-					$("#userList").append(userList);
+					var findList = $("#findList");
+					$(xml).find("user").each(function(i) {
+						prof_name = $(this).find("name").text();
+						prof_nick = $(this).find("nick").text();
+						findList.append("<li><a href=\"#\">"+prof_name+"("+prof_nick+")</a></li>");
+					});
+					findList.find("a").on("click", function() {
+						userList.push(prof_nick);
+					});					
 				} else {
-					$("#findList").append("<p class=\"text-center\">검색 결과가 없습니다.</p>");
+					$("#findList").append("<li>검색 결과가 없습니다.</li>");
 				}
 			});
+    	});
+    	
+    	$("#coworkerConfirm").on("click", function() {
+    		$("pf_coworker").text(userList);
     	});
     });    
 

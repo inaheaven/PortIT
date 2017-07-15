@@ -16,7 +16,6 @@ import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
 import portit.model.dto.Profile;
 import portit.model.dto.Tag;
-import portit.util.FileUpload;
 
 /**
  * 포트폴리오 작성 컨트롤러
@@ -31,35 +30,14 @@ public class PortfolioAddController implements Controller {
 		List<String> fileList = (List<String>) formData.get("fileList");
 		
 		// 태그, 공동 작업자 관련 처리
-		List<Tag> languageTagList = new ArrayList<Tag>();
-		List<Tag> toolTagList = new ArrayList<Tag>();
-		List<Tag> fieldTagList = new ArrayList<Tag>();
-		List<Profile> coworkerList = new ArrayList<Profile>();
+		List<Tag> languageTagList = (List<Tag>) formData.get("tagLang");
+		List<Tag> toolTagList = (List<Tag>) formData.get("tagTool");
+		List<Tag> fieldTagList = (List<Tag>) formData.get("tagField");
+		List<Profile> coworkerList = (List<Profile>) formData.get("coworker");
 		for (String key : formData.keySet()) {
-			System.out.println(key + " : " +formData.get(key));
-		}
-		/*for (String key : formData.keySet()) {
-			if (key.equals("pf_tags_language") && formData.get(key) != null) {
-				String[] pf_tags_language = (String[]) formData.get(key);
-				for (int i = 0; i < pf_tags_language.length; i++) {
-					languageTagList.add(new Tag().setTag_type("language").setTag_name(pf_tags_language[i]));
-				}
-			} else if (key.equals("pf_tags_tool") && formData.get(key) != null) {
-				String[] pf_tags_tool = (String[]) formData.get(key);
-				for (int i = 0; i < pf_tags_tool.length; i++) {
-					toolTagList.add(new Tag().setTag_type("tool").setTag_name(pf_tags_tool[i]));
-				}
-			} else if (key.equals("pf_tags_field") && formData.get(key) != null) {
-				String[] pf_tags_field = (String[]) formData.get(key);
-				for (int i = 0; i < pf_tags_field.length; i++) {
-					fieldTagList.add(new Tag().setTag_type("field").setTag_name(pf_tags_field[i]));
-				}
-			} else if (key.equals("pf_coworkers") && formData.get(key) != null) {
-				String[] pf_coworker = (String[]) formData.get(key);
-				for (int i = 0; i < pf_coworker.length; i++) {
-					coworkerList.add(new Profile().setProf_nick(pf_coworker[i]));
-				}
-			}
+			if (formData.get(key) != null) {
+				System.out.println(key + " : " +formData.get(key));
+			}			
 		}
 		
 		// 파일 관련 처리
@@ -72,7 +50,7 @@ public class PortfolioAddController implements Controller {
 		PortfolioDao portfolioDao = new PortfolioDao();
 		Portfolio portfolio = new Portfolio();
 		try {
-			portfolio.setMem_id((int) formData.get("mem_id")).setPf_title((String) formData.get("pf_title"))
+			portfolio.setMem_id(Integer.parseInt(formData.get("mem_id").toString())).setPf_title((String) formData.get("pf_title"))
 					.setPf_intro(((String) formData.get("pf_intro")).replaceAll("\\r\\n", "<br />"))
 					.setPf_startdate(new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_start_date")))
 					.setPf_enddate(new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_end_date")))
@@ -85,7 +63,7 @@ public class PortfolioAddController implements Controller {
 		} catch (ParseException e) {
 			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
 			e.printStackTrace();
-		}*/
+		}
 		
 		// 뷰 URL 반환
 		String viewUrl = "rdr:/page?page=myPfList";
