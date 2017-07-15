@@ -15,8 +15,6 @@
 <link href="assets/css/style-responsive.css" rel="stylesheet">
 <link href="assets/css/custom.css" rel="stylesheet">
 <link href="assets/css/search.css" rel="stylesheet">
-
-
 <jsp:include page="header.jsp"></jsp:include>
 
 <jsp:useBean id="portfolio_viewDao"	class="portit.model.dao.ViewDao"></jsp:useBean>
@@ -37,7 +35,7 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="pfSearch"value="${sessionScope.search}" />
+							<input type="text" class="form-control" name="pfSearch" />
 						</div>
 						<button type="submit" class="col-md-1 btn common" >
 							<i class="fa fa-search"></i>
