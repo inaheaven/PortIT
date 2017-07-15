@@ -312,7 +312,7 @@ public class ProjectDao {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("멤버 테이블에서 멤버 아이디 검색3" + e);
+			System.out.println("멤버 테이블에서 멤버 아이디 검색문제" + e);
 		}
 		try {
 			String sql_proj_id = "SELECT PROJ_ID FROM PROJECT WHERE PROJ_INTRO=? AND PROJ_TITLE=?";
@@ -324,7 +324,7 @@ public class ProjectDao {
 				proj_id = rs.getInt("PROJ_ID"); // 테그에 사용하는 글번호 - 프로젝트 번호
 			}
 		} catch (Exception e) {
-			System.out.println("검색 내용PROJECT_APP에 입력 쿼리" + e);
+			System.out.println("PROJ_ID검색 쿼리" + e);
 		}
 		try {
 			String join = "y";

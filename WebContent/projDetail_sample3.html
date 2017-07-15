@@ -1,20 +1,10 @@
-btnSave<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="java.util.*"%>
-<%@ page import="portit.model.dao.*"%>
-<%@ page import="portit.model.dto.*"%>
 <!DOCTYPE html>
 <html lang="ko">
-<%
-request.setCharacterEncoding("UTF-8");
-Project project = (Project) request.getAttribute("project");
-%>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><%= project.getProj_title() %></title>
+<title>도깨비</title>
 
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -127,16 +117,14 @@ Project project = (Project) request.getAttribute("project");
 		<section id="projHeader">
 			<div class="container">
 				<h4 class="tags">
-					<% for (Tag tag : project.getProj_tags_language()) { %>
-					<span><a href=""><%=tag.getTag_name()%></a>&nbsp;</span>
-					<% } %>
+					<span><a href="">#front_end #visualstudio #NetBeans </a>&nbsp;</span>
 				</h4>
-				<h1><%= project.getProj_title() %></h1>
-				<h3 class="username"><a href=""><%= project.getProj_authorName() %></a></h3>
+				<h1>도깨비</h1>
+				<h3 class="username"><a href="">조병규</a></h3>
 				<h4 class="field">
-					모집 분야 / <%= project.getProj_numofperson() %>명
+					모집 분야 front_end / 2명
 				</h4>
-				<h3 class="dday">D-<%= %></h3>
+				<h3 class="dday">D-6</h3>
 			</div>
 		</section><!-- /Profile header -->
 		
@@ -164,63 +152,11 @@ Project project = (Project) request.getAttribute("project");
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="intro">
-							<%= project.getProj_intro() %>
+						낯선 땅 극한의 환경 속에서 사랑과 성공을 꿈꾸는 젊은 군인과 의사들을 통해 삶의 가치를 담아낼 블록버스터급 휴먼 멜로 드라마		
 						</div>
 					</div>
 					<div class="col-md-offset-2 col-md-8 projMedia">
-						<div id="Screenshots" class="carousel slide" data-ride="carousel">
-							<%
-							List<Media> mediae = project.getProj_mediae();
-							for (int idx = 0; idx < mediae.size(); idx++) {
-								Media media = mediae.get(idx);
-
-								if (idx == 0) {
-							%>
-							<!-- Indicators -->
-							<ol class="carousel-indicators">
-								<%
-									}
-								%>
-								<li data-target="#Screenshots" data-slide-to="<%=idx%>"
-									<%if (idx == 0) {%> class="active" <%}%>></li>
-								<%
-									if (idx == 0) {
-								%>
-							</ol>
-							<%
-								}
-									if (idx == 0) {
-							%>
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner">
-								<%
-									}
-								%>
-								<div class="item<%if (idx == 0) {%> active<%}%>">
-									<img src="<%=media.getMl_path()%>" />
-								</div>
-								<%
-									if (idx == 0) {
-								%>
-							</div>
-							<%
-								}
-							%>
-							<%
-								}
-							%>
-		
-							<!-- Controls -->
-							<a class="left carousel-control" href="#Screenshots"
-								data-slide="prev"> <span
-								class="glyphicon glyphicon-chevron-left"></span>
-								<span class="sr-only">Previous</span>
-							</a> <a class="right carousel-control" href="#Screenshots"
-								data-slide="next"> <span
-								class="glyphicon glyphicon-chevron-right"></span>
-								<span class="sr-only">Next</span>
-							</a>
-						</div>
+							<img src="/assets/img/proj_sample_image2.jpg" height="500" width="600">
 					</div>
 				</div>
 			</div>
@@ -237,41 +173,33 @@ Project project = (Project) request.getAttribute("project");
 						<table class="table">
 							<tr>
 								<th>개설자</th>
-								<td><%= project.getProj_authorName() %></td>
+								<td>이인수</td>
 							</tr>
 							<tr>
 								<th>등록일</th>
-								<td>
-									<%= project.getProj_regdate() %><br />
-									마감일까지 D-<%= %>
+								<td>2017 - 07 - 23 마감일까지 D-6
 								</td>
 							</tr>
 							<tr>
 								<th>모집분야</th>
 								<td>
-									<% for (Tag tag : project.getProj_tags_field()) { %>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
+									<span><a href="">개발자</a>&nbsp;</span>
+									
 								</td>
 							</tr>
 							<tr>
 								<th>모집인원</th>
-								<td><%= project.getProj_numofperson() %>명</td>
+								<td>13명</td>
 							</tr>
 							<tr>
 								<th>요구기술</th>
 								<td>
-									<% for (Tag tag : project.getProj_tags_language()) { %>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
-									<% for (Tag tag : project.getProj_tags_tool()) { %>
-									<span><a href=""><%= tag.getTag_name() %></a>&nbsp;</span>
-									<% } %>
+									#Ultraedit #C++
 								</td>
 							</tr>							
 							<tr>
 								<th>예상작업기간</th>
-								<td><%= project.getProj_period() %>일</td>
+								<td>50일</td>
 							</tr>
 						</table>
 					</div>
@@ -291,59 +219,10 @@ Project project = (Project) request.getAttribute("project");
 				<div class="row">					
 					<h2 class="text-center">Collaborators</h2>
 				</div>
-				<%
-					List<Profile> coworkers = project.getProj_coworkers();
-					if (coworkers != null && coworkers.size() > 0) {
-						for (int idx = 0; idx < coworkers.size(); idx++) {
-							Profile profile = coworkers.get(idx);
-							if (idx == 0 || idx % 4 == 0) {
-				%>
-				<div class="row collaboList">
-					<%
-							}
-					%>
-					<div class="col-md-3 mb">
-						<div class="member-simple">
-							<div class="simple-content text-center">
-								<img class="memImg img-circle" alt="avatar"
-									src="<%=profile.getProf_img()%>" />
-								<div>
-									<div class="memName">
-										<a href=""><%=profile.getProf_name()%></a>
-									</div>
-									<div class="memTag">
-										<%
-											for (Tag tag : profile.getProf_tags_language()) {
-										%>
-										#<a href=""><%=tag.getTag_name()%>&nbsp;</a>
-										<%
-											}
-										%>
-									</div>
-									<div class="memFollow">
-										<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-											class="memFollowCount"><%=profile.getProf_follower()%></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- member-simple end -->
-					<%
-							if (idx == 0 || idx % 4 == 0) {
-					%>
+				<div class="col-md-offset-2 col-md-4 projMedia">
+					<img src="/assets/img/park.png">
 				</div>
-				<%
-							}
-						}
-					} else {
-				%>
-				<div class="row collaboList">
-					<p class="text-center">아직 이 프로젝트에 지원한 사람이 없습니다.</p>
-				</div>
-				<%
-					}
-				%>
+				
 			</div>
 		</section><!-- /Collaborators -->		
 		
