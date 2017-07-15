@@ -354,10 +354,10 @@ public class PortfolioDao {
 	/**
 	 * 데이터 추가
 	 * @param pf_id
-	 * @return 추가된 데이터 개수
+	 * @return pf_id
 	 */
 	public int insert(Portfolio portfolio) {
-		int rows = 0;
+		int pf_id = 0;
 		try {
 			// INSERT문 지정
 			String sql = "INSERT INTO portfolio("
@@ -372,13 +372,12 @@ public class PortfolioDao {
 			stmt.setDate(5, new Date(portfolio.getPf_enddate().getTime()));
 			stmt.setInt(6, portfolio.getPf_numofperson());
 			stmt.setString(7, portfolio.getPf_url());
-			rows += stmt.executeUpdate();
+			stmt.executeUpdate();
 			
 			// 작성된 게시물 번호 얻기
 			sql = "SELECT seq_pf_id.currVal FROM DUAL";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			int pf_id = 0;
 			if (rs.next()) {
 				pf_id = rs.getInt(1);
 			}
@@ -458,7 +457,7 @@ public class PortfolioDao {
 		} finally {
 			freeConnection();
 		}
-		return rows;
+		return pf_id;
 	}
 	
 	/**

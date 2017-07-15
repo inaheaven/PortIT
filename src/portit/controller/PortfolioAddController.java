@@ -49,6 +49,7 @@ public class PortfolioAddController implements Controller {
 		}		
 
 		// DTO에 추가
+		String viewUrl = "";
 		PortfolioDao portfolioDao = new PortfolioDao();
 		Portfolio portfolio = new Portfolio();
 		try {
@@ -64,13 +65,14 @@ public class PortfolioAddController implements Controller {
 					.setPf_tags_tool(toolTagList).setPf_tags_field(fieldTagList).setPf_mediaList(mediaList)
 					.setPf_coworkers(coworkerList);
 			// DAO의 추가 메서드 호출
-			portfolioDao.insert(portfolio);
+			int pf_id = portfolioDao.insert(portfolio);
+			
+			// 뷰 URL 반환
+			viewUrl = "rdr:/view?type=portfolio&id="+String.valueOf(pf_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// 뷰 URL 반환
-		String viewUrl = "rdr:/page?page=myPfList";
+		
 		return viewUrl;
 	}
 
