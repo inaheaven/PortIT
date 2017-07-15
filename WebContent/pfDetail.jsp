@@ -141,26 +141,22 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 							<table class="table">
 								<tr>
 									<th>기간</th>
-									<td></td>
+									<td>${portfolio.pf_startdate} ~ ${portfolio.pf_enddate}</td>
 								</tr>
 								<tr>
 									<th>사용언어</th>
 									<td>
-										<c:if test="${!empty portfolio.pf_tags_language}">
-											<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-												<span> <a href="">${pf_tag_language.tag_name}</a> </span>
-											</c:forEach>
-										</c:if>
+										<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
+											<span> <a href="">${pf_tag_language.tag_name}</a> </span>
+										</c:forEach>
 									</td>
 								</tr>
 								<tr>
 									<th>사용도구</th>
 									<td>
-										<c:if test="${!empty portfolio.pf_tags_tool}">
-											<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
-												<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
-											</c:forEach>
-										</c:if>
+										<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
+											<span> <a href="">${pf_tag_tool.tag_name}</a> </span>
+										</c:forEach>
 									</td>
 								</tr>
 								<tr>
@@ -170,15 +166,13 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 								<tr>
 									<th>담당분야</th>
 									<td>
-										<c:if test="${!empty portfolio.pf_tags_field}">
-											<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
-												<span> <a href="">${pf_tag_field.tag_name}</a> </span>
-											</c:forEach>
-										</c:if>
+										<c:forEach var="pf_tag_field" items="${portfolio.pf_tags_field}">
+											<span> <a href="">${pf_tag_field.tag_name}</a> </span>
+										</c:forEach>
 									</td>
 								</tr>
 								<tr>
-									<th>저장소</th>
+									<th>URL</th>
 									<td><a href="${portfolio.pf_url}">${portfolio.pf_url}</a></td>
 								</tr>
 							</table>

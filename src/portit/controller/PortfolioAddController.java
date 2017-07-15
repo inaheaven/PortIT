@@ -31,8 +31,17 @@ public class PortfolioAddController implements Controller {
 
 		// 태그, 공동 작업자 관련 처리
 		List<Tag> languageTagList = (List<Tag>) formData.get("tagLang");
+		for (Tag tag : languageTagList) {
+			tag.setTag_use_type("portfolio");
+		}
 		List<Tag> toolTagList = (List<Tag>) formData.get("tagTool");
+		for (Tag tag : toolTagList) {
+			tag.setTag_use_type("portfolio");
+		}
 		List<Tag> fieldTagList = (List<Tag>) formData.get("tagField");
+		for (Tag tag : fieldTagList) {
+			tag.setTag_use_type("portfolio");
+		}
 		List<Profile> coworkerList = (List<Profile>) formData.get("coworker");
 		for (String key : formData.keySet()) {
 			if (formData.get(key) != null) {

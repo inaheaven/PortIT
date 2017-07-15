@@ -81,11 +81,11 @@ public class FileUpload {
 					value = item.getString("UTF-8");
 					if (value != null || !"".equals(value)) {
 						if (key.matches(".*[Ll]ang.*")) {
-							tagLang.add(new Tag().setTag_name(value));
+							tagLang.add(new Tag().setTag_type("language").setTag_name(value));
 						} else if (key.matches(".*[Tt]ool.*")) {
-							tagTool.add(new Tag().setTag_name(value));
+							tagTool.add(new Tag().setTag_type("tool").setTag_name(value));
 						} else if (key.matches(".*[Ff]ield.*")) {
-							tagField.add(new Tag().setTag_name(value));
+							tagField.add(new Tag().setTag_type("field").setTag_name(value));
 						} else if (key.matches(".*[Cc]oworker.*")) {
 							coworker.add(new Profile().setProf_name(value));
 						}
