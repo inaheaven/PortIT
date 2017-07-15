@@ -25,7 +25,15 @@ public class Notification {
 	private int nt_type_id;
 	private char nt_isread = 'n';
 	
+	private String prof_nick;
 	
+	
+	public String getProf_nick() {
+		return prof_nick;
+	}
+	public void setProf_nick(String prof_nick) {
+		this.prof_nick = prof_nick;
+	}
 	public int getNt_id() {
 		return nt_id;
 	}

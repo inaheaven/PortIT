@@ -35,7 +35,9 @@ public class NotificationDao {
 		
 		try {
 			conn = pool.getConnection();
-			sql = "SELECT * FROM NOTIFICATION WHERE mem_id_receiver = ? ";
+			sql = "SELECT n.nt_id, n.mem_id_sender, n.mem_id_receiver, n.nt_date, n.nt_type, n.nt_type_id, n.nt_isread, p.prof_nick "
+					+ "FROM notification n, profile p "
+					+ "WHERE n.mem_id_sender = p.mem_id and mem_id_receiver = ? ";
 			
 			if(sorting.equals("like"))
 				sql += " and nt_type = 'like'";
@@ -53,8 +55,6 @@ public class NotificationDao {
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
 			
-			
-			
 			while(rs.next()) {
 				Notification nt = new Notification();				
 				nt.setNt_id(rs.getInt("nt_id"));
@@ -64,8 +64,12 @@ public class NotificationDao {
 				nt.setNt_type(rs.getString("nt_type"));
 				nt.setNt_type_id(rs.getInt("nt_type_id"));
 				nt.setNt_isread(rs.getString("nt_isread").charAt(0));
+				
+				if(rs.getString("nt_type").equals("follow")){
+					nt.setProf_nick(rs.getString("prof_nick"));
+				}
+				
 				ntList.add(nt);
-				System.out.println(rs.getInt("nt_id"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

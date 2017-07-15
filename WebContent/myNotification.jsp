@@ -80,11 +80,11 @@
 	                   					<input type="hidden" value="${ntList[i].nt_id}">
 	                  					<c:if test="${ntList[i].nt_type eq 'like'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-heart"></span></td>
-	                       					<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 포트폴리오를 좋아합니다.</a></td>
+	                       					<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/view?type=portfolio&id=${ntList[i].nt_type_id}');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 포트폴리오를 좋아합니다.</a></td>
 	                  					</c:if>
 	                  					<c:if test="${ntList[i].nt_type eq 'upload'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-upload"></span></td>
-	                        				<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 새로운 포트폴리오를 업로드했습니다.</a></td>
+	                        				<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/view?type=portfolio&id=${ntList[i].nt_type_id}');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 새로운 포트폴리오를 업로드했습니다.</a></td>
 	                  					</c:if>
 	                  					<c:if test="${ntList[i].nt_type eq 'message'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-envelope"></span></td>
@@ -92,11 +92,11 @@
 	                  					</c:if>
 	                  					<c:if test="${ntList[i].nt_type eq 'project'}">
 	                  					    <td class="sort"><span class="glyphicon glyphicon-ok-sign"></span></td>
-	                        				<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 프로젝트에 신청했습니다.</a></td>
+	                        				<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/myproj?cmd=list');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 프로젝트에 신청했습니다.</a></td>
 	                  					</c:if>
 	                  					<c:if test="${ntList[i].nt_type eq 'follow'}">
 	                  						<td class="sort"><span class="glyphicon glyphicon-plus"></span></td>
-	                       		        	<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">님이 나를 팔로잉했습니다.</a></td>
+	                       		        	<td class="content"><a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/view?type=profile&id=${ntList[i].prof_nick}');">${dao.getSenderName(ntList[i].mem_id_sender)}님이 나를 팔로잉했습니다.</a></td>
 	                  					</c:if>
 	                  					
 	                   					<td class="date">${ntList[i].nt_date }</td>
