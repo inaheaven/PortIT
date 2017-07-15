@@ -28,7 +28,6 @@ public class PortfolioAddController implements Controller {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, Object> formData = (Map<String, Object>) req.getAttribute("formData");
-		List<String> fileList = (List<String>) formData.get("fileList");
 
 		// 태그, 공동 작업자 관련 처리
 		List<Tag> languageTagList = (List<Tag>) formData.get("tagLang");
@@ -42,10 +41,12 @@ public class PortfolioAddController implements Controller {
 		}
 
 		// 파일 관련 처리
-		List<Media> mediaList = new ArrayList<Media>();
-		for (int i = 0; i < fileList.size(); i++) {
-			mediaList.add(new Media().setMl_type("portfolio").setMl_path(fileList.get(i)));
-		}
+		List<Media> mediaList = (List<Media>) formData.get("fileList");
+		if (mediaList != null && mediaList.size() > 0) {
+			for (int i = 0; i < mediaList.size(); i++) {
+				mediaList.get(i).setMl_type("portfolio");
+			}
+		}		
 
 		// DTO에 추가
 		PortfolioDao portfolioDao = new PortfolioDao();
@@ -63,9 +64,8 @@ public class PortfolioAddController implements Controller {
 					.setPf_tags_tool(toolTagList).setPf_tags_field(fieldTagList).setPf_mediaList(mediaList)
 					.setPf_coworkers(coworkerList);
 			// DAO의 추가 메서드 호출
-			// portfolioDao.insert(portfolio);
+			portfolioDao.insert(portfolio);
 		} catch (Exception e) {
-			System.out.println("데이터가 데이터베이스에 저장되지 못했습니다.");
 			e.printStackTrace();
 		}
 

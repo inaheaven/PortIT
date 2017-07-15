@@ -64,12 +64,16 @@ public class TagDao {
 		try {
 			sql = "INSERT INTO tag"
 					+ "(tag_id, tag_type, tag_name) "
-					+ "VALUES(LPAD(seq_tag_id.nextval, 4, '0'),?,?) "
-					+ "WHERE tag_name NOT IN (SELECT tag_name FROM tag)";
+					+ "VALUES(LPAD(seq_tag_id.nextval, 4, '0'),?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tag.getTag_type());
 			stmt.setString(2, tag.getTag_name());
 			rows = stmt.executeUpdate();
+			
+			sql = "DELETE FROM tag a "
+					+ "WHERE a.rowid > (SELECT min(b.rowid) FROM tag b WHERE a.tag_name=b.tag_name)";
+			stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,7 +116,7 @@ public class TagDao {
 		try {
 			sql = "INSERT INTO tag_use"
 					+ "(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level, proj_numofperson) "
-					+ "VALUES(seq_tag_use_id.nextVal,?,?,?)";
+					+ "VALUES(seq_tag_use_id.nextVal,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, articleType);
 			stmt.setInt(2, articleId);

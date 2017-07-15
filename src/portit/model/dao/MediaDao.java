@@ -62,10 +62,9 @@ public class MediaDao {
 					+ "(ml_id, ml_type, ml_type_id, ml_path) "
 					+ "VALUES(LPAD(seq_ml_id.nextval, 4, '0'),?,?,?)";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, media.getMl_id());
-			stmt.setString(2, media.getMl_type());
-			stmt.setInt(3, media.getMl_type_id());
-			stmt.setString(4, media.getMl_path());
+			stmt.setString(1, media.getMl_type());
+			stmt.setInt(2, media.getMl_type_id());
+			stmt.setString(3, media.getMl_path());
 			rows = stmt.executeUpdate();
 			return rows;
 		} catch (Exception e) {

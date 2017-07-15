@@ -1,17 +1,19 @@
-<%@page import="portit.model.dto.Portfolio"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="portit.model.dao.*"%>
+<%@page import="portit.model.dto.*"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <script>
 <%
-	List<Portfolio> myport = (List)request.getAttribute("portfolio");
+	List<Portfolio> myport = new PortfolioDao()
+		.selectListByMemId(Integer.parseInt(request.getSession().getAttribute("loginId").toString()));
 	if(myport.isEmpty()){
 		myport= new ArrayList();
 }

@@ -375,12 +375,12 @@ public class PortfolioDao {
 			rows += stmt.executeUpdate();
 			
 			// 작성된 게시물 번호 얻기
-			sql = "SELECT pf_id FROM portfolio WHERE pf_id=seq_pf_id.currVal";
+			sql = "SELECT seq_pf_id.currVal FROM DUAL";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			int pf_id = 0;
 			if (rs.next()) {
-				pf_id = rs.getInt("pf_id");
+				pf_id = rs.getInt(1);
 			}
 
 			// 태그 추가
@@ -427,7 +427,7 @@ public class PortfolioDao {
 				for (int i = 0; i < coworkers.size(); i++) {
 					stmt = conn.prepareStatement(sql);
 					stmt.setInt(1, usernameToId(coworkers.get(i).getProf_nick()));
-					rows += stmt.executeUpdate();
+					stmt.executeUpdate();
 				}
 			}
 			
@@ -435,8 +435,8 @@ public class PortfolioDao {
 			List<Media> mediaList = portfolio.getPf_mediaList();
 			if (mediaList != null) {
 				for (int i = 0; i < mediaList.size(); i++) {
+					mediaList.get(i).setMl_type("portfolio").setMl_type_id(pf_id);
 					mediaDao.insert(conn, mediaList.get(i));
-					rows++;
 				}
 			}
 			
@@ -445,7 +445,7 @@ public class PortfolioDao {
 					+ " VALUES(seq_prof_pf_id.nextVal,?,seq_pf_id.currVal)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, usernameToId(portfolio.getPf_prof_name()));
-			rows += stmt.executeUpdate();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			if (conn != null) {
 				try {
@@ -536,7 +536,7 @@ public class PortfolioDao {
 				stmt.setInt(4, portfolio.getPf_id());
 				stmt.setInt(5, portfolio.getPf_id());
 				stmt.setInt(6, coworkers.get(i).getMem_id());
-				rows += stmt.executeUpdate();
+				stmt.executeUpdate();
 			}
 			
 			
@@ -545,7 +545,6 @@ public class PortfolioDao {
 			mediaDao.delete(conn, "portfolio", portfolio.getPf_id());
 			for (int i = 0; i < mediaList.size(); i++) {
 				mediaDao.insert(conn, mediaList.get(i));
-				rows++;
 			}
 		} catch (SQLException e) {
 			if (conn != null) {
