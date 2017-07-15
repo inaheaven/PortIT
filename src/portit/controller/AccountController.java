@@ -91,9 +91,13 @@ public class AccountController extends HttpServlet {
 					
 					url="myAccount.jsp";
 				
+					req.setAttribute("result", null);	
+					
 					// 버튼을 눌렀을때만 동작해야한다.
 					if (newpwcf != null) {
-						model.alterAccount(userid, userpw, newpw, newpwcf);
+						boolean result =model.alterAccount(userid, userpw, newpw, newpwcf);
+						req.removeAttribute("result");
+						req.setAttribute("result", result);
 					}
 				
 				

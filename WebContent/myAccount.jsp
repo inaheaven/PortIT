@@ -57,7 +57,20 @@
 
   <script>
       //custom select box
-	
+      
+      	//결과알람.
+       window.onload = function(){
+    	   var result =${result}
+    	   
+    		if(result==true){
+    			alert('변경 되었습니다!');
+    		}
+    		else if(result==false){
+    			alert('비밀번호가 틀렸습니다!');
+    		}
+    			
+    	}
+
       
       //
       function fnPasswordConfirm() {

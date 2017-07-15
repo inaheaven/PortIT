@@ -51,7 +51,7 @@ public class AccountModel {
 	
 	//Update
 	//userid,userpw
-	public void alterAccount(String userid, String userpw, String newpw, String newpwcf){
+	public boolean alterAccount(String userid, String userpw, String newpw, String newpwcf){
 		
 		//본인인증 : 로그인된 아이디와 비밀번호가 일치하는지 조회
 		this.IdentityVerification=dao.validationService(userpw);;//본인인증.
@@ -64,6 +64,7 @@ public class AccountModel {
 			
 			//새로운 비밀번호가 일치하면 변경 
 			dao.alterAccount(userid,newpw, newpw);
+			
 		}
 		
 		//ID와 PW가 틀렸다면.
@@ -71,6 +72,9 @@ public class AccountModel {
 			//경고메세지!!!
 			System.out.println("Model: 비밀번호 일치하지 않습니다.");
 		}
+		
+		
+		return IdentityVerification;
 	}
 	
 	

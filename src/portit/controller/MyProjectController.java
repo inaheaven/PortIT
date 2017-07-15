@@ -40,12 +40,6 @@ public class MyProjectController extends HttpServlet{
 		//요청에서 저장된 session값에 접근할수 있다.
 		HttpSession session = req.getSession();
 		
-		/*
-			
-			남은적업
-				아코디언 오류
-				내가 지원한 프로젝트 업로드...
-		 */
 		
 		
 		/*

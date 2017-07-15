@@ -42,7 +42,8 @@ String keyWord = request.getParameter("keyWord");
 							<form class="form-inline" method="post" action="/msg?cmd=list">
 								<div class="form-group">
 								
-							<select name="keyField" size="1">
+								
+							<select class="form-control pull-left" name="keyField" size="1">
 								<option value="search_name"
 								<%if ("mem_name".equals(keyField)) {%>selected="selected" <%}%>>Name
 								<option value="search_content" 

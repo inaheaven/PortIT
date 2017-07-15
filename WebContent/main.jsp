@@ -47,7 +47,9 @@
 											<div class="portfolio-simple">
 										
 											<div class="pfImg">
-				            					<img src="<%=port.getMl_path()%>"/>     
+											
+				            					<img src="file:///C://Users//Public//Pictures//Sample%20Pictures//Chrysanthemum.jpg"/> 
+				            					    
 						         			</div>
 												<div class="pfInfo">
 													<div class="simple-content">
@@ -95,7 +97,7 @@
 											<div class="member-simple">
 												<div class="simple-content text-center">
 													<img class="memImg img-circle" alt="avatar"
-														src="<%=mem.getProf_img()%>" />
+														src="<%=mem.getProf_img()%>" height="130" width="60"/>
 													<div>
 														<div class="memName">
 																<a href="#" onclick="prof(<%=mem.getProf_id()%>)">

@@ -29,7 +29,7 @@
 								<div class="member-simple">
 									<div class="simple-content text-center">
 										<img class="memImg img-circle" alt="avatar"
-											src="${fwList[i].prof_img}" />
+											src="${fwList[i].prof_img}" height="140" width="70"/>
 										<div>
 											<div class="memName">			
 												<a href="/detail?for=mem&id=${fwList[i].mem_id_receiver}">${fwList[i].prof_nick}</a>

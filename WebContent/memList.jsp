@@ -125,7 +125,8 @@
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
 		          				<div class="simple-content text-center">	      
-			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"/>   
+			          				<img class="memImg img-circle" alt="avatar" src="<%=mem.getProf_img()%>"
+			          					height="140" width="70"/>   
 			         				<div>
 			         					<div class="memName">
 			         						<a href="#" onclick="prof(<%=mem.getProf_id()%>)">
