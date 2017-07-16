@@ -206,7 +206,7 @@ public class MessageController extends HttpServlet {
 			else if(cmd.equals("send")){
 				//from msgList, msgDetail
 				
-				
+				//msg?cmd=send&mem_id_sender=11
 				
 				//MsgList에서 전달 받았을때. 해당 발신자의 메일주소를 담아라.
 				if(req.getParameter("mem_id_sender")!=null){

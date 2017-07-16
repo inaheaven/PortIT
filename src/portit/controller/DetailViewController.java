@@ -30,14 +30,11 @@ public class DetailViewController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		  
-		/*
-		 /detailView?yame=<%=mem.getProf_id()%>
-		/detailView?yame_pj=<%=proj.getProj_id()%>
-		*/
 
 		System.out.println("0.서블릿접근!");
 		
-	/*	String yame_string = (String) req.getParameter("yame");
+	/*	
+ㄴ	 * String yame_string = (String) req.getParameter("yame");
 		int yame=0;
 		if(yame_string!=null){
 		yame=Integer.parseInt(yame_string);
@@ -51,30 +48,8 @@ public class DetailViewController extends HttpServlet {
 		 yame_pj=Integer.parseInt(yame_pj_string);
 		}
 */
-		
-		
-		
-		
-		String cmd = req.getParameter("cmd");
-		String url = null;
-		SearchDao searchDao = new SearchDao();		
-		ViewDao viewdao=new ViewDao();
-		
-		int loginId=-1;
-		String log_id=null;
-		if(null!=session.getAttribute("loginId")){
-			loginId=(int) session.getAttribute("loginId");
-			
-			 log_id= String.valueOf(loginId);
-		System.out.println(loginId+"가 로그인 되었습니다.");
-		}
-		
-		
-		
-		ProjectModel model = new ProjectModel(req,log_id);
-		
 		/*
-	
+		
 		//페이크  프로필 페이지.
 		if(yame==2){
 			System.out.println("fake_profile"+yame);
@@ -111,6 +86,28 @@ public class DetailViewController extends HttpServlet {
 		
 		
 		
+		
+		String cmd = req.getParameter("cmd");
+		String url = null;
+		SearchDao searchDao = new SearchDao();		
+		ViewDao viewdao=new ViewDao();
+		
+		int loginId=-1;
+		String log_id=null;
+		if(null!=session.getAttribute("loginId")){
+			loginId=(int) session.getAttribute("loginId");
+			
+			 log_id= String.valueOf(loginId);
+		System.out.println(loginId+"가 로그인 되었습니다.");
+		}
+		
+		
+		
+		ProjectModel model = new ProjectModel(req,log_id);
+		
+		
+		
+		
 		System.out.println("CTRL.cmd="+cmd);
 
 		
@@ -128,17 +125,18 @@ public class DetailViewController extends HttpServlet {
 			System.out.println("CTRL:DB조회완료");
 			
 			
-			
 			//Test....
 			project_detail dto =(project_detail)project.get(0);
 			System.out.println("CTRL_Test="+dto.getProj_title());
 			
 			
-			
-			
 			req.setAttribute("pj_inform", project);
 			url="projDetail_0716.jsp";
 		}
+		
+		
+		
+		
 		
 	/*	
 		else if(cmd.equals("MEMBER")){

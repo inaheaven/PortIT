@@ -74,7 +74,7 @@ public class Pj_Dao{
 	//dto: Project
 	public Project getPj_inform(int proj_id) {
 		
-		String sql ="select * from project  where proj_id="+proj_id;
+		String sql ="select PROJ_ID, PROJ_TITLE,PROJ_INTRO, PROJ_TO,PROJ_REGDATE,  PROJ_STARTDATE, PROJ_PERIOD, PROJ_REGENDDATE-sysdate from project  where proj_id="+proj_id;
 		
 		//dto 선언
 		Project dto = new Project();
@@ -95,7 +95,7 @@ public class Pj_Dao{
 					dto.setProj_regdate(rs.getDate("PROJ_REGDATE"));
 					dto.setProj_startdate(rs.getDate("PROJ_STARTDATE"));
 					dto.setProj_period(rs.getInt("PROJ_PERIOD"));
-					dto.setProj_regenddate(rs.getDate("PROJ_REGENDDATE"));
+					dto.setD_day(rs.getInt("PROJ_REGENDDATE-sysdate"));
 				}
 		}
 		catch(Exception err){
@@ -242,7 +242,7 @@ public class Pj_Dao{
 	public ArrayList getWhoApply(int proj_id) {
 		
 		ArrayList result= new ArrayList();
-		String sql ="select mem_id from proj_app where proj_id="+proj_id;
+		String sql ="select mem_id from proj_app where proj_id="+proj_id+" and proj_app_confirm='y'";
 		
 		//dto 선언
 		try{
@@ -300,9 +300,127 @@ public class Pj_Dao{
 	
 	
 	
+
+	//8.pj 동료의 폼정보...
+	//dto: Profile
+	public Profile getCoworkerInform(int mem_id) {
+	
+		ArrayList result= new ArrayList();
+		String sql ="select * from profile where mem_id="+mem_id+"";
+		
+		//dto 선언
+		Profile dto = new Profile();
+		try{
+				con = pool.getConnection();
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				   
+				
+				while(rs.next()){
+					dto.setProf_id(rs.getInt("PROF_ID"));
+					dto.setMem_id(rs.getInt("MEM_ID"));
+					dto.setProf_nick(rs.getString("PROF_NICK"));
+					dto.setProf_name(rs.getString("PROF_NAME"));
+					dto.setProf_intro(rs.getString("PROF_INTRO"));
+					dto.setProf_img(rs.getString("PROF_IMG"));
+					dto.setProf_background(rs.getString("PROF_BACKGROUND"));
+					dto.setProf_website(rs.getString("PROF_WEBSITE"));
+					dto.setProf_github(rs.getString("PROF_GITHUB"));
+					dto.setProf_facebook(rs.getString("PROF_FACEBOOK"));
+					dto.setProf_regdate(rs.getDate("PROF_REGDATE"));
+					dto.setProf_follower(rs.getInt("PROF_FOLLOWER"));
+				}
+		}
+		catch(Exception err){
+			System.out.println("getWhoMade()에서 오류"+err);
+		}
+		finally{
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return dto;
+	}
 	
 	
 	
+	
+
+/*	//8-1.동료의 팔로워수
+	//10,13
+	public ArrayList getFollower_num(int mem_id) {
+		
+		ArrayList result= new ArrayList();
+		String sql =null;
+				//"select mem_id from proj_app where proj_id="+proj_id+" and proj_app_confirm='y'";
+		
+		//dto 선언
+		try{
+				con = pool.getConnection();
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				   
+				while(rs.next()){
+					result.add(rs.getInt("mem_id"));
+				}
+		}
+		catch(Exception err){
+			System.out.println("getWhoApply()에서 오류"+err);
+		}
+		finally{
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return result;
+	}
+	*/
+	
+	
+	
+	/*
+	
+	
+	//7.pj의 동료들..
+	//dto: Profile
+	public ArrayList getWhoapply(int proj_id) {
+	
+		
+		
+		ArrayList result= new ArrayList();
+		String sql ="select * from profile where mem_id=(select mem_id from proj_app where proj_id="+proj_id+"and proj_app_confirm='y')";
+		//   
+	    
+		//dto 선언
+		
+		try{
+				con = pool.getConnection();
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				   
+				
+				while(rs.next()){
+					Profile dto = new Profile();
+					dto.setProf_id(rs.getInt("PROF_ID"));
+					dto.setMem_id(rs.getInt("MEM_ID"));
+					dto.setProf_nick(rs.getString("PROF_NICK"));
+					dto.setProf_name(rs.getString("PROF_NAME"));
+					dto.setProf_intro(rs.getString("PROF_INTRO"));
+					dto.setProf_img(rs.getString("PROF_IMG"));
+					dto.setProf_background(rs.getString("PROF_BACKGROUND"));
+					dto.setProf_website(rs.getString("PROF_WEBSITE"));
+					dto.setProf_github(rs.getString("PROF_GITHUB"));
+					dto.setProf_facebook(rs.getString("PROF_FACEBOOK"));
+					dto.setProf_regdate(rs.getDate("PROF_REGDATE"));
+					dto.setProf_follower(rs.getInt("PROF_FOLLOWER"));
+					result.add(dto);
+				}
+		}
+		catch(Exception err){
+			System.out.println("getWhoMade()에서 오류"+err);
+		}
+		finally{
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return result;
+	}
+	*/
 	
 	
 

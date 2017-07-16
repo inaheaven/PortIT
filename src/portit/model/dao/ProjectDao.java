@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.MessageDto;
 import portit.model.dto.Profile;
 import portit.model.dto.Project;
 import portit.model.dto.ProjectApp_mem;
@@ -1105,4 +1106,33 @@ public class ProjectDao {
 		}
 		return project;
 	}
+	
+	
+	
+	
+
+	// 프로젝트지원하기
+	public void applyPj(int prof_id,int loginId){
+		String sql = "insert into proj_app(PROJ_APP_ID,MEM_ID,PROJ_ID,PROJ_APP_REGDATE,PROJ_APP_CONFIRM)"
+					+"VALUES(LPAD((seq_proj_app_id.NEXTVAL),4,'0'),"+loginId+","+prof_id+", sysdate, 'n')";
+	
+		try{
+			conn = pool.getConnection();
+	 		stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+		}
+		
+		catch(Exception err){
+			System.out.println("[DAO]: applyPj()에서 오류");
+			err.printStackTrace();
+		}
+		
+		finally{
+			pool.freeConnection(conn, stmt);
+		}
+	}
+	
+	
+	
+	
 }

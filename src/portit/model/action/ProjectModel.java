@@ -83,7 +83,7 @@ public class ProjectModel {
 		pj_inform.setProj_regdate(project.getProj_regdate());
 		pj_inform.setProj_startdate(project.getProj_startdate());
 		pj_inform.setProj_period(project.getProj_period());
-		pj_inform.setProj_regenddate(project.getProj_regenddate());
+		pj_inform.setD_day(project.getD_day());
 		
 		
 		System.out.println("[MODEL.1]");
@@ -131,6 +131,8 @@ public class ProjectModel {
 		// tag_use에서 해당 프로젝트에 사용된 정보 반환. 해당 정보가 나타내는 태그구분 태그명 반환.
 		ArrayList wanted=pj_dao.getWanted(proj_id);
 		pj_inform.setTag_list(wanted);
+		
+		
 	/*	if(0!=wanted.size()){
 		Tag dto =(Tag) wanted.get(0);
 		
@@ -166,10 +168,14 @@ public class ProjectModel {
 		ArrayList coWork =pj_dao.getWhoApply(proj_id);
 		for(int i=0; i<coWork.size(); i++){
 			int mem_id = (int)coWork.get(i);
+			
+			//System.out.println("[model_apply]"+mem_id);
 			ArrayList applicant_inform = new ArrayList();
 			
 			//1.사용자 정보를 담는다.
-			Profile applicant= pj_dao.getWhoMade(mem_id);
+			Profile applicant= pj_dao.getCoworkerInform(mem_id);
+			
+			
 			applicant_inform.add(applicant);
 			
 			
@@ -190,6 +196,8 @@ public class ProjectModel {
 		//최종결과를 담는다.
 		// 1) : pj정보	<Project>
 		// 2) : 지원자list <list>
+		// 2-1 <Profile>
+		// 2-2 <List>: 태그 
 		result.add(pj_inform);
 		result.add(pj_appList);
 		

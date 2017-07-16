@@ -131,13 +131,22 @@
 		//데이터 정리..
 		System.out.println("PJ_JPS페이지 ");
 		
+		
+		
+		//최종결과를 담는다.
+				// 1) : pj정보	<Project>
+				// 2) : Coworker_list <list>
+				// 2-1 <Profile>
+				// 2-2 <List>: 태그 
+		
+		
 		ArrayList pj_inform= (ArrayList)request.getAttribute("pj_inform");
 		
-		//Project 정보
+		//1.Project 정보
 		project_detail dto=	(project_detail)	pj_inform.get(0);
 		
 		
-		//프로젝트의 테그정보
+		//1-1.프로젝트의 테그정보
 		ArrayList tag_list=(ArrayList) dto.getTag_list();
 
 		
@@ -153,7 +162,7 @@
 		String title = dto.getProj_title();
 		String username = dto.getProf_name();
 		int to =dto.getProj_to();
-		Date regEnd= dto.getProj_regenddate();
+		int d_day= dto.getD_day();
 		String intro = dto.getProj_intro();
 		String img=dto.getMl_path();
 
@@ -161,7 +170,7 @@
 		
 		
 		
-		//Coworker정보
+		//2.Coworker정보
 		ArrayList cowork_list=	(ArrayList)	pj_inform.get(1);
 		
 		%>
@@ -196,7 +205,7 @@
 				
 				
 				 /<%=to%>명</h4>
-				<h3 class="dday"><%=regEnd %></h3>
+				<h3 class="dday">D-<%=d_day %></h3>
 			</div>
 		</section><!-- /Profile header -->
 		
@@ -242,9 +251,11 @@
 									<img src="<%=img %>" alt="...">
 									<!-- <div class="carousel-caption">...</div> -->
 								</div>
+							<!-- 	
 								<div class="item">
 									<img src="http://loremflickr.com/1280/1024/pug" alt="...">
 								</div>
+								 -->
 							</div>
 		
 							<!-- Controls -->
@@ -280,7 +291,7 @@
 								<th>등록일</th>
 								<td>
 									<%=dto.getProj_regdate() %><br />
-									마감일까지 D-12
+									마감일까지 D-<%=dto.getD_day() %>
 								</td>
 							</tr>
 							<tr>
@@ -331,13 +342,17 @@
 				</div>
 				<div class="row">
 					<div class="actions">
-						<button type="button" class="btn common" onclick="location.href='<%=dto.getProf_email() %>'">개설자에게 연락하기</button>&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn common" onclick="location.href='<%=dto.getProj_id() %>'">프로젝트 지원하기</button>
+						<button type="button" class="btn common" onclick="location.href='/msg?cmd=send&mem_id_sender=<%=dto.getProf_id() %>'">개설자에게 연락하기</button>&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn common" onclick="location.href='/myproj?cmd=apply&pj_id=<%=dto.getProj_id() %>'">프로젝트 지원하기</button>
 					</div>
 				</div>
 			</div>
 		</section><!-- /Info -->
 		<hr />
+		
+		
+		
+		
 		<!-- Collaborators -->
 		<section id="projCollaborators">
 			<div class="container">
@@ -346,13 +361,19 @@
 				</div>
 				<div class="row collaboList">
 				
-				<% for(int i=0; i<cowork_list.size();i++){
-					
+				<% 
+				//동료....
+				for(int i=0; i<cowork_list.size();i++){
 				ArrayList cowoker=(ArrayList) cowork_list.get(i);
 				
+				//2-1동료정보.
 				Profile inform=	(Profile)	cowoker.get(0);
+				
+				//2-2 동료태그정보
 				ArrayList tag_inform = (ArrayList) cowoker.get(1);
 					
+				
+				System.out.println("[JSP_appy_memId]="+inform.getMem_id());
 				%>
 				
 					<div class="col-md-3 mb">
@@ -360,11 +381,25 @@
 	          				<div class="simple-content text-center">	      
 		          				<img class="memImg img-circle" alt="avatar" src="<%=inform.getProf_img()%>"/>   
 		         				<div>
+		         				
+		         				<!-- 긍정왕:프로필경로삽입 -->
 		         					<div class="memName"><a href=""><%=inform.getProf_name() %></a></div>
-		         					<div class="memTag"><a href="">#태그&nbsp;</a></div>
+		         					<div class="memTag">
+		         					<!-- 태그목록  -->
+		         					
+		         					
+		         					<%for(int j=1;j<tag_inform.size();j++){ 
+		         						if(j>2)break;		//최대 3개
+		         					Tag tag = (Tag)tag_inform.get(j);
+		         					%>
+		         					<!-- 긍정왕:태그경로삽입 -->
+		         					<a href="<%=tag.getTag_id()%>">#<%=tag.getTag_name()%>&nbsp;</a>
+		         					<%} %>
+		         					
+		         					</div>
 		         					<div class="memFollow">
 		         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-		         						<span class="memFollowCount">135</span>
+		         						<span class="memFollowCount"><%=inform.getProf_follower() %></span>
 		         					</div>
 		         				</div>
 	          				</div>          				
