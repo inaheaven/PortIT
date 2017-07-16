@@ -32,11 +32,12 @@ public class ProjectDao {
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 	
-	private TagDao tagDao = TagDao.getInstance();
+	private TagDao tagDao;
 
 	public ProjectDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
+			tagDao = new TagDao();
 		} catch (Exception e) {
 			System.out.println("Connection Pool 오류" + e);
 		}
@@ -1042,19 +1043,19 @@ public class ProjectDao {
 				project.setProj_period(rs.getInt("proj_period"));
 				project.setProj_regenddate(rs.getDate("proj_regenddate"));
 				
-				List<Tag> proj_tags_language = tagDao.selectList(conn, "language", "project", articleId);
+				List<Tag> proj_tags_language = tagDao.selectList("language", "project", articleId);
 				ArrayList<String> proj_language = new ArrayList<String>();
 				for (Tag tag : proj_tags_language) {
 					proj_language.add(tag.getTag_name());
 				}
 				project.setProj_language(proj_language);
-				List<Tag> proj_tags_tool = tagDao.selectList(conn, "tool", "project", articleId);
+				List<Tag> proj_tags_tool = tagDao.selectList("tool", "project", articleId);
 				ArrayList<String> proj_tool = new ArrayList<String>();
 				for (Tag tag : proj_tags_tool) {
 					proj_tool.add(tag.getTag_name());
 				}
 				project.setProj_tool(proj_tool);
-				List<Tag> proj_tags_field = tagDao.selectList(conn, "field", "project", articleId);
+				List<Tag> proj_tags_field = tagDao.selectList("field", "project", articleId);
 				ArrayList<String> proj_field = new ArrayList<String>();
 				for (Tag tag : proj_tags_field) {
 					proj_field.add(tag.getTag_name());

@@ -39,6 +39,8 @@ public class FileUpload {
 	 * @throws IOException
 	 */
 	public Map<String, Object> fileUpload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("\n==== "+this.getClass().getSimpleName()+" ====\n");
+		
 		// 파일 저장 디렉토리 설정
 		String saveDir = req.getServletContext().getRealPath("");
 		

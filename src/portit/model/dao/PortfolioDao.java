@@ -218,10 +218,12 @@ public class PortfolioDao {
 		profileDao = new ProfileDao();
 		tagDao = new TagDao();
 		
+		String sql = "";
+		
 		int pf_id = 0;
 		try {
 			// INSERT문 지정
-			String sql = "INSERT INTO portfolio("
+			sql = "INSERT INTO portfolio("
 					+ "pf_id, pf_title, pf_intro, pf_regdate, pf_like, "
 					+ "pf_startdate, pf_enddate, pf_numofperson, pf_repository"
 					+ ") VALUES(seq_pf_id.nextVal,?,?,SYSDATE,?,?,?,?,?)";

@@ -774,8 +774,8 @@ public class ProfileDao {
 				profile.setProf_email(rs.getString("mem_email"));
 			}
 			
-			List<Tag> tagListL = tagDao.selectList("language", "profile", profile.getProf_id());
-			List<Tag> tagListT = tagDao.selectList("tool", "profile", profile.getProf_id());
+			List<Tag> tagListL = tagDao.selectList("language", "prof", profile.getProf_id());
+			List<Tag> tagListT = tagDao.selectList("tool", "prof", profile.getProf_id());
 			List<String> tag_skill = new ArrayList<String>();
 			List<Integer> tag_skill_level = new ArrayList<Integer>();
 			for (Tag tag : tagListL) {

@@ -2,7 +2,6 @@ package portit.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import portit.model.dao.PortfolioDao;
 import portit.model.dao.ProfileDao;
 import portit.model.dto.Media;
 import portit.model.dto.Portfolio;
-import portit.model.dto.Profile;
 import portit.model.dto.Tag;
 
 /**
@@ -45,7 +43,7 @@ public class PortfolioAddController implements Controller {
 		for (Tag tag : fieldTagList) {
 			tag.setTag_use_type("portfolio");
 		}
-		List<Profile> coworkerList = new ArrayList<Profile>();
+		/*List<Profile> coworkerList = new ArrayList<Profile>();
 		if (formData.get("final_result_id") != null || formData.get("final_result_id").toString().length() > 0) {
 			String[] findUser = formData.get("final_result_id").toString().split(",");
 			int[] findUser2 = new int[findUser.length];
@@ -55,7 +53,7 @@ public class PortfolioAddController implements Controller {
 			for (int i = 0; i < findUser.length; i++) {
 				coworkerList.add(profileDao.getProfile(findUser2[i]));
 			}
-		}
+		}*/
 		
 		for (String key : formData.keySet()) {
 			if (formData.get(key) != null) {
