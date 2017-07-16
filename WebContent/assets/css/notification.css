@@ -1,0 +1,55 @@
+.noti {
+	padding: 20px;
+	background-color: #e1e1e1;
+}
+
+.msgListContent {
+	width: 90%;
+	margin: auto;
+	margin-top: 60px;
+}
+
+.notiTable {
+	width: 80%;
+	margin: auto;
+}
+
+.notiTable button {
+	background-color: #A1BBD0;
+	color: #fff;
+}
+.notiTable button:active,
+.notiTable button:hover,
+.notiTable button:focus {
+	background-color: #E69138;
+	color: #F4E7D7;
+}
+
+.notiTable th {
+	text-align: center;
+}
+.notiTable th,td {
+	vertical-align: middle !important;
+}
+td.sort, td.date, td.delete {
+	text-align: center;
+}
+td.content {
+	padding-left: 50px !important;
+}
+
+/** 안읽음 표시 (기본) **/
+td.sort {
+	color: #E69138;
+}
+td.content a{
+	font-weight: bold;
+	color: #797979;
+}
+td.content:hover a,
+td.content:focus a{
+	color: #E69138;
+}
+
+
+
