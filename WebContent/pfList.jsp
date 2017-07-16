@@ -15,8 +15,6 @@
 <link href="assets/css/style-responsive.css" rel="stylesheet">
 <link href="assets/css/custom.css" rel="stylesheet">
 <link href="assets/css/search.css" rel="stylesheet">
-
-
 <jsp:include page="header.jsp"></jsp:include>
 
 <jsp:useBean id="portfolio_viewDao"	class="portit.model.dao.ViewDao"></jsp:useBean>
@@ -37,7 +35,7 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="pfSearch"value="${sessionScope.search}" />
+							<input type="text" class="form-control" name="pfSearch" />
 						</div>
 						<button type="submit" class="col-md-1 btn common" >
 							<i class="fa fa-search"></i>
@@ -76,13 +74,13 @@
 							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
 							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
 							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
-							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')'" /> .....
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')" />  .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
-							<input type="text" class="form-control taginput" id="language"
-								name="language" placeholder="검색하고 싶은 태그를 입력하세요."
-								onchange="fnAppendItem2(text)" />
+							<input type="text" class="form-control taginput" 
+								name="language2" placeholder="검색하고 싶은 태그를 입력하세요."
+								onchange="fnAppendItem2()" />
 						</div>
 						<br> <br>
 						<hr />
@@ -137,7 +135,9 @@
   				<div class="portfolio-simple">
 
  					<div class="pfImg">
-   						<img src="<%=port.getMl_path()%>"/>    
+   						<% if(port.getMl_path2() != null){ %>
+           					<img src="${pageContext.request.contextPath}<%=port.getMl_path2().get(0)%>"/> 
+          				<%} %> 
         			</div>
   					<div class="pfInfo">
   						<div class="simple-content">
@@ -236,9 +236,8 @@
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
-	<input type="hidden" name="cmd" value="TAG" />
+	<input type="hidden" name="cmd" value="PFTAG" />
 </form>
-s
-<!-- 포트폴리오 정보 -->
 
+<!-- 포트폴리오 정보 -->
 

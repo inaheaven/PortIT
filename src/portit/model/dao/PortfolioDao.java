@@ -129,15 +129,13 @@ public class PortfolioDao {
 			portfolio.setPf_tags_language(pf_tags_language)
 			.setPf_tags_tool(pf_tags_tool)
 			.setPf_tags_field(pf_tags_field);
-			if ((pf_tags_language != null && pf_tags_language.size() > 0)
-					|| (pf_tags_tool != null && pf_tags_tool.size() > 0)
-					|| (pf_tags_field != null && pf_tags_field.size() > 0)) {
+			if (pf_tags_language.size() > 0 || pf_tags_tool.size() > 0 || pf_tags_field.size() > 0) {
 				List<String> tags = new ArrayList<String>();
 				tags.add(pf_tags_language.get(new Random().nextInt(pf_tags_language.size())).getTag_name());
 				tags.add(pf_tags_tool.get(new Random().nextInt(pf_tags_tool.size())).getTag_name());
 				tags.add(pf_tags_field.get(new Random().nextInt(pf_tags_field.size())).getTag_name());
 				portfolio.setTags(tags);
-			}				
+			}
 			System.out.println("태그 정보 DTO에 저장");
 			
 			// 미디어 데이터를 조회해서 DTO에 저장
@@ -337,17 +335,17 @@ public class PortfolioDao {
 	/**
 	 * 데이터 수정
 	 * @param pf_id
-	 * @return 수정된 데이터 개수
 	 */
-	public int update(Portfolio portfolio) {
+	public void update(Portfolio portfolio) {
 		mediaDao = new MediaDao();
 		profileDao = new ProfileDao();
 		tagDao = new TagDao();
 		
-		int rows = 0;
+		getConnection();
+		String sql = null;
 		try {
 			// UPDATE문 지정
-			String sql = "UPDATE portfolio"
+			sql = "UPDATE portfolio"
 					+ " SET pf_title=?, pf_intro=?, pf_startdate=?,"
 					+ " pf_enddate=?, pf_numofperson=?, pf_repository=?"
 					+ " WHERE pf_id=?";
@@ -359,7 +357,8 @@ public class PortfolioDao {
 			stmt.setInt(5, portfolio.getPf_numofperson());
 			stmt.setString(6, portfolio.getPf_url());
 			stmt.setInt(7, portfolio.getPf_id());
-			rows += stmt.executeUpdate();
+			stmt.executeUpdate();
+			System.out.println("포트폴리오 수정");
 
 			// 등록되지 않은 태그 추가
 			List<Tag> pf_tags_language = portfolio.getPf_tags_language();
@@ -380,6 +379,7 @@ public class PortfolioDao {
 					tagDao.insertTag( pf_tags_field.get(i));
 				}
 			}
+			System.out.println("등록되지 않은 태그 추가");
 			
 			// 태그 사용 수정
 			for (int i = 0; i < pf_tags_language.size(); i++) {
@@ -391,6 +391,7 @@ public class PortfolioDao {
 			for (int i = 0; i < pf_tags_field.size(); i++) {
 				tagDao.updateTagUse( "portfolio", portfolio.getPf_id(), pf_tags_field.get(i));
 			}
+			System.out.println("태그 사용 수정");
 			
 			// 공동 작업자 수정
 			List<Profile> coworkers = portfolio.getPf_coworkers();
@@ -414,7 +415,8 @@ public class PortfolioDao {
 				stmt.setInt(5, portfolio.getPf_id());
 				stmt.setInt(6, coworkers.get(i).getMem_id());
 				stmt.executeUpdate();
-			}			
+			}
+			System.out.println("공동작업자 수정");
 			
 			// 미디어 라이브러리 수정
 			List<Media> mediaList = portfolio.getPf_mediaList();
@@ -422,6 +424,7 @@ public class PortfolioDao {
 			for (int i = 0; i < mediaList.size(); i++) {
 				mediaDao.insert(mediaList.get(i));
 			}
+			System.out.println("미디어 라이브러리 수정");
 		} catch (SQLException e) {
 			if (conn != null) {
 				try {
@@ -434,7 +437,6 @@ public class PortfolioDao {
 		} finally {
 			freeConnection();
 		}
-		return rows;
 	}
 	
 	/**
