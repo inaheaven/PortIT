@@ -43,7 +43,6 @@ public class ProfileController extends HttpServlet {
 	private static final String UPLOAD_DIR = "upload";
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("test");
 		doPost(req, resp);
 	}
 
@@ -53,93 +52,20 @@ public class ProfileController extends HttpServlet {
 
 		HttpSession session = req.getSession();
 		int loginId = (int)session.getAttribute("loginId");
-		System.out.println("login Id :" +loginId);
 		req.setAttribute("loginId", loginId);
 		
-		
+		ProfileDao profileDao = new ProfileDao();
+		Profile prof_reg = new Profile();
 		String cmd = req.getParameter("cmd");
 		String url = "";
 
 		//int mem_id = Integer.parseInt(req.getParameter("mem_id"));
 		//req.setAttribute("mem_id", mem_id);
 
-	
-
 		int prof_follower =0;
-		String prof_id = req.getParameter("prof_id");
-		String prof_img = req.getParameter("prof_img");
-		String prof_background = req.getParameter("prof_background");
-		String prof_name = req.getParameter("prof_name");
-		String prof_nick = req.getParameter("prof_nick");
-		String prof_intro = req.getParameter("prof_intro");
-		String prof_website = req.getParameter("prof_website");
-		String prof_facebook = req.getParameter("prof_facebook");
-		String prof_github = req.getParameter("prof_github");
-		String[] lang_list1 = req.getParameterValues("tag_lang");
-		String[] tool_list1 = req.getParameterValues("tag_tool");
-		String[] field_list1 = req.getParameterValues("tag_field");
-		String[] tag_skill1 = req.getParameterValues("tag_skill");
-		String[] prof_skill_level1 = req.getParameterValues("prof_skill_level");
+		//int prof_id = Integer.parseInt(req.getParameter("prof_id"));
 		
-		List<String> tag_lang = new ArrayList();
-		for(String tags : lang_list1){
-			tag_lang.add(tags);
-		}
 		
-		List<String> tag_tool = new ArrayList();
-		for(String tags : tool_list1){
-			tag_tool.add(tags);
-		}
-		
-		List<String> tag_field = new ArrayList();
-		for(String tags : field_list1){
-			tag_field.add(tags);
-		}
-		
-		List<String> tag_skill = new ArrayList();
-		for(String tags : tag_skill1){
-			tag_skill.add(tags);
-		}
-		
-		List<String> prof_skill_level = new ArrayList();
-		for(String tags : prof_skill_level1){
-			prof_skill_level.add(tags);
-		}
-		
-				
-		System.out.println(tag_lang);
-		System.out.println(tag_tool);
-		System.out.println(tag_field);
-		System.out.println("tag_skill: "+ tag_skill);
-		System.out.println("prof_skill_level: "+ prof_skill_level);
-		
-		System.out.println("name :" + prof_name);
-		
-
-//		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
-		
-		ProfileDao profileDao = new ProfileDao();
-		Profile prof_reg = new Profile();
-
-		prof_reg.setProf_img(prof_img);
-		prof_reg.setProf_background(prof_background);
-		prof_reg.setProf_follower(prof_follower);
-		prof_reg.setProf_name(prof_name);
-		prof_reg.setProf_nick(prof_nick);
-		prof_reg.setProf_intro(prof_intro);
-		prof_reg.setProf_website(prof_website);
-		prof_reg.setProf_facebook(prof_facebook);
-		prof_reg.setProf_github(prof_github);
-	
-		prof_reg.setTag_lang(tag_lang);
-		prof_reg.setTag_tool(tag_tool);
-		prof_reg.setTag_field(tag_field);
-		prof_reg.setTag_skill(tag_skill);
-		prof_reg.setProf_skill_level(prof_skill_level);
-		
-		profileDao.addprofile(prof_reg, loginId);
-		req.setAttribute("prof_reg", prof_reg);
-
 	/*
 		if (!ServletFileUpload.isMultipartContent(req)) {
 			try {
@@ -192,24 +118,213 @@ public class ProfileController extends HttpServlet {
 			e.printStackTrace();
 		}
 */
-
+		
+	/*이미 프로필이 있을경우(my메뉴에서 설정 해주기)////////////////////////
+	 * 
+		HttpSession session = req.getSession();
+		int loginId = (int)session.getAttribute("loginId");		
+		req.setAttribute("loginId", loginId);
+			
+		ProfileDao profileDao = new ProfileDao();
+	
+		
+	//프로필 아이디를 가지고 옴
+		int prof_id = profileDao.getProf_id(loginId);
+	//프로필 닉네임을 가지고 옴
+		String nickname = profileDao.idToNick(loginId);
+		
+		if(prof_id == 0 || nickname.equals(null)){
+			url = "/page?page=myProfUpdate";
+		}
+		else{
+			url = "/page?page=myprof";
+		}
+		
+		RequestDispatcher view = req.getRequestDispatcher(url);
+		view.forward(req, resp);
+	*/
 		
 		if (cmd.equals("REGISTER")) {
-			prof_reg= profileDao.getProfile(loginId);
-			req.setAttribute("prof", prof_reg);
+			String prof_img = req.getParameter("prof_img");
+			String prof_background = req.getParameter("prof_background");
+			String prof_name = req.getParameter("prof_name");
+			String prof_nick = req.getParameter("prof_nick");
+			String prof_intro = req.getParameter("prof_intro");
+			String prof_website = req.getParameter("prof_website");
+			String prof_facebook = req.getParameter("prof_facebook");
+			String prof_github = req.getParameter("prof_github");
+			String[] lang_list1 = req.getParameterValues("tag_lang");
+			String[] tool_list1 = req.getParameterValues("tag_tool");
+			String[] field_list1 = req.getParameterValues("tag_field");
+			String[] tag_skill1 = req.getParameterValues("tag_skill");
+			String[] prof_skill_level1 = req.getParameterValues("prof_skill_level");
+			
+			List<String> tag_lang = new ArrayList();
+			if(lang_list1 != null){
+				for(String tags : lang_list1){
+					tag_lang.add(tags);
+				}
+			}
+			List<String> tag_tool = new ArrayList();
+			if(tool_list1 != null){
+				for(String tags : tool_list1){
+					tag_tool.add(tags);
+				}
+			}
+			List<String> tag_field = new ArrayList();
+			if(field_list1 != null){
+				for(String tags : field_list1){
+					tag_field.add(tags);
+				}
+			}
+			List<String> tag_skill = new ArrayList();
+			if(tag_skill1 != null){
+				for(String tags : tag_skill1){
+					tag_skill.add(tags);
+				}
+			}
+			List<String> prof_skill_level = new ArrayList();
+			if(prof_skill_level1 != null){
+				for(String tags : prof_skill_level1){
+					prof_skill_level.add(tags);
+				}
+			}
+					
+			System.out.println(tag_lang);
+			System.out.println(tag_tool);
+			System.out.println(tag_field);
+			System.out.println("tag_skill: "+ tag_skill);
+			System.out.println("prof_skill_level: "+ prof_skill_level);
+			
+			System.out.println("name :" + prof_name);
+			
+
+//			int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
+			
+			
+			//프로필 아이디를 가지고 옴
+			int prof_id = profileDao.getProf_id(loginId);
+			//프로필 닉네임을 가지고 옴
+			String nickname = profileDao.idToNick(loginId);
+			
+			prof_reg.setProf_img(prof_img);
+			prof_reg.setProf_background(prof_background);
+			prof_reg.setProf_follower(prof_follower);
+			prof_reg.setProf_name(prof_name);
+			prof_reg.setProf_nick(prof_nick);
+			prof_reg.setProf_intro(prof_intro);
+			prof_reg.setProf_website(prof_website);
+			prof_reg.setProf_facebook(prof_facebook);
+			prof_reg.setProf_github(prof_github);
+		
+			prof_reg.setTag_lang(tag_lang);
+			prof_reg.setTag_tool(tag_tool);
+			prof_reg.setTag_field(tag_field);
+			prof_reg.setTag_skill(tag_skill);
+			prof_reg.setProf_skill_level(prof_skill_level);
+			
+			profileDao.addprofile(prof_reg, loginId);
+			prof_reg = profileDao.getProfile(loginId);
+			
+			
+			req.setAttribute("prof", prof_reg);			
 			url = "/page?page=myProfUpdate";
 		}
 
 		else if (cmd.equals("UPDATE")) {
-		//	ProfileDao dao = new ProfileDao();
-		//	Profile prof= dao.selectOne(loginId);
-		//	req.setAttribute("prof", prof);
-		//	url = "/page?page=myProfUpdate";
+			String prof_img = req.getParameter("prof_img");
+			String prof_background = req.getParameter("prof_background");
+			String prof_name = req.getParameter("prof_name");
+			String prof_nick = req.getParameter("prof_nick");
+			String prof_intro = req.getParameter("prof_intro");
+			String prof_website = req.getParameter("prof_website");
+			String prof_facebook = req.getParameter("prof_facebook");
+			String prof_github = req.getParameter("prof_github");
+			String[] lang_list1 = req.getParameterValues("tag_lang");
+			String[] tool_list1 = req.getParameterValues("tag_tool");
+			String[] field_list1 = req.getParameterValues("tag_field");
+			String[] tag_skill1 = req.getParameterValues("tag_skill");
+			String[] prof_skill_level1 = req.getParameterValues("prof_skill_level");
+			
+			List<String> tag_lang = new ArrayList();
+			if(lang_list1 != null){
+				for(String tags : lang_list1){
+					tag_lang.add(tags);
+				}
+			}
+			List<String> tag_tool = new ArrayList();
+			if(tool_list1 != null){
+				for(String tags : tool_list1){
+					tag_tool.add(tags);
+				}
+			}
+			List<String> tag_field = new ArrayList();
+			if(field_list1 != null){
+				for(String tags : field_list1){
+					tag_field.add(tags);
+				}
+			}
+			List<String> tag_skill = new ArrayList();
+			if(tag_skill1 != null){
+				for(String tags : tag_skill1){
+					tag_skill.add(tags);
+				}
+			}
+			List<String> prof_skill_level = new ArrayList();
+			if(prof_skill_level1 != null){
+				for(String tags : prof_skill_level1){
+					prof_skill_level.add(tags);
+				}
+			}
+					
+			System.out.println(tag_lang);
+			System.out.println(tag_tool);
+			System.out.println(tag_field);
+			System.out.println("tag_skill: "+ tag_skill);
+			System.out.println("prof_skill_level: "+ prof_skill_level);
+			
+			System.out.println("name :" + prof_name);		
+
+//			int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
+			
+			//프로필 아이디를 가지고 옴
+			int prof_id = profileDao.getProf_id(loginId);
+			//프로필 닉네임을 가지고 옴
+			String nickname = profileDao.idToNick(loginId);
+			
+			prof_reg.setProf_img(prof_img);
+			prof_reg.setProf_background(prof_background);
+			prof_reg.setProf_follower(prof_follower);
+			prof_reg.setProf_name(prof_name);
+			prof_reg.setProf_nick(prof_nick);
+			prof_reg.setProf_intro(prof_intro);
+			prof_reg.setProf_website(prof_website);
+			prof_reg.setProf_facebook(prof_facebook);
+			prof_reg.setProf_github(prof_github);
+		
+			prof_reg.setTag_lang(tag_lang);
+			prof_reg.setTag_tool(tag_tool);
+			prof_reg.setTag_field(tag_field);
+			prof_reg.setTag_skill(tag_skill);
+			prof_reg.setProf_skill_level(prof_skill_level);
+		
+			profileDao.updateProfile(prof_reg, loginId);
+			//System.out.println("로그인 Id :" +loginId);
+			prof_reg= profileDao.getProfile(loginId);
+			//System.out.println(prof_reg.getProf_name());
+			req.setAttribute("prof", prof_reg);
+			url = "/page?page=myProfUpdate";
 		}
+		
+		else if (cmd.equals("READ")) {
+			Profile prof = profileDao.getProfile(loginId);
+			req.setAttribute("prof", prof);
+			url = "/page?page=myProfUpdate";
+		}
+		
 
 		RequestDispatcher view = req.getRequestDispatcher(url);
 		view.forward(req, resp);
-
 	}
 
 	/**

@@ -338,18 +338,17 @@ public class ProfileDao {
 	}
 
 
-	//프로필 아이디를 가지오는 메서드
-	private int getProf_id(int mem_id){
-		int req_prof_id=0;
-		try{
-			sql = "select * from profile where mem_id = ?" ;
+	// 프로필 아이디를 가지오는 메서드
+	public int getProf_id(int mem_id) {
+		int req_prof_id = 0;
+		try {
+			sql = "select * from profile where mem_id = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mem_id);
 			rs = stmt.executeQuery();
 			rs.next();
-			req_prof_id = rs.getInt("mem_id");
-		}
-		catch (Exception e) {
+			req_prof_id = rs.getInt("prof_id");
+		} catch (Exception e) {
 			System.out.println("프로필아이디 겟에서 오류");
 			e.printStackTrace();
 		} finally {

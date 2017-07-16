@@ -1,6 +1,7 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import portit.model.action.ProjectModel;
 import portit.model.dao.SearchDao;
 import portit.model.dao.ViewDao;
+import portit.model.dto.project_detail;
 
 @WebServlet("/detailView")
 public class DetailViewController extends HttpServlet {
@@ -63,11 +65,20 @@ public class DetailViewController extends HttpServlet {
 			//req.setAttribute("prof_view",viewdao.member_info(prof_id));
 			url="/page?page=";
 		}
-		else if(cmd.equals("PROJECT")){
-			//int proj_id = Integer.parseInt(req.getParameter("proj_id"));
-			//req.setAttribute("proj_view",viewdao.project_info(proj_id));			
-			url="projDetail_0716.jsp";
-		}
+		else if("PROJECT".equals(cmd)){
+	         System.out.println("프로젝트CTRL 접근");
+	         ArrayList project = (ArrayList) model.prject_detail_infrom();
+	         System.out.println("CTRL:DB조회완료");
+	         
+	         
+	         //Test....
+	         project_detail dto =(project_detail)project.get(0);
+	         System.out.println("CTRL_Test="+dto.getProj_title());
+	         
+	         
+	         req.setAttribute("pj_inform", project);
+	         url="projDetail_0716.jsp";
+	    }
 		else if(cmd.equals("TAG")){
 			String tag_name = req.getParameter("tag_name");
 			System.out.println(tag_name);

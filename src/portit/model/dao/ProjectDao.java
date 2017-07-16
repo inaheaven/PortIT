@@ -1080,15 +1080,54 @@ public class ProjectDao {
 	}
 	
 	
-
+	// mem_id 얻기
+	public int memidByprofid (int proj_id) {
+		int mem_id = 0;
+		
+		try{
+			conn = pool.getConnection();
+	 		stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+			
+			// 알림 테이블에 넣기
+			String sql = "select mem_id from mem_proj where proj_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, proj_id);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()){
+				mem_id = rs.getInt("mem_id");
+			}
+		}catch(Exception err){
+			System.out.println("[DAO]: applyPj()에서 오류");
+			err.printStackTrace();
+		}finally{
+			pool.freeConnection(conn, stmt);
+		}
+		
+		return mem_id;
+	}
+	
+	
 	// 프로젝트지원하기
-	public void applyPj(int prof_id,int loginId){
+	public void applyPj(int proj_id,int loginId){
 		String sql = "insert into proj_app(PROJ_APP_ID,MEM_ID,PROJ_ID,PROJ_APP_REGDATE,PROJ_APP_CONFIRM)"
-					+"VALUES(LPAD((seq_proj_app_id.NEXTVAL),4,'0'),"+loginId+","+prof_id+", sysdate, 'n')";
+					+"VALUES(LPAD((seq_proj_app_id.NEXTVAL),4,'0'),"+loginId+","+proj_id+", sysdate, 'n')";
 	
 		try{
 			conn = pool.getConnection();
 	 		stmt = conn.prepareStatement(sql);
+			stmt.executeUpdate();
+			
+			int mem_id_receiver = memidByprofid(proj_id);
+			
+			// 알림 테이블에 넣기
+			sql = "insert into notification(nt_id, mem_id_sender, mem_id_receiver, nt_date, nt_type, nt_type_id, nt_isread) "
+					+ "values(seq_nt_id.nextVal, ?, ?, sysdate, 'project', ?, 'n')";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, loginId);
+			stmt.setInt(2, mem_id_receiver);
+			stmt.setInt(3, proj_id);
 			stmt.executeUpdate();
 		}
 		
