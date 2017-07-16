@@ -401,7 +401,7 @@ public class PortfolioDao {
 			for (int i = 0; i < coworkers.size(); i++) {
 				sql = "MERGE INTO pf_coworker pfc "
 						+ "USING (SELECT * FROM pf_coworker WHERE pf_id=?) pfcs "
-						+ "ON pfc.pf_id=pfcs.pf_id "
+						+ "ON (pfc.pf_id=pfcs.pf_id) "
 						+ "WHEN MATCHED THEN "
 						+ "UPDATE SET mem_id=? WHERE mem_id!=? AND pf_id=? "
 						+ "WHEN NOT MATCHED THEN INSERT ("
