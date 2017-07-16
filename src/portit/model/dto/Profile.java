@@ -15,7 +15,7 @@ public class Profile {
 	private String prof_name;
 	private String prof_intro;
 	private String prof_img = "/assets/img/user-basic.png";
-	private String prof_background;
+	private String prof_background = "/assets/img/prof-bg1.png";
 	private String prof_email;
 	private String prof_website;
 	private String prof_github;
