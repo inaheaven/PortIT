@@ -56,7 +56,7 @@ public class ViewDao {
 	 */
 	public List portfolio_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct portfolio.pf_id, prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
+		String sql = "select distinct portfolio.pf_id, prof_name, pf_title, pf_like , pf_regdate "
 				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
 				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
 				+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
@@ -73,7 +73,7 @@ public class ViewDao {
 			while (rs.next()) {
 				Portfolio portfolio = new Portfolio();
 				portfolio.setPf_id(rs.getInt("pf_id"));
-				portfolio.setMl_path(rs.getString("ml_path"));
+				//portfolio.setMl_path(rs.getString("ml_path"));
 				//portfolio.setTag_name(rs.getString("tag_name"));
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
@@ -81,6 +81,7 @@ public class ViewDao {
 				int pf_id = rs.getInt("pf_id");
 				
 				portfolio.setTags(portfolio_tag(pf_id));
+				portfolio.setMl_path2(port_media(pf_id));
 				list.add(portfolio);
 			}
 		}
@@ -119,49 +120,33 @@ public class ViewDao {
 		catch (Exception e) {
 			System.out.println("포트폴리오 태그 " + e);
 		}
+		
 		return null;
 	}
 	/**
-	 * 포트폴리오 정보를 불러오는 메서드 (하나의 포폴 조회)	  
+	 * 포트폴리오 미디어 (미디어 라이브러리)
 	 */
-	public List portfolio_info(int pf_id) {
-		ArrayList list = new ArrayList();
-		String sql = "select distinct portfolio.pf_id, prof_name, pf_title, pf_like ,  ml_path, pf_regdate "
-				+ "from prof_pf join profile on prof_pf.prof_id = profile.prof_id "
-				+ "join portfolio on portfolio.pf_id = prof_pf.pf_id "
-				+ "join tag_use on tag_use.tag_use_type_id = portfolio.pf_id "
-				+ "join tag on tag.tag_id = tag_use.tag_id  "
-				+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
-				+ "where tag_use_type ='pf' and ml_type = 'pf' and portfolio.pf_id = ? "
-				+ "order by pf_regdate desc";
-		
+	public List port_media(int pf_id) {
 		try {
+			String sql = "SELECT ml_path FROM (SELECT * FROM portfolio pf, media_library ml "
+					+ " WHERE pf.pf_id = ml.ml_type_id AND ml.ml_type = 'pf' AND ml.ml_type_id = ? ) "
+					+ " WHERE rownum < 4 ";
 			
-			pstmt = con.prepareStatement(sql);		
+			ArrayList list = new ArrayList();
+			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pf_id);
-			rs = pstmt.executeQuery();
-					
-			while (rs.next()) {
-				Portfolio portfolio = new Portfolio();
-				portfolio.setMl_path(rs.getString("ml_path"));
-				//portfolio.setTag_name(rs.getString("tag_name"));
-				portfolio.setPf_title(rs.getString("pf_title"));
-				portfolio.setPf_like(rs.getInt("pf_like"));
-				portfolio.setPf_id(rs.getInt("pf_id"));
-				portfolio.setProf_name(rs.getString("prof_name"));
-
+			rs4 = pstmt.executeQuery();
+			
+			List<String> media_path = new ArrayList<>();
+			while (rs4.next()) {
+				media_path.add(rs4.getString("ml_path"));
 			}
+			return media_path;
+		} 
+		catch (Exception e) {
+			System.out.println("ml_path(proj) 오류" + e);
 		}
-		
-		catch (Exception err) {
-			System.out.println("portfolio_info_(pf_id) 에서 오류");
-			err.printStackTrace();
-		}
-		
-		finally {
-			freeConnection();
-		}
-		return list;
+		return null;
 	}
 
 	/**
@@ -231,47 +216,7 @@ public class ViewDao {
 		}
 		return null;
 	}
-
-	/**
-	 * 전체 멤버를 보여주는 메서드(한명의 멤버 조회)
-	 */
-	public List member_info(int prof_id) {
-		ArrayList list = new ArrayList();
-		String sql = "select distinct prof_id, prof_img, prof_name,  prof_follower, prof_nick, prof_regdate  "
-					+ "from profile join tag_use  "
-					+ "on tag_use.tag_use_type_id = profile.prof_id "
-					+ "join tag  on tag.tag_id = tag_use.tag_id  "
-					+ "where (tag_use_type = 'prof') and  prof_id=? "
-					+ "order by prof_regdate desc"; 
-				
-		
-		try {
-			pstmt = con.prepareStatement(sql);		
-			pstmt.setInt(1, prof_id);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Member member = new Member(); 
-				//member.setTag_name(rs.getString("tag_name"));
-				member.setProf_img(rs.getString("prof_img"));
-				member.setProf_name(rs.getString("prof_name"));
-				member.setProf_nick(rs.getString("prof_nick"));
-				member.setProf_follower(rs.getInt("prof_follower"));
-				member.setProf_id(rs.getInt("prof_id"));
-		
-			}
-		}
-
-		catch (Exception err) {
-			System.out.println("mem_info(id) 에서 오류");
-			err.printStackTrace();
-		}
-
-		finally {
-			freeConnection();
-		}
-		return list;
-	}
+	
 	/**
 	 * 프로젝트 간략 정보 (태그x)
 	 */
@@ -525,7 +470,7 @@ public class ViewDao {
 		try {
 			String sql = "SELECT ml_path FROM (SELECT * FROM portfolio pf, media_library ml "
 					+ " WHERE pf.pf_id = ml.ml_type_id AND ml.ml_type = 'pf' AND ml.ml_type_id = ? ) "
-					+ " WHERE rownum < 3 ";
+					+ " WHERE rownum < 4 ";
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);

@@ -1,6 +1,7 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -58,7 +59,7 @@ public class SearchDetailController extends HttpServlet {
 		String param2=req.getParameter("param2");
 		String param3=req.getParameter("param3");
 		String param4=req.getParameter("param4");
-
+		System.out.println("param1 : " +param1);
 		
 		if(cmd.equals("PFDETAIL")){
 			String pfSearch = (String) session.getAttribute("pfSearch");
@@ -204,6 +205,59 @@ public class SearchDetailController extends HttpServlet {
 				req.setAttribute("proj_list", list);	
 			}	
 			url="page?page=projSearch";
+		}
+		else if(cmd.equals("SEARCHALL")){
+			List list1 = new ArrayList();
+			List list2 = new ArrayList();
+			List list3 = new ArrayList();
+			
+			System.out.println("CTRL 파라미터전달확인="+param1);
+			System.out.println("CTRL 파라미터전달확인22="+param2);
+			System.out.println("CTRL 파라미터전달확인33="+param3);
+			System.out.println("CTRL 파라미터전달확인44="+param4);
+			
+			//검색어 없을시
+			if(param1 ==null && param2 == null && param3 == null ){
+				list1 = searchDao.searchAll_port(" ", true);
+				list2 = searchDao.searchAll_member(" ", true);
+				list3 = searchDao.searchAll_proj(" ", true);
+				
+				req.setAttribute("port_list", list1);
+				req.setAttribute("mem_list", list2);
+				req.setAttribute("proj_list", list3);				
+			}
+			//검색태그 1개
+			else if(param1 != null && param2 ==null && param3 == null ){
+				list1 = searchDao.searchAll_port(param1, true);	
+				list2 = searchDao.searchAll_member(param1, true);	
+				list3 = searchDao.searchAll_proj(param1, true);	
+				
+				req.setAttribute("port_list", list1);
+				req.setAttribute("mem_list", list2);
+				req.setAttribute("proj_list", list3);
+			}
+			//검색태그 2개
+			else if(param1 != null && param2 != null && param3 == null ){
+				list1 = searchDao.searchAll_port(param1, param2);
+				list2 = searchDao.searchAll_member(param1, param2);
+				list3 = searchDao.searchAll_proj(param1, param2);
+				
+				req.setAttribute("port_list", list1);
+				req.setAttribute("mem_list", list2);
+				req.setAttribute("proj_list", list3);
+			}
+			//검색태그 3개
+			else{
+				list = searchDao.searchAll_port(param1, param2, param3);
+				list = searchDao.searchAll_member(param1, param2, param3);
+				list = searchDao.searchAll_proj(param1, param2, param3);
+				
+				req.setAttribute("port_list", list);
+				req.setAttribute("mem_list", list);
+				req.setAttribute("proj_list", list);
+			}
+			
+			url="page?page=searchAll";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

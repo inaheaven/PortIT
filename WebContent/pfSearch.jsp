@@ -109,7 +109,12 @@
 			<!-- 첫번째 포트폴리오 -->
 			<div class="col-md-3 mb">
 				<div class="portfolio-simple">
-					<div class="pfImg"></div>
+					<div class="pfImg">
+						<% if(port.getMl_path2() != null){
+							for(int j=0; j<1; j++) { %>
+           					<img src="${pageContext.request.contextPath}<%=port.getMl_path2().get(j)%>"/> 
+          				<%}} %> 
+					</div>
 					<div class="pfInfo">
 						<div class="simple-content">
 						
@@ -215,7 +220,7 @@
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 
-	<input type="hidden" name="cmd" value="TAG" />
+	<input type="hidden" name="cmd" value="PFTAG" />
 </form>
 
 <!-- 포트폴리오 정보 -->

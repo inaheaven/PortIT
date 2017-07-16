@@ -216,11 +216,4 @@
 	<input type="hidden" name="tag_name" /> 
 	<input type="hidden" name="cmd" value="MEMTAG" />
 </form>
-<form name="prof_info" method="post" action="/detailView">
-	<input type="hidden" name="prof_id" /> 
-	<input type="hidden" name="cmd" value="PROJECT" />
-</form>
-<form name="proj_info" method="post" action="/detailView">
-	<input type="hidden" name="proj_id" /> 
-	<input type="hidden" name="cmd" value="MEMBER" />
-</form>
+

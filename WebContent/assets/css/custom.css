@@ -214,7 +214,7 @@ body.index {
 .portfolio-simple .pfImg {
 	height: 180px;
 	border-radius: 10px 10px 0 0;
-
+	width: 238px;
 	display: block;
     position: relative;
     overflow: hidden;
@@ -222,10 +222,10 @@ body.index {
 .portfolio-simple .pfImg img {
 	border-radius: 10px 10px 0 0;
 	height: 180px;
-		
+	width: 238px;
   	position: absolute;
     top: 0;
-    left: -50%;
+    left: 0%;
 }
 .portfolio-simple .pfInfo {
 	display: table;
