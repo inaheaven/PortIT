@@ -127,6 +127,18 @@
 		<!-- Profile header -->
 		
 		
+		<script type="text/javascript"> 
+		
+		function goPage(id) { 
+			var pj_id= id;
+			alert('프로젝트에 지원되셨습니다!')
+			location.href="/myproj?cmd=apply&pj_id="+pj_id;
+			}
+		</script>
+
+		
+		
+		
 		<%
 		//데이터 정리..
 		System.out.println("PJ_JPS페이지 ");
@@ -186,6 +198,7 @@
 					if(i>3)break;
 						Tag tag_inform=(Tag)tag_list.get(i);
 				%>
+				<!-- 긍정왕:태그 검색 경로 삽입 -->
 				<a href="<%=tag_inform.getTag_id()%>">#<%=tag_inform.getTag_name() %> </a>&nbsp;
 				<%} %>
 				</h4>
@@ -343,7 +356,7 @@
 				<div class="row">
 					<div class="actions">
 						<button type="button" class="btn common" onclick="location.href='/msg?cmd=send&mem_id_sender=<%=dto.getProf_id() %>'">개설자에게 연락하기</button>&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn common" onclick="location.href='/myproj?cmd=apply&pj_id=<%=dto.getProj_id() %>'">프로젝트 지원하기</button>
+						<button type="button" class="btn common" onclick="javascript:goPage(<%=dto.getProj_id() %>)">프로젝트 지원하기</button>
 					</div>
 				</div>
 			</div>
