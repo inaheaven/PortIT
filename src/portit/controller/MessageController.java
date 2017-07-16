@@ -20,7 +20,7 @@ public class MessageController extends HttpServlet {
 	
 	//컨트롤러
 	//model에서 request로부터 뽑아서 데이터에 저장하는작업.
-	
+	// /msg?cmd=send&mem_id_sender=
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		doPost(req, resp);

@@ -631,131 +631,164 @@ public class PortfolioDao {
 	
 	
 
-	/**
-	 * 내가 작성한 포트폴리오 조회하기 
-	 * 
-	 * @author hyang
-	 */
-	
-	public List myPortfolio(int prof_id) {
-		ArrayList portlist = new ArrayList();
-		String sql = "";
-		
-		try {
-			conn = pool.getConnection();
-			sql = "SELECT distinct PORT.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH"
-					+ " FROM PORTFOLIO PORT INNER JOIN PROF_PF PROF ON PORT.PF_ID = PROF.PF_ID"
-					+ " JOIN MEDIA_LIBRARY MEDIA ON PORT.PF_ID = MEDIA.ML_TYPE_ID"
-					+ " JOIN PROFILE P ON P.PROF_ID = PROF.PROF_ID"
-		            + " WHERE PROF.PROF_ID = ?";
-		        
-					
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, prof_id);
-			rs2 = stmt.executeQuery();
+	  /**
+	    * 내가 작성한 포트폴리오 조회하기 
+	    * 
+	    * @author hyang
+	    */
+	   
+	   public List myPortfolio(int prof_id) {
+	      ArrayList portlist = new ArrayList();
+	      String sql = "";
+	      
+	      try {
+	         conn = pool.getConnection();
+	         sql = "SELECT distinct PORT.* , PORT.PF_TITLE, PORT.PF_LIKE, P.PROF_NICK, MEDIA.ML_PATH"
+	               + " FROM PORTFOLIO PORT INNER JOIN PROF_PF PROF ON PORT.PF_ID = PROF.PF_ID"
+	               + " JOIN MEDIA_LIBRARY MEDIA ON PORT.PF_ID = MEDIA.ML_TYPE_ID"
+	               + " JOIN PROFILE P ON P.PROF_ID = PROF.PROF_ID"
+	                  + " WHERE PROF.PROF_ID = ?";
+	              
+	               
+	         stmt = conn.prepareStatement(sql);
+	         stmt.setInt(1, prof_id);
+	         rs2 = stmt.executeQuery();
 
-			
-			while (rs2.next()) {
-				Portfolio port = new Portfolio();
-				//port.setProf_pf_id(rs2.getInt("prof_pf_id"));
-				//port.setPf_prof_img(rs2.getString("ml_path"));
-				port.setPf_id(rs2.getInt("pf_id"));
-				port.setPf_regdate(rs2.getDate("pf_regdate"));
-				//port.setMl_path(rs2.getString("ml_path"));
-				port.setProf_nick(rs2.getString("prof_nick"));
-				port.setPf_title(rs2.getString("pf_title"));
-				port.setPf_like(rs2.getInt("pf_like"));
-				
-				int pf_id = rs2.getInt("pf_id");
-				
-				port.setMl_path2(myportfolio_media(pf_id));		
-				port.setTags(getTag(port, pf_id));
-				portlist.add(port);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(conn, stmt, rs2);
-		}
-		return portlist;
-	}
-	
-	/**
-	 * 내가 작성한 포트폴리오의 태그 부분 가져오기 
-	 * 
-	 * @param pf_id
-	 */
-	
-	
-	public List<String> getTag(Portfolio port, int pf_id) {
-		String sql = "";
-		
-		try {
-			sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
-					+ " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' "
-					+ " AND tu.tag_use_type_id = ? "
-					+ " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 "; // 랜덤하게
-																		// 3개
+	         
+	         while (rs2.next()) {
+	            Portfolio port = new Portfolio();
+	            //port.setProf_pf_id(rs2.getInt("prof_pf_id"));
+	            //port.setPf_prof_img(rs2.getString("ml_path"));
+	            port.setPf_id(rs2.getInt("pf_id"));
+	            port.setPf_regdate(rs2.getDate("pf_regdate"));
+	            //port.setMl_path(rs2.getString("ml_path"));
+	            port.setProf_nick(rs2.getString("prof_nick"));
+	            port.setPf_title(rs2.getString("pf_title"));
+	            port.setPf_like(rs2.getInt("pf_like"));
+	            
+	            int pf_id = rs2.getInt("pf_id");
+	            
+	            port.setMl_path2(myportfolio_media(pf_id));      
+	            port.setTags(getTag(port, pf_id));
+	            portlist.add(port);
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         pool.freeConnection(conn, stmt, rs2);
+	      }
+	      return portlist;
+	   }
 
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, pf_id);
-			rs3 = stmt.executeQuery();
 
-			List<String> tags = new ArrayList<>();
-			while (rs3.next()) {
-				tags.add(rs3.getString("tag_name"));
-				
-			}
-			return tags; 
-		} catch (Exception e) {
-			System.out.println("TAG() : 여기 에러나지마라 " + e);
-		}
-		return null;
-	}
 	
-	
-	
-	/**
-	 * myPortfolio 페이지에서 x버튼 눌러서 삭제
-	 * 
-	 * @param prof_pf_id
-	 */
-	public void deleteMyport(int pf_id) {
-		String sql = "delete from PROF_PF where prof_pf_id =" + pf_id + "";
+	   /**
+	    * 내가 작성한 포트폴리오의 태그 부분 가져오기 
+	    * 
+	    * @param pf_id
+	    */
+	   
+	   
+	   public List<String> getTag(Portfolio port, int pf_id) {
+	      String sql = "";
+	      
+	      try {
+	         sql = "SELECT tag_name FROM (SELECT * FROM tag t, tag_use tu "
+	               + " WHERE t.tag_id = tu.tag_id AND tu.tag_use_type = 'pf' "
+	               + " AND tu.tag_use_type_id = ? "
+	               + " ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 4 "; // 랜덤하게
+	                                                      // 3개
 
-		try {
-			conn = pool.getConnection();
-			stmt = conn.prepareStatement(sql);
-			stmt.executeUpdate();
-		} catch (Exception err) {
-			System.out.println("DBCP  : " + err);
-		}
-	}
-	/**
-	 * 포트폴리오에서 하나의 사진만 가져오기 
-	 * @param pf_id
-	 * @return
-	 */
-	public List myportfolio_media(int pf_id) {
-		try {
-			String sql = "SELECT ml_path FROM (SELECT * FROM portfolio pf, media_library ml "
-					+ " WHERE pf.pf_id = ml.ml_type_id AND ml.ml_type = 'pf' AND ml.ml_type_id = ? ) "
-					+ " WHERE rownum < 1 ";
-			
-			ArrayList list = new ArrayList();
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, pf_id);
-			rs4 = stmt.executeQuery();
-			
-			List<String> media_path = new ArrayList<>();
-			while (rs4.next()) {
-				media_path.add(rs4.getString("ml_path"));
-			}
-			return media_path;
-		} 
-		catch (Exception e) {
-			System.out.println("ml_path(proj) 오류" + e);
-		}
-		return null;
-	}
+	         stmt = conn.prepareStatement(sql);
+	         stmt.setInt(1, pf_id);
+	         rs3 = stmt.executeQuery();
+
+	         List<String> tags = new ArrayList<>();
+	         while (rs3.next()) {
+	            tags.add(rs3.getString("tag_name"));
+	            
+	         }
+	         return tags; 
+	      } catch (Exception e) {
+	         System.out.println("TAG() : 여기 에러나지마라 " + e);
+	      }
+	      return null;
+	   }
+
+	
+	
+	
+	   
+
+	   /**
+	    * myPortfolio 페이지에서 x버튼 눌러서 삭제
+	    * 
+	    * @param prof_pf_id
+	    */
+	   public void deleteMyport(int pf_id) {
+	      String sql = "delete from PROF_PF where prof_pf_id =" + pf_id + "";
+
+	      try {
+	         conn = pool.getConnection();
+	         stmt = conn.prepareStatement(sql);
+	         stmt.executeUpdate();
+	      } catch (Exception err) {
+	         System.out.println("DBCP  : " + err);
+	      }
+	   }
+	   
+	   
+	   
+	   /**
+	    * 포트폴리오에서 하나의 사진만 가져오기 
+	    * @param pf_id
+	    * @return
+	    */
+	   public List myportfolio_media(int pf_id) {
+	      try {
+	         String sql = "SELECT ml_path FROM (SELECT * FROM portfolio pf, media_library ml "
+	               + " WHERE pf.pf_id = ml.ml_type_id AND ml.ml_type = 'pf' AND ml.ml_type_id = ? ) "
+	               + " WHERE rownum < 1 ";
+	         
+	         ArrayList list = new ArrayList();
+	         stmt = conn.prepareStatement(sql);
+	         stmt.setInt(1, pf_id);
+	         rs4 = stmt.executeQuery();
+	         
+	         List<String> media_path = new ArrayList<>();
+	         while (rs4.next()) {
+	            media_path.add(rs4.getString("ml_path"));
+	         }
+	         return media_path;
+	      } 
+	      catch (Exception e) {
+	         System.out.println("ml_path(proj) 오류" + e);
+	      }
+	      return null;
+	   }
+	   
+	   
+	   
+	   /**
+	   -    * 포트폴리오 id로 작성자 mem_id 가져오기
+	   -    */
+	   public int pfidTomemid(int pf_id) {
+	       int mem_id = 0;
+	       
+	       try {
+	          String sql = "SELECT prof.mem_id FROM prof_pf profpf, profile prof "
+	                + "WHERE profpf.prof_id = prof.prof_id "
+	              + "AND profpf.pf_id = " + pf_id;
+	         stmt = conn.prepareStatement(sql);
+	          rs = stmt.executeQuery();
+	            
+	           if(rs.next()){
+	              mem_id = rs.getInt("prof.mem_id");
+	            }
+	           
+	        }catch (Exception e) {
+	           System.out.println("pfidTomemid(pf_id) 오류" + e);
+	        }
+	         return mem_id;
+	      }
 }
