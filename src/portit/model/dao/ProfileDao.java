@@ -745,6 +745,7 @@ public class ProfileDao {
 				dto.setProf_website(rs.getString("prof_website"));
 				dto.setProf_github(rs.getString("prof_github"));
 				dto.setProf_facebook(rs.getString("prof_facebook"));
+				dto.setProf_follower(rs.getInt("prof_follower"));
 				int prof_id = rs.getInt("prof_id");
 				dto.setTag_lang(tags_lang(prof_id));
 				dto.setTag_tool(tags_tool(prof_id));

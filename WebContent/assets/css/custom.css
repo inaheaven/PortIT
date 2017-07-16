@@ -342,10 +342,11 @@ body.index {
 .project-list .pjIntro {
 	font-size: 14px;
 	
-	width: 700dpx; 
+	width: 700px; 
 	overflow:hidden;
 	white-space:nowrap; 
 	text-overflow:ellipsis; 
+	margin-bottom: 20px;
 }
 .project-list .pjTag {
 	position: absolute;

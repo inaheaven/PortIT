@@ -62,7 +62,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 					<span id="follower">${profile.prof_follower}</span>
 				</h4>
 				<div class="actions">
-					<button type="button" class="btn common" id="followToggle" value="follow" onclick="location.href='/follow?act=add'">+ Follow</button>			
+					<button type="button" class="btn common" id="followToggle" value="follow">+ Follow</button>			
 				</div>
 			</div>
 		</section><!-- /Profile header -->
@@ -266,7 +266,8 @@ Profile profile = (Profile) request.getAttribute("profile");
 						$("#followToggle").attr("value", "like");
 					}
 				});
-			}
+				
+			});
 		});	
 		
 		
