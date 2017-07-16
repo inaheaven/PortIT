@@ -127,7 +127,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 								<div class="col-md-3 mb">
 									<div class="portfolio-simple">
 										<div class="pfImg">
-											<a href="/view?type=portfolio&id=${mypf.pf_id}"><img src="${mypf.mediaList[0].ml_path}" /></a>
+											<a href="/view?type=portfolio&id=${mypf.pf_id}"><img src="${mypf.pf_mediaList[0].ml_path}" /></a>
 										</div>
 										<div class="pfInfo">
 											<div class="simple-content">

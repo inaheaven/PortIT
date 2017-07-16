@@ -37,7 +37,7 @@ public class MyPortfoliolistController extends HttpServlet{
 		
 		//마이포트폴리오리스트 조회
 		if (cmd.equals("MYPORTFOLIO")) {
-			PortfolioDao ptDao = new PortfolioDao();
+			PortfolioDao ptDao = PortfolioDao.getInstance();
 			List<Portfolio> pfPortfolio = ptDao.myPortfolio(loginId);
 			
 			req.setAttribute("portfolio", pfPortfolio);
@@ -49,7 +49,7 @@ public class MyPortfoliolistController extends HttpServlet{
 		}
 		//마이 포트폴리오리스트 삭제 
 		else if (cmd.equals("MYPORTFOLIODELETE")) {
-			PortfolioDao pfDao = new PortfolioDao();
+			PortfolioDao pfDao = PortfolioDao.getInstance();
 			int pf_id = 0;
 			if (req.getParameter("pf_id") != null) {
 				pf_id = Integer.parseInt(req.getParameter("pf_id"));

@@ -23,12 +23,21 @@ public class ProfileDao {
 	private ResultSet rs, rs2;
 	private DBConnectionMgr pool;
 	private String sql = null;
+	
+	private MediaDao mediaDao = MediaDao.getInstance();
+	private PortfolioDao portfolioDao = PortfolioDao.getInstance();
+	private TagDao tagDao = TagDao.getInstance();
+	
+	private static ProfileDao instance = new ProfileDao();
+	
+	public static ProfileDao getInstance() {
+		return instance;
+	}
 
-	public ProfileDao() {
+	private ProfileDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
-			conn = pool.getConnection();
-
+			//conn = pool.getConnection();
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -41,7 +50,9 @@ public class ProfileDao {
 	private void getConnection() {
 		try {
 			conn = pool.getConnection();
-			if (conn != null) ;
+			if (conn != null) {
+				System.out.println("DB 접속 : "+this.getClass().getName());
+			}
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -55,7 +66,7 @@ public class ProfileDao {
 		try {
 			pool.freeConnection(conn, stmt, rs);
 			if (conn != null) {
-				System.out.println("DB 접속 해제");
+				System.out.println("DB 접속 해제 : "+this.getClass().getName());
 			}
 		} catch (Exception e) {
 			System.out.println("DB 접속해제 오류 :");
@@ -486,6 +497,7 @@ public class ProfileDao {
 	 *	프로필 리스트
 	 */
 	public Profile getProfile(int mem_id) {
+		getConnection();
 		Profile dto = new Profile();
 		sql = "select distinct mem_id,prof_id, prof_name, prof_nick, prof_website, prof_github, "
 				+ " prof_facebook, prof_regdate, prof_follower,prof_img,prof_background,prof_intro "
@@ -517,7 +529,7 @@ public class ProfileDao {
 				dto.setTag_skill(tags_skill(prof_id));
 				dto.setProf_skill_level(prof_skill_levels(prof_id));
 				
-				dto.setProf_myPf(new PortfolioDao().selectListByMemId(mem_id));
+				dto.setProf_myPf(portfolioDao.selectListByMemId(mem_id));
 			}
 		} 
 		catch (Exception err) {
@@ -736,6 +748,56 @@ public class ProfileDao {
 		
 	}
 	
+	public Profile getProfileByNick(String nick) {
+		Profile profile = new Profile();
+		getConnection();
+		try {
+			String sql = "SELECT * FROM profile WHERE prof_nick=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, nick);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				profile.setProf_id(rs.getInt("prof_id"))
+				.setMem_id(rs.getInt("mem_id"))
+				.setProf_name(rs.getString("prof_name"))
+				.setProf_nick(rs.getString("prof_nick"))
+				.setProf_intro(rs.getString("prof_intro"))
+				.setProf_img(rs.getString("prof_img"))
+				.setProf_background(rs.getString("prof_background"))
+				.setProf_website(rs.getString("prof_website"))
+				.setProf_github(rs.getString("prof_github"))
+				.setProf_facebook(rs.getString("prof_facebook"));
+			}
+			
+			sql = "SELECT mem_email FROM member WHERE mem_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, profile.getMem_id());
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				profile.setProf_email(rs.getString("mem_email"));
+			}
+			
+			sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, profile.getProf_id());
+			rs = stmt.executeQuery();
+			List<Portfolio> myPf = new ArrayList<Portfolio>();
+			if (rs.next()) {
+				while (rs.next()) {
+					myPf.add(portfolioDao.selectOne(rs.getInt("pf_id")));
+				}
+			}
+			profile.setProf_myPf(myPf);
+			return profile;
+		} catch (Exception e) {
+			System.out.println("getProfileByNick() 오류 : ");
+			e.printStackTrace();
+		} finally {
+			freeConnection();
+		}
+		return profile;
+	}
+	
 	
 	/**
 	 * 닉네임으로 프로필 번호 얻기
@@ -752,10 +814,12 @@ public class ProfileDao {
 			rs = stmt.executeQuery();
 			if (rs.next()) {
 				prof_id = rs.getInt("prof_id");
-			}			
+			}
 			return prof_id;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return prof_id;
 	}

@@ -21,7 +21,7 @@ public class PortfolioViewController implements Controller {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		int articleId = Integer.parseInt(req.getParameter("id"));
-		PortfolioDao portfolioDao = new PortfolioDao();
+		PortfolioDao portfolioDao = PortfolioDao.getInstance();
 		Portfolio portfolio = portfolioDao.selectOne(articleId);
 		req.setAttribute("portfolio", portfolio);
 		

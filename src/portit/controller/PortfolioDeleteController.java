@@ -17,7 +17,7 @@ public class PortfolioDeleteController implements Controller {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int pf_id = (int) req.getAttribute("pf_id");
-		PortfolioDao portfolioDao = new PortfolioDao();
+		PortfolioDao portfolioDao = PortfolioDao.getInstance();
 		portfolioDao.delete(pf_id);
 		
 		// 뷰 URL 반환

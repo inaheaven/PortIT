@@ -13,11 +13,19 @@ import portit.model.dto.Media;
  * 미디어 라이브러리 DAO
  *
  */
-public class MediaDao {
+public class MediaDao { 
 
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	private String sql;
+	
+	private static MediaDao instance = new MediaDao();
+	
+	private MediaDao() {}
+	
+	public static MediaDao getInstance() {
+		return instance;
+	}
 	
 	/**
 	 * 미디어 정보 리스트 조회

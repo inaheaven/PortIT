@@ -118,7 +118,7 @@ public class ProfileController extends HttpServlet {
 
 //		int prof_follower = Integer.parseInt(req.getParameter("prof_follower"));
 		
-		ProfileDao profileDao = new ProfileDao();
+		ProfileDao profileDao = ProfileDao.getInstance();
 		Profile prof_reg = new Profile();
 
 		prof_reg.setProf_img(prof_img);

@@ -12,7 +12,7 @@
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <script>
 <%
-	List<Portfolio> myport = new PortfolioDao()
+	List<Portfolio> myport = PortfolioDao.getInstance()
 		.selectListByMemId(Integer.parseInt(request.getSession().getAttribute("loginId").toString()));
 	if(myport.isEmpty()){
 		myport= new ArrayList();

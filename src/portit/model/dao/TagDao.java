@@ -17,6 +17,14 @@ public class TagDao {
 	private ResultSet rs;
 	private String sql;
 	
+	private static TagDao instance = new TagDao();
+	
+	private TagDao() {}
+	
+	public static TagDao getInstance() {
+		return instance;
+	}
+	
 	/**
 	 * 태그 정보 리스트 조회
 	 * @param conn 작업을 요청하는 DB 커넥션

@@ -25,17 +25,20 @@ public class PortfolioDao {
 	private ResultSet rs, rs2, rs3, rs4;
 	private DBConnectionMgr pool;
 	
-	private MediaDao mediaDao;
-	private ProfileDao profileDao;
-	private TagDao tagDao;
+	private MediaDao mediaDao = MediaDao.getInstance();
+	private ProfileDao profileDao = ProfileDao.getInstance();
+	private TagDao tagDao = TagDao.getInstance();
 	
-	public PortfolioDao() {
+	private static PortfolioDao instance = new PortfolioDao();
+	
+	public static PortfolioDao getInstance() {
+		return instance;
+	}
+	
+	private PortfolioDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
-			conn = pool.getConnection();
-			mediaDao = new MediaDao();
-			profileDao = new ProfileDao();
-			tagDao = new TagDao();
+			//conn = pool.getConnection();
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -48,7 +51,7 @@ public class PortfolioDao {
 	private void getConnection() {
 		try {
 			conn = pool.getConnection();
-			if (conn != null) System.out.println("DB 접속");
+			if (conn != null) System.out.println("DB 접속 : "+this.getClass().getName());
 		} catch (Exception e) {
 			System.out.println("DB 접속 오류 :");
 			e.printStackTrace();
@@ -62,7 +65,7 @@ public class PortfolioDao {
 		try {
 			pool.freeConnection(conn, stmt, rs);
 			if (conn != null) {
-				System.out.println("DB 접속 해제");
+				System.out.println("DB 접속 해제 : "+this.getClass().getName());
 			}
 		} catch (Exception e) {
 			System.out.println("DB 접속해제 오류 :");
@@ -141,10 +144,10 @@ public class PortfolioDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, pf_id);
 				rs = stmt.executeQuery();
-				profileDao = new ProfileDao();
-				while (rs.next()) {
-					Profile profile = profileDao.getProfile(rs.getInt("mem_id"));
-					coworkers.add(profile);
+				if (rs.next()) {
+					while (rs.next()) {
+						coworkers.add(profileDao.getProfile(rs.getInt("mem_id")));
+					}
 				}
 				portfolio.setPf_coworkers(coworkers);
 				System.out.println("공동작업자 정보 DTO에 저장");

@@ -27,8 +27,8 @@ public class PortfolioEditController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PortfolioDao portfolioDao = new PortfolioDao();
-		ProfileDao profileDao = new ProfileDao();
+		PortfolioDao portfolioDao = PortfolioDao.getInstance();
+		ProfileDao profileDao = ProfileDao.getInstance();
 		
 		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, Object> formData = (Map<String, Object>) req.getAttribute("formData");

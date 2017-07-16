@@ -23,7 +23,7 @@ public class LikeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
-		PortfolioDao portfolioDao = new PortfolioDao();
+		PortfolioDao portfolioDao = PortfolioDao.getInstance();
 		
 		int pf_id = Integer.parseInt(req.getParameter("pf_id"));
 		int mem_id = Integer.parseInt(req.getParameter("mem_id"));
