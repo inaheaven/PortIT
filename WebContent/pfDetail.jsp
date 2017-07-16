@@ -8,6 +8,7 @@
 <%
 request.setCharacterEncoding("UTF-8");
 Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
+String dataTF= (String)request.getAttribute("dataTF");
 %>
 <head>
 <meta charset="utf-8">
@@ -386,7 +387,26 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					}
 				});
 			});
+
+			//북마크 버튼 실행부분
+			 
+<%
+		if ("T".equals(dataTF)) {
+%>	
+			$("#bookmarkToggle").empty();						
+			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark\"></i>");
+			$("#bookmarkToggle").attr("value", "unbookmark");
+<%
+		}else{
+%>
+			$("#bookmarkToggle").empty();
+			$("#bookmarkToggle").append("<i class=\"fa fa-bookmark-o\"></i>");
+			$("#bookmarkToggle").attr("value", "bookmark");
+<%
+		}
+%>
 			
+			/*
 			// 북마크 토글
 			$("#bookmarkToggle").click(function() {
 				var value = $("#bookmarkToggle").attr("value");
@@ -427,6 +447,7 @@ Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
 					}
 				});
 			});
+			*/
 		});		
 	</script>
 
