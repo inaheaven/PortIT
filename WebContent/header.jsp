@@ -4,6 +4,11 @@
 <%@page import="portit.model.dto.Profile"%>
 <%@page import="portit.model.dao.ProfileDao"%>
 <jsp:useBean id="dao" class="portit.model.dao.NotificationDao" />
+<script>
+function main_con(){
+	document.main_conn.submit();	
+}
+</script>
 <%
 	String loginEmail = (String)session.getAttribute("loginEmail");
 	Profile prof = new Profile();
@@ -14,10 +19,14 @@
 	String nickname = profileDao.idToNick(loginId);
 		
 %>
+
+<form name="main_conn" method="post" action="/logo_click">
+	<input type="hidden" name="cmd" value="MAIN" />
+</form>
 <c:set var="ntList" value="<%= dao.headerNoti(loginId) %>" />
 <header class="header black-bg">
-	<!--logo start-->
-	<a href="/page?page=main" class="logo"><b>Port IT</b></a>
+	<!--logo start-->	
+		<a href="javascript:main_con()" class="logo"><b>Port IT</b></a>		
 	<!--logo end-->
 	<div class="nav notify-row" id="top_menu">
 		<!--  menu start -->

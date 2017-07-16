@@ -17,28 +17,26 @@
 <link href="assets/css/custom.css" rel="stylesheet">
 <link href="assets/css/search.css" rel="stylesheet">
 
-
 <jsp:include page="header.jsp"></jsp:include>
 
 <jsp:useBean id="member_viewDao" class="portit.model.dao.ViewDao" />
 	<section class="container">
 		<section class="wrapper site-min-height">
-			<div class="col-md-12 mt search" id="searchPf">
+			<div class="col-md-12 mt search" id="searchMem">
 				<!-- 검색어 검색 폼 -->
 
 				<div class="col-md-12 mt mb">
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=MEMSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="memSearch"
-								value="${sessionScope.search}" />
+							<input type="text" class="form-control" name="memSearch" />
 						</div>
 						<button type="submit" class="col-md-1 btn common" >
 							<i class="fa fa-search"></i>
 						</button>
 					</form>
 					<div class="col-md-2 collapsed sortingBtn text-right"
-						data-toggle="collapse" data-parent="#searchPf"
+						data-toggle="collapse" data-parent="#searchMem"
 						href="#searchSorting">
 						<button type="button" class="btn common updown">
 							조건 검색&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
@@ -66,16 +64,16 @@
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
 							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
-							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="OS" name="language"	onclick="fnAppendItem('OS')" /> 
 							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
 							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
+							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')" />  .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
-							<input type="text" class="form-control taginput" id="language"
-								name="language" placeholder="검색하고 싶은 태그를 입력하세요."
+							<input type="text" class="form-control taginput" 
+								name="language2" placeholder="검색하고 싶은 태그를 입력하세요."
 								onchange="fnAppendItem2()" />
 						</div>
 						<br> <br>
@@ -161,7 +159,7 @@
  				if((nowBlock*pagePerBlock)+i == totalPage)
  					break;
  		%>
- 				<a href="/memList.jsp?page=memList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
+ 			<a href="/memList.jsp?page=memList?nowPage=<%=(nowBlock*pagePerBlock)+i%>&nowBlock=<%=nowBlock%>"><%= (nowBlock*pagePerBlock)+i+1%></a>&nbsp;&nbsp;&nbsp;
  		<%
  			}
  		%>
@@ -208,9 +206,9 @@
 	</script>
 	
 		<!-- 상세페이지로 이동하기 위한 폼 -->
-<form name="pf_info" method="post" action="/detailView">
-	<input type="hidden" name="pf_id" /> 
-	<input type="hidden" name="cmd" value="PORTFOLIO" />
+<form name="prof_info" method="post" action="/view">
+	<input type="hidden" name="id" /> 
+	<input type="hidden" name="type" value="profile" />
 </form>
 <form name="tag_info" method="post" action="/detailView">
 	<input type="hidden" name="tag_name" /> 

@@ -222,7 +222,7 @@ public class ViewDao {
 	 */
 	public List project_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct project.proj_id, ml_path, proj_title, prof_name, proj_intro, "
+		String sql = "select distinct project.proj_id, proj_title, prof_name, proj_intro, "
 				+ "proj_to ,  proj_regenddate, trunc(proj_regenddate - sysdate) as d_day  "
 				+ "from project join mem_proj on project.proj_id = mem_proj.proj_id "
 				+ "join member on member.mem_id = mem_proj.mem_id "
@@ -241,7 +241,6 @@ public class ViewDao {
 				//project.setTag_name(rs.getString("tag_name"));
 				project.setProj_id(rs.getInt("proj_id"));
 				project.setProj_title(rs.getString("proj_title"));
-				project.setMl_path(rs.getString("ml_path"));
 				project.setProj_to(rs.getInt("proj_to"));
 				project.setProj_intro(rs.getString("proj_intro"));				
 				project.setProf_name(rs.getString("prof_name"));				
@@ -318,49 +317,7 @@ public class ViewDao {
 		return null;
 	}
 	
-	/**
-	 * 프로젝트 간략 정보 (하나의 프로젝트 조회)
-	 */
-	public List project_info(int proj_id) {
-		ArrayList list = new ArrayList();
-		String sql =  "select distinct project.proj_id, ml_path, proj_title, prof_name, proj_intro, proj_to ,  proj_regenddate, trunc(proj_regenddate - sysdate) as d_day  "
-				+ "from project join mem_proj on project.proj_id = mem_proj.proj_id "
-				+ "join member on member.mem_id = mem_proj.mem_id "
-				+ "join profile on profile.mem_id = member.mem_id  "
-				+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
-				+ "join tag on tag.tag_id = tag_use.tag_id "
-				+ "join media_library on media_library.ml_type_id = project.proj_id "
-				+ "where tag_use_type = 'proj' and ml_type = 'proj' and  proj_id=? ";
-				
-			
-		try {
-			pstmt = con.prepareStatement(sql);		
-			pstmt.setInt(1, proj_id);
-			rs = pstmt.executeQuery();
-
-			
-			while (rs.next()) {
-				Project project = new Project(); 
-				//project.setTag_name(rs.getString("tag_name"));
-				project.setProj_title(rs.getString("proj_title"));
-				project.setMl_path(rs.getString("ml_path"));
-				project.setProj_id(rs.getInt("proj_id"));
-				project.setProj_intro(rs.getString("proj_intro"));				
-				project.setProf_name(rs.getString("prof_name"));				
-				project.setProj_regenddate(rs.getDate("proj_regenddate"));
-				//project.setD_day(rs.getInt("d_day"));
-				
-			}
-		}
-		catch (Exception err) {
-			System.out.println("proj_id() 에서 오류");
-			err.printStackTrace();
-		}
-		finally {
-			freeConnection();
-		}
-		return list;
-	}
+	
 	/**
 	 * 타임라인 정보를 불러오는 메서드	  
 	 */

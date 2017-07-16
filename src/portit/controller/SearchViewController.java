@@ -32,21 +32,18 @@ public class SearchViewController extends HttpServlet {
 		String url = null;
 		HttpSession session = req.getSession();
 		
-		
 		//검색어 결과 저장
 		String totalsearch = req.getParameter("totalsearch");	//통합 검색한 결과
-		String pfSearch = req.getParameter("pfSearch");	//포트폴리오 페이지 내에서 검색 결과 값
-		System.out.println(pfSearch);
-		String memSearch = req.getParameter("memSearch");  // 멤버 페이지 내에서 검색 결과 값
-		System.out.println(memSearch);
+		String pfSearch = req.getParameter("pfSearch");	//포트폴리오 페이지 내에서 검색 결과 값		
+		String memSearch = req.getParameter("memSearch");  // 멤버 페이지 내에서 검색 결과 값		
 		String projSearch = req.getParameter("projSearch");	 // 프로젝트 페이지 내에서 검색 결과 값
 		
 		session.setAttribute("pfSearch",pfSearch);
+		session.setAttribute("memSearch",memSearch);
+		session.setAttribute("projSearch",projSearch);
 		
-		String pfSearch2 = (String) session.getAttribute("pfSearch");
 		
 		//포트폴리오 Dao 호출
-		//Controller -> Model로 넘겨주기
 		SearchDao searchDao = new SearchDao();
 		
 		//list : 불러올 결과    list1 : 불러올 태그 결과
@@ -84,8 +81,7 @@ public class SearchViewController extends HttpServlet {
 		//통합검색의 후, 더 보기 버튼을 눌렀을 때, 통합검색한 검색어를 가지고 포트폴리오 페이지로 이동
 		if(cmd.equals("PFSEARCH")){		
 			if(totalsearch != null){				
-				list = searchDao.searchAll_port(totalsearch,lineup);	
-			
+				list = searchDao.searchAll_port(totalsearch,lineup);				
 				req.setAttribute("port_list", list);
 		
 			}			
@@ -93,7 +89,6 @@ public class SearchViewController extends HttpServlet {
 		}
 		else if(cmd.equals("MEMSEARCH")){
 			if(totalsearch != null){
-				System.out.println(totalsearch);
 				list = searchDao.searchAll_member(totalsearch,lineup);
 				req.setAttribute("mem_list", list);
 

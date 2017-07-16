@@ -45,17 +45,17 @@
 					<div class="col-md-11">
 						<!-- 인기 태그 6개 띄우기 -->
 						<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
-						<input class="btn poptag" type="button" value="C#" name="language"	onclick="fnAppendItem('C#')" /> 
-						<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
-						<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
-						<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
-						<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
+							<input class="btn poptag" type="button" value="OS" name="language"	onclick="fnAppendItem('OS')" /> 
+							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
+							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
+							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')" /> .....
 					</div>
 					<br>
 					<br>
 					<div class="col-md-offset-1 col-md-4">
-						<input type="text" class="form-control taginput" id="language"
-							name="language" placeholder="검색하고 싶은 태그를 입력하세요."
+						<input type="text" class="form-control taginput"
+							name="language2" placeholder="검색하고 싶은 태그를 입력하세요."
 							onchange="fnAppendItem2()" />
 					</div>
 					<br>
@@ -93,8 +93,11 @@
   						<div class="portfolio-simple">
  							
  							<div class="pfImg">
-           						<img src="<%=port.getMl_path()%>"/>   
- 		         			</div>
+		   						<% if(port.getMl_path2() != null){
+									for(int j=0; j<1; j++) { %>
+		           					<img src="${pageContext.request.contextPath}<%=port.getMl_path2().get(j)%>"/> 
+		          				<%}} %>  
+		        			</div>
   							<div class="pfInfo">
   								<div class="simple-content">
 									<div class="pfTag">

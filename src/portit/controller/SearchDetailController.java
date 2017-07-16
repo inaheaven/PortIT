@@ -53,16 +53,22 @@ public class SearchDetailController extends HttpServlet {
 		//lineup = true(최신순) / false(인기순)
 		boolean lineup = true;
 	
-		SearchDao dao = new SearchDao();
 		
 		String param1=req.getParameter("param1");
 		String param2=req.getParameter("param2");
 		String param3=req.getParameter("param3");
-		String param4=req.getParameter("param4");
+		String param4=req.getParameter("language2");
 		System.out.println("param1 : " +param1);
+		System.out.println("param4 : " +param4);
+		param4 = param4.toUpperCase();
 		
+		
+		//  포트폴리오 정렬 및 / 다중 검색
 		if(cmd.equals("PFDETAIL")){
 			String pfSearch = (String) session.getAttribute("pfSearch");
+			if(!"".equals(pfSearch) ){
+				pfSearch = pfSearch.toUpperCase();
+			}
 			System.out.println("CTRL : PFDETAIL 접근확인");
 			
 			
@@ -75,22 +81,39 @@ public class SearchDetailController extends HttpServlet {
 			//다중검색
 			if(list_value == 0 ){
 				//검색어 없을시
-				if(param1 ==null && param2 == null && param3 == null ){
+				//if(param1 ==null && param2 == null && param3 == null && param4 == "" ){
+				if("".equals(param1)  && "".equals(param2) && "".equals(param3) && "".equals(param4)){
 					list = searchDao.searchAll_port(" ", true);
+					req.setAttribute("port_list", list);
 				}
-				//검색태그 1개
-				else if(param1 != null && param2 ==null && param3 == null ){
+				//검색태그 1개 (버튼 1개로 검색)
+				else if(param1 != null && param2 ==null && param3 == null && param4 == ""  ){
 					list = searchDao.searchAll_port(param1, true);	
 					req.setAttribute("port_list", list);
 				}
-				//검색태그 2개
-				else if(param1 != null && param2 != null && param3 == null ){
+				//검색태그 1개 (텍스트박스로 검색)
+				else if(param1 == null && param2 ==null && param3 == null && param4 != "" ){
+					list = searchDao.searchAll_port(param4, true);	
+					req.setAttribute("port_list", list);
+				}
+				//검색태그 2개 (버튼 2개로 검색)
+				else if(param1 != null && param2 != null && param3 == null && param4 == ""){
 					list = searchDao.searchAll_port(param1, param2);
 					req.setAttribute("port_list", list);
 				}
-				//검색태그 3개
-				else{
+				//검색태그 2개 (버튼 1개 + 텍스트 1개로 검색)
+				else if(param1 != null && param2 == null && param3 == null &&  param4 != "" ){
+					list = searchDao.searchAll_port(param1, param4);
+					req.setAttribute("port_list", list);
+				}
+				//검색태그 3개 (버튼 3개로 검색)
+				else if(param1 != null && param2 != null && param3 != null && param4 == "" ){
 					list = searchDao.searchAll_port(param1, param2, param3);
+					req.setAttribute("port_list", list);
+				}
+				//검색태그 3개 (버튼 2개 + 텍스트로 검색)
+				else if(param1 != null && param2 != null && param3 == null &&  param4 != "" ){
+					list = searchDao.searchAll_port(param1, param2, param4);
 					req.setAttribute("port_list", list);
 				}
 			}
@@ -102,12 +125,14 @@ public class SearchDetailController extends HttpServlet {
 			// 1 : 최신순 , 2 : 인기순
 			else if(list_value == 1){
 				req.setAttribute("pfSearch", pfSearch);
-				list = dao.searchAll_port(pfSearch, lineup);
+				System.out.println("pfsearch ??? " + pfSearch);				
+				list =  searchDao.searchAll_port(pfSearch, lineup);
 				req.setAttribute("port_list", list);
 			}
 			else if(list_value == 2){
 				req.setAttribute("pfSearch", pfSearch);
-				list = dao.searchAll_port(pfSearch, !lineup);
+				System.out.println("pfsearch ..? " + pfSearch);
+				list = searchDao.searchAll_port(pfSearch, !lineup);
 				req.setAttribute("port_list", list);	
 			}			
 			
@@ -116,48 +141,66 @@ public class SearchDetailController extends HttpServlet {
 		
 		else if(cmd.equals("MEMDETAIL")){
 			String memSearch = (String) session.getAttribute("memSearch");
-
+			if(memSearch !=null){
+				memSearch = memSearch.toUpperCase();
+			}
 			System.out.println("CTRL 파라미터전달확인="+param1);
 			System.out.println("CTRL 파라미터전달확인22="+param2);
 			System.out.println("CTRL 파라미터전달확인33="+param3);
 			System.out.println("CTRL 파라미터전달확인44="+param4);
 			
-			//list = searchDao.searchAll_member(param, true);
-			//req.setAttribute("mem_list", list);
+			
 			
 			//다중검색
 			if(list_value == 0 ){
 				//검색어 없을시
-				if(param1 ==null && param2 == null && param3 == null ){
+				if(param1 ==null && param2 == null && param3 == null && param4 == ""){
 					list = searchDao.searchAll_member(" ", true);
 					req.setAttribute("mem_list", list);
 				}
-				//검색태그 1개
-				else if(param1 != null && param2 ==null && param3 == null ){
+				//검색태그 1개 (버튼 1개로 검색)
+				else if(param1 != null && param2 ==null && param3 == null && param4 == ""){
 					list = searchDao.searchAll_member(param1, true);	
 					req.setAttribute("mem_list", list);
 				}
-				//검색태그 2개
-				else if(param1 != null && param2 != null && param3 == null ){
+				//검색태그 1개 (텍스트박스 검색)
+				else if(param1 == null && param2 ==null && param3 == null && param4 != ""){
+					list = searchDao.searchAll_member(param4, true);	
+					req.setAttribute("mem_list", list);
+				}
+				//검색태그 2개 (버튼 2개 클릭으로 검색)
+				else if(param1 != null && param2 != null && param3 == null && param4 == ""){
 					list = searchDao.searchAll_member(param1, param2);
 					req.setAttribute("mem_list", list);
 				}
-				//검색태그 3개
-				else{
+				//검색태그 2개 (버튼 1개 + 텍스트박스 검색)
+				else if(param1 != null && param2 == null && param3 == null && param4 != ""){
+					list = searchDao.searchAll_member(param1, param4);
+					req.setAttribute("mem_list", list);
+				}
+				//검색태그 3개(버튼 3개로 검색)
+				else if(param1 != null && param2 != null && param3 != null && param4 == ""){
 					list = searchDao.searchAll_member(param1, param2, param3);
+					req.setAttribute("mem_list", list);
+				}
+				//검색태그 3개(버튼 2개 + 텍스트박스로 검색)
+				else if(param1 != null && param2 != null && param3 == null && param4 != ""){
+					list = searchDao.searchAll_member(param1, param2, param4);
 					req.setAttribute("mem_list", list);
 				}
 			}
 			
 			// 3 : 최신순 , 4 : 인기순
-			if(list_value == 3){
+			else if(list_value == 3){
 				req.setAttribute("memSearch", memSearch);
-				list = dao.searchAll_port(memSearch, lineup);
+				
+				list = searchDao.searchAll_member(memSearch, lineup);
 				req.setAttribute("mem_list", list);
 			}
 			else if(list_value == 4){
 				req.setAttribute("memSearch", memSearch);
-				list = dao.searchAll_port(memSearch, !lineup);
+				
+				list = searchDao.searchAll_member(memSearch, !lineup);
 				req.setAttribute("mem_list", list);	
 			}		
 			
@@ -165,43 +208,59 @@ public class SearchDetailController extends HttpServlet {
 		}
 		else if(cmd.equals("PROJDETAIL")){
 			String projSearch = (String) session.getAttribute("projSearch");
-			//list = searchDao.searchAll_member(param, true);
-			//req.setAttribute("proj_list", list);
+			projSearch = projSearch.toUpperCase();	
 			
 			//다중검색
 			if(list_value == 0 ){
 				//검색어 없을시
-				if(param1 ==null && param2 == null && param3 == null ){
+				if(param1 ==null && param2 == null && param3 == null && param4 == "" ){
 					list = searchDao.searchAll_proj(" ", true);
 					req.setAttribute("proj_list", list);
 				}
-				//검색태그 1개
-				else if(param1 != null && param2 ==null && param3 == null ){
+				//검색태그 1개 (버튼 클릭으로 검색)
+				else if(param1 != null && param2 ==null && param3 == null && param4 == "" ){
 					list = searchDao.searchAll_proj(param1, true);	
 					req.setAttribute("proj_list", list);
 				}
-				//검색태그 2개
-				else if(param1 != null && param2 != null && param3 == null ){
+				//검색태그 1개 (텍스트로 검색)
+				else if(param1 == null && param2 ==null && param3 == null && param4 != "" ){
+					list = searchDao.searchAll_proj(param4, true);	
+					req.setAttribute("proj_list", list);
+				}
+				//검색태그 2개(버튼 2개로 검색)
+				else if(param1 != null && param2 != null && param3 == null  && param4 == ""){
 					list = searchDao.searchAll_proj(param1, param2);
 					req.setAttribute("proj_list", list);
 				}
-				//검색태그 3개
-				else{
+				//검색태그 2개(버튼 1개 + 텍스트로 검색)
+				else if(param1 != null && param2 == null && param3 == null  && param4 != ""){
+					list = searchDao.searchAll_proj(param1, param4);
+					req.setAttribute("proj_list", list);
+				}
+				//검색태그 3개(버튼 3개로 검색)
+				else if(param1 != null && param2 != null && param3 != null  && param4 == ""){
 					list = searchDao.searchAll_proj(param1, param2, param3);
+					req.setAttribute("proj_list", list);
+				}
+				//검색태그 3개(버튼 2개 + 텍스트로 검색)
+				else if(param1 != null && param2 != null && param3 == null  && param4 != ""){
+					list = searchDao.searchAll_proj(param1, param2, param4);
 					req.setAttribute("proj_list", list);
 				}
 			}			
 			
 			
 			//5 : 최신순 , 6:d-day임박 순
-			if(list_value == 5){
+			else if(list_value == 5){
 				req.setAttribute("projSearch", projSearch);
-				list = dao.searchAll_port(projSearch, lineup);
-				req.setAttribute("porj_list", list);
+				System.out.println("projSearch5: " + projSearch);
+				list = searchDao.searchAll_proj(projSearch, lineup);
+				req.setAttribute("proj_list", list);
 			}
 			else if(list_value == 6){
 				req.setAttribute("projSearch", projSearch);
-				list = dao.searchAll_port(projSearch, !lineup);
+				System.out.println("projSearch6: " + projSearch);
+				list = searchDao.searchAll_proj(projSearch, !lineup);
 				req.setAttribute("proj_list", list);	
 			}	
 			url="page?page=projSearch";
@@ -217,7 +276,7 @@ public class SearchDetailController extends HttpServlet {
 			System.out.println("CTRL 파라미터전달확인44="+param4);
 			
 			//검색어 없을시
-			if(param1 ==null && param2 == null && param3 == null ){
+			if(param1 ==null && param2 == null && param3 == null && param4 == ""){
 				list1 = searchDao.searchAll_port(" ", true);
 				list2 = searchDao.searchAll_member(" ", true);
 				list3 = searchDao.searchAll_proj(" ", true);
@@ -226,8 +285,8 @@ public class SearchDetailController extends HttpServlet {
 				req.setAttribute("mem_list", list2);
 				req.setAttribute("proj_list", list3);				
 			}
-			//검색태그 1개
-			else if(param1 != null && param2 ==null && param3 == null ){
+			//검색태그 1개 (버튼눌러서 검색)
+			else if(param1 != null && param2 ==null && param3 == null && param4 == ""){
 				list1 = searchDao.searchAll_port(param1, true);	
 				list2 = searchDao.searchAll_member(param1, true);	
 				list3 = searchDao.searchAll_proj(param1, true);	
@@ -236,8 +295,18 @@ public class SearchDetailController extends HttpServlet {
 				req.setAttribute("mem_list", list2);
 				req.setAttribute("proj_list", list3);
 			}
-			//검색태그 2개
-			else if(param1 != null && param2 != null && param3 == null ){
+			//검색태그 1개 (검색어로 검색)
+			else if(param1 == null && param2 ==null && param3 == null && param4 != "" ){
+				list1 = searchDao.searchAll_port(param4, true);	
+				list2 = searchDao.searchAll_member(param4, true);	
+				list3 = searchDao.searchAll_proj(param4, true);	
+				
+				req.setAttribute("port_list", list1);
+				req.setAttribute("mem_list", list2);
+				req.setAttribute("proj_list", list3);
+			}
+			//검색태그 2개 (버튼 2개 클릭해서 검색)
+			else if(param1 != null && param2 != null && param3 == null && param4 == "" ){
 				list1 = searchDao.searchAll_port(param1, param2);
 				list2 = searchDao.searchAll_member(param1, param2);
 				list3 = searchDao.searchAll_proj(param1, param2);
@@ -246,15 +315,35 @@ public class SearchDetailController extends HttpServlet {
 				req.setAttribute("mem_list", list2);
 				req.setAttribute("proj_list", list3);
 			}
-			//검색태그 3개
-			else{
-				list = searchDao.searchAll_port(param1, param2, param3);
-				list = searchDao.searchAll_member(param1, param2, param3);
-				list = searchDao.searchAll_proj(param1, param2, param3);
+			//검색태그 2개 (버튼1 + 텍스트 1)
+			else if(param1 != null && param2 != null && param3 == null && param4 != ""){
+				list1 = searchDao.searchAll_port(param1, param4);
+				list2 = searchDao.searchAll_member(param1, param4);
+				list3 = searchDao.searchAll_proj(param1, param4);
 				
-				req.setAttribute("port_list", list);
-				req.setAttribute("mem_list", list);
-				req.setAttribute("proj_list", list);
+				req.setAttribute("port_list", list1);
+				req.setAttribute("mem_list", list2);
+				req.setAttribute("proj_list", list3);
+			}
+			//검색태그 3개(버튼 3개)
+			else if(param1 != null && param2 != null && param3 != null && param4 == ""){
+				list1 = searchDao.searchAll_port(param1, param2, param3);
+				list2 = searchDao.searchAll_member(param1, param2, param3);
+				list3 = searchDao.searchAll_proj(param1, param2, param3);
+				
+				req.setAttribute("port_list", list1);
+				req.setAttribute("mem_list", list2);
+				req.setAttribute("proj_list", list3);
+			}
+			//검색태그 3개(버튼 2개 + 텍스트 1)
+			else if(param1 != null && param2 != null && param3 == null && param4 != ""){
+				list1 = searchDao.searchAll_port(param1, param2, param4);
+				list2 = searchDao.searchAll_member(param1, param2, param4);
+				list3 = searchDao.searchAll_proj(param1, param2, param4);
+				
+				req.setAttribute("port_list", list1);
+				req.setAttribute("mem_list", list2);
+				req.setAttribute("proj_list", list3);
 			}
 			
 			url="page?page=searchAll";

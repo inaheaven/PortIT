@@ -65,7 +65,7 @@ public class SearchDao {
 					+ "join tag on tag.tag_id = tag_use.tag_id  "
 					+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
 					+ "where tag_use_type ='pf' and ml_type = 'pf' "
-					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+					+ "and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by pf_regdate desc";
 		}
 		else{
@@ -76,7 +76,7 @@ public class SearchDao {
 					+ "join tag on tag.tag_id = tag_use.tag_id  "
 					+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
 					+ "where tag_use_type ='pf' and ml_type = 'pf' "
-					+ "and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
+					+ "and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(portfolio.pf_title) like '%"+keyword+"%') "
 					+ "order by portfolio.PF_LIKE desc";
 		}
 		
@@ -175,7 +175,7 @@ public class SearchDao {
 				+ "join tag on tag.tag_id = tag_use.tag_id  "
 				+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
 				+ "where tag_use_type ='pf' and ml_type = 'pf' and "
-				+ " (UPPER(tag.tag_name) like '%"+keyword+"%') or (UPPER(tag.tag_name) like '%"+keyword2+"%')  "
+				+ " (UPPER(tag.tag_name) like '"+keyword+"') or (UPPER(tag.tag_name) like '"+keyword2+"')  "
 				+ "order by pf_regdate desc";
 		
 		
@@ -196,6 +196,7 @@ public class SearchDao {
 				int pf_id = rs.getInt("pf_id");
 				
 				portfolio.setTags(portfolio_tag(pf_id));
+				portfolio.setMl_path2(port_media(pf_id));
 				list.add(portfolio);
 			}
 		}
@@ -222,7 +223,7 @@ public class SearchDao {
 				+ "join tag on tag.tag_id = tag_use.tag_id  "
 				+ "join media_library on media_library.ml_type_id = portfolio.pf_id  "
 				+ "where tag_use_type ='pf' and ml_type = 'pf' and "
-				+ " (UPPER(tag.tag_name) like '%"+keyword+"%') or (UPPER(tag.tag_name) like '%"+keyword2+"%') or (UPPER(tag.tag_name) like '%"+keyword3+"%') "
+				+ " (UPPER(tag.tag_name) like '"+keyword+"') or (UPPER(tag.tag_name) like '"+keyword2+"') or (UPPER(tag.tag_name) like '"+keyword3+"') "
 				+ "order by pf_regdate desc";
 		
 		
@@ -243,6 +244,7 @@ public class SearchDao {
 				int pf_id = rs.getInt("pf_id");
 				
 				portfolio.setTags(portfolio_tag(pf_id));
+				portfolio.setMl_path2(port_media(pf_id));
 				list.add(portfolio);
 			}
 		}
@@ -270,7 +272,7 @@ public class SearchDao {
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
 					+ "where (tag_use_type = 'prof') and "
-					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
+					+ "(UPPER(tag.tag_name) like '"+keyword+"' or UPPER(profile.prof_name) like '%"+keyword+"%') "
 					+ "order by prof_regdate desc";
 		}	
 		else{
@@ -279,7 +281,7 @@ public class SearchDao {
 					+ "on tag_use.tag_use_type_id = profile.prof_id "
 					+ "join tag  on tag.tag_id = tag_use.tag_id  "
 					+ "where (tag_use_type = 'prof') and "
-					+ "(UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(profile.prof_name) like '%"+keyword+"%') "
+					+ "(UPPER(tag.tag_name) like '"+keyword+"' or UPPER(profile.prof_name) like '%"+keyword+"%') "
 					+ "order by profile.prof_follower desc";
 		}
 		ArrayList list = new ArrayList();
@@ -327,7 +329,7 @@ public class SearchDao {
 				+ "on tag_use.tag_use_type_id = profile.prof_id "
 				+ "join tag  on tag.tag_id = tag_use.tag_id  "
 				+ "where (tag_use_type = 'prof') and "
-				+ "(UPPER(tag.tag_name) like '%"+keyword1+"%' or UPPER(tag.tag_name) like '%"+keyword2+"%') "
+				+ "(UPPER(tag.tag_name) like '"+keyword1+"' or UPPER(tag.tag_name) like '"+keyword2+"') "
 				+ "order by prof_regdate desc";
 	
 		
@@ -376,7 +378,7 @@ public class SearchDao {
 				+ "on tag_use.tag_use_type_id = profile.prof_id "
 				+ "join tag  on tag.tag_id = tag_use.tag_id  "
 				+ "where (tag_use_type = 'prof') and "
-				+ "(UPPER(tag.tag_name) like '%"+keyword1+"%' or UPPER(tag.tag_name) like '%"+keyword2+"%' or UPPER(tag.tag_name) like '%"+keyword3+"%') "
+				+ "(UPPER(tag.tag_name) like '"+keyword1+"' or UPPER(tag.tag_name) like '"+keyword2+"' or UPPER(tag.tag_name) like '"+keyword3+"') "
 				+ "order by prof_regdate desc";
 		
 		
@@ -451,11 +453,11 @@ public class SearchDao {
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "join media_library on media_library.ml_type_id = project.proj_id "
 					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
-					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') "
+					+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(project.proj_title) like '%"+keyword+"%') "
 					+ " order by proj_regdate desc";
 		}
 		else{
-			sql =  "select distinct project.proj_id, proj_title, prof_name, proj_intro, proj_to ,  proj_regenddate, trunc(proj_regenddate - sysdate) as d_day  "
+			sql =  "select distinct project.proj_id, proj_title, prof_name, proj_intro, proj_to , proj_regdate, proj_regenddate, trunc(proj_regenddate - sysdate) as d_day  "
 					+ "from project join mem_proj on project.proj_id = mem_proj.proj_id "
 					+ "join member on member.mem_id = mem_proj.mem_id "
 					+ "join profile on profile.mem_id = member.mem_id  "
@@ -463,7 +465,7 @@ public class SearchDao {
 					+ "join tag on tag.tag_id = tag_use.tag_id "
 					+ "join media_library on media_library.ml_type_id = project.proj_id "
 					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
-					+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(project.proj_title) like '%"+keyword+"%') "
+					+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(project.proj_title) like '%"+keyword+"%') "
 					+ "order by d_day ";
 
 		}
@@ -518,7 +520,7 @@ public class SearchDao {
 				+ "join tag on tag.tag_id = tag_use.tag_id "
 				+ "join media_library on media_library.ml_type_id = project.proj_id "
 				+ "where tag_use_type = 'proj' and ml_type = 'proj' "
-				+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(tag.tag_name) like '%"+keyword2+"%') "
+				+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(tag.tag_name) like '%"+keyword2+"%') "
 				+ " order by proj_regdate desc";
 		
 		
@@ -573,7 +575,7 @@ public class SearchDao {
 				+ "join tag on tag.tag_id = tag_use.tag_id "
 				+ "join media_library on media_library.ml_type_id = project.proj_id "
 				+ "where tag_use_type = 'proj' and ml_type = 'proj' "
-				+ " and (UPPER(tag.tag_name) like '%"+keyword+"%' or UPPER(tag.tag_name) like '%"+keyword2+"%' UPPER(tag.tag_name) like '%"+keyword3+"%') "
+				+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(tag.tag_name) like '"+keyword2+"' or UPPER(tag.tag_name) like '"+keyword3+"') "
 				+ " order by proj_regdate desc";
 		
 		

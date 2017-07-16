@@ -64,23 +64,24 @@ var count = 0;
 
 	}
 
-	function fnAppendItem2(_param) {
+	function fnAppendItem2() {
 		count++;
 
 		var newSpan = document.createElement("span");
+		/*
 		//INPUT생성
 		var newInput = document.createElement("input");
-		
+		*/
 		newSpan.setAttribute("id", "item_" + count);
 		newSpan.setAttribute("class", "btn");
 		newSpan.className += " tagcondition";
-		
+		/*
 		//속성
 		newInput.setAttribute("id", "param" + count);
 		newInput.setAttribute("name", "param" + count);
 		newInput.setAttribute("value", _param);
 		newInput.setAttribute("type", "hidden");
-		
+		*/
 
 		newSpan.innerHTML = window.event.target.value
 				+ "<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("
@@ -88,7 +89,7 @@ var count = 0;
 
 		var itemList = document.getElementById("itemList");
 		itemList.appendChild(newSpan);
-		itemList.appendChild(newInput);
+		//itemList.appendChild(newInput);
 		
-		var test = document.getElementById("param4").value;
+		//var test = document.getElementById("param4").value;
 	}

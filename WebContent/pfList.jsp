@@ -74,13 +74,13 @@
 							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
 							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
 							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
-							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')'" /> .....
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')" />  .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
-							<input type="text" class="form-control taginput" id="language"
-								name="language" placeholder="검색하고 싶은 태그를 입력하세요."
-								onchange="fnAppendItem2(text)" />
+							<input type="text" class="form-control taginput" 
+								name="language2" placeholder="검색하고 싶은 태그를 입력하세요."
+								onchange="fnAppendItem2()" />
 						</div>
 						<br> <br>
 						<hr />
@@ -135,10 +135,9 @@
   				<div class="portfolio-simple">
 
  					<div class="pfImg">
-   						<% if(port.getMl_path2() != null){
-							for(int j=0; j<1; j++) { %>
-           					<img src="${pageContext.request.contextPath}<%=port.getMl_path2().get(j)%>"/> 
-          				<%}} %>  
+   						<% if(port.getMl_path2() != null){ %>
+           					<img src="${pageContext.request.contextPath}<%=port.getMl_path2().get(0)%>"/> 
+          				<%} %> 
         			</div>
   					<div class="pfInfo">
   						<div class="simple-content">
