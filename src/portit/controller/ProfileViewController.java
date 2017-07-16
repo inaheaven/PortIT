@@ -24,15 +24,14 @@ public class ProfileViewController implements Controller {
 		ProfileDao profileDao = new ProfileDao();
 		
 		// 닉네임으로 프로필 번호를 받아오기
-		int articleId = profileDao.nickToId(req.getParameter("id"));
+		//int mem_id = profileDao.nickToId(req.getParameter("id"));
 		
 		// 조회 결과가 저장된 프로필 DTO를 획득하여 요청에 세팅
-		Profile profile = profileDao.getProfile(articleId);
+		Profile profile = profileDao.getProfileByNick(req.getParameter("id"));
 		req.setAttribute("profile", profile);
 		
 		// 뷰 URL 반환
 		String viewUrl = "fwd:/memDetail.jsp";
-		//String viewUrl = "memDetail.jsp";
 		return viewUrl;
 	}
 

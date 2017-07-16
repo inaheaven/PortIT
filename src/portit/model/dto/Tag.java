@@ -16,7 +16,6 @@ public class Tag {
 	private String tag_use_type;
 	/** 태그가 사용되는 글번호 */
 	private int tag_use_type_id;
-	
 	/** 프로필 스킬레벨 */
 	private int prof_skill_level;
 	/** 프로젝트 모집인원수 */
@@ -25,31 +24,7 @@ public class Tag {
 	private ArrayList<String> proj_tool_list  = new ArrayList<>();
 	private ArrayList<String> proj_field_list = new ArrayList<>();
 	private ArrayList<String> proj_lang_list  = new ArrayList<>();
-
 	
-	
-	
-	public int getTag_use_id() {
-		return tag_use_id;
-	}
-	public String getTag_use_type() {
-		return tag_use_type;
-	}
-	public int getTag_use_type_id() {
-		return tag_use_type_id;
-	}
-	public Tag setTag_use_id(int tag_use_id) {
-		this.tag_use_id = tag_use_id;
-		return this;
-	}
-	public Tag setTag_use_type(String tag_use_type) {
-		this.tag_use_type = tag_use_type;
-		return this;
-	}
-	public Tag setTag_use_type_id(int tag_use_type_id) {
-		this.tag_use_type_id = tag_use_type_id;
-		return this;
-	}
 	public int getTag_id() {
 		return tag_id;
 	}
@@ -58,6 +33,15 @@ public class Tag {
 	}
 	public String getTag_name() {
 		return tag_name;
+	}
+	public int getTag_use_id() {
+		return tag_use_id;
+	}
+	public String getTag_use_type() {
+		return tag_use_type;
+	}
+	public int getTag_use_type_id() {
+		return tag_use_type_id;
 	}
 	public int getProf_skill_level() {
 		return prof_skill_level;
@@ -87,6 +71,18 @@ public class Tag {
 		this.tag_name = tag_name;
 		return this;
 	}
+	public Tag setTag_use_id(int tag_use_id) {
+		this.tag_use_id = tag_use_id;
+		return this;
+	}
+	public Tag setTag_use_type(String tag_use_type) {
+		this.tag_use_type = tag_use_type;
+		return this;
+	}
+	public Tag setTag_use_type_id(int tag_use_type_id) {
+		this.tag_use_type_id = tag_use_type_id;
+		return this;
+	}
 	public Tag setProf_skill_level(int prof_skill_level) {
 		this.prof_skill_level = prof_skill_level;
 		return this;
@@ -106,6 +102,6 @@ public class Tag {
 	public Tag setProj_lang_list(ArrayList<String> proj_lang_list) {
 		this.proj_lang_list = proj_lang_list;
 		return this;
-	}
+	}	
 	
 }

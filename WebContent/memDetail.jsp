@@ -96,18 +96,21 @@ Profile profile = (Profile) request.getAttribute("profile");
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="skillset">
-							<% for (int i = 0; profile.getTag_skill() != null && i < profile.getTag_skill().size(); i++) { %>
-							<div class="skill clearfix">
-								<div class="col-xs-3 text-center">
-									<span class=""><%= profile.getTag_skill().get(i) %></span>
-								</div>
-								<div class="col-xs-9">
-									<div class="progress">
-										<div class="progress-bar" style="width:<%=100 * ((Integer.parseInt(profile.getProf_skill_level().get(i).toString())) / 10)%>%;"></div>
+							<c:forEach items="${profile.tag_skill}" var="skill" varStatus="status">
+								<div class="skill clearfix">
+									<div class="col-xs-3 text-center">
+										<span class="">${skill}</span>
+									</div>
+									<div class="col-xs-9">
+										<div class="progress">
+											<div class="progress-bar"
+												style="width:${(profile.prof_skill_level[status.index] / 10) * 100}%;">
+												${profile.prof_skill_level[status.index]}
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<% } %>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -127,14 +130,14 @@ Profile profile = (Profile) request.getAttribute("profile");
 								<div class="col-md-3 mb">
 									<div class="portfolio-simple">
 										<div class="pfImg">
-											<a href="/view?type=portfolio&id=${mypf.pf_id}"><img src="${mypf.mediaList[0].ml_path}" /></a>
+											<a href="/view?type=portfolio&id=${mypf.pf_id}"><img src="${mypf.pf_mediaList[0].ml_path}" /></a>
 										</div>
 										<div class="pfInfo">
 											<div class="simple-content">
 												<div class="pfTag">
 													<c:if test="${!empty mypf.pf_tags_language}">
 														<c:forEach var="pf_tag_language" items="${mypf.pf_tags_language}">
-															#<a href="">${pf_tag_language}</a>
+															#<a href="">${pf_tag_language.tag_name}</a>
 														</c:forEach>
 													</c:if>
 													#<a href="">&nbsp;</a>
