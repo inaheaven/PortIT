@@ -267,8 +267,6 @@ Profile profile = (Profile) request.getAttribute("profile");
 					}
 				});
 			}
-							
-			}
 		});	
 		
 		
