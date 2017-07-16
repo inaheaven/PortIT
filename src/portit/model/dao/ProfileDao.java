@@ -776,6 +776,10 @@ public class ProfileDao {
 			
 			List<Tag> tagListL = tagDao.selectList("language", "prof", profile.getProf_id());
 			List<Tag> tagListT = tagDao.selectList("tool", "prof", profile.getProf_id());
+			List<Tag> tagListF = tagDao.selectList("field", "prof", profile.getProf_id());
+			profile.setTag_lang(tagListL);
+			profile.setTag_tool(tagListT);
+			profile.setTag_field(tagListF);
 			List<String> tag_skill = new ArrayList<String>();
 			List<Integer> tag_skill_level = new ArrayList<Integer>();
 			for (Tag tag : tagListL) {

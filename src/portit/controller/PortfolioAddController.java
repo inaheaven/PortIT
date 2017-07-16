@@ -33,15 +33,15 @@ public class PortfolioAddController implements Controller {
 		// 태그, 공동 작업자 관련 처리
 		List<Tag> languageTagList = (List<Tag>) formData.get("tagLang");
 		for (Tag tag : languageTagList) {
-			tag.setTag_use_type("portfolio");
+			tag.setTag_use_type("pf");
 		}
 		List<Tag> toolTagList = (List<Tag>) formData.get("tagTool");
 		for (Tag tag : toolTagList) {
-			tag.setTag_use_type("portfolio");
+			tag.setTag_use_type("pf");
 		}
 		List<Tag> fieldTagList = (List<Tag>) formData.get("tagField");
 		for (Tag tag : fieldTagList) {
-			tag.setTag_use_type("portfolio");
+			tag.setTag_use_type("pf");
 		}
 		/*List<Profile> coworkerList = new ArrayList<Profile>();
 		if (formData.get("final_result_id") != null || formData.get("final_result_id").toString().length() > 0) {
@@ -65,7 +65,7 @@ public class PortfolioAddController implements Controller {
 		List<Media> mediaList = (List<Media>) formData.get("fileList");
 		if (mediaList != null && mediaList.size() > 0) {
 			for (int i = 0; i < mediaList.size(); i++) {
-				mediaList.get(i).setMl_type("portfolio");
+				mediaList.get(i).setMl_type("pf");
 			}
 		}		
 

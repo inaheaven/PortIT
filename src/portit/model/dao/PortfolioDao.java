@@ -123,9 +123,9 @@ public class PortfolioDao {
 			
 			
 			// 태그 관련 데이터를 조회해서 DTO에 저장
-			List<Tag> pf_tags_language = tagDao.selectList( "language", "portfolio", pf_id);
-			List<Tag> pf_tags_tool = tagDao.selectList( "tool", "portfolio", pf_id);
-			List<Tag> pf_tags_field = tagDao.selectList( "field", "portfolio", pf_id);
+			List<Tag> pf_tags_language = tagDao.selectList("language", "pf", pf_id);
+			List<Tag> pf_tags_tool = tagDao.selectList("tool", "pf", pf_id);
+			List<Tag> pf_tags_field = tagDao.selectList("field", "pf", pf_id);
 			portfolio.setPf_tags_language(pf_tags_language)
 			.setPf_tags_tool(pf_tags_tool)
 			.setPf_tags_field(pf_tags_field);
@@ -141,7 +141,7 @@ public class PortfolioDao {
 			System.out.println("태그 정보 DTO에 저장");
 			
 			// 미디어 데이터를 조회해서 DTO에 저장
-			List<Media> mediaList = mediaDao.selectList("portfolio", pf_id);
+			List<Media> mediaList = mediaDao.selectList("pf", pf_id);
 			portfolio.setPf_mediaList(mediaList);
 			System.out.println("미디어 정보 DTO에 저장");
 			
@@ -253,6 +253,7 @@ public class PortfolioDao {
 			sql = "SELECT DISTINCT prof_id, prof_nick, prof_name, prof_img FROM profile WHERE mem_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, portfolio.getMem_id());
+			rs = stmt.executeQuery();
 			int prof_id = 0;
 			if (rs.next()) {
 				prof_id = rs.getInt("prof_id");
@@ -274,21 +275,21 @@ public class PortfolioDao {
 			List<Tag> pf_tags_field = portfolio.getPf_tags_field();
 			for (Tag tag : pf_tags_language) {
 				if (tag.getTag_name() != null || "".equals(tag.getTag_name())) {
-					tag.setTag_type("language").setTag_use_type("portfolio").setTag_use_type_id(pf_id);
+					tag.setTag_type("language").setTag_use_type("pf").setTag_use_type_id(pf_id);
 					tagDao.insertTag( tag);
 					System.out.println("태그 추가 : "+tag.getTag_name()+"("+tag.getTag_type()+"/"+tag.getTag_use_type());
 				}
 			}
 			for (Tag tag : pf_tags_tool) {
 				if (tag.getTag_name() != null || "".equals(tag.getTag_name())) {
-					tag.setTag_type("tool").setTag_use_type("portfolio").setTag_use_type_id(pf_id);
+					tag.setTag_type("tool").setTag_use_type("pf").setTag_use_type_id(pf_id);
 					tagDao.insertTag( tag);
 					System.out.println("태그 추가 : "+tag.getTag_name()+"("+tag.getTag_type()+"/"+tag.getTag_use_type());
 				}
 			}
 			for (Tag tag : pf_tags_field) {
 				if (tag.getTag_name() != null || "".equals(tag.getTag_name())) {
-					tag.setTag_type("field").setTag_use_type("portfolio").setTag_use_type_id(pf_id);
+					tag.setTag_type("field").setTag_use_type("pf").setTag_use_type_id(pf_id);
 					tagDao.insertTag( tag);
 					System.out.println("태그 추가 : "+tag.getTag_name()+"("+tag.getTag_type()+"/"+tag.getTag_use_type());
 				}
@@ -299,6 +300,7 @@ public class PortfolioDao {
 			List<Media> mediaList = portfolio.getPf_mediaList();
 			if (mediaList != null) {
 				for (Media media : mediaList) {
+					media.setMl_type("pf");
 					media.setMl_type_id(pf_id);
 					mediaDao.insert(media);
 				}
