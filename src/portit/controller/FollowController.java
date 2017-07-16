@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import oracle.net.aso.f;
 import portit.model.dao.BookmarkDao;
 import portit.model.dao.FollowDao;
 import portit.model.dto.Follow;
@@ -43,16 +44,25 @@ public class FollowController extends HttpServlet {
 		
 		// 팔로우 등록
 		else if (act.equals("add")) {
-			int mem_id = Integer.parseInt(req.getParameter("mem_id"));
-			fw.insert(loginId, mem_id);
+			int prof_id = Integer.parseInt(req.getParameter("prof_id"));
+			int mem_receiver_id = fw.memidByprofid(prof_id);
 			
-			resp.sendRedirect(""); // 해당 멤버 디테일 페이지로 
+			fw.insert(loginId, mem_receiver_id);
+			
+			int followers = fw.getFollowers(prof_id);
+			resp.getWriter().print(followers);
+			//resp.sendRedirect(""); // 해당 멤버 디테일 페이지로 
 		}
 		
 		// 팔로우 취소 ( 멤버 상세 페이지에서 )
 		else if (act.equals("cancel")) {
-			int mem_id = Integer.parseInt(req.getParameter("mem_id"));
-			fw.cancel(loginId, mem_id);
+			int prof_id = Integer.parseInt(req.getParameter("prof_id"));
+			int mem_receiver_id = fw.memidByprofid(prof_id);
+						
+			fw.cancel(loginId, mem_receiver_id);
+			
+			int followers = fw.getFollowers(prof_id);
+			resp.getWriter().print(followers);
 		}
 	}
 

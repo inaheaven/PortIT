@@ -59,10 +59,10 @@ Profile profile = (Profile) request.getAttribute("profile");
 				</h4>
 				<h4>
 					<i class="fa fa-user"></i>
-					${profile.prof_follower}
+					<span id="follower">${profile.prof_follower}</span>
 				</h4>
 				<div class="actions">
-					<button type="button" class="btn common" onclick="location.href='#'">+ Follow</button>					
+					<button type="button" class="btn common" id="followToggle" value="follow">+ Follow</button>			
 				</div>
 			</div>
 		</section><!-- /Profile header -->
@@ -225,6 +225,49 @@ Profile profile = (Profile) request.getAttribute("profile");
 				$("html,body").animate({ scrollTop : 0 }, 500);
 			});
 			
+			$("#followToggle").click(function() {
+				var value = $("#followToggle").attr("value");
+				var mem_id = ${sessionScope.loginId};
+				var pf_id = ${profile.prof_id};
+				
+				var param;
+				if(value == "follow") {
+					param = {
+						"act" : 'add',
+						"mem_id" : mem_id,
+						"prof_id" : prof_id
+						};
+					
+				} else if(value == "unfollow") {
+					param = {
+						"act" : 'cancel',
+						"mem_id" : mem_id,
+						"prof_id" : prof_id
+					};					
+				}
+		
+				var request = $.ajax({
+					type : "POST",
+					url : "/follow",
+					data : param,
+					dataType : "text"
+				});
+
+				request.done(function(followers) {
+					if (value == "follow") {
+						$("#followToggle").empty();						
+						$("#followToggle").append("following");
+						$("#follower").text(followers);
+						$("#followToggle").attr("value", "dislike");
+					} else {
+						$("#followToggle").empty();
+						$("#followToggle").append("+ follow");
+						$("#follower").text(followers);
+						$("#followToggle").attr("value", "like");
+					}
+				});
+				
+			});
 		});	
 		
 		

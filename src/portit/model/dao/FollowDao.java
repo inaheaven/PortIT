@@ -242,5 +242,57 @@ public class FollowDao {
 
 	}
 
+	/**
+	 * mem_receiver_id by prof_id 
+	 */
+	public int memidByprofid(int prof_id) {
+		int mem_id = 0;
+		
+		try {
+			conn = pool.getConnection();
+			
+			// 팔로우 받는 사람의 카운트 -1
+			sql = "select mem_id from profile where prof_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				mem_id = rs.getInt("mem_id");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, stmt);
+		
+		return mem_id;
+		}
+	}
+	
+	/**
+	 * 팔로우 수 가져오기
+	 */
+	public int getFollowers(int prof_id) {
+		int followers = 0;
+		
+		try {
+			conn = pool.getConnection();
+			
+			// 팔로우 받는 사람의 카운트 -1
+			sql = "select prof_follower from profile where prof_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, prof_id);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				followers = rs.getInt("prof_follower");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, stmt);
+		}
+		return followers;
+	}
 }
 
