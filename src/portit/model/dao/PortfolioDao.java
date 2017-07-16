@@ -221,6 +221,7 @@ public class PortfolioDao {
 		String sql = "";
 		
 		int pf_id = 0;
+		getConnection();
 		try {
 			// INSERT문 지정
 			sql = "INSERT INTO portfolio("
