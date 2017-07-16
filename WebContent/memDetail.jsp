@@ -266,6 +266,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 						$("#followToggle").attr("value", "like");
 					}
 				});
+			}
 							
 			}
 		});	
