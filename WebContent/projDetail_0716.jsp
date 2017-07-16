@@ -1,3 +1,4 @@
+<%@page import="portit.model.dto.Tag"%>
 <%@page import="portit.model.dto.Profile"%>
 <%@page import="java.util.Date"%>
 <%@page import="portit.model.dto.project_detail"%>
@@ -136,6 +137,16 @@
 		project_detail dto=	(project_detail)	pj_inform.get(0);
 		
 		
+		//프로젝트의 테그정보
+		ArrayList tag_list=(ArrayList) dto.getTag_list();
+
+		
+		
+		//Tag tag_dto1=(Tag)pj_tag.get(0);
+		//System.out.println("[JSP_tag===]"+tag_dto1.getTag_name());
+		/* Tag tag_dto1=(Tag)pj_tag.get(0);
+		Tag tag_dto2=(Tag)pj_tag.get(1); */
+		//Tag tag_dto3=(Tag)pj_tag.get(2);
 		
 		
 		//생략가능한부분...
@@ -160,13 +171,31 @@
 		<section id="projHeader">
 			<div class="container">
 				<h4 class="tags">
-					<span>#<a href="">태그</a>&nbsp;</span>
-					<span>#<a href="">태그</a>&nbsp;</span>
-					<span>#<a href="">태그</a>&nbsp;</span>
+				
+				<!-- 반복한다  최대 3회. -->
+				<%for(int i=0; i<tag_list.size();i++){ 
+					if(i>3)break;
+						Tag tag_inform=(Tag)tag_list.get(i);
+				%>
+				<a href="<%=tag_inform.getTag_id()%>">#<%=tag_inform.getTag_name() %> </a>&nbsp;
+				<%} %>
 				</h4>
 				<h1><%=title %></h1>
 				<h3 class="username"><a href=""><%=username %></a></h3>
-				<h4 class="field">모집 분야 / <%=to %>명</h4>
+				<h4 class="field">
+				
+				<%for(int i=0; i<tag_list.size();i++){ 
+					Tag tag_inform=(Tag)tag_list.get(i);
+					
+					//등록된 테그 중에서 filed값만 출력한다.
+				if("field".equals(tag_inform.getTag_type())){
+				 %>
+				 	<%=tag_inform.getTag_name() %>&nbsp;
+				<%} //if문
+				}//for문%>
+				
+				
+				 /<%=to%>명</h4>
 				<h3 class="dday"><%=regEnd %></h3>
 			</div>
 		</section><!-- /Profile header -->
@@ -257,33 +286,53 @@
 							<tr>
 								<th>모집분야</th>
 								<td>
-									<span><a href="">백엔드 개발자</a>,&nbsp;</span>
+									<span>
+										<%for(int i=0; i<tag_list.size();i++){ 
+													Tag tag_inform=(Tag)tag_list.get(i);
+												if("field".equals(tag_inform.getTag_type())){
+									 %>
+											<a href="<%=tag_inform.getTag_id()%>">	<%=tag_inform.getTag_name() %></a>&nbsp;
+												
+												<%} //if문
+												}//for문%>
+									</span>
 								</td>
 							</tr>
 							<tr>
 								<th>모집인원</th>
-								<td>6명</td>
+								<td><%=dto.getProj_to() %>명</td>
 							</tr>
 							<tr>
 								<th>요구기술</th>
 								<td>
-									<span><a href="">Java</a>,&nbsp;</span>
-									<span><a href="">Oracle</a>,&nbsp;</span>
-									<span><a href="">Git</a>,&nbsp;</span>
-									<span><a href="">Eclipse</a>,&nbsp;</span>
+								<span>
+									<%for(int i=0; i<tag_list.size();i++){ 
+											Tag tag_inform=(Tag)tag_list.get(i);
+											if(!"field".equals(tag_inform.getTag_type())){
+									 %>
+											<a href="<%=tag_inform.getTag_id()%>">	<%=tag_inform.getTag_name() %></a>&nbsp;
+												
+									<%			} //if문
+										}//for문%>
+								</span>
+									
+									
+									
+									
+									
 								</td>
 							</tr>							
 							<tr>
 								<th>예상작업기간</th>
-								<td>14일</td>
+								<td><%=dto.getProj_period() %>일</td>
 							</tr>
 						</table>
 					</div>
 				</div>
 				<div class="row">
 					<div class="actions">
-						<button type="button" class="btn common" onclick="location.href=''">개설자에게 연락하기</button>&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn common" onclick="location.href=''">프로젝트 지원하기</button>
+						<button type="button" class="btn common" onclick="location.href='<%=dto.getProf_email() %>'">개설자에게 연락하기</button>&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn common" onclick="location.href='<%=dto.getProj_id() %>'">프로젝트 지원하기</button>
 					</div>
 				</div>
 			</div>
@@ -296,7 +345,6 @@
 					<h2 class="text-center">Collaborators</h2>
 				</div>
 				<div class="row collaboList">
-				
 				
 				<% for(int i=0; i<cowork_list.size();i++){
 					
@@ -323,14 +371,10 @@
           				</div>
           			</div> <!-- member-simple end -->
           			
-          			
-          			
           			<%
           			}
           			%>
           			
-          			
-          
           			
           			
           			

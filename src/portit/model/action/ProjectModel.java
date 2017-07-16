@@ -5,13 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import portit.model.dao.MassageDao;
 import portit.model.dao.Pj_Dao;
 import portit.model.dao.ProjectDao;
-import portit.model.dto.MessageDto;
 import portit.model.dto.Profile;
 import portit.model.dto.Project;
-import portit.model.dto.ProjectApp_mem;
 import portit.model.dto.Tag;
 import portit.model.dto.project_detail;
 
@@ -133,8 +130,8 @@ public class ProjectModel {
 		//4.어떤 태그를 사용했는가?		//List형태로 DTO에 포장한다.
 		// tag_use에서 해당 프로젝트에 사용된 정보 반환. 해당 정보가 나타내는 태그구분 태그명 반환.
 		ArrayList wanted=pj_dao.getWanted(proj_id);
-		
-		if(0!=wanted.size()){
+		pj_inform.setTag_list(wanted);
+	/*	if(0!=wanted.size()){
 		Tag dto =(Tag) wanted.get(0);
 		
 		pj_inform.setTag_id(dto.getTag_id());
@@ -144,7 +141,7 @@ public class ProjectModel {
 		}else{
 			System.out.println("[model]:조회결과가 없습니다.");
 		}
-
+*/
 		System.out.println("[MODEL.4]");
 		
 		

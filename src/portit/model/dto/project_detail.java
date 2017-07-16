@@ -9,8 +9,17 @@ public class project_detail {
 	//프로젝트 페이지에서 필요한 모든 정보를 담는다.
 	
 	
+	List tag_list;
 	
 	
+	
+	
+	public List getTag_list() {
+		return tag_list;
+	}
+	public void setTag_list(List tag_list) {
+		this.tag_list = tag_list;
+	}
 	public int getMem_id() {
 		return mem_id;
 	}
