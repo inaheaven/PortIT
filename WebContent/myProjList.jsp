@@ -151,7 +151,7 @@
 							<div class="panel-heading clearfix" role="tab" >
 								<h4 class="panel-title">
 									<span class="col-sm-4"> 
-									<a onclick="window.open('/detailView?yame_pj=<%=pj_Inform.getProj_id()%>');">
+									<a onclick="window.open('/detailView?cmd=PROJECT&proj_id=<%=pj_Inform.getProj_id()%>');">
 									<%=pj_Inform.getProj_title() %> 
 									</a>
 									</span> 
@@ -297,7 +297,7 @@
 							<div class="panel-heading clearfix" role="tab" id="headingOne">
 								<h4 class="panel-title">								
 									<span class="col-sm-3"> 
-									<a href="javascript:fnParameter('pj_detail' , '' , '<%=app_PJ.getProj_id()%>', '')">
+									<a  href="/detailView?cmd=PROJECT&proj_id=<%=app_PJ.getProj_id()%>">
 									<%=app_PJ.getProj_title() %>
 									</a> 
 									</span> 
