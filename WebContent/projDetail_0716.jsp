@@ -143,7 +143,7 @@
 		ArrayList pj_inform= (ArrayList)request.getAttribute("pj_inform");
 		
 		//1.Project 정보
-		project_detail dto=	(project_detail)	pj_inform.get(0);
+		project_detail dto=	(project_detail)pj_inform.get(0);
 		
 		
 		//1-1.프로젝트의 테그정보

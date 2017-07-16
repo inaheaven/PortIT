@@ -24,22 +24,22 @@ public class ControllerFactory {
 	 * @return 기능별 컨트롤러 인스턴스
 	 */
 	public Controller newController(String param) {
-		if (param.equals("profileView")) {
-			return new ProfileViewController();
-		}
-		else if (param.equals("portfolioAdd")) {
+		if ("portfolioAdd".equals(param)) {
 			return new PortfolioAddController();
 		}
-		else if (param.equals("portfolioView")) {
+		else if ("portfolioView".equals(param)) {
 			return new PortfolioViewController();
 		}
-		else if (param.equals("portfolioEdit")) {
+		else if ("portfolioEdit".equals(param)) {
 			return new PortfolioEditController();
 		}
-		else if (param.equals("portfolioDelete")) {
+		else if ("portfolioDelete".equals(param)) {
 			return new PortfolioDeleteController();
 		}
-		else if (param.equals("projectView")) {
+		else if ("profileView".equals(param)) {
+			return new ProfileViewController();
+		}
+		else if ("projectView".equals(param)) {
 			return new ProjectViewController();
 		}
 		else {

@@ -55,7 +55,8 @@ public class PostServlet extends HttpServlet {
 		req.setAttribute("formData", formData);
 		
 		String viewUrl = ""; // 컨트롤러는 처리 결과 viewUrl을 반환할 것
-		String articleType = req.getParameter("type"); // 작성할 게시물의 구분
+		//String articleType = req.getParameter("type"); // 작성할 게시물의 구분
+		String articleType = formData.get("type").toString(); // 작성할 게시물의 구분
 		
 		// 컨트롤러의 인스턴스를 생성하고 실행 메서드 호출 
 		ControllerFactory factory = ControllerFactory.getInstance();

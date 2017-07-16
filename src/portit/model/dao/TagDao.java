@@ -202,7 +202,7 @@ public class TagDao {
 
 			sql = "MERGE INTO tag_use tu "
 					+ "USING (SELECT * FROM tag_use WHERE tag_use_type=? AND tag_use_type_id=?) t "
-					+ "ON tu.tag_use_id=t.tag_use_id "
+					+ "ON (tu.tag_use_id=t.tag_use_id) "
 					+ "WHEN MATCHED THEN "
 					+ "UPDATE SET tu.tag_id=? "
 					+ "WHERE tu.tag_id!=? AND tag_use_type=? AND tag_use_type_id=? "
@@ -219,7 +219,7 @@ public class TagDao {
 			stmt.setString(7, articleType);
 			stmt.setInt(8, articleId);
 			stmt.setInt(9, tag.getTag_id());
-			rows += stmt.executeUpdate();
+			stmt.executeUpdate();
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();

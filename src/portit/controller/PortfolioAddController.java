@@ -67,24 +67,27 @@ public class PortfolioAddController implements Controller {
 			for (int i = 0; i < mediaList.size(); i++) {
 				mediaList.get(i).setMl_type("pf");
 			}
-		}		
+		}
 
 		// DTO에 추가
 		String viewUrl = "";
 		
 		Portfolio portfolio = new Portfolio();
 		try {
-			portfolio.setMem_id(Integer.parseInt(formData.get("mem_id").toString()))
-					.setPf_title((String) formData.get("pf_title"))
-					.setPf_intro(formData.get("pf_intro") != null
-							? new String(((String) formData.get("pf_intro")).getBytes("UTF-8"), "UTF-8").replaceAll("\\r\\n", "<br />") : "")
-					.setPf_startdate(
-							(Date) new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_startdate")))
-					.setPf_enddate((Date) new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_enddate")))
-					.setPf_numofperson(Integer.parseInt((String) formData.get("pf_numofperson")))
-					.setPf_url((String) formData.get("pf_url")).setPf_tags_language(languageTagList)
-					.setPf_tags_tool(toolTagList).setPf_tags_field(fieldTagList).setPf_mediaList(mediaList)
-					/*.setPf_coworkers(coworkerList)*/;
+			portfolio.setMem_id(Integer.parseInt(formData.get("mem_id").toString()));
+			portfolio.setPf_title((String) formData.get("pf_title"));
+			portfolio.setPf_intro(formData.get("pf_intro") != null
+							? new String(((String) formData.get("pf_intro")).getBytes("UTF-8"), "UTF-8").replaceAll("\\r\\n", "<br />") : "");
+			portfolio.setPf_startdate(
+							(Date) new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_startdate")));
+			portfolio.setPf_enddate((Date) new SimpleDateFormat("yyyy-MM-dd").parse((String) formData.get("pf_enddate")));
+			portfolio.setPf_numofperson(Integer.parseInt((String) formData.get("pf_numofperson")));
+			portfolio.setPf_url((String) formData.get("pf_url"));
+			portfolio.setPf_tags_language(languageTagList);
+			portfolio.setPf_tags_tool(toolTagList);
+			portfolio.setPf_tags_field(fieldTagList);
+			portfolio.setPf_mediaList(mediaList);
+			/*portfolio.setPf_coworkers(coworkerList)*/;
 			// DAO의 추가 메서드 호출
 			int pf_id = portfolioDao.insert(portfolio);
 			
