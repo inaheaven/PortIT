@@ -16,7 +16,7 @@
 					<form class="col-md-10 searchKeyword" method="post"
 						action="/SearchView?cmd=PROJSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="projSearch" value="${sessionScope.search}"/>
+							<input type="text" class="form-control" name="projSearch" />
 						</div>
 						<button type="submit" class="col-md-1 btn common" id="">
 							<i class="fa fa-search"></i>
@@ -50,15 +50,15 @@
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
 							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem('JAVA')" /> 
-							<input class="btn poptag" type="button" value="C" name="language"	onclick="fnAppendItem('C')" /> 
+							<input class="btn poptag" type="button" value="OS" name="language"	onclick="fnAppendItem('OS')" /> 
 							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
 							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem('jsp')" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem('servlet')'" /> .....
+							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
-							<input type="text" class="form-control taginput" id="language" name="language2"
+							<input type="text" class="form-control taginput"  name="language2"
 								placeholder="검색하고 싶은 태그를 입력하세요." onchange="fnAppendItem2()" />
 						</div>
 						<br> <br>
