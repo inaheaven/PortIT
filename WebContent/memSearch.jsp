@@ -116,7 +116,7 @@
 							src="<%=mem.getProf_img()%>" />
 						<div>
 							<div class="memName">
-								<a href="#" onclick="prof(<%=mem.getProf_id()%>)"> <%=mem.getProf_name()%></a>
+								<a  href="/detailView?cmd=PROJECT&proj_id=  <%=mem.getProf_id()%> ">  <%=mem.getProf_name()%></a>
 							</div>
 							<div class="memTag">
 								<%

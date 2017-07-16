@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import portit.model.action.ProjectModel;
 import portit.model.dao.SearchDao;
+import portit.model.dao.ViewDao;
 
 @WebServlet("/detailView")
 public class DetailViewController extends HttpServlet {
@@ -30,7 +32,27 @@ public class DetailViewController extends HttpServlet {
 		String url = null;
 		
 		SearchDao searchDao = new SearchDao();		
-	
+		ViewDao viewdao=new ViewDao();
+		
+		int loginId=-1;
+		String log_id=null;
+		if(null!=session.getAttribute("loginId")){
+			loginId=(int) session.getAttribute("loginId");
+			
+			 log_id= String.valueOf(loginId);
+		System.out.println(loginId+"가 로그인 되었습니다.");
+		}
+		
+		
+		
+		ProjectModel model = new ProjectModel(req,log_id);
+		
+		
+		
+		
+		System.out.println("CTRL.cmd="+cmd);
+
+		
 		if(cmd.equals("PORTFOLIO")){
 			//int pf_id = Integer.parseInt(req.getParameter("pf_id"));
 			//req.setAttribute("pf_view", viewdao.portfolio_info(pf_id));	//이름만 바꿔주면 됨.
@@ -44,7 +66,7 @@ public class DetailViewController extends HttpServlet {
 		else if(cmd.equals("PROJECT")){
 			//int proj_id = Integer.parseInt(req.getParameter("proj_id"));
 			//req.setAttribute("proj_view",viewdao.project_info(proj_id));			
-			url="/page?page=";
+			url="projDetail_0716.jsp";
 		}
 		else if(cmd.equals("TAG")){
 			String tag_name = req.getParameter("tag_name");

@@ -49,7 +49,7 @@
 		<!-- sidebar menu start-->
 		<ul class="sidebar-menu">       
 			<div class="myImg">
-				<p class="centered"><a href="profile.html"><img src="<%=mem_prof.getProf_img() %>" class="img-circle" width="60"></a></p>
+				<p class="centered"><a  href="/detailView?cmd=PROJECT&proj_id=<%=mem_prof.getProf_id()%>"><img src="<%=mem_prof.getProf_img() %>" class="img-circle" width="60"></a></p>
 				<h5 class="centered"><%=userName %> 님</h5>              	  
 			</div>       
 			<hr class="line" />

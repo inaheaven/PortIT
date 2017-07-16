@@ -151,8 +151,8 @@
 											<%} %>
 					          				</div>
 											<div class="pjTitle">
-												<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
-												<%=proj.getProj_title() %> </a>
+												<a  href="/detailView?cmd=PROJECT&proj_id=<%=proj.getProj_id()%>">
+  												<%=proj.getProj_title() %> </a>
 											</div>
 											<div class="pjInfo">
 												<span class="pjField"><a href="">#

@@ -839,6 +839,28 @@ public class ProfileDao {
 	}
 	
 	
+	/**
+	 * 프로필 번호로 닉네임 얻기
+	 * 
+	 * @param nick
+	 * @return
+	 */
+	public String idToNick(int mem_id) {
+		String prof_nick = null;
+		getConnection();
+		try {
+			String sql = "SELECT prof_nick FROM profile WHERE mem_id=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, mem_id);
+			rs = stmt.executeQuery();
+			rs.next();
+			prof_nick = rs.getString("prof_nick");
+			return prof_nick;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prof_nick;
+	}
 	
 	
 }

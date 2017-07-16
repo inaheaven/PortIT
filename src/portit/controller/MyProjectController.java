@@ -41,14 +41,6 @@ public class MyProjectController extends HttpServlet{
 		HttpSession session = req.getSession();
 		
 		/*
-			
-			남은적업
-				아코디언 오류
-				내가 지원한 프로젝트 업로드...
-		 */
-		
-		
-		/*
 		 전달받을 파라미터 : 
 		 -CMD:경로(ist), 
 		 -action:행동(delete)
@@ -179,6 +171,26 @@ public class MyProjectController extends HttpServlet{
 			ProjectDao updateDao= new ProjectDao();
 			updateDao.read_proj(req, resp);
 			url="/myProjRegisterEdit.jsp";
+		}
+		
+	//프로젝트에 지원하기!!
+		else if("apply".equals(cmd)){
+			// "/myproj?cmd=apply&pj_id="
+			
+			System.out.println("PJ지원요청접수");
+			int pj_id=0;
+			String id=(String)req.getParameter("pj_id");
+			
+			if(id!=null){
+				System.out.println("[CTRL]myPj: pj_id 수신확인");
+				pj_id=Integer.parseInt(id);
+			}
+			
+			
+			int log_id=Integer.valueOf(loginId);
+			
+			daoPRO.applyPj(pj_id, log_id);
+			url="/detailView?cmd=PROJECT&proj_id="+pj_id;
 		}
 		
 		req.setAttribute("pageName", url);
