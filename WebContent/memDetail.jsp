@@ -177,7 +177,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 							<a href="${profile.prof_github}" title="GitHub"><span class="fa fa-github"></span></a>
 							<a href="${profile.prof_facebook}" title="Facebook"><span class="fa fa-facebook-square"></span></a>
 							<a href="mailto:${profile.prof_email}" title="Email"><span class="fa fa-envelope"></span></a>
-							<a href="#" title="Message"><span class="fa fa-comment"></span></a>
+							<a href="/msg?cmd=send&mem_id_sender=${profile.mem_id}" title="Message"><span class="fa fa-comment"></span></a>
 							<a data-toggle="collapse" href="#Share" title="Share"><span class="fa fa-share-alt"></span></a>
 							<div class="collapse pull-right" id="Share">
 								<div class="actions">
