@@ -104,7 +104,9 @@ Profile profile = (Profile) request.getAttribute("profile");
 									<div class="col-xs-9">
 										<div class="progress">
 											<div class="progress-bar"
-												style="width:${(profile.prof_skill_level[status.index] / 10) * 100}%;"></div>
+												style="width:${(profile.prof_skill_level[status.index] / 10) * 100}%;">
+												${profile.prof_skill_level[status.index]}
+											</div>
 										</div>
 									</div>
 								</div>
@@ -135,7 +137,7 @@ Profile profile = (Profile) request.getAttribute("profile");
 												<div class="pfTag">
 													<c:if test="${!empty mypf.pf_tags_language}">
 														<c:forEach var="pf_tag_language" items="${mypf.pf_tags_language}">
-															#<a href="">${pf_tag_language}</a>
+															#<a href="">${pf_tag_language.tag_name}</a>
 														</c:forEach>
 													</c:if>
 													#<a href="">&nbsp;</a>
