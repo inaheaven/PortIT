@@ -100,7 +100,7 @@ public class PortfolioDao {
 			sql = "SELECT DISTINCT prof.prof_name, prof.prof_nick, prof.prof_img "
 					+ "FROM profile prof "
 					+ "INNER JOIN prof_pf pp "
-					+ "ON prof.prof_id=pp.prof_id WHERE pp.prof_id=?";
+					+ "ON prof.prof_id=pp.prof_id WHERE pp.pf_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, portfolio.getPf_id());
 			rs = stmt.executeQuery();
