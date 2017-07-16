@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Tag;
 
 /**
@@ -13,29 +14,57 @@ import portit.model.dto.Tag;
  */
 public class TagDao {
 
+	private DBConnectionMgr pool;
+	private Connection conn;
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	private String sql;
 	
-	private static TagDao instance = new TagDao();
+	public TagDao() {
+		try {
+			pool = DBConnectionMgr.getInstance();
+			if (conn != null) {
+				System.out.println("DB 접속 : "+this.getClass().getName());
+			}
+		} catch (Exception e) {
+			System.out.println("DB 접속 오류 :");
+			e.printStackTrace();
+		}
+	}
 	
-	private TagDao() {}
-	
-	public static TagDao getInstance() {
-		return instance;
+	private void getConnection() {
+		try {
+			conn = pool.getConnection();
+			if (conn != null) System.out.println("DB 접속 : "+this.getClass().getName());
+		} catch (Exception e) {
+			System.out.println("DB 접속 오류 :");
+			e.printStackTrace();
+		}
+	}
+
+	private void freeConnection() {
+		try {
+			pool.freeConnection(conn, stmt, rs);
+			if (conn != null) {
+				System.out.println("DB 접속 해제 : "+this.getClass().getName());
+			}
+		} catch (Exception e) {
+			System.out.println("DB 접속해제 오류 :");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * 태그 정보 리스트 조회
-	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param tagType 태그 구분
 	 * @param articleType 게시물 구분
 	 * @param articleId 게시물 ID
 	 * @return 태그 정보 목록
 	 */
-	public List<Tag> selectList(Connection conn, String tagType, String articleType, int articleId) {
+	public List<Tag> selectList(String tagType, String articleType, int articleId) {
 		List<Tag> tagList = new ArrayList<Tag>();
 		Tag tag = null;
+		getConnection();
 		try {
 			sql = "SELECT * FROM tag t INNER JOIN tag_use tu ON tu.tag_id=t.tag_id "
 					+ "WHERE t.tag_type=? AND tu.tag_use_type=? AND tu.tag_use_type_id=?";
@@ -57,18 +86,20 @@ public class TagDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return tagList;
 	}
 	
 	/**
 	 * 태그 정보 등록
-	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param tag 태그
 	 * @return 등록한 태그 ID
 	 */
-	public void insertTag(Connection conn, Tag tag) {
+	public void insertTag(Tag tag) {
 		int tag_id = 0;
+		getConnection();
 		try {
 			sql = "INSERT INTO tag"
 					+ "(tag_id, tag_type, tag_name) "
@@ -88,30 +119,34 @@ public class TagDao {
 			tag.setTag_id(tag_id);
 			System.out.println("태그ID 획득하여 DTO에 저장 : "+tag_id);
 			
-			insertTagUse(conn, tag);
+			insertTagUse(tag);
 			System.out.println("태그사용 정보 저장");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 	}
 	
 	
 	/**
 	 * 태그 정보 삭제
-	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param tag 태그
 	 * @return 작업된 행 갯수
 	 */
-	public int deleteTag(Connection conn, Tag tag) {
+	public int deleteTag(Tag tag) {
 		int rows = 0;
+		getConnection();
 		try {
-			deleteTagUse(conn, tag.getTag_use_type(), tag.getTag_use_type_id());
+			deleteTagUse(tag.getTag_use_type(), tag.getTag_use_type_id());
 			sql = "DELETE tag WHERE tag_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, tag.getTag_id());
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}
@@ -121,13 +156,13 @@ public class TagDao {
 	/**
 	 * 태그 사용 정보 등록
 	 * (insertTag()가 호출)
-	 * @param conn
 	 * @param articleType
 	 * @param articleId
 	 * @param tag_id
 	 * @return
 	 */
-	public void insertTagUse(Connection conn, Tag tag) {
+	public void insertTagUse(Tag tag) {
+		getConnection();
 		try {
 			sql = "INSERT INTO tag_use"
 					+ "(tag_use_id, tag_use_type, tag_use_type_id, tag_id, prof_skill_level, proj_numofperson) "
@@ -141,12 +176,15 @@ public class TagDao {
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 	}
 	
 	
-	public int updateTagUse(Connection conn, String articleType, int articleId, Tag tag) {
+	public int updateTagUse(String articleType, int articleId, Tag tag) {
 		int rows = 0;
+		getConnection();
 		try {
 			sql = "SELECT t.tag_id, t.tag_type, tu.prof_skill_level, tu.proj_numofperson "
 					+ "FROM tag t INNER JOIN tag_use tu "
@@ -185,12 +223,15 @@ public class TagDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}
 	
-	public int deleteTagUse(Connection conn, String articleType, int articleId) {
+	public int deleteTagUse(String articleType, int articleId) {
 		int rows = 0;
+		getConnection();
 		try {
 			sql = "DELETE tag_use WHERE tag_use_type=? AND tag_use_type_id=?";
 			stmt = conn.prepareStatement(sql);
@@ -200,6 +241,8 @@ public class TagDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}

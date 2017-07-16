@@ -94,8 +94,8 @@ public class FileUpload {
 					// isFormField()의 반환값이 false이면 파일로 처리
 					if (item != null && item.getSize() > 0) {
 						if (item.getContentType().startsWith("image/")) {
-							System.out.println(saveDir + File.separator + UPLOAD_DIR + File.separator + getFileName(item));
-							item.write(new File(saveDir + File.separator + UPLOAD_DIR + File.separator + getFileName(item)));
+							System.out.println(saveDir + UPLOAD_DIR + File.separator + getFileName(item));
+							item.write(new File(saveDir + UPLOAD_DIR + File.separator + getFileName(item)));
 							fileList.add(new Media().setMl_path(UPLOAD_DIR + File.separator + getFileName(item)));
 						} else {
 							throw new Exception("이미지파일만 업로드할 수 있습니다.");

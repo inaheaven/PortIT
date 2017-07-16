@@ -24,17 +24,11 @@ public class ProfileDao {
 	private DBConnectionMgr pool;
 	private String sql = null;
 	
-	private MediaDao mediaDao = MediaDao.getInstance();
-	private PortfolioDao portfolioDao = PortfolioDao.getInstance();
-	private TagDao tagDao = TagDao.getInstance();
-	
-	private static ProfileDao instance = new ProfileDao();
-	
-	public static ProfileDao getInstance() {
-		return instance;
-	}
+	private MediaDao mediaDao;
+	private PortfolioDao portfolioDao;
+	private TagDao tagDao;
 
-	private ProfileDao() {
+	public ProfileDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			//conn = pool.getConnection();
@@ -749,6 +743,9 @@ public class ProfileDao {
 	}
 	
 	public Profile getProfileByNick(String nick) {
+		mediaDao = new MediaDao();
+		portfolioDao = new PortfolioDao();
+		tagDao = new TagDao();
 		Profile profile = new Profile();
 		getConnection();
 		try {
@@ -777,15 +774,28 @@ public class ProfileDao {
 				profile.setProf_email(rs.getString("mem_email"));
 			}
 			
+			List<Tag> tagListL = tagDao.selectList("language", "profile", profile.getProf_id());
+			List<Tag> tagListT = tagDao.selectList("tool", "profile", profile.getProf_id());
+			List<String> tag_skill = new ArrayList<String>();
+			List<Integer> tag_skill_level = new ArrayList<Integer>();
+			for (Tag tag : tagListL) {
+				tag_skill.add(tag.getTag_name());
+				tag_skill_level.add(tag.getProf_skill_level());
+			}
+			for (Tag tag : tagListT) {
+				tag_skill.add(tag.getTag_name());
+				tag_skill_level.add(tag.getProf_skill_level());
+			}
+			profile.setTag_skill(tag_skill);
+			profile.setProf_skill_level(tag_skill_level);
+			
 			sql = "SELECT pf_id FROM prof_pf WHERE prof_id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, profile.getProf_id());
 			rs = stmt.executeQuery();
 			List<Portfolio> myPf = new ArrayList<Portfolio>();
-			if (rs.next()) {
-				while (rs.next()) {
-					myPf.add(portfolioDao.selectOne(rs.getInt("pf_id")));
-				}
+			while (rs.next()) {
+				myPf.add(portfolioDao.selectOne(rs.getInt("pf_id")));
 			}
 			profile.setProf_myPf(myPf);
 			return profile;

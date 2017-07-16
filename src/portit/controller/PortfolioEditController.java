@@ -27,8 +27,8 @@ public class PortfolioEditController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PortfolioDao portfolioDao = PortfolioDao.getInstance();
-		ProfileDao profileDao = ProfileDao.getInstance();
+		PortfolioDao portfolioDao = new PortfolioDao();
+		ProfileDao profileDao = new ProfileDao();
 		
 		// UploadServlet이 전달해준 데이터 받아오기
 		Map<String, Object> formData = (Map<String, Object>) req.getAttribute("formData");
@@ -46,7 +46,7 @@ public class PortfolioEditController implements Controller {
 		for (Tag tag : fieldTagList) {
 			tag.setTag_use_type("portfolio");
 		}
-		/*List<Profile> coworkerList = new ArrayList<Profile>();
+		List<Profile> coworkerList = new ArrayList<Profile>();
 		if (formData.get("final_result_id") != null || formData.get("final_result_id").toString().length() > 0) {
 			String[] findUser = formData.get("final_result_id").toString().split(",");
 			int[] findUser2 = new int[findUser.length];
@@ -56,7 +56,7 @@ public class PortfolioEditController implements Controller {
 			for (int i = 0; i < findUser.length; i++) {
 				coworkerList.add(profileDao.getProfile(findUser2[i]));
 			}
-		}*/
+		}
 		
 		for (String key : formData.keySet()) {
 			if (formData.get(key) != null) {
@@ -76,7 +76,7 @@ public class PortfolioEditController implements Controller {
 		String viewUrl = "";
 		
 		try {
-			/*portfolio.setPf_title((String) formData.get("pf_title"))
+			portfolio.setPf_title((String) formData.get("pf_title"))
 					.setPf_intro(formData.get("pf_intro") != null
 							? new String(((String) formData.get("pf_intro")).getBytes("UTF-8"), "UTF-8").replaceAll("\\r\\n", "<br />") : "")
 					.setPf_startdate(
@@ -90,7 +90,7 @@ public class PortfolioEditController implements Controller {
 			portfolioDao.update(portfolio);
 			
 			// 뷰 URL 반환
-			viewUrl = "rdr:/view?type=portfolio&id="+String.valueOf(pf_id);*/
+			viewUrl = "rdr:/view?type=portfolio&id="+String.valueOf(pf_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

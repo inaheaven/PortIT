@@ -12,11 +12,9 @@
 <link href="assets/css/profpfproj.css" rel="stylesheet">
 <script>
 <%
-	List<Portfolio> myport = PortfolioDao.getInstance()
-		.selectListByMemId(Integer.parseInt(request.getSession().getAttribute("loginId").toString()));
-	if(myport.isEmpty()){
-		myport= new ArrayList();
-}
+	PortfolioDao portfolioDao = new PortfolioDao();
+	int mem_id = Integer.parseInt(request.getSession().getAttribute("loginId").toString());
+	List<Portfolio> myport = portfolioDao.selectListByMemId(mem_id);	
 %>	
 </script>
 	<%--sidenavbar start--%>
@@ -40,50 +38,47 @@
 						</span>
 					</div>
 					<div class="pflist_box clearfix">
-						<% 
-          					for(int i=0; i<myport.size(); i++){
-          						Portfolio portfo = myport.get(i);
-         					%>	
-						<div class="col-md-4 mb"> <!-- 반복 -->
-							<div class="image-hover">
-								<div class="portfolio-simple">
-									<div class="pfImg" >
-		            					<img src="<%=portfo.getMl_path2() %>"/>   
-				         			</div>
-									<div class="pfInfo">
-										<div class="simple-content">
-											<div class="pfTag">
-												<% for(int j=0; j<portfo.getTags().size(); j++) { %>
-													<a href="">#<%= portfo.getTags().get(j)%></a>&nbsp;
-													<%} %>
+						<c:if test="${!empty myport}">
+							<c:forEach items="${myport}" var="mypf" varStatus="status">
+								<div class="col-md-4 mb">
+									<!-- 반복 -->
+									<div class="image-hover">
+										<div class="portfolio-simple">
+											<div class="pfImg">
+												<img src="${mypf.pf_mediaList[0].ml_path}" />
+											</div>
+											<div class="pfInfo">
+												<div class="simple-content">
+													<div class="pfTag">
+														<c:forEach items="${mypf.tags}" var="tag" varStatus="status">
+															<a href=""># ${tag}</a>&nbsp;
+														</c:forEach>
+													</div>
+													<div class="pfTitle">
+														<a href="/view?type=portfolio&id=${mypf.pf_id}">${mypf.pf_title}</a>
+													</div>
+													<div class="pfBottom">
+														<span class="pfmemName"><a href="/view?type=profile&id=${mypf.pf_prof_nick}">${mypf.pf_prof_name}</a></span>
+														<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;${mypf.pf_like}</span>
+													</div>
 												</div>
-											<div class="pfTitle">
-												<a href=""><%=portfo.getPf_title() %></a>
 											</div>
-											<div class="pfBottom">
-												<span class="pfmemName"><a href=""><%=portfo.getProf_nick() %></a></span> <span
-													class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=portfo.getPf_like() %></span>
+											<div class="top-hover-right">
+												<div class="after-hover">
+													<button type="button" class="btn btn-hover">
+														<span class="glyphicon glyphicon-edit"></span>
+													</button>
+													<button type="button" class="btn btn-hover" id="hover"
+														onclick="location.href='/pfList?cmd=MYPORTFOLIODELETE&pf_id=${mypf.pf_id}'">
+														<span class="glyphicon glyphicon-remove"></span>
+													</button>
+												</div>
 											</div>
-										</div>
-									</div>
-									<div class="top-hover-right">
-										<div class="after-hover" >
-											<button type="button" class="btn btn-hover" >
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-											<button type="button" class="btn btn-hover" id ="hover" onclick="location.href='/pfList?cmd=MYPORTFOLIODELETE&pf_id=<%=portfo.getPf_id() %>'">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<%	
-									
-          						}
-							%>
-				 		
+							</c:forEach>
+						</c:if>
 					</div>
 				</div>
 				<!-- /row -->

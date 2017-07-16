@@ -21,7 +21,7 @@ public class ProfileViewController implements Controller {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
 		
-		ProfileDao profileDao = ProfileDao.getInstance();
+		ProfileDao profileDao = new ProfileDao();
 		
 		// 닉네임으로 프로필 번호를 받아오기
 		//int mem_id = profileDao.nickToId(req.getParameter("id"));

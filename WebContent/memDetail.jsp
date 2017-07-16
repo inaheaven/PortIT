@@ -96,18 +96,19 @@ Profile profile = (Profile) request.getAttribute("profile");
 					</div>
 					<div class="col-md-offset-2 col-md-8">
 						<div class="skillset">
-							<% for (int i = 0; profile.getTag_skill() != null && i < profile.getTag_skill().size(); i++) { %>
-							<div class="skill clearfix">
-								<div class="col-xs-3 text-center">
-									<span class=""><%= profile.getTag_skill().get(i) %></span>
-								</div>
-								<div class="col-xs-9">
-									<div class="progress">
-										<div class="progress-bar" style="width:<%=100 * ((Integer.parseInt(profile.getProf_skill_level().get(i).toString())) / 10)%>%;"></div>
+							<c:forEach items="${profile.tag_skill}" var="skill" varStatus="status">
+								<div class="skill clearfix">
+									<div class="col-xs-3 text-center">
+										<span class="">${skill}</span>
+									</div>
+									<div class="col-xs-9">
+										<div class="progress">
+											<div class="progress-bar"
+												style="width:${(profile.prof_skill_level[status.index] / 10) * 100}%;"></div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<% } %>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

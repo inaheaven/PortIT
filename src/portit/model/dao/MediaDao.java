@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.util.FileDelete;
+import portit.model.db.DBConnectionMgr;
 import portit.model.dto.Media;
 
 /**
@@ -15,28 +16,56 @@ import portit.model.dto.Media;
  */
 public class MediaDao { 
 
+	private DBConnectionMgr pool;
+	private Connection conn;
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	private String sql;
 	
-	private static MediaDao instance = new MediaDao();
+	public MediaDao() {
+		try {
+			pool = DBConnectionMgr.getInstance();
+			if (conn != null) {
+				System.out.println("DB 접속 : "+this.getClass().getName());
+			}
+		} catch (Exception e) {
+			System.out.println("DB 접속 오류 :");
+			e.printStackTrace();
+		}
+	}
 	
-	private MediaDao() {}
-	
-	public static MediaDao getInstance() {
-		return instance;
+	private void getConnection() {
+		try {
+			conn = pool.getConnection();
+			if (conn != null) System.out.println("DB 접속 : "+this.getClass().getName());
+		} catch (Exception e) {
+			System.out.println("DB 접속 오류 :");
+			e.printStackTrace();
+		}
+	}
+
+	private void freeConnection() {
+		try {
+			pool.freeConnection(conn, stmt, rs);
+			if (conn != null) {
+				System.out.println("DB 접속 해제 : "+this.getClass().getName());
+			}
+		} catch (Exception e) {
+			System.out.println("DB 접속해제 오류 :");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * 미디어 정보 리스트 조회
-	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param articleType 게시물 구분
 	 * @param articleId 게시물 ID
 	 * @return 미디어 정보 목록
 	 */
-	public List<Media> selectList(Connection conn, String articleType, int articleId) {
+	public List<Media> selectList(String articleType, int articleId) {
 		List<Media> mediaList = new ArrayList<Media>();
 		Media media = null;
+		getConnection();
 		try {
 			sql = "SELECT * FROM media_library WHERE ml_type=? AND ml_type_id=?";
 			stmt = conn.prepareStatement(sql);
@@ -55,18 +84,20 @@ public class MediaDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return mediaList;
 	}
 	
 	/**
 	 * 미디어 정보 등록
-	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param media 미디어 DTO
 	 * @return 작업된 행 갯수
 	 */
-	public int insert(Connection conn, Media media) {
+	public int insert(Media media) {
 		int rows = 0;
+		getConnection();
 		try {
 			sql = "INSERT INTO media_library"
 					+ "(ml_id, ml_type, ml_type_id, ml_path) "
@@ -81,6 +112,8 @@ public class MediaDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}
@@ -91,8 +124,9 @@ public class MediaDao {
 	 * @param media
 	 * @return 작업된 행 갯수
 	 */
-	public int update(Connection conn, Media media) {
+	public int update(Media media) {
 		int rows = 0;
+		getConnection();
 		try {
 			sql = "MERGE INTO media_library ml "
 					+ "USING (SELECT * FROM media_library WHERE ml_type=? AND ml_type_id=?)  "
@@ -117,22 +151,24 @@ public class MediaDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}
 	
 	/**
 	 * 미디어 정보 삭제
-	 * @param conn 작업을 요청하는 DB 커넥션
 	 * @param articleType 게시물 구분
 	 * @param articleId 게시물 ID
 	 * @return 작업된 행 갯수
 	 */
-	public int delete(Connection conn, String articleType, int articleId) {
+	public int delete(String articleType, int articleId) {
 		int rows = 0;
+		getConnection();
 		try {
 			// 기존 미디어 정보 조회
-			List<Media> mediaList = selectList(conn, articleType, articleId);
+			List<Media> mediaList = selectList(articleType, articleId);
 			
 			// 기존 파일 삭제
 			deleteFile(mediaList);
@@ -150,6 +186,8 @@ public class MediaDao {
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			freeConnection();
 		}
 		return rows;
 	}

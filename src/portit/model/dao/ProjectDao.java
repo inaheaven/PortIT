@@ -32,12 +32,11 @@ public class ProjectDao {
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 	
-	private TagDao tagDao;
+	private TagDao tagDao = TagDao.getInstance();
 
 	public ProjectDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
-			TagDao tagDao = new TagDao();
 		} catch (Exception e) {
 			System.out.println("Connection Pool 오류" + e);
 		}
