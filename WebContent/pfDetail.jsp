@@ -55,7 +55,7 @@ String dataTF= (String)request.getAttribute("dataTF");
 				<h4 class="tags">
 					<c:if test="${!empty portfolio.pf_tags_language}">
 						<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-							<span> <a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a> </span>
+							<span>#<a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a></span>&nbsp;&nbsp;&nbsp;
 						</c:forEach>
 					</c:if>
 				</h4>
@@ -120,11 +120,11 @@ String dataTF= (String)request.getAttribute("dataTF");
 						<div class="col-xs-4 text-right">
 							<div class="actions">
 								<button type="button" class="btn common"
-									onclick="location.href='#'">
+									onclick="location.href='#">
 									<i class="fa fa-envelope"></i>
 								</button>
 								<button type="button" class="btn common"
-									onclick="location.href='#'">
+									onclick="location.href='/msg?cmd=send&mem_id_sender=${portfolio.mem_id}'">
 									<i class="fa fa-comment"></i>
 								</button>
 							</div>
@@ -148,7 +148,7 @@ String dataTF= (String)request.getAttribute("dataTF");
 									<th>사용언어</th>
 									<td>
 										<c:forEach var="pf_tag_language" items="${portfolio.pf_tags_language}">
-											<span> <a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a> </span>
+											<span>#<a href="javascript:tag('${pf_tag_language.tag_name}')">${pf_tag_language.tag_name}</a> </span>
 										</c:forEach>
 									</td>
 								</tr>
@@ -156,7 +156,7 @@ String dataTF= (String)request.getAttribute("dataTF");
 									<th>사용도구</th>
 									<td>
 										<c:forEach var="pf_tag_tool" items="${portfolio.pf_tags_tool}">
-											<span> <a href="javascript:tag('${pf_tag_tool.tag_name}')">${pf_tag_tool.tag_name}</a> </span>
+											<span>#<a href="javascript:tag('${pf_tag_tool.tag_name}')">${pf_tag_tool.tag_name}</a> </span>
 										</c:forEach>
 									</td>
 								</tr>

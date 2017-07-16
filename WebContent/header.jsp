@@ -69,14 +69,14 @@ function main_con(){
 						<c:forEach begin="0" end="4" var="i"> 
 							<li>
 							<c:if test="${ntList[i].nt_type eq 'like' }">
-								<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+								<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/view?type=portfolio&id=${ntList[i].nt_type_id}');">
 	          						<span class="glyphicon glyphicon-heart"></span>&nbsp;/&nbsp; 
 	          						<span class="time">${ntList[i].nt_date }</span>
 	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 포트폴리오를 좋아합니다.</span>
                					</a>
           					</c:if>
           					<c:if test="${ntList[i].nt_type  eq 'upload' }">
-          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/view?type=portfolio&id=${ntList[i].nt_type_id}');">
 	          						<span class="glyphicon glyphicon-upload"></span>&nbsp;/&nbsp; 
 	          						<span class="time">${ntList[i].nt_date }</span>
 	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 새로운 포트폴리오를 업로드했습니다.</span>
@@ -90,14 +90,14 @@ function main_con(){
                					</a>
           					</c:if>
           					<c:if test="${ntList[i].nt_type  eq 'project' }">
-          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/myproj?cmd=list');">
 	          						<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;/&nbsp; 
 	          						<span class="time">${ntList[i].nt_date }</span>
 	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 내 프로젝트에 신청했습니다.</span>
                					</a>
           					</c:if>
           					<c:if test="${ntList[i].nt_type  eq 'follow' }">
-          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('');">
+          						<a href="/nt?act=read&id=${ntList[i].nt_id}" onclick="window.open('/view?type=profile&id=${ntList[i].prof_nick}');">
 	          						<span class="glyphicon glyphicon-plus"></span>&nbsp;/&nbsp; 
 	          						<span class="time">${ntList[i].nt_date }</span>
 	               					<span class="message">${dao.getSenderName(ntList[i].mem_id_sender)}님이 나를 팔로잉했습니다.</span>
