@@ -1,6 +1,7 @@
 package portit.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,8 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import portit.model.action.ProjectModel;
 import portit.model.dao.SearchDao;
 import portit.model.dao.ViewDao;
+import portit.model.dto.Project;
+import portit.model.dto.project_detail;
 
 @WebServlet("/detailView")
 public class DetailViewController extends HttpServlet {
@@ -33,7 +37,7 @@ public class DetailViewController extends HttpServlet {
 
 		System.out.println("0.서블릿접근!");
 		
-		String yame_string = (String) req.getParameter("yame");
+	/*	String yame_string = (String) req.getParameter("yame");
 		int yame=0;
 		if(yame_string!=null){
 		yame=Integer.parseInt(yame_string);
@@ -46,16 +50,32 @@ public class DetailViewController extends HttpServlet {
 			System.out.println("서블릿:파라미터 수신2"+yame_pj_string);
 		 yame_pj=Integer.parseInt(yame_pj_string);
 		}
-
+*/
+		
+		
+		
 		
 		String cmd = req.getParameter("cmd");
 		String url = null;
 		SearchDao searchDao = new SearchDao();		
 		ViewDao viewdao=new ViewDao();
 		
+		int loginId=-1;
+		String log_id=null;
+		if(null!=session.getAttribute("loginId")){
+			loginId=(int) session.getAttribute("loginId");
+			
+			 log_id= String.valueOf(loginId);
+		System.out.println(loginId+"가 로그인 되었습니다.");
+		}
+		
+		
+		
+		ProjectModel model = new ProjectModel(req,log_id);
+		
+		/*
 	
 		//페이크  프로필 페이지.
-
 		if(yame==2){
 			System.out.println("fake_profile"+yame);
 			url="profile_sample1.html";
@@ -87,18 +107,38 @@ public class DetailViewController extends HttpServlet {
 		}else if(yame_pj==4){	//도깨비
 			url="projDetail_sample3.html";
 		}
+		*/
 		
 		
 		
-		
-		
+		System.out.println("CTRL.cmd="+cmd);
 
+		
+		
+		
 		if("PORTFOLIO".equals(cmd)){
 			//int pf_id = Integer.parseInt(req.getParameter("pf_id"));
 			//req.setAttribute("pf_view", viewdao.portfolio_info(pf_id));	//이름만 바꿔주면 됨.
 			url="/page?page=searchAll";
 		}
 		
+		else if("PROJECT".equals(cmd)){
+			System.out.println("프로젝트CTRL 접근");
+			ArrayList project = (ArrayList) model.prject_detail_infrom();
+			System.out.println("CTRL:DB조회완료");
+			
+			
+			
+			//Test....
+			project_detail dto =(project_detail)project.get(0);
+			System.out.println("CTRL_Test="+dto.getProj_title());
+			
+			
+			
+			
+			req.setAttribute("pj_inform", project);
+			url="projDetail_0716.jsp";
+		}
 		
 	/*	
 		else if(cmd.equals("MEMBER")){

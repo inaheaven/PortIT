@@ -14,7 +14,7 @@
 		document.prof_info.id.value = prof_nick;
 		document.prof_info.submit();		
 	}
-	function proj(proj_id){
-		document.proj_info.id.value = proj_id;
+	function proj(id){
+		document.proj_info.proj_id.value =id;
 		document.proj_info.submit();
 	}

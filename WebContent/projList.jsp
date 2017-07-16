@@ -126,7 +126,7 @@
           					<div class="col-md-9 mb" >
 		          				<span class="pjInfoText">
 		          					<div class="pjTitle">
-		          						<a href="detailView?yame_pj=<%=proj.getProj_id()%>">
+		          						<a  href="/detailView?cmd=PROJECT&proj_id=<%=proj.getProj_id()%>">
 		          							<%=proj.getProj_title() %></a></div>
 		          					<div class="pjmemName"><span class="fa fa-user"><%=proj.getProf_name() %></span>
 		          						&nbsp;&nbsp;<a href=""></a></div>     		
@@ -222,10 +222,10 @@
 </form>
 <form name="prof_info" method="post" action="/detailView">
 	<input type="hidden" name="prof_id" /> 
-	<input type="hidden" name="cmd" value="PROJECT" />
+	<input type="hidden" name="cmd" value="MEMBER" />
 </form>
 <form name="proj_info" method="post" action="/detailView">
-	<input type="hidden" name="proj_id" /> 
-	<input type="hidden" name="cmd" value="MEMBER" />
+	<input type="hidden" name="proj_id" id="proj_id" value=""/> 
+	<input type="hidden" name="cmd" value="PROJECT" />
 </form>
 	
