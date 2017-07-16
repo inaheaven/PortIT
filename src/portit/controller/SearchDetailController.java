@@ -66,7 +66,7 @@ public class SearchDetailController extends HttpServlet {
 		//  포트폴리오 정렬 및 / 다중 검색
 		if(cmd.equals("PFDETAIL")){
 			String pfSearch = (String) session.getAttribute("pfSearch");
-			if(!"".equals(pfSearch) ){
+			if(pfSearch != null ){
 				pfSearch = pfSearch.toUpperCase();
 			}
 			System.out.println("CTRL : PFDETAIL 접근확인");
@@ -76,13 +76,13 @@ public class SearchDetailController extends HttpServlet {
 			System.out.println("CTRL 파라미터전달확인22="+param2);
 			System.out.println("CTRL 파라미터전달확인33="+param3);
 			System.out.println("CTRL 파라미터전달확인44="+param4);
-	
+			
 			
 			//다중검색
 			if(list_value == 0 ){
 				//검색어 없을시
 				//if(param1 ==null && param2 == null && param3 == null && param4 == "" ){
-				if("".equals(param1)  && "".equals(param2) && "".equals(param3) && "".equals(param4)){
+				if(param1 ==null && param2 == null && param3 == null && param4 == "" ){
 					list = searchDao.searchAll_port(" ", true);
 					req.setAttribute("port_list", list);
 				}
@@ -208,7 +208,10 @@ public class SearchDetailController extends HttpServlet {
 		}
 		else if(cmd.equals("PROJDETAIL")){
 			String projSearch = (String) session.getAttribute("projSearch");
-			projSearch = projSearch.toUpperCase();	
+			if(projSearch !=null){
+				projSearch = projSearch.toUpperCase();	
+			}
+		
 			
 			//다중검색
 			if(list_value == 0 ){
