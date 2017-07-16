@@ -69,7 +69,8 @@
 							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem('C++')" /> 
 							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem('ECLIPSE')" /> 
 							<input class="btn poptag" type="button" value="빅데이터" name="language" onclick="fnAppendItem('빅데이터')" /> 
-							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')'" /> .....
+							<input class="btn poptag" type="button" value="시스템" name="language" onclick="fnAppendItem('시스템')" /> .....
+							
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">

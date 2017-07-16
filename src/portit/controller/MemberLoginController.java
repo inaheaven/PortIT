@@ -29,10 +29,7 @@ public class MemberLoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = resp.getWriter();
-		
-	
-	
-	
+
 		// 세션에 로그인 정보 넣기
 		HttpSession session = req.getSession(true);
 		

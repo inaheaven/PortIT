@@ -154,11 +154,12 @@ public class ViewDao {
 	 */
 	public List member_info() {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct mem_id, prof_id, prof_img, prof_name,  prof_follower  "
+		String sql = "select distinct mem_id, prof_id, prof_img, prof_name,  prof_follower, prof_regdate  "
 				+ "from profile join tag_use  "
 				+ "on tag_use.tag_use_type_id = profile.prof_id "
 				+ "join tag  on tag.tag_id = tag_use.tag_id  "
-				+ "where (tag_use_type = 'prof')  ";
+				+ "where (tag_use_type = 'prof')  "
+				+ "order by prof_regdate desc";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -172,6 +173,7 @@ public class ViewDao {
 				member.setProf_follower(rs.getInt("prof_follower"));
 				member.setProf_id(rs.getInt("prof_id"));
 				member.setMem_id(rs.getInt("mem_id"));
+				member.setProf_regdate(rs.getDate("prof_regdate"));
 				
 				int prof_id = rs.getInt("prof_id");
 				
@@ -398,11 +400,12 @@ public class ViewDao {
 	 */
 	public List timeline_info_like(int pf_id) {
 		try {
-			String sql = "select  prof_name, profile.prof_id, member.mem_id , portfolio.pf_id  "
+			String sql = "select  prof_name, profile.prof_id, member.mem_id , portfolio.pf_id , pf_like.PF_LK_ID "
 					+ "from member join pf_like on member.mem_id = pf_like.mem_id "
 					+ "join portfolio on portfolio.pf_id = pf_like.pf_id "
 					+ "join profile on profile.mem_id = member.mem_id "
-					+ "where portfolio.pf_id=?";
+					+ "where portfolio.pf_id=? "
+					+ "order by pf_like.PF_LK_ID desc";
 			
 			ArrayList list = new ArrayList();
 			pstmt = con.prepareStatement(sql);

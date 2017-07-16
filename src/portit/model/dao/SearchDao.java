@@ -451,8 +451,7 @@ public class SearchDao {
 					+ "join profile on profile.mem_id = member.mem_id  "
 					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
-					+ "join media_library on media_library.ml_type_id = project.proj_id "
-					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
+					+ "where tag_use_type = 'proj' "
 					+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(project.proj_title) like '%"+keyword+"%') "
 					+ " order by proj_regdate desc";
 		}
@@ -463,8 +462,7 @@ public class SearchDao {
 					+ "join profile on profile.mem_id = member.mem_id  "
 					+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 					+ "join tag on tag.tag_id = tag_use.tag_id "
-					+ "join media_library on media_library.ml_type_id = project.proj_id "
-					+ "where tag_use_type = 'proj' and ml_type = 'proj' "
+					+ "where tag_use_type = 'proj' "
 					+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(project.proj_title) like '%"+keyword+"%') "
 					+ "order by d_day ";
 
@@ -518,8 +516,7 @@ public class SearchDao {
 				+ "join profile on profile.mem_id = member.mem_id  "
 				+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 				+ "join tag on tag.tag_id = tag_use.tag_id "
-				+ "join media_library on media_library.ml_type_id = project.proj_id "
-				+ "where tag_use_type = 'proj' and ml_type = 'proj' "
+				+ "where tag_use_type = 'proj'  "
 				+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(tag.tag_name) like '%"+keyword2+"%') "
 				+ " order by proj_regdate desc";
 		
@@ -573,8 +570,7 @@ public class SearchDao {
 				+ "join profile on profile.mem_id = member.mem_id  "
 				+ "join tag_use on tag_use.tag_use_type_id = project.proj_id "
 				+ "join tag on tag.tag_id = tag_use.tag_id "
-				+ "join media_library on media_library.ml_type_id = project.proj_id "
-				+ "where tag_use_type = 'proj' and ml_type = 'proj' "
+				+ "where tag_use_type = 'proj' "
 				+ " and (UPPER(tag.tag_name) like '"+keyword+"' or UPPER(tag.tag_name) like '"+keyword2+"' or UPPER(tag.tag_name) like '"+keyword3+"') "
 				+ " order by proj_regdate desc";
 		

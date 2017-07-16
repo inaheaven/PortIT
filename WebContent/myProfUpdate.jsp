@@ -291,7 +291,7 @@ function fnSelectSnsInfo(snsName){
 					<div class="form-group">
 						<label class="col-md-3 control-label">프로필 사진</label>
 						<div class="col-md-9">
-							<input type="file" class="form-control" name="prof_img" value="${prof.prof_img}">
+							<input type="file" class="form-control" name="prof_img" value="${pageContext.request.contextPath}/assets/img/${prof.prof_img}">
 						</div>
 					</div>
 					<div class="form-group">
