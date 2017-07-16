@@ -151,7 +151,7 @@
 							</div>
 
 							<div class="pfTitle">
-								<a href="#" onclick="pf(<%=port.getPf_id()%>)">
+								<a href="/detailView?cmd=PORTFOLIO&?pf_id=<%=port.getPf_id()%>">
 								<%=port.getPf_title()%></a>
 							</div>
 							<div class="pfBottom">

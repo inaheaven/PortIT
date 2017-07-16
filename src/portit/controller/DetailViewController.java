@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import portit.model.dao.SearchDao;
 import portit.model.dao.ViewDao;
+import portit.model.dto.Portfolio;
 
 @WebServlet("/detailView")
 public class DetailViewController extends HttpServlet {
@@ -26,51 +27,85 @@ public class DetailViewController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		
-		int yame=Integer.parseInt((String) req.getParameter("yame"));
-		int yame_pj=Integer.parseInt((String) req.getParameter("yamepj"));
+
+		System.out.println("0.서블릿접근!");
 		
+		String yame_string = (String) req.getParameter("yame");
+		
+		int yame=0;
+		if(yame_string!=null){
+		yame=Integer.parseInt(yame_string);
+		System.out.println("서블릿:파라미터 수신"+yame);
+		}
+		
+		String yame_pj_string = (String) req.getParameter("yame_pj");
+		int yame_pj=0;
+		if(yame_pj_string!=null){
+			System.out.println("서블릿:파라미터 수신2"+yame_pj_string);
+		 yame_pj=Integer.parseInt(yame_pj_string);
+		}
+
+	
 		
 		String cmd = req.getParameter("cmd");
-	
 		String url = null;
-		
 		SearchDao searchDao = new SearchDao();		
-	
 		ViewDao viewdao=new ViewDao();
 		
 	
-		//야매  프로필 페이지.
+		//페이크  프로필 페이지.
 		
 		if(yame==2){
 			
-			System.out.println("view접근"+yame);
+			System.out.println("fake_profile"+yame);
 			url="profile_sample1.html";
 		}else if(yame==7){//상민
 			
-			url="profile_sample2.html";
+			url="profile_sample3.html";
 		}else if(yame==9){//권상우
 			
-			url="profile_sample1.html";
+			url="profile_sample2.html";
 		}
 		
 		//야매  프로젝트페이지
-		if(yame_pj==2){
+		if(yame_pj==3){		//파리의연인
 			
-			System.out.println("view접근"+yame);
-			url="profile_sample1.html";
-		}else if(yame_pj==2){
+			System.out.println("fake_PJ"+yame);
+			url="projDetail_sample1.html";
+		}else if(yame_pj==10){	//태양의후예
 			
-			url="profile_sample1.html";
-		}else if(yame_pj==2){
-			url="profile_sample1.html";
+			url="projDetail_sample2.html";
+		}else if(yame_pj==4){	//도깨비
+			url="projDetail_sample3.html";
 		}
+		
+		
+		
+		
 		
 		
 		
 		
 		if("PORTFOLIO".equals(cmd)){
+			
+
+			System.out.println(" 서블릿접근!CMD"+cmd);
+			
+			
 			int pf_id = Integer.parseInt(req.getParameter("pf_id"));
+			
+			
+			List list = viewdao.portfolio_info(pf_id);
+			
+			Portfolio portfolio =(Portfolio)list.get(0);
+			System.out.println("데이터 수신확인"+portfolio.getPf_title());
+			
+			System.out.println("CTRL 포폴 접근요청"+cmd+pf_id);
 			req.setAttribute("pf_view", viewdao.portfolio_info(pf_id));	//이름만 바꿔주면 됨.
+			
+			
+			
+			
 			url="/page?page=searchAll";
 		}
 		

@@ -205,7 +205,7 @@
 						<span class="pfInfo">
 							<div>
 								<span class="pfTitle">
-									<a href="#" onclick="pf(<%=time.getPf_id()%>)">						
+									<a href="/detailView?cmd=PORTFOLIO&pf_id=<%=time.getPf_id()%>">						
 										<%=time.getPf_title()%></a></span>
 								<span class="pfLike"> <span
 									class="glyphicon glyphicon-heart"></span>

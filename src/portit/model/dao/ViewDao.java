@@ -29,7 +29,7 @@ public class ViewDao {
 	public ViewDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
-			con = pool.getConnection();
+			
 		} catch (Exception err) {
 			System.out.println("DB접속 오류 : " + err);
 		}
@@ -66,6 +66,7 @@ public class ViewDao {
 				+ "order by pf_regdate desc";
 		
 		try {
+			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -174,7 +175,7 @@ public class ViewDao {
 				+ "order by pf_regdate desc";
 		
 		try {
-			
+			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);		
 			pstmt.setInt(1, pf_id);
 			rs = pstmt.executeQuery();
@@ -187,6 +188,7 @@ public class ViewDao {
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setPf_id(rs.getInt("pf_id"));
 				portfolio.setProf_name(rs.getString("prof_name"));
+				portfolio.setPf_regdate(rs.getDate("pf_regdate"));
 
 			}
 		}

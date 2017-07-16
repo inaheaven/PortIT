@@ -146,12 +146,11 @@
 							 */
 							
 						%>
-						
 						<!-- R프로젝트:반복시작 -->
 							<div class="panel-heading clearfix" role="tab" >
 								<h4 class="panel-title">
 									<span class="col-sm-4"> 
-									<a onclick="window.open('/view?type=project&id=<%=pj_Inform.getProj_id()%>');">
+									<a onclick="window.open('/detailView?yame_pj=<%=pj_Inform.getProj_id()%>');">
 									<%=pj_Inform.getProj_title() %> 
 									</a>
 									</span> 
