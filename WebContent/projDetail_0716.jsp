@@ -343,7 +343,7 @@
 				<div class="row">
 					<div class="actions">
 						<button type="button" class="btn common" onclick="location.href='/msg?cmd=send&mem_id_sender=<%=dto.getProf_id() %>'">개설자에게 연락하기</button>&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn common" onclick="location.href='/myproj?cmd=apply&pj_id=<%=dto.getProj_id() %>'">프로젝트 지원하기</button>
+						<button type="button" class="btn common" onclick="javascript:goPage(<%=dto.getProj_id() %>)">프로젝트 지원하기</button>
 					</div>
 				</div>
 			</div>
@@ -461,6 +461,12 @@
 			e.preventDefault();
 			$("html,body").animate({ scrollTop : 0 }, 500);
 		});
+		
+		function goPage(id) { 
+			var pj_id= id;
+			alert('프로젝트에 지원되셨습니다!')
+			location.href="/myproj?cmd=apply&pj_id="+pj_id;
+		}
 	</script>
 
 </body>
