@@ -189,6 +189,8 @@ public class ProjectDao {
 			prof_list.add(profile);
 		} catch (Exception e) {
 			System.out.println("profile 테이블 쿼리 오류");
+		}finally {
+			freeConnection();
 		}
 
 		// Tag_USE 테이블에서 필요한 값 불러오기
@@ -208,6 +210,8 @@ public class ProjectDao {
 			}
 		} catch (Exception e) {
 			System.out.println("TAG_USE테이블 쿼리 오류" + e);
+		}finally {
+			freeConnection();
 		}
 		Iterator<Integer> tag = tag_id_list.iterator();
 		try {
@@ -296,6 +300,8 @@ public class ProjectDao {
 			rs = stmt.executeQuery();
 		} catch (Exception e) {
 			System.out.println("폼에 입력받은 데이터를 프로젝트 테이블에 입력" + e);
+		}finally {
+			freeConnection();
 		}
 
 		// 폼에 입력받은 함께할 사람데이터를 proj_app 테이블에 입력
@@ -391,6 +397,8 @@ public class ProjectDao {
 				}
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
+			}finally {
+				freeConnection();
 			}
 		}
 
@@ -435,6 +443,8 @@ public class ProjectDao {
 				}
 			} catch (SQLException e) {
 				System.out.println("개발 언어 입력 문제" + e);
+			}finally {
+				freeConnection();
 			}
 		}
 
@@ -481,6 +491,8 @@ public class ProjectDao {
 				}
 			} catch (Exception e) {
 				System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
+			}finally {
+				freeConnection();
 			}
 
 		}
@@ -493,6 +505,8 @@ public class ProjectDao {
 			rs = stmt.executeQuery();
 		} catch (Exception e) {
 			System.out.println("내가 등록한 프로젝트 테이블에 등록 오류 " + e);
+		}finally {
+			freeConnection();
 		}
 
 		System.out.println("모든게 등록되었다.");
@@ -569,6 +583,8 @@ public class ProjectDao {
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 
 		// TAG아이디 값 호출
@@ -588,6 +604,8 @@ public class ProjectDao {
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 
 		String proj_del_sql = "DELETE FROM PROJECT WHERE PROJ_ID = ?";
@@ -598,6 +616,8 @@ public class ProjectDao {
 			rs = stmt.executeQuery();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 
 	}
@@ -640,6 +660,8 @@ public class ProjectDao {
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("폼에 입력받은 데이터를 프로젝트 테이블에 입력" + e);
+		}finally {
+			freeConnection();
 		}
 
 		// 폼에 입력받은 함께할 사람데이터를 proj_app 테이블에 입력
@@ -832,6 +854,8 @@ public class ProjectDao {
 				}
 			} catch (Exception e) {
 				System.out.println("모집분야 및 인원 테이블에 등록오류 " + e);
+			}finally {
+				freeConnection();
 			}
 
 		}
@@ -988,7 +1012,7 @@ public class ProjectDao {
 		rsList = new ArrayList();
 		sql = "select  DISTINCT project.proj_title, project.proj_id, project.proj_regdate,  project.proj_regenddate-sysdate, project.proj_startDate, proj_app.proj_app_confirm "
 				+ "from project inner join proj_app on project.proj_id=proj_app.proj_id  "
-				+ "where project.proj_id in (select proj_id from proj_app where mem_id='" + login_id + "')";
+				+ "where project.proj_id in (select proj_id from proj_app where mem_id='" + login_id + "')and mem_id='"+login_id+"'";
 
 		// 필요한 정보: proj_title, proj_id, PROJ_REGENDDATE, mem_id, prof_name,
 		// proj_app_confirm
@@ -1076,6 +1100,8 @@ public class ProjectDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return project;
 	}

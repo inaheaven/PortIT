@@ -695,6 +695,8 @@ public class PortfolioDao {
 			return tags; 
 		} catch (Exception e) {
 			System.out.println("TAG() : 여기 에러나지마라 " + e);
+		}finally {
+			pool.freeConnection(conn, stmt);
 		}
 		return null;
 	}
@@ -715,6 +717,8 @@ public class PortfolioDao {
 			stmt.executeUpdate();
 		} catch (Exception err) {
 			System.out.println("DBCP  : " + err);
+		}finally {
+			pool.freeConnection(conn, stmt);
 		}
 	}
 	/**
@@ -741,6 +745,8 @@ public class PortfolioDao {
 		} 
 		catch (Exception e) {
 			System.out.println("ml_path(proj) 오류" + e);
+		}finally {
+			pool.freeConnection(conn, stmt);
 		}
 		return null;
 	}
@@ -767,6 +773,8 @@ public class PortfolioDao {
 			
 		}catch (Exception e) {
 			System.out.println("pfidTomemid(pf_id) 오류" + e);
+		}finally {
+			pool.freeConnection(conn, stmt);
 		}
 		return mem_id;
 	}

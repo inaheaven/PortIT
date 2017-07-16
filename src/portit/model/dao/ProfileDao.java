@@ -415,6 +415,8 @@ public class ProfileDao {
 			return tags;
 		} catch (Exception e) {
 			System.out.println("member_tag 오류 " + e);
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -865,6 +867,8 @@ public class ProfileDao {
 		} catch (Exception e) {
 			System.out.println("tags_lang 오류 " + e);
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -891,6 +895,8 @@ public class ProfileDao {
 		} catch (Exception e) {
 			System.out.println("tags_tool 오류 " + e);
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -917,6 +923,8 @@ public class ProfileDao {
 		} catch (Exception e) {
 			System.out.println("tags_field 오류 " + e);
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -943,6 +951,8 @@ public class ProfileDao {
 		} catch (Exception e) {
 			System.out.println("tags_skill 오류 " + e);
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -969,6 +979,8 @@ public class ProfileDao {
 		} catch (Exception e) {
 			System.out.println("prof_skill_levels 오류 " + e);
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -994,6 +1006,8 @@ public class ProfileDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return result;
 	}
@@ -1020,6 +1034,8 @@ public class ProfileDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return flag;
 	}
@@ -1065,6 +1081,8 @@ public class ProfileDao {
 			return prof_id;
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return prof_id;
 	}
@@ -1088,6 +1106,8 @@ public class ProfileDao {
 			return prof_nick;
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			freeConnection();
 		}
 		return prof_nick;
 	}

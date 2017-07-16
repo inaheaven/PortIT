@@ -90,6 +90,8 @@ public class FollowDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			pool.freeConnection(conn, stmt);
 		}
 	}
 	
@@ -114,7 +116,9 @@ public class FollowDao {
 			fw.setTags(tags);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		} finally{
+			pool.freeConnection(conn, stmt);
+		}
 	}
 	
 	

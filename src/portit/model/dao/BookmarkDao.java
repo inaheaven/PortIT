@@ -152,6 +152,8 @@ public class BookmarkDao {
 			return tags; 
 		} catch (Exception e) {
 			System.out.println("TAG() : 여기 에러나지마라 " + e);
+		}finally {
+			pool.freeConnection(conn, stmt, rs);
 		}
 		return null;
 	}

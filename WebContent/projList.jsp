@@ -126,7 +126,7 @@
           					<div class="col-md-9 mb" >
 		          				<span class="pjInfoText">
 		          					<div class="pjTitle">
-		          						<a href="#" onclick="proj(<%=proj.getProj_id()%>)">
+		          						<a href="detailView?yame_pj=<%=proj.getProj_id()%>">
 		          							<%=proj.getProj_title() %></a></div>
 		          					<div class="pjmemName"><span class="fa fa-user"><%=proj.getProf_name() %></span>
 		          						&nbsp;&nbsp;<a href=""></a></div>     		

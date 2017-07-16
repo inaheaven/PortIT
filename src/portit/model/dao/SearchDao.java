@@ -136,6 +136,8 @@ public class SearchDao {
 		} 
 		catch (Exception e) {
 			System.out.println("포트폴리오 태그 " + e);
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -415,6 +417,8 @@ public class SearchDao {
 		} 
 		catch (Exception e) {
 			System.out.println("member_tag 오류 " + e);
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -618,6 +622,8 @@ public class SearchDao {
 		} 
 		catch (Exception e) {
 			System.out.println("proj_tag 오류" + e);
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
@@ -643,6 +649,8 @@ public class SearchDao {
 		} 
 		catch (Exception e) {
 			System.out.println("proj_tag(필드) 오류" + e);
+		}finally {
+			freeConnection();
 		}
 		return null;
 	}
