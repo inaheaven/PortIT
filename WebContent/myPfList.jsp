@@ -132,7 +132,8 @@
 
 								<div class="after-hover">
 
-									<button type="button" class="btn btn-hover">
+									<button type="button" class="btn btn-hover" 
+										onclick="location.href='/edit?type=portfolio&id=<%=portfo.getPf_id() %>'">
 
 										<span class="glyphicon glyphicon-edit"></span>
 
